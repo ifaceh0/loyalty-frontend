@@ -1,6 +1,9 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-const Signin= () => {
+const Signin = () => {
+  const navigate = useNavigate(); // 
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -9,7 +12,6 @@ const Signin= () => {
 
   const [error, setError] = useState("");
   const [captchaText] = useState(() => {
-    // Simple captcha string generator (for demo purposes)
     const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
     return Array.from({ length: 6 }, () => chars[Math.floor(Math.random() * chars.length)]).join("");
   });
@@ -29,7 +31,11 @@ const Signin= () => {
 
     setError("");
     console.log("Sign in data:", formData);
-    // Perform sign-in logic here
+  
+    localStorage.setItem("isLoggedIn", "true");
+       //navigate("/dashboard");
+    // ✅ Simulate login and navigate to dashboard
+    navigate("/dashboard");
   };
 
   return (
@@ -93,10 +99,6 @@ const Signin= () => {
         </form>
       </div>
     </div>
-
-
-
-
   );
 };
 

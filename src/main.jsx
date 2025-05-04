@@ -9,6 +9,7 @@ import Home from './components/Home/Home.jsx'
 import Subscription from './components/Subscription/Subscription.jsx'
 import Resources from './components/Resources/Resources.jsx'
 import Contact from './components/Contact/Contact.jsx'
+import Dashboard from './components/Dashboard/Dashboard.jsx'
 
 import Signin from './components/Signin/Signin.jsx'
 import Shopkeeper from './components/Signup/Shopkeeper.jsx'
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
       {
         path:"signin",
         element:<Signin/>
+      },
+      {
+        path:"/dashboard",
+        element:<Dashboard/>
       },
 
     ]
