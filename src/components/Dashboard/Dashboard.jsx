@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import React,{ useState } from "react";
 import User_profile from "../User-Profile/User_profile";
 import ShopkeeperProfile from "../Shopkeeper_profile/Shopkeeper_profile";
+import User from "../User/User";
 
 
 const Dashboard = () => {
@@ -29,9 +30,9 @@ const Dashboard = () => {
         <h2 className="text-xl font-bold text-fuchsia-600 mb-6">Dashboard</h2>
         <nav className="space-y-2">
           <button
-            onClick={() => setActiveTab('user')}
+            onClick={() => setActiveTab('user_profile')}
             className={`block w-full text-left px-4 py-2 rounded-lg ${
-              activeTab === 'user' ? 'bg-fuchsia-600 text-white' : 'hover:bg-gray-200'
+              activeTab === 'user_profile' ? 'bg-fuchsia-600 text-white' : 'hover:bg-gray-200'
             }`}
           >
             User Profile
@@ -44,14 +45,25 @@ const Dashboard = () => {
           >
             Shopkeeper Profile
           </button>
+
+          <button
+            onClick={() => setActiveTab('user')}
+            className={`block w-full text-left px-4 py-2 rounded-lg ${
+              activeTab === 'user' ? 'bg-fuchsia-600 text-white' : 'hover:bg-gray-200'
+            }`}
+          >
+            User
+          </button>
+
         </nav>
       </aside>
 
       <main className="flex-1 p-6">
 
         {activeTab === 'dashboard' && <Dashboard/>}
-        {activeTab === 'user' && <User_profile/>}
+        {activeTab === 'user_profile' && <User_profile/>}
         {activeTab === 'shopkeeper' && <ShopkeeperProfile/>}
+        {activeTab === 'user' && <User/>}
       </main>
 
       </div>
