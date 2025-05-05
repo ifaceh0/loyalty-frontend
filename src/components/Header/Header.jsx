@@ -27,7 +27,10 @@ export default function Header() {
 
           <div className="flex items-center lg:order-2">
             {!isLoggedIn ? (
-              <>
+              <> 
+           
+          
+
                 {/* Sign Up Dropdown */}
                 <div className="relative group inline-block">
                   <div
@@ -35,6 +38,7 @@ export default function Header() {
                   >
                     Sign up
                   </div>
+
                   <div className="absolute left-0 mt-2 bg-white rounded-lg shadow-lg z-10 min-w-[150px] opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-200">
                     <NavLink
                       to="/signup-shopkeeper"
@@ -58,12 +62,21 @@ export default function Header() {
                 >
                   Sign in
                 </NavLink>
+
+
+
+
+
+            
+
+
               </>
             ) : (
               <>
                 <NavLink
                   to="/dashboard"
-                  className="text-white bg-green-600 hover:bg-gray-500 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-4 py-2 lg:px-5 lg:py-2.5 mr-2 focus:outline-none"
+                  className={({isActive})=>
+                    `text-white bg-green-600 hover:bg-gray-500 ${isActive? "text-fuchsia-700" : "text-gray-700"}focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-4 py-2 lg:px-5 lg:py-2.5 mr-2 focus:outline-none`}
                 >
                   Dashboard
                 </NavLink>
@@ -134,6 +147,9 @@ export default function Header() {
               </li>
             </ul>
           </div>
+
+
+
         </div>
       </nav>
     </header>
