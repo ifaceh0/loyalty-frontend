@@ -1,177 +1,116 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 const User_profile = () => {
   const [formData, setFormData] = useState({
-    id: '',
-    firstName: '',
-    lastName: '',
-    phone: '',
-    email: '',
-    address: {
-      street: '',
-      city: '',
-      zip: '',
-      country: '',
-    },
-    createdDate: '',
-    updatedDate: '',
-    shopId: '',
+    userId: '',
+    purchasePoints: '',
+    transactionDate: '',
+    totalPoints: '',
   });
-
-  // Simulate auto-generated ID and date setup
-  useEffect(() => {
-    const generatedId = `USER-${Math.floor(1000 + Math.random() * 9000)}`;
-    const now = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
-    setFormData((prev) => ({
-      ...prev,
-      id: generatedId,
-      createdDate: now,
-      updatedDate: now,
-    }));
-  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    if (name in formData.address) {
-      setFormData((prev) => ({
-        ...prev,
-        address: {
-          ...prev.address,
-          [name]: value,
+    // If needed, you can auto-calculate totalPoints here
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const res = await fetch('https://your-backend-api.com/transactions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
         },
-      }));
-    } else {
-      setFormData((prev) => ({
-        ...prev,
-        [name]: value,
-        updatedDate: new Date().toISOString().slice(0, 10),
-      }));
+        body: JSON.stringify(formData),
+      });
+
+      
+
+      if (res.ok) {
+        alert('Transaction submitted successfully!');
+        setFormData({
+          userId: '',
+          purchasePoints: '',
+          transactionDate: '',
+          totalPoints: '',
+        });
+      } else {
+        alert('Error submitting transaction!');
+      }
+    } catch (error) {
+      console.error('Submission error:', error);
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('User Data:', formData);
-    // Future API call placeholder
-  };
-
   return (
-    <div className="bg-white p-6 rounded-lg shadow-md max-w-2xl mx-auto">
-      <h3 className="text-2xl font-semibold mb-6">User Profile</h3>
+    <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-xl shadow-md">
+      <h2 className="text-xl font-bold mb-4">User Transaction Form</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
-        {/* ID (Read-only) */}
-        <input
-          type="text"
-          value={formData.id}
-          readOnly
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-100"
-          placeholder="User ID"
-        />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label className="block mb-1 font-medium">User ID</label>
           <input
             type="text"
-            name="firstName"
-            value={formData.firstName}
+            name="userId"
+            value={formData.userId}
             onChange={handleChange}
-            className="px-4 py-2 border border-gray-300 rounded-lg"
-            placeholder="First Name"
-          />
-          <input
-            type="text"
-            name="lastName"
-            value={formData.lastName}
-            onChange={handleChange}
-            className="px-4 py-2 border border-gray-300 rounded-lg"
-            placeholder="Last Name"
-          />
-          <input
-            type="text"
-            name="phone"
-            value={formData.phone}
-            onChange={handleChange}
-            className="px-4 py-2 border border-gray-300 rounded-lg"
-            placeholder="Phone"
-          />
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            className="px-4 py-2 border border-gray-300 rounded-lg"
-            placeholder="Email"
-          />
-          <input
-            type="text"
-            name="street"
-            value={formData.address.street}
-            onChange={handleChange}
-            className="px-4 py-2 border border-gray-300 rounded-lg"
-            placeholder="Street"
-          />
-          <input
-            type="text"
-            name="city"
-            value={formData.address.city}
-            onChange={handleChange}
-            className="px-4 py-2 border border-gray-300 rounded-lg"
-            placeholder="City"
-          />
-          <input
-            type="text"
-            name="zip"
-            value={formData.address.zip}
-            onChange={handleChange}
-            className="px-4 py-2 border border-gray-300 rounded-lg"
-            placeholder="ZIP Code"
-          />
-          <input
-            type="text"
-            name="country"
-            value={formData.address.country}
-            onChange={handleChange}
-            className="px-4 py-2 border border-gray-300 rounded-lg"
-            placeholder="Country"
+            className="w-full border border-gray-300 p-2 rounded"
+            required
           />
         </div>
 
-        <input
-          type="text"
-          name="shopId"
-          value={formData.shopId}
-          onChange={handleChange}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-          placeholder="Shop ID"
-        />
-
-        {/* Created & Updated Date - Readonly */}
-        <div className="grid grid-cols-2 gap-4">
+        <div>
+          <label className="block mb-1 font-medium">Purchase Points ($)</label>
           <input
-            type="text"
-            value={formData.createdDate}
-            readOnly
-            className="px-4 py-2 border border-gray-300 rounded-lg bg-gray-100"
-            placeholder="Created Date"
+            type="number"
+            name="purchasePoints"
+            value={formData.purchasePoints}
+            onChange={handleChange}
+            className="w-full border border-gray-300 p-2 rounded"
+            required
           />
+        </div>
+
+        <div>
+          <label className="block mb-1 font-medium">Transaction Date</label>
           <input
-            type="text"
-            value={formData.updatedDate}
-            readOnly
-            className="px-4 py-2 border border-gray-300 rounded-lg bg-gray-100"
-            placeholder="Last Updated"
+            type="date"
+            name="transactionDate"
+            value={formData.transactionDate}
+            onChange={handleChange}
+            className="w-full border border-gray-300 p-2 rounded"
+            required
+          />
+        </div>
+
+        <div>
+          <label className="block mb-1 font-medium">Total Points</label>
+          <input
+            type="number"
+            name="totalPoints"
+            value={formData.totalPoints}
+            onChange={handleChange}
+            className="w-full border border-gray-300 p-2 rounded"
+            required
           />
         </div>
 
         <button
           type="submit"
-          className="bg-fuchsia-600 text-white px-6 py-2 rounded-lg hover:bg-fuchsia-700"
+          className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
         >
-          Save
+          Submit
         </button>
       </form>
     </div>
   );
 };
 
-export default User_profile;
+export default User_profile
+;

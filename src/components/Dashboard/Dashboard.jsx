@@ -3,6 +3,7 @@ import React,{ useState } from "react";
 import User_profile from "../User-Profile/User_profile";
 import ShopkeeperProfile from "../Shopkeeper_profile/Shopkeeper_profile";
 import User from "../User/User";
+import Shopkeeper_setting from "../Shopkeeper-setting/Shopkeeper_setting";
 
 
 const Dashboard = () => {
@@ -55,6 +56,15 @@ const Dashboard = () => {
             User
           </button>
 
+          <button
+            onClick={() => setActiveTab('shopkeeper_setting')}
+            className={`block w-full text-left px-4 py-2 rounded-lg ${
+              activeTab === 'shopkeeper_setting' ? 'bg-fuchsia-600 text-white' : 'hover:bg-gray-200'
+            }`}
+          >
+            Shopkeeper Setting
+          </button>
+
         </nav>
       </aside>
 
@@ -64,6 +74,7 @@ const Dashboard = () => {
         {activeTab === 'user_profile' && <User_profile/>}
         {activeTab === 'shopkeeper' && <ShopkeeperProfile/>}
         {activeTab === 'user' && <User/>}
+        {activeTab === 'shopkeeper_setting' && <Shopkeeper_setting/>}
       </main>
 
       </div>
