@@ -41,7 +41,7 @@ const User_profile = () => {
           totalPoints: '',
         });
       } else {
-        alert('Error submitting transaction!');
+        alert(' submitting transaction!');
       }
     } catch (error) {
       console.error('Submission error:', error);
