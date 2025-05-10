@@ -14,7 +14,6 @@ const ShopkeeperProfile = () => {
     },
   });
 
-  // Auto-generate shopkeeper ID on mount
   useEffect(() => {
     const generatedId = `SHOP-${Math.floor(1000 + Math.random() * 9000)}`;
     setFormData((prev) => ({ ...prev, id: generatedId }));
@@ -39,17 +38,33 @@ const ShopkeeperProfile = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Shopkeeper Data:', formData);
-    // Placeholder for future backend API call
+
+    try {
+      const response = await fetch('http://localhost:8080/api/shopkeepers', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        alert('Shopkeeper profile saved successfully');
+      } else {
+        alert('Failed to save shopkeeper profile');
+      }
+    } catch (error) {
+      console.error('Error submitting shopkeeper profile:', error);
+      alert('An error occurred while saving data');
+    }
   };
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-md max-w-2xl mx-auto">
       <h3 className="text-2xl font-semibold mb-6">Shopkeeper Profile</h3>
       <form onSubmit={handleSubmit} className="space-y-4">
-        {/* Auto-generated ID (Read-only) */}
         <input
           type="text"
           value={formData.id}

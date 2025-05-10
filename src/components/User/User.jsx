@@ -18,7 +18,6 @@ const User = () => {
     shopId: '',
   });
 
-  // Simulate auto-generated ID and date setup
   useEffect(() => {
     const generatedId = `USER-${Math.floor(1000 + Math.random() * 9000)}`;
     const now = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
@@ -40,6 +39,7 @@ const User = () => {
           ...prev.address,
           [name]: value,
         },
+        updatedDate: new Date().toISOString().slice(0, 10),
       }));
     } else {
       setFormData((prev) => ({
@@ -50,17 +50,33 @@ const User = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('User Data:', formData);
-    // Future API call placeholder
+
+    try {
+      const response = await fetch('http://localhost:8080/api/users', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        alert('User profile saved successfully');
+      } else {
+        alert('Failed to save user profile');
+      }
+    } catch (error) {
+      console.error('Submission error:', error);
+      alert('An error occurred while saving data');
+    }
   };
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-md max-w-2xl mx-auto">
-      <h3 className="text-2xl font-semibold mb-6">User </h3>
+      <h3 className="text-2xl font-semibold mb-6">User</h3>
       <form onSubmit={handleSubmit} className="space-y-4">
-        {/* ID (Read-only) */}
         <input
           type="text"
           value={formData.id}
@@ -145,7 +161,6 @@ const User = () => {
           placeholder="Shop ID"
         />
 
-        {/* Created & Updated Date - Readonly */}
         <div className="grid grid-cols-2 gap-4">
           <input
             type="text"
