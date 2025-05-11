@@ -42,7 +42,7 @@ const ShopkeeperProfile = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:8080/api/shopkeepers', {
+      const response = await fetch('https://loyalty-backend-java.onrender.com/api/shop/saveShop', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
