@@ -18,7 +18,7 @@ const Shopkeeper_setting = () => {
     e.preventDefault();
     
     try {
-      const response = await fetch("http://localhost:8080/api/shopkeeper/settings", {
+      const response = await fetch("", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
