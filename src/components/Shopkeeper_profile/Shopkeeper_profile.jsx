@@ -19,23 +19,13 @@ const ShopkeeperProfile = () => {
   }, []);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+  const { name, value } = e.target;
+  setFormData((prev) => ({
+    ...prev,
+    [name]: value,
+  }));
+};
 
-    if (name in formData.address) {
-      setFormData((prev) => ({
-        ...prev,
-        address: {
-          ...prev.address,
-          [name]: value,
-        },
-      }));
-    } else {
-      setFormData((prev) => ({
-        ...prev,
-        [name]: value,
-      }));
-    }
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
