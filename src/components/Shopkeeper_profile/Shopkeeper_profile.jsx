@@ -5,13 +5,12 @@ const ShopkeeperProfile = () => {
     id: '',
     shopName: '',
     shopOwner: '',
-    address: {
       street: '',
       city: '',
       state: '',
       zip: '',
       country: '',
-    },
+    
   });
 
   useEffect(() => {
@@ -95,7 +94,7 @@ const ShopkeeperProfile = () => {
           <input
             type="text"
             name="street"
-            value={formData.address.street}
+            value={formData.street}
             onChange={handleChange}
             className="px-4 py-2 border border-gray-300 rounded-lg"
             placeholder="Street"
@@ -103,7 +102,7 @@ const ShopkeeperProfile = () => {
           <input
             type="text"
             name="city"
-            value={formData.address.city}
+            value={formData.city}
             onChange={handleChange}
             className="px-4 py-2 border border-gray-300 rounded-lg"
             placeholder="City"
@@ -111,7 +110,7 @@ const ShopkeeperProfile = () => {
           <input
             type="text"
             name="state"
-            value={formData.address.state}
+            value={formData.state}
             onChange={handleChange}
             className="px-4 py-2 border border-gray-300 rounded-lg"
             placeholder="State"
@@ -119,7 +118,7 @@ const ShopkeeperProfile = () => {
           <input
             type="text"
             name="zip"
-            value={formData.address.zip}
+            value={formData.zip}
             onChange={handleChange}
             className="px-4 py-2 border border-gray-300 rounded-lg"
             placeholder="ZIP Code"
@@ -127,7 +126,7 @@ const ShopkeeperProfile = () => {
           <input
             type="text"
             name="country"
-            value={formData.address.country}
+            value={formData.country}
             onChange={handleChange}
             className="px-4 py-2 border border-gray-300 rounded-lg"
             placeholder="Country"
