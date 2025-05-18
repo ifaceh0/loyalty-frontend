@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 const ShopkeeperProfile = () => {
   const [formData, setFormData] = useState({
+    id:'',
     shopName: '',
     shopOwner: '',
     street: '',
@@ -10,6 +11,11 @@ const ShopkeeperProfile = () => {
     zipCode: '', // Correct key for backend
     country: '',
   });
+
+  useEffect(() => {
+    const generatedId = `SHOP-${Math.floor(1000 + Math.random() * 9000)}`;
+    setFormData((prev) => ({ ...prev, id: generatedId }));
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
