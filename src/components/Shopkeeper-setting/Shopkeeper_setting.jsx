@@ -45,7 +45,7 @@ const Shopkeeper_setting = () => {
 
   return (
     <form onSubmit={handleSubmit} className="max-w-xl mx-auto p-4 bg-white shadow rounded-lg space-y-4">
-      <h2 className="text-xl font-semibold text-gray-700">Shopkeeper Settings</h2>
+      <h2 className="text-xl font-semibold text-gray-700">Shopkeeper setting</h2>
 
       <input
         type="text"
