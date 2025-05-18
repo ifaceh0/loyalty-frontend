@@ -8,7 +8,7 @@ const ShopkeeperProfile = () => {
       street: '',
       city: '',
       state: '',
-      zip: '',
+      zipCode: '',
       country: '',
     
   });
@@ -107,8 +107,8 @@ const ShopkeeperProfile = () => {
           />
           <input
             type="text"
-            name="zip"
-            value={formData.zip}
+            name="zipCode"
+            value={formData.zipCode}
             onChange={handleChange}
             className="px-4 py-2 border border-gray-300 rounded-lg"
             placeholder="ZIP Code"
