@@ -12,6 +12,7 @@ function User() {
   });
 
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,6 +25,8 @@ function User() {
     setError("Passwords do not match!");
     return;
   }
+
+  setLoading(true);
 
   try {
     const response = await fetch("https://loyalty-backend-java.onrender.com/api/login/registerUser", {
@@ -57,6 +60,8 @@ function User() {
   } catch (error) {
     console.error("Signup error:", error);
     setError("Something went wrong. Please try again later.");
+  }finally{
+    setLoading(false);
   }
 };
 
