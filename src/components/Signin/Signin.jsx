@@ -21,22 +21,37 @@ const Signin = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+ const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    if (formData.captcha !== captchaText) {
-      setError("Invalid captcha. Please try again.");
-      return;
+  if (formData.captcha !== captchaText) {
+    setError("Invalid captcha. Please try again.");
+    return;
+  }
+
+  try {
+    const res = await fetch("https://your-backend-name.onrender.com/api/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: formData.email,
+        password: formData.password,
+      }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      throw new Error(data.message || "Login failed");
     }
 
-    setError("");
-    console.log("Sign in data:", formData);
-  
-    localStorage.setItem("isLoggedIn", "true");
-       //navigate("/dashboard");
-    // ✅ Simulate login and navigate to dashboard
-    navigate("/dashboard");
-  };
+    localStorage.setItem("token", data.token); // or any relevant data
+    navigate("/dashboard"); // or wherever
+  } catch (err) {
+    setError(err.message);
+  }
+};
+
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center">

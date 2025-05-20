@@ -18,16 +18,51 @@ function Shopkeeper() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (formData.password !== formData.confirmPassword) {
-      setError("Passwords do not match!");
-      return;
+ const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  if (formData.password !== formData.confirmPassword) {
+    setError("Passwords do not match!");
+    return;
+  }
+
+  setError(""); // Reset any previous error
+
+  try {
+    const response = await fetch("https://loyalty-backend-java.onrender.com/api/login/registerShopkeeper", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        phone: formData.phone,
+        email: formData.email,
+        password: formData.password,
+      }),
+    });
+
+    if (response.ok) {
+      alert("Shopkeeper signup successful!");
+      setFormData({
+        firstName: "",
+        lastName: "",
+        phone: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+      });
+    } else {
+      const errorData = await response.json();
+      setError(errorData.message || "Signup failed!");
     }
-    setError("");
-    console.log("Form submitted:", formData);
-    // Handle actual sign-up logic here
-  };
+  } catch (err) {
+    console.error("Error submitting shopkeeper form:", err);
+    setError("Something went wrong. Please try again.");
+  }
+};
+
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
