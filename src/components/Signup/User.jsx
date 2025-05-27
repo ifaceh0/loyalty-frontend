@@ -48,7 +48,7 @@ function User() {
     const contentType = response.headers.get("content-type");
 
     if (response.ok) {
-      alert("Shopkeeper signup successful!");
+      alert("User signup successful!");
       setFormData({
         firstName: "",
         lastName: "",
