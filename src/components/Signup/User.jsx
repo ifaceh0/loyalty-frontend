@@ -21,12 +21,14 @@ function User() {
 
   const handleSubmit = async (e) => {
   e.preventDefault();
+
   if (formData.password !== formData.confirmPassword) {
     setError("Passwords do not match!");
     return;
   }
 
   setLoading(true);
+  setError("");
 
   try {
     const response = await fetch("https://loyalty-backend-java.onrender.com/api/login/registerUser", {
@@ -37,30 +39,36 @@ function User() {
       body: JSON.stringify({
         firstName: formData.firstName,
         lastName: formData.lastName,
-        phone: formData.phoneNumber,//
+        phoneNumber: formData.phoneNumber,
         email: formData.email,
         password: formData.password,
       }),
     });
 
+    const contentType = response.headers.get("content-type");
+
     if (response.ok) {
-      alert("Signup successful!");
+      alert("Shopkeeper signup successful!");
       setFormData({
         firstName: "",
         lastName: "",
-        phoneNumber: "",//
+        phoneNumber: "",
         email: "",
         password: "",
         confirmPassword: "",
       });
     } else {
-      const errorData = await response.json();
-      setError(errorData.message || "Signup failed!");
+      // handle plain text or JSON error responses safely
+      const errorMessage = contentType && contentType.includes("application/json")
+        ? (await response.json()).message
+        : await response.text();
+
+      setError(errorMessage || "Signup failed!");
     }
-  } catch (error) {
-    console.error("Signup error:", error);
-    setError("Something went wrong. Please try again later.");
-  }finally{
+  } catch (err) {
+    console.error("Error submitting shopkeeper form:", err);
+    setError("Something went wrong. Please try again.");
+  } finally {
     setLoading(false);
   }
 };
@@ -169,5 +177,7 @@ function User() {
   
 
 export default User
+
+
 
 
