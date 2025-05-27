@@ -40,7 +40,7 @@ function Shopkeeper() {
       body: JSON.stringify({
         firstName: formData.firstName,
         lastName: formData.lastName,
-        phone: formData.phoneNumber,
+        phoneNumber: formData.phoneNumber,
         email: formData.email,
         password: formData.password,
       }),
