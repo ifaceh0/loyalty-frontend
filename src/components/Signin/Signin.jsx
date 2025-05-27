@@ -30,7 +30,7 @@ const Signin = () => {
   }
 
   try {
-    const res = await fetch("https://your-backend-name.onrender.com/api/auth/login", {
+    const res = await fetch("https://loyalty-backend-java.onrender.com/api/login/signIn", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
