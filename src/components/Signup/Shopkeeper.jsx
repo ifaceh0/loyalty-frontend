@@ -29,8 +29,7 @@ function Shopkeeper() {
   }
 
   setLoading(true);
-
-  setError(""); // Reset any previous error
+  setError("");
 
   try {
     const response = await fetch("https://loyalty-backend-java.onrender.com/api/login/registerShopkeeper", {
@@ -41,33 +40,40 @@ function Shopkeeper() {
       body: JSON.stringify({
         firstName: formData.firstName,
         lastName: formData.lastName,
-        phone: formData.phoneNumber,//
+        phone: formData.phoneNumber,
         email: formData.email,
         password: formData.password,
       }),
     });
+
+    const contentType = response.headers.get("content-type");
 
     if (response.ok) {
       alert("Shopkeeper signup successful!");
       setFormData({
         firstName: "",
         lastName: "",
-        phoneNumber: "",//
+        phoneNumber: "",
         email: "",
         password: "",
         confirmPassword: "",
       });
     } else {
-      const errorData = await response.json();
-      setError(errorData.message || "Signup failed!");
+      // handle plain text or JSON error responses safely
+      const errorMessage = contentType && contentType.includes("application/json")
+        ? (await response.json()).message
+        : await response.text();
+
+      setError(errorMessage || "Signup failed!");
     }
   } catch (err) {
     console.error("Error submitting shopkeeper form:", err);
     setError("Something went wrong. Please try again.");
-  }finally{
+  } finally {
     setLoading(false);
   }
 };
+
 
 
   return (
