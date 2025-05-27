@@ -5,7 +5,7 @@ function Shopkeeper() {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
-    phone: "",
+    phoneNumber: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -41,7 +41,7 @@ function Shopkeeper() {
       body: JSON.stringify({
         firstName: formData.firstName,
         lastName: formData.lastName,
-        phone: formData.phone,
+        phone: formData.phoneNumber,//
         email: formData.email,
         password: formData.password,
       }),
@@ -52,7 +52,7 @@ function Shopkeeper() {
       setFormData({
         firstName: "",
         lastName: "",
-        phone: "",
+        phoneNumber: "",//
         email: "",
         password: "",
         confirmPassword: "",
@@ -100,9 +100,9 @@ function Shopkeeper() {
         </div>
         <input
           type="tel"
-          name="phone"
+          name="phoneNumber"
           placeholder="Phone Number"
-          value={formData.phone}
+          value={formData.Number}//
           onChange={handleChange}
           className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200"
           required
