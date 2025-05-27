@@ -131,7 +131,7 @@ const Signin = () => {
           d="M4 12a8 8 0 018-8v4l3.5-3.5L12 0v4a8 8 0 00-8 8z"
         ></path>
       </svg>
-      Signing in...
+      Logging  in...
     </span>
   ) : (
     "Sign In"
