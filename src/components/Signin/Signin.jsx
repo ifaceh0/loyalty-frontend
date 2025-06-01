@@ -23,38 +23,38 @@ const Signin = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
- const handleSubmit = async (e) => {
-  e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  setLoading(true);
+    setLoading(true);
 
-  if (formData.captcha !== captchaText) {
-    setError("Invalid captcha. Please try again.");
-    return;
-  }
-
-  try {
-    const res = await fetch("https://loyalty-backend-java.onrender.com/api/login/signIn", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        email: formData.email,
-        password: formData.password,
-      }),
-    });
-
-    const data = await res.json();
-
-    if (!res.ok) {
-      throw new Error(data.message || "Login failed");
+    if (formData.captcha !== captchaText) {
+      setError("Invalid captcha. Please try again.");
+      return;
     }
 
-    localStorage.setItem("token", data.token); // or any relevant data
-    navigate("/dashboard"); // or wherever
-  } catch (err) {
-    setError(err.message);
-  }
-};
+    try {
+      const res = await fetch("https://loyalty-backend-java.onrender.com/api/login/signIn", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.message || "Login failed");
+      }
+
+      localStorage.setItem("token", data.token); // or any relevant data
+      navigate("/dashboard"); // or wherever
+    } catch (err) {
+      setError(err.message);
+    }
+  };
 
 
   return (
@@ -109,34 +109,43 @@ const Signin = () => {
             required
           />
 
-               <button
-  type="submit"
-  disabled={loading}
-  className={`w-full flex justify-center items-center bg-blue-500 text-white py-2 rounded-lg transition duration-200 ${
-    loading ? "opacity-70 cursor-not-allowed" : "hover:bg-blue-600"
-  }`}
->
-  {loading ? (
-    <span className="flex items-center gap-2">
-      <svg
-        className="animate-spin h-5 w-5 text-white"
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-      >
-        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-        <path
-          className="opacity-75"
-          fill="currentColor"
-          d="M4 12a8 8 0 018-8v4l3.5-3.5L12 0v4a8 8 0 00-8 8z"
-        ></path>
-      </svg>
-      Logging  in...
-    </span>
-  ) : (
-    "Sign In"
-  )}
-</button>
+          <div className="text-right">
+            <button
+              type="button"
+              onClick={() => navigate("/forgot-password")}
+              className="text-sm text-blue-500 hover:underline"
+            >
+              Forgot Password?
+            </button>
+          </div>
+
+          <button
+            type="submit"
+            disabled={loading}
+            className={`w-full flex justify-center items-center bg-blue-500 text-white py-2 rounded-lg transition duration-200 ${loading ? "opacity-70 cursor-not-allowed" : "hover:bg-blue-600"
+              }`}
+          >
+            {loading ? (
+              <span className="flex items-center gap-2">
+                <svg
+                  className="animate-spin h-5 w-5 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8v4l3.5-3.5L12 0v4a8 8 0 00-8 8z"
+                  ></path>
+                </svg>
+                Logging  in...
+              </span>
+            ) : (
+              "Sign In"
+            )}
+          </button>
 
 
 

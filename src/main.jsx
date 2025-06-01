@@ -10,6 +10,7 @@ import Subscription from './components/Subscription/Subscription.jsx'
 import Resources from './components/Resources/Resources.jsx'
 import Contact from './components/Contact/Contact.jsx'
 import Dashboard from './components/Dashboard/Dashboard.jsx'
+import ForgotPassword from './components/Forget_pass/ForgotPassword.jsx'
 
 import Signin from './components/Signin/Signin.jsx'
 import Shopkeeper from './components/Signup/Shopkeeper.jsx'
@@ -55,6 +56,10 @@ const router = createBrowserRouter([
       {
         path:"/dashboard",
         element:<Dashboard/>
+      },
+      {
+        path:"/forgot-password",
+        element:<ForgotPassword/>
       },
 
     ]
