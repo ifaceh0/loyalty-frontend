@@ -16,6 +16,8 @@ import Signin from './components/Signin/Signin.jsx'
 import Shopkeeper from './components/Signup/Shopkeeper.jsx'
 import User from './components/Signup/User.jsx'
 import Shopdashboard from './components/Dashboards/Shopdashboard.jsx'
+import CustomerLookup from './components/Customer/CustomerLookup.jsx'
+import QrScanner from './components/Customer/QrScanner.jsx';
 
 const router = createBrowserRouter([
    {
@@ -45,6 +47,14 @@ const router = createBrowserRouter([
       {
         path:"signup-shopkeeper",
         element:<Shopkeeper/>
+      },
+      {
+        path: "/shopkeeper/customer-lookup",
+        element: <CustomerLookup />
+      },
+      {
+        path: "/shopkeeper/qr-scanner",
+        element: <QrScanner />
       },
       {
         path:"signup-user",
