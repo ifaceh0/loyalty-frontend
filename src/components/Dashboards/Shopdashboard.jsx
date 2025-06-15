@@ -10,6 +10,8 @@ import Shopkeeper_setting from "../Shopkeeper-setting/Shopkeeper_setting";
 const Shopdashboard= () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState(null);
+    const [summary, setSummary] = useState({ totalUsers: 0, totalPoints: 0 });
+
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -82,6 +84,20 @@ const Shopdashboard= () => {
       </aside>
 
       <main className="flex-1 p-6">
+
+         {/* ✅ Summary Section */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
+          <div className="bg-white p-6 rounded-lg shadow text-center">
+            <h3 className="text-lg font-semibold text-gray-700">Total Users</h3>
+            <p className="text-3xl font-bold text-fuchsia-600">{summary.totalUsers}</p>
+          </div>
+          <div className="bg-white p-6 rounded-lg shadow text-center">
+            <h3 className="text-lg font-semibold text-gray-700">Loyalty Points Generated</h3>
+            <p className="text-3xl font-bold text-green-600">{summary.totalPoints}</p>
+          </div>
+        </div>
+
+
 
         {activeTab === 'dashboard' && <Dashboard />}
         {/* {activeTab === 'user_profile' && <User_profile />} */}
