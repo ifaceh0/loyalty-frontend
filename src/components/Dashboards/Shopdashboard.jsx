@@ -28,7 +28,7 @@ const Shopdashboard = () => {
         if (!token) {
             navigate("/signin");
         } else {
-            fetchSummaryData(token);
+            // fetchSummaryData(token);
             fetchGraphData(token); // 🆕 Fetch graph data too
         }
     }, [navigate]);
