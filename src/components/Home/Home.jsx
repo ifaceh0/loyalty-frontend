@@ -4,7 +4,7 @@ function Home() {
   return (
     <div className="relative w-full h-screen overflow-hidden">
       <img
-        src="images/loyalty.jpg" 
+        src="https://media.istockphoto.com/id/2163991744/photo/gas-station-worker-holding-a-loyalty-card.jpg?s=612x612&w=0&k=20&c=Ew8_f_FDXedVbqTbeEMzI94Wi4-LhSU_HB4s4fluzus="
         alt="Home Banner"
         className="absolute top-0 left-0 w-full h-full object-cover"
       />
