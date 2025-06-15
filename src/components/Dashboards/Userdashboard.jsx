@@ -7,7 +7,7 @@ import User from "../User/User";
 import Shopkeeper_setting from "../Shopkeeper-setting/Shopkeeper_setting";
 
 
-const Dashboard = () => {
+const Userdashboard = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState(null);
 
@@ -46,13 +46,13 @@ const Dashboard = () => {
           >
             User Profile
           </button>
-          <button
+          {/* <button
             onClick={() => setActiveTab('shopkeeper')}
             className={`block w-full text-left px-4 py-2 rounded-lg ${activeTab === 'shopkeeper' ? 'bg-fuchsia-600 text-white' : 'hover:bg-gray-200'
               }`}
           >
             Shopkeeper Profile
-          </button>
+          </button> */}
 
           <button
             onClick={() => setActiveTab('user')}
@@ -62,21 +62,21 @@ const Dashboard = () => {
             User
           </button>
 
-          <button
+          {/* <button
             onClick={() => setActiveTab('shopkeeper_setting')}
             className={`block w-full text-left px-4 py-2 rounded-lg ${activeTab === 'shopkeeper_setting' ? 'bg-fuchsia-600 text-white' : 'hover:bg-gray-200'
               }`}
           >
             Shopkeeper Setting
-          </button>
+          </button> */}
 
 
-          <button
+          {/* <button
             onClick={handleLogout}
             className="block w-full text-left px-4 py-2 rounded-lg bg-red-500 text-white hover:bg-red-600 mt-8"
           >
             Logout
-          </button>
+          </button> */}
 
         </nav>
       </aside>
@@ -85,9 +85,9 @@ const Dashboard = () => {
 
         {activeTab === 'dashboard' && <Dashboard />}
         {activeTab === 'user_profile' && <User_profile />}
-        {activeTab === 'shopkeeper' && <ShopkeeperProfile />}
+        {/* {activeTab === 'shopkeeper' && <ShopkeeperProfile />} */}
         {activeTab === 'user' && <User />}
-        {activeTab === 'shopkeeper_setting' && <Shopkeeper_setting />}
+        {/* {activeTab === 'shopkeeper_setting' && <Shopkeeper_setting />} */}
       </main>
 
     </div>
@@ -99,5 +99,5 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default Userdashboard;
 

@@ -9,12 +9,13 @@ import Home from './components/Home/Home.jsx'
 import Subscription from './components/Subscription/Subscription.jsx'
 import Resources from './components/Resources/Resources.jsx'
 import Contact from './components/Contact/Contact.jsx'
-import Dashboard from './components/Dashboard/Dashboard.jsx'
+import Userdashboard from './components/Dashboards/Userdashboard.jsx'
 import ForgotPassword from './components/Forget_pass/ForgotPassword.jsx'
 
 import Signin from './components/Signin/Signin.jsx'
 import Shopkeeper from './components/Signup/Shopkeeper.jsx'
 import User from './components/Signup/User.jsx'
+import Shopdashboard from './components/Dashboards/Shopdashboard.jsx'
 
 const router = createBrowserRouter([
    {
@@ -54,9 +55,14 @@ const router = createBrowserRouter([
         element:<Signin/>
       },
       {
-        path:"/dashboard",
-        element:<Dashboard/>
+        path:"/user/dashboard",
+        element:<Userdashboard/>
       },
+      {
+        path:"/shopkeeper/dashboard",
+        element:<Shopdashboard/>
+      },
+
       {
         path:"/forgot-password",
         element:<ForgotPassword/>
