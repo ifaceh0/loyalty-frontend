@@ -24,11 +24,10 @@ const Signin = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     setLoading(true);
     setError("");
 
-    // ✅ Validate captcha
+    // Validate captcha
     if (formData.captcha !== captchaText) {
       setError("Invalid captcha. Please try again.");
       setLoading(false);
@@ -51,11 +50,13 @@ const Signin = () => {
         throw new Error(data.message || "Login failed");
       }
 
-      // ✅ Save token and role/userType in localStorage
+      // Save login status
+      localStorage.setItem("isLoggedIn", "true");
       localStorage.setItem("token", data.token);
-      localStorage.setItem("userType", data.userType); // <- make sure backend returns this
+      localStorage.setItem("userType", data.userType || "");
+      localStorage.setItem("role", data.role || "");
 
-      // ✅ Redirect based on userType
+      // Redirect based on userType
       if (data.userType === "shopkeeper") {
         navigate("/shopkeeper/dashboard");
       } else {
@@ -132,8 +133,7 @@ const Signin = () => {
           <button
             type="submit"
             disabled={loading}
-            className={`w-full flex justify-center items-center bg-blue-500 text-white py-2 rounded-lg transition duration-200 ${loading ? "opacity-70 cursor-not-allowed" : "hover:bg-blue-600"
-              }`}
+            className={`w-full flex justify-center items-center bg-blue-500 text-white py-2 rounded-lg transition duration-200 ${loading ? "opacity-70 cursor-not-allowed" : "hover:bg-blue-600"}`}
           >
             {loading ? (
               <span className="flex items-center gap-2">
