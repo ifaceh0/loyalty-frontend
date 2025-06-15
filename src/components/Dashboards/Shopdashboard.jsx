@@ -11,6 +11,15 @@ import User from "../User/User";
 import Shopkeeper_setting from "../Shopkeeper-setting/Shopkeeper_setting";
 
 
+const demoGraphData = [
+  { date: "2025-06-01", users: 10, points: 200 },
+  { date: "2025-06-02", users: 15, points: 300 },
+  { date: "2025-06-03", users: 20, points: 400 },
+  { date: "2025-06-04", users: 25, points: 350 },
+  { date: "2025-06-05", users: 30, points: 500 },
+  { date: "2025-06-06", users: 35, points: 600 },
+];
+
 const Shopdashboard = () => {
     const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState(null);
@@ -125,7 +134,7 @@ const Shopdashboard = () => {
                     <h3 className="text-xl font-bold text-gray-700 mb-4">User Growth & Loyalty Points</h3>
                     <ResponsiveContainer width="100%" height={300}>
                         <LineChart
-                            data={graphData}
+                            data={demoGraphData}
                             margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
                         >
                             <CartesianGrid strokeDasharray="3 3" />
