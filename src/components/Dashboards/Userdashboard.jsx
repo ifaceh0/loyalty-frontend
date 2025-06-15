@@ -46,13 +46,13 @@ const Userdashboard = () => {
           >
             User Profile
           </button>
-          <button
+          {/* <button
             onClick={() => setActiveTab('shopkeeper')}
             className={`block w-full text-left px-4 py-2 rounded-lg ${activeTab === 'shopkeeper' ? 'bg-fuchsia-600 text-white' : 'hover:bg-gray-200'
               }`}
           >
             Shopkeeper Profile
-          </button>
+          </button> */}
 
           <button
             onClick={() => setActiveTab('user')}
@@ -62,13 +62,13 @@ const Userdashboard = () => {
             User
           </button>
 
-          <button
+          {/* <button
             onClick={() => setActiveTab('shopkeeper_setting')}
             className={`block w-full text-left px-4 py-2 rounded-lg ${activeTab === 'shopkeeper_setting' ? 'bg-fuchsia-600 text-white' : 'hover:bg-gray-200'
               }`}
           >
             Shopkeeper Setting
-          </button>
+          </button> */}
 
 
           <button
@@ -85,9 +85,9 @@ const Userdashboard = () => {
 
         {activeTab === 'dashboard' && <Dashboard />}
         {activeTab === 'user_profile' && <User_profile />}
-        {activeTab === 'shopkeeper' && <ShopkeeperProfile />}
+        {/* {activeTab === 'shopkeeper' && <ShopkeeperProfile />} */}
         {activeTab === 'user' && <User />}
-        {activeTab === 'shopkeeper_setting' && <Shopkeeper_setting />}
+        {/* {activeTab === 'shopkeeper_setting' && <Shopkeeper_setting />} */}
       </main>
 
     </div>
