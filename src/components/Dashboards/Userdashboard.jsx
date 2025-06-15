@@ -7,7 +7,7 @@ import User from "../User/User";
 import Shopkeeper_setting from "../Shopkeeper-setting/Shopkeeper_setting";
 
 
-const Dashboard = () => {
+const Userdashboard = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState(null);
 
@@ -99,5 +99,5 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default Userdashboard;
 
