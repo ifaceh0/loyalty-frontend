@@ -2,14 +2,13 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Signin = () => {
-  const navigate = useNavigate(); // 
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     email: "",
     password: "",
     captcha: "",
   });
-
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -27,9 +26,12 @@ const Signin = () => {
     e.preventDefault();
 
     setLoading(true);
+    setError("");
 
+    // ✅ Validate captcha
     if (formData.captcha !== captchaText) {
       setError("Invalid captcha. Please try again.");
+      setLoading(false);
       return;
     }
 
@@ -49,20 +51,28 @@ const Signin = () => {
         throw new Error(data.message || "Login failed");
       }
 
-      localStorage.setItem("token", data.token); // or any relevant data
-      navigate("/dashboard"); // or wherever
+      // ✅ Save token and role/userType in localStorage
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("userType", data.userType); // <- make sure backend returns this
+
+      // ✅ Redirect based on userType
+      if (data.userType === "shopkeeper") {
+        navigate("/shopkeeper/dashboard");
+      } else {
+        navigate("/user/dashboard");
+      }
+
     } catch (err) {
       setError(err.message);
+    } finally {
+      setLoading(false);
     }
   };
-
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
       <div className="bg-white p-8 rounded-2xl shadow-md w-full max-w-md">
-        <h2 className="text-2xl font-bold text-center text-gray-700 mb-6">
-          Sign In
-        </h2>
+        <h2 className="text-2xl font-bold text-center text-gray-700 mb-6">Sign In</h2>
         {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
@@ -140,15 +150,12 @@ const Signin = () => {
                     d="M4 12a8 8 0 018-8v4l3.5-3.5L12 0v4a8 8 0 00-8 8z"
                   ></path>
                 </svg>
-                Logging  in...
+                Logging in...
               </span>
             ) : (
               "Sign In"
             )}
           </button>
-
-
-
         </form>
       </div>
     </div>
