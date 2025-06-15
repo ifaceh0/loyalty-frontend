@@ -39,13 +39,13 @@ const Shopdashboard= () => {
       <aside className="w-64 bg-white p-6 shadow">
         <h2 className="text-xl font-bold text-fuchsia-600 mb-6">Dashboard</h2>
         <nav className="space-y-2">
-          <button
+          {/* <button
             onClick={() => setActiveTab('user_profile')}
             className={`block w-full text-left px-4 py-2 rounded-lg ${activeTab === 'user_profile' ? 'bg-fuchsia-600 text-white' : 'hover:bg-gray-200'
               }`}
           >
             User Profile
-          </button>
+          </button> */}
           <button
             onClick={() => setActiveTab('shopkeeper')}
             className={`block w-full text-left px-4 py-2 rounded-lg ${activeTab === 'shopkeeper' ? 'bg-fuchsia-600 text-white' : 'hover:bg-gray-200'
@@ -54,13 +54,13 @@ const Shopdashboard= () => {
             Shopkeeper Profile
           </button>
 
-          <button
+          {/* <button
             onClick={() => setActiveTab('user')}
             className={`block w-full text-left px-4 py-2 rounded-lg ${activeTab === 'user' ? 'bg-fuchsia-600 text-white' : 'hover:bg-gray-200'
               }`}
           >
             User
-          </button>
+          </button> */}
 
           <button
             onClick={() => setActiveTab('shopkeeper_setting')}
@@ -71,12 +71,12 @@ const Shopdashboard= () => {
           </button>
 
 
-          <button
+          {/* <button
             onClick={handleLogout}
             className="block w-full text-left px-4 py-2 rounded-lg bg-red-500 text-white hover:bg-red-600 mt-8"
           >
             Logout
-          </button>
+          </button> */}
 
         </nav>
       </aside>
@@ -84,9 +84,9 @@ const Shopdashboard= () => {
       <main className="flex-1 p-6">
 
         {activeTab === 'dashboard' && <Dashboard />}
-        {activeTab === 'user_profile' && <User_profile />}
+        {/* {activeTab === 'user_profile' && <User_profile />} */}
         {activeTab === 'shopkeeper' && <ShopkeeperProfile />}
-        {activeTab === 'user' && <User />}
+        {/* {activeTab === 'user' && <User />} */}
         {activeTab === 'shopkeeper_setting' && <Shopkeeper_setting />}
       </main>
 
