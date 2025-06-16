@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Phone, Mail, QrCode } from "lucide-react";
-import QrScanner from "./QrScanner"; // Make sure this path is correct
+import QrScanner from "./QrScanner"; 
 
 const CustomerLookup = () => {
   const [phone, setPhone] = useState("");
@@ -154,6 +154,7 @@ const CustomerLookup = () => {
               >
                 Open Scanner
               </button>
+               {showScanner && <QrScanner onClose={() => setShowScanner(false)} />}
             </div>
           </div>
         </div>
