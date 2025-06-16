@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { Phone, Mail, QrCode } from "lucide-react";
-import QrScanner from "./QrScanner"; 
+import QrScanner from "./QrScanner";
 
 const CustomerLookup = () => {
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
   const [showScanner, setShowScanner] = useState(false);
+  const [scannedResult, setScannedResult] = useState(null);
 
   const [loading, setLoading] = useState({
     phone: false,
@@ -16,9 +17,9 @@ const CustomerLookup = () => {
 
   const handleSearch = (type) => {
     if (type === "phone") {
-      const isValidPhone = /^\d{10}$/.test(phone.trim());
+      const isValidPhone = /^\d{10,13}$/.test(phone.trim());
       if (!isValidPhone) {
-        alert("Please enter a valid 10-digit phone number");
+        alert("Please enter a valid phone number");
         return;
       }
     }
@@ -39,21 +40,46 @@ const CustomerLookup = () => {
     setLoading((prev) => ({ ...prev, [type]: true }));
     console.log(`${type} search started...`);
 
-    //Backend Integration Start
-    // Here you would typically make an API call to your backend
-    // Backend Integration End
-
     setTimeout(() => {
+      // Integrate backend  here
+      const dummyData = {
+        name: "Arjun",
+        phone: phone || "63534363464",
+        email: email || "arjun@ifaceh.com",
+        referralCode: code || "R000839210537",
+        customerId: 29,
+        shopName: "testShopkeeper",
+        shopID: 8,
+        availableBalance: 10.0,
+      };
+
       console.log(`${type} searched with value:`, { phone, email, code }[type]);
+      setScannedResult(dummyData);
       setLoading((prev) => ({ ...prev, [type]: false }));
+
+      // Reset inputs
+      setPhone("");
+      setEmail("");
+      setCode("");
     }, 1500);
   };
 
   const handleScan = (scannedValue) => {
-    setCode(scannedValue);
-    setShowScanner(false);
+    // TODO: Integrate backend here using scannedValue
+    const dummyData = {
+      name: "Arjun (Scanned)",
+      phone: "63534363464",
+      email: "arjun@ifaceh.com",
+      referralCode: scannedValue,
+      customerId: 29,
+      shopName: "testShopkeeper",
+      shopID: 8,
+      availableBalance: 10.0,
+    };
 
-    // Backend Integration for Scanned QR
+    setCode(scannedValue);
+    setScannedResult(dummyData);
+    setShowScanner(false);
   };
 
   return (
@@ -154,8 +180,31 @@ const CustomerLookup = () => {
               >
                 Open Scanner
               </button>
-               {showScanner && <QrScanner onClose={() => setShowScanner(false)} />}
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Shared Result Modal */}
+      {scannedResult && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+          <div className="bg-white rounded-xl p-6 shadow-lg w-[90%] max-w-md">
+            <h2 className="text-xl font-semibold mb-4 text-center text-green-700">Customer Found</h2>
+            <div className="space-y-1 text-gray-700 text-sm">
+              <p><strong>Name:</strong> {scannedResult.name}</p>
+              <p><strong>Phone:</strong> {scannedResult.phone}</p>
+              <p><strong>Email:</strong> {scannedResult.email}</p>
+              <p><strong>Referral Code:</strong> {scannedResult.referralCode}</p>
+              <p><strong>Customer ID:</strong> {scannedResult.customerId}</p>
+              <p><strong>Shop:</strong> {scannedResult.shopName} (ID: {scannedResult.shopID})</p>
+              <p><strong>Balance:</strong> ₹{scannedResult.availableBalance}</p>
+            </div>
+            <button
+              className="mt-4 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 w-full"
+              onClick={() => setScannedResult(null)}
+            >
+              Close
+            </button>
           </div>
         </div>
       )}
