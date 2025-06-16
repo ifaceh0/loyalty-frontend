@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { BrowserMultiFormatReader } from "@zxing/library";
+import { BrowserMultiFormatReader, NotFoundException } from "@zxing/library";
 
 const QrScanner = ({ onClose }) => {
   const videoRef = useRef(null);
@@ -22,35 +22,40 @@ const QrScanner = ({ onClose }) => {
               if (result) {
                 try {
                   const parsed = JSON.parse(result.getText());
-                  setScannedData(parsed); // display the popup with result
-                  codeReader.current.reset(); // stop camera after scan
+                  setScannedData(parsed);
+                  codeReader.current.reset();
+                  setError(null); // clear previous errors
                 } catch (e) {
-                  setError("Scanned data is not valid JSON");
+                  setError("Scanned QR is not valid JSON");
                 }
               }
-              if (err && !(err.name === "NotFoundException")) {
-                setError("Error while scanning");
+
+              // Ignore NotFoundException (this is normal when no QR is in frame)
+              if (err && !(err instanceof NotFoundException)) {
+                console.error("Scanning error:", err);
+                setError("Unexpected error while scanning");
               }
             }
           );
         } else {
-          setError("No camera found");
+          setError("No camera device found.");
         }
       })
       .catch((err) => {
-        console.error(err);
+        console.error("Camera access error:", err);
         setError("Could not access camera");
       });
 
     return () => {
-      if (codeReader.current) codeReader.current.reset();
+      if (codeReader.current) {
+        codeReader.current.reset();
+      }
     };
   }, []);
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
       <div className="relative bg-white rounded-lg p-4 w-[350px] min-h-[320px] shadow-lg flex flex-col items-center justify-center">
-
         <h2 className="text-lg font-semibold mb-3">Scan QR Code</h2>
 
         {!scannedData ? (
@@ -69,6 +74,7 @@ const QrScanner = ({ onClose }) => {
           </div>
         )}
 
+        {/* Show real errors only */}
         {error && <p className="text-red-600 mt-2">{error}</p>}
 
         <button

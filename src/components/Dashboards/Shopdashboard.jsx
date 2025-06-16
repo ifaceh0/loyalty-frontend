@@ -110,7 +110,7 @@ const Shopdashboard = () => {
                             activeTab === "interactions" ? "bg-fuchsia-600 text-white" : "hover:bg-gray-200"
                         }`}
                     >
-                    Interactions
+                    Interactions Pannel
                     </button>
 
 
