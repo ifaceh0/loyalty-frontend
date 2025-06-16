@@ -9,7 +9,7 @@ import User_profile from "../User-Profile/User_profile";
 import ShopkeeperProfile from "../Shopkeeper_profile/Shopkeeper_profile";
 import User from "../User/User";
 import Shopkeeper_setting from "../Shopkeeper-setting/Shopkeeper_setting";
-
+import CustomerLookup from "../Customer/CustomerLookup"; 
 
 const demoGraphData = [
   { date: "2025-06-01", users: 10, points: 200 },
@@ -22,7 +22,7 @@ const demoGraphData = [
 
 const Shopdashboard = () => {
     const navigate = useNavigate();
-    const [activeTab, setActiveTab] = useState(null);
+    const [activeTab, setActiveTab] = useState('shopkeeper'); // Default to 'shopkeeper'
     const [summary, setSummary] = useState({ totalUsers: 0, totalPoints: 0 });
     const [graphData, setGraphData] = useState([]);
 
@@ -104,6 +104,15 @@ const Shopdashboard = () => {
                         Shopkeeper Setting
                     </button>
 
+                    <button
+                        onClick={() => setActiveTab("interactions")}
+                            className={`block w-full text-left px-4 py-2 rounded-lg ${
+                            activeTab === "interactions" ? "bg-fuchsia-600 text-white" : "hover:bg-gray-200"
+                        }`}
+                    >
+                    Interactions
+                    </button>
+
 
                     {/* <button
             onClick={handleLogout}
@@ -156,6 +165,7 @@ const Shopdashboard = () => {
                 {activeTab === 'shopkeeper' && <ShopkeeperProfile />}
                 {/* {activeTab === 'user' && <User />} */}
                 {activeTab === 'shopkeeper_setting' && <Shopkeeper_setting />}
+                {activeTab === "interactions" && <CustomerLookup />}
             </main>
 
         </div>
