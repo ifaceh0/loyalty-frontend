@@ -6,29 +6,29 @@ const QrScanner = ({ onClose }) => {
   const codeReader = useRef(null);
   const [scannedData, setScannedData] = useState(null);
   const [error, setError] = useState(null);
-  const [permissionRequested, setPermissionRequested] = useState(false);
-  const [isCameraActive, setIsCameraActive] = useState(false);
+  const [guidance, setGuidance] = useState("");
 
   useEffect(() => {
     codeReader.current = new BrowserMultiFormatReader();
 
-    return () => {
-      if (codeReader.current) {
-        codeReader.current.reset();
-      }
-    };
-  }, []);
+    codeReader.current
+      .listVideoInputDevices()
+      .then((devices) => {
+        if (!devices.length) {
+          setError("No camera devices found.");
+          setGuidance("Make sure your device has a working camera and permissions are granted.");
+          return;
+        }
 
-  const startCamera = async () => {
-    setError(null);
-    try {
-      const devices = await codeReader.current.listVideoInputDevices();
-      const selectedDeviceId = devices[0]?.deviceId;
+        // Prefer back camera on mobile or default on desktop
+        const preferredDevice = devices.find(device =>
+          /back|rear/i.test(device.label)
+        ) || devices[0];
 
-      if (selectedDeviceId) {
-        setIsCameraActive(true);
+        setGuidance("If prompted, please allow camera access. On mobile, use back camera for better scanning.");
+
         codeReader.current.decodeFromVideoDevice(
-          selectedDeviceId,
+          preferredDevice.deviceId,
           videoRef.current,
           (result, err) => {
             if (result) {
@@ -36,51 +36,42 @@ const QrScanner = ({ onClose }) => {
                 const parsed = JSON.parse(result.getText());
                 setScannedData(parsed);
                 codeReader.current.reset();
-                setIsCameraActive(false);
               } catch (e) {
-                setError("Scanned data is not valid JSON.");
+                setError("Scanned QR is not valid JSON.");
               }
             }
             if (err && !(err.name === "NotFoundException")) {
-              setError("Error while scanning.");
+              setError("Error during scanning.");
             }
           }
         );
-      } else {
-        setError("No camera devices found.");
-      }
-    } catch (err) {
-      console.error(err);
-      setError("Camera permission denied or unavailable.");
-    }
-  };
+      })
+      .catch((err) => {
+        console.error("Camera access error:", err);
+        setError("Unable to access camera.");
+        setGuidance(
+          "Please ensure you’ve allowed camera access in your browser settings.\n\n" +
+          "- On Desktop: Click the padlock icon in the address bar and enable camera.\n" +
+          "- On Mobile: Enable camera for browser from settings or app permissions."
+        );
+      });
 
-  const handleStartScan = () => {
-    setPermissionRequested(true);
-    startCamera();
-  };
+    return () => {
+      if (codeReader.current) codeReader.current.reset();
+    };
+  }, []);
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
-      <div className="relative bg-white rounded-lg p-4 w-[350px] min-h-[320px] shadow-lg flex flex-col items-center justify-center">
-        <h2 className="text-lg font-semibold mb-3">Scan QR Code</h2>
+      <div className="relative bg-white rounded-lg p-4 w-[350px] min-h-[360px] shadow-lg flex flex-col items-center justify-center">
+        <h2 className="text-lg font-semibold mb-2">Scan QR Code</h2>
 
         {!scannedData ? (
-          <>
-            <div className="w-[280px] h-[200px] border-4 border-blue-500 rounded overflow-hidden mb-4">
-              <video ref={videoRef} className="w-full h-full object-cover" />
-            </div>
-            {!permissionRequested && (
-              <button
-                onClick={handleStartScan}
-                className="mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-              >
-                Start Scanning
-              </button>
-            )}
-          </>
+          <div className="w-[280px] h-[200px] border-4 border-blue-500 rounded overflow-hidden mb-2">
+            <video ref={videoRef} className="w-full h-full object-cover" />
+          </div>
         ) : (
-          <div className="w-full bg-green-50 border border-green-300 rounded p-4 text-sm">
+          <div className="w-full bg-green-50 border border-green-300 rounded p-4 text-sm mb-2">
             <p><strong>Name:</strong> {scannedData.name}</p>
             <p><strong>Email:</strong> {scannedData.email}</p>
             <p><strong>Phone:</strong> {scannedData.phone}</p>
@@ -91,8 +82,9 @@ const QrScanner = ({ onClose }) => {
           </div>
         )}
 
-        {error && (
-          <p className="text-red-600 mt-3 text-sm text-center">{error}</p>
+        {error && <p className="text-red-600 text-sm mt-2 text-center">{error}</p>}
+        {guidance && !scannedData && (
+          <p className="text-xs text-gray-600 mt-2 text-center whitespace-pre-line">{guidance}</p>
         )}
 
         <button
