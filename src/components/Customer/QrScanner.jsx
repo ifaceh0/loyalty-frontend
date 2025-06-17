@@ -4,9 +4,21 @@ import { BrowserMultiFormatReader } from "@zxing/library";
 const QrScanner = ({ onClose }) => {
   const videoRef = useRef(null);
   const codeReader = useRef(null);
+  const hasScannedRef = useRef(false);
   const [scannedData, setScannedData] = useState(null);
   const [error, setError] = useState(null);
   const [guidance, setGuidance] = useState("");
+
+  // ✅ One-time beep on successful scan
+  const playBeep = () => {
+    const context = new AudioContext();
+    const oscillator = context.createOscillator();
+    oscillator.type = "sine";
+    oscillator.frequency.setValueAtTime(1000, context.currentTime);
+    oscillator.connect(context.destination);
+    oscillator.start();
+    oscillator.stop(context.currentTime + 0.2);
+  };
 
   useEffect(() => {
     codeReader.current = new BrowserMultiFormatReader();
@@ -20,28 +32,37 @@ const QrScanner = ({ onClose }) => {
           return;
         }
 
-        // Prefer back camera on mobile or default on desktop
-        const preferredDevice = devices.find(device =>
-          /back|rear/i.test(device.label)
-        ) || devices[0];
+        const preferredDevice =
+          devices.find((device) => /back|rear/i.test(device.label)) || devices[0];
 
-        setGuidance("If prompted, please allow camera access. On mobile, use back camera for better scanning.");
+        setGuidance("Allow camera access. Prefer rear camera on mobile for better scanning.");
 
         codeReader.current.decodeFromVideoDevice(
           preferredDevice.deviceId,
           videoRef.current,
           (result, err) => {
-            if (result) {
+            if (result && !hasScannedRef.current) {
               try {
                 const parsed = JSON.parse(result.getText());
                 setScannedData(parsed);
-                codeReader.current.reset();
+                hasScannedRef.current = true;
+                playBeep();
+                navigator.vibrate?.(200);
+                setError(null);
               } catch (e) {
                 setError("Scanned QR is not valid JSON.");
               }
             }
-            if (err && !(err.name === "NotFoundException")) {
-              setError("Error during scanning.");
+
+            // ✅ Ignore common scan-time errors that aren't critical
+            const ignoredErrors = ["NotFoundException", "ChecksumException", "FormatException"];
+            if (
+              err &&
+              !hasScannedRef.current &&
+              !ignoredErrors.includes(err?.name)
+            ) {
+              console.warn("Scan error (non-critical):", err.name);
+              setError(null); // suppress visible error
             }
           }
         );
@@ -50,16 +71,63 @@ const QrScanner = ({ onClose }) => {
         console.error("Camera access error:", err);
         setError("Unable to access camera.");
         setGuidance(
-          "Please ensure you’ve allowed camera access in your browser settings.\n\n" +
-          "- On Desktop: Click the padlock icon in the address bar and enable camera.\n" +
-          "- On Mobile: Enable camera for browser from settings or app permissions."
+          "Please enable camera permissions:\n- Desktop: Click padlock in address bar.\n- Mobile: Check app permissions."
         );
       });
 
     return () => {
-      if (codeReader.current) codeReader.current.reset();
+      codeReader.current?.reset();
     };
   }, []);
+
+  // ✅ Manual scan reset
+  const handleScanAgain = async () => {
+  setScannedData(null);
+  setError(null);
+  hasScannedRef.current = false;
+
+  try {
+    const devices = await codeReader.current.listVideoInputDevices();
+    const preferredDevice =
+      devices.find((device) => /back|rear/i.test(device.label)) || devices[0];
+
+    codeReader.current.reset(); // Stop the current scan session
+
+    // Restart scanning
+    codeReader.current.decodeFromVideoDevice(
+      preferredDevice.deviceId,
+      videoRef.current,
+      (result, err) => {
+        if (result && !hasScannedRef.current) {
+          try {
+            const parsed = JSON.parse(result.getText());
+            setScannedData(parsed);
+            hasScannedRef.current = true;
+            playBeep();
+            navigator.vibrate?.(200);
+            setError(null);
+          } catch (e) {
+            setError("Scanned QR is not valid JSON.");
+          }
+        }
+
+        const ignoredErrors = ["NotFoundException", "ChecksumException", "FormatException"];
+        if (
+          err &&
+          !hasScannedRef.current &&
+          !ignoredErrors.includes(err?.name)
+        ) {
+          console.warn("Scan error (non-critical):", err.name);
+          setError(null);
+        }
+      }
+    );
+  } catch (e) {
+    console.error("Error restarting scanner:", e);
+    setError("Unable to restart camera. Please refresh the page.");
+  }
+};
+
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
@@ -67,8 +135,10 @@ const QrScanner = ({ onClose }) => {
         <h2 className="text-lg font-semibold mb-2">Scan QR Code</h2>
 
         {!scannedData ? (
-          <div className="w-[280px] h-[200px] border-4 border-blue-500 rounded overflow-hidden mb-2">
+          <div className="relative w-[280px] h-[200px] border-4 border-blue-500 rounded overflow-hidden mb-2">
             <video ref={videoRef} className="w-full h-full object-cover" />
+            {/* ✅ Visual scan guide box */}
+            <div className="absolute border-2 border-green-500 rounded w-40 h-32 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
           </div>
         ) : (
           <div className="w-full bg-green-50 border border-green-300 rounded p-4 text-sm mb-2">
@@ -82,17 +152,26 @@ const QrScanner = ({ onClose }) => {
           </div>
         )}
 
-        {error && <p className="text-red-600 text-sm mt-2 text-center">{error}</p>}
         {guidance && !scannedData && (
           <p className="text-xs text-gray-600 mt-2 text-center whitespace-pre-line">{guidance}</p>
         )}
 
-        <button
-          onClick={onClose}
-          className="mt-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
-        >
-          Close
-        </button>
+        <div className="mt-4 flex gap-3">
+          {scannedData && (
+            <button
+              onClick={handleScanAgain}
+              className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+            >
+              Scan Again
+            </button>
+          )}
+          <button
+            onClick={onClose}
+            className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+          >
+            Close
+          </button>
+        </div>
       </div>
     </div>
   );
