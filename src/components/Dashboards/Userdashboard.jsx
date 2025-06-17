@@ -5,6 +5,7 @@ import User_profile from "../User-Profile/User_profile";
 import ShopkeeperProfile from "../Shopkeeper_profile/Shopkeeper_profile";
 import User from "../User/User";
 import Shopkeeper_setting from "../Shopkeeper-setting/Shopkeeper_setting";
+import ExploreShops from '../ShopList/ExploreShops';
 
 
 const Userdashboard = () => {
@@ -62,6 +63,14 @@ const Userdashboard = () => {
             User
           </button>
 
+          <button
+            onClick={() => setActiveTab('shop')}
+            className={`block w-full text-left px-4 py-2 rounded-lg ${activeTab === 'shop' ? 'bg-fuchsia-600 text-white' : 'hover:bg-gray-200'
+              }`}
+          >
+            Shop
+          </button>
+
           {/* <button
             onClick={() => setActiveTab('shopkeeper_setting')}
             className={`block w-full text-left px-4 py-2 rounded-lg ${activeTab === 'shopkeeper_setting' ? 'bg-fuchsia-600 text-white' : 'hover:bg-gray-200'
@@ -88,6 +97,9 @@ const Userdashboard = () => {
         {/* {activeTab === 'shopkeeper' && <ShopkeeperProfile />} */}
         {activeTab === 'user' && <User />}
         {/* {activeTab === 'shopkeeper_setting' && <Shopkeeper_setting />} */}
+        {/* Render ExploreShops when activeTab is 'shop' */}
+        {activeTab === 'shop' && <ExploreShops />}
+
       </main>
 
     </div>
