@@ -57,11 +57,18 @@ export default function ExploreShops() {
               />
               <p className="text-gray-700 text-sm mb-2"><strong>ID:</strong> {shop.id}</p>
               <p className="text-gray-700 text-sm mb-4"><strong>📞</strong> {shop.phone}</p>
+
+              {/* QR Code Button - works only if qrToken exists */}
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
-                onClick={() => setSelectedShop(shop)}
+                disabled={!shop.qrToken}
+                className={`w-full px-4 py-2 rounded transition font-medium text-sm ${
+                  shop.qrToken
+                    ? 'bg-blue-600 text-white hover:bg-blue-700'
+                    : 'bg-gray-400 text-gray-700 cursor-not-allowed'
+                }`}
+                onClick={() => shop.qrToken && setSelectedShop(shop)}
               >
                 QR Code
               </motion.button>

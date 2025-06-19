@@ -1,6 +1,34 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 export default function QRModal({ shop, isOpen, onClose }) {
+  const [qrData, setQrData] = useState(null);
+
+  useEffect(() => {
+    const fetchQRCodeData = async () => {
+      if (!shop?.qrToken) return;
+
+      try {
+        const response = await fetch(`https://loyalty-backend-java.onrender.com/api/qrcode/scan/${shop.qrToken}`, {
+          method: "GET",
+          headers: {
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch QR data");
+        }
+
+        const data = await response.json();
+        setQrData(data);
+      } catch (err) {
+        console.error("QR Fetch Error:", err.message);
+      }
+    };
+
+    fetchQRCodeData();
+  }, [shop]);
+
   if (!isOpen || !shop) return null;
 
   return (
@@ -17,12 +45,13 @@ export default function QRModal({ shop, isOpen, onClose }) {
           {shop.name}
         </h2>
 
-        {/* QR Code Placeholder - Backend will dynamically render QR here */}
-        <div className="flex justify-center items-center w-full h-48 bg-gray-100 rounded mb-4">
-          <p className="text-gray-500 text-sm">[ QR Code will appear here ]</p>
-        </div>
+        {qrData && (
+          <div className="mt-4 bg-green-100 p-3 rounded text-center text-green-700 font-medium">
+            QR Verified: {qrData.message || "Success"}
+          </div>
+        )}
 
-        <p className="text-center text-sm text-gray-800">
+        <p className="text-center text-sm text-gray-800 mt-4">
           <strong>Shop ID:</strong> {shop.id}
         </p>
 

@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { Menu, X } from 'lucide-react';
 
 export default function Header() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
     const loginStatus = localStorage.getItem("isLoggedIn") === "true";
     setIsLoggedIn(loginStatus);
+    setMenuOpen(false); // Close menu on route change
   }, [location]);
 
   const handleLogout = () => {
@@ -21,95 +24,103 @@ export default function Header() {
   };
 
   return (
-    <header className="shadow sticky z-50 top-0">
-      <nav className="bg-white border-gray-200 px-4 lg:px-6 py-2.5">
-        <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
-          <Link to="/" className="flex items-center">
-            <h2 className="font-bold text-fuchsia-600">MyApp</h2>
-          </Link>
+    <header className="shadow sticky z-50 top-0 bg-white">
+      <nav className="px-4 lg:px-6 py-3 max-w-screen-xl mx-auto flex items-center justify-between relative">
+        {/* Logo */}
+        <Link to="/" className="text-2xl font-bold text-fuchsia-600">MyApp</Link>
 
-          <div className="flex items-center lg:order-2">
-            {!isLoggedIn ? (
-              <>
-                {/* Sign Up Dropdown */}
-                <div className="relative group inline-block">
-                  <div className="text-white bg-orange-700 hover:bg-gray-500 focus:ring-4 focus:ring-orange-300 font-medium rounded-lg text-sm px-5 py-2 lg:px-5 lg:py-2.5 mr-2 focus:outline-none cursor-default">
-                    Sign up
-                  </div>
-                  <div className="absolute left-0 mt-2 bg-white rounded-lg shadow-lg z-10 min-w-[150px] opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-200">
-                    <NavLink to="/signup-shopkeeper" className="block px-4 py-2 text-sm text-gray-800 hover:bg-orange-100 hover:text-orange-700">
-                      Shopkeeper
-                    </NavLink>
-                    <NavLink to="/signup-user" className="block px-4 py-2 text-sm text-gray-800 hover:bg-orange-100 hover:text-orange-700">
-                      User
-                    </NavLink>
-                  </div>
-                </div>
-
-                {/* Sign In Button */}
-                <NavLink
-                  to="/signin"
-                  className="text-white bg-blue-700 hover:bg-gray-500 focus:ring-4 focus:ring-orange-300 font-medium rounded-lg text-sm px-4 py-2 lg:px-5 lg:py-2.5 mr-2 focus:outline-none"
-                >
-                  Sign in
-                </NavLink>
-              </>
-            ) : (
-              <>
-                <NavLink
-                  to={
-                    localStorage.getItem("userType") === "user"
-                      ? "/user/dashboard"
-                      : "/shopkeeper/dashboard"
-                  }
-                  className={({ isActive }) =>
-                    `text-white bg-green-600 hover:bg-gray-500 ${isActive ? "text-fuchsia-700" : "text-gray-700"
-                    } focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-4 py-2 lg:px-5 lg:py-2.5 mr-2 focus:outline-none`
-                  }
-                >
-                  Dashboard
-                </NavLink>
-
-                <button
-                  onClick={handleLogout}
-                  className="text-white bg-red-600 hover:bg-gray-500 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2 lg:px-5 lg:py-2.5 mr-2 focus:outline-none"
-                >
-                  Logout
-                </button>
-              </>
-            )}
-          </div>
-
-          <div className="hidden justify-between items-center w-full lg:flex lg:w-auto lg:order-1" id="mobile-menu-2">
-            <ul className="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
-              <li>
-                <NavLink to="/" className={({ isActive }) => `block py-2 pr-4 pl-3 duration-200 ${isActive ? "text-fuchsia-700" : "text-gray-700"} border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 hover:text-fuchsia-700 lg:p-0`}>
-                  Home
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/features" className={({ isActive }) => `block py-2 pr-4 pl-3 duration-200 ${isActive ? "text-fuchsia-700" : "text-gray-700"} border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 hover:text-fuchsia-700 lg:p-0`}>
-                  Features
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/subscription" className={({ isActive }) => `block py-2 pr-4 pl-3 duration-200 ${isActive ? "text-fuchsia-700" : "text-gray-700"} border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 hover:text-fuchsia-700 lg:p-0`}>
-                  Subscription
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/resources" className={({ isActive }) => `block py-2 pr-4 pl-3 duration-200 ${isActive ? "text-fuchsia-700" : "text-gray-700"} border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 hover:text-fuchsia-700 lg:p-0`}>
-                  Resources
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/contact" className={({ isActive }) => `block py-2 pr-4 pl-3 duration-200 ${isActive ? "text-fuchsia-700" : "text-gray-700"} border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 hover:text-fuchsia-700 lg:p-0`}>
-                  Contact
-                </NavLink>
-              </li>
-            </ul>
-          </div>
+        {/* Hamburger Icon */}
+        <div className="lg:hidden">
+          <button onClick={() => setMenuOpen(!menuOpen)} className="text-gray-800">
+            {menuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
         </div>
+
+        {/* Desktop Nav */}
+        <div className="hidden lg:flex items-center space-x-8">
+          <NavLink to="/" className={({ isActive }) => isActive ? "text-fuchsia-700" : "text-gray-800"}>Home</NavLink>
+          <NavLink to="/features" className={({ isActive }) => isActive ? "text-fuchsia-700" : "text-gray-800"}>Features</NavLink>
+          <NavLink to="/subscription" className={({ isActive }) => isActive ? "text-fuchsia-700" : "text-gray-800"}>Subscription</NavLink>
+          <NavLink to="/resources" className={({ isActive }) => isActive ? "text-fuchsia-700" : "text-gray-800"}>Resources</NavLink>
+          <NavLink to="/contact" className={({ isActive }) => isActive ? "text-fuchsia-700" : "text-gray-800"}>Contact</NavLink>
+
+          {/* Auth buttons */}
+          {!isLoggedIn ? (
+            <>
+              <div className="relative group inline-block">
+                <div className="text-white bg-orange-700 hover:bg-orange-600 font-medium rounded-lg text-sm px-4 py-2 cursor-pointer">
+                  Sign up
+                </div>
+                <div className="absolute right-0 mt-2 bg-white rounded-lg shadow-lg z-10 min-w-[150px] opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-200">
+                  <NavLink to="/signup-shopkeeper" className="block px-4 py-2 text-sm text-gray-800 hover:bg-orange-100">Shopkeeper</NavLink>
+                  <NavLink to="/signup-user" className="block px-4 py-2 text-sm text-gray-800 hover:bg-orange-100">User</NavLink>
+                </div>
+              </div>
+              <NavLink to="/signin" className="text-white bg-blue-700 hover:bg-blue-600 font-medium rounded-lg text-sm px-4 py-2">
+                Sign in
+              </NavLink>
+            </>
+          ) : (
+            <>
+              <NavLink
+                to={localStorage.getItem("userType") === "user" ? "/user/dashboard" : "/shopkeeper/dashboard"}
+                className="text-white bg-green-600 hover:bg-green-500 font-medium rounded-lg text-sm px-4 py-2"
+              >
+                Dashboard
+              </NavLink>
+              <button onClick={handleLogout} className="text-white bg-red-600 hover:bg-red-500 font-medium rounded-lg text-sm px-4 py-2">
+                Logout
+              </button>
+            </>
+          )}
+        </div>
+
+        {/* Mobile Menu */}
+        {menuOpen && (
+          <div className="lg:hidden absolute top-full left-0 w-full bg-white border-t shadow-md z-50 py-4">
+            <div className="flex flex-col items-center gap-4">
+              <NavLink to="/" onClick={() => setMenuOpen(false)} className={({ isActive }) => isActive ? "text-fuchsia-700" : "text-gray-800"}>Home</NavLink>
+              <NavLink to="/features" onClick={() => setMenuOpen(false)} className={({ isActive }) => isActive ? "text-fuchsia-700" : "text-gray-800"}>Features</NavLink>
+              <NavLink to="/subscription" onClick={() => setMenuOpen(false)} className={({ isActive }) => isActive ? "text-fuchsia-700" : "text-gray-800"}>Subscription</NavLink>
+              <NavLink to="/resources" onClick={() => setMenuOpen(false)} className={({ isActive }) => isActive ? "text-fuchsia-700" : "text-gray-800"}>Resources</NavLink>
+              <NavLink to="/contact" onClick={() => setMenuOpen(false)} className={({ isActive }) => isActive ? "text-fuchsia-700" : "text-gray-800"}>Contact</NavLink>
+
+              {!isLoggedIn ? (
+                <>
+                  <div className="relative group inline-block">
+                    <div className="text-white bg-orange-700 hover:bg-orange-600 font-medium rounded-lg text-sm px-5 py-2 cursor-pointer">
+                      Sign up
+                    </div>
+                    <div className="absolute left-1/2 transform -translate-x-1/2 mt-2 bg-white rounded-lg shadow-lg z-10 min-w-[150px] opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-200">
+                      <NavLink to="/signup-shopkeeper" onClick={() => setMenuOpen(false)} className="block px-4 py-2 text-sm text-gray-800 hover:bg-orange-100">Shopkeeper</NavLink>
+                      <NavLink to="/signup-user" onClick={() => setMenuOpen(false)} className="block px-4 py-2 text-sm text-gray-800 hover:bg-orange-100">User</NavLink>
+                    </div>
+                  </div>
+
+                  <NavLink to="/signin" onClick={() => setMenuOpen(false)} className="text-white bg-blue-700 hover:bg-blue-600 font-medium rounded-lg text-sm px-5 py-2">
+                    Sign in
+                  </NavLink>
+                </>
+              ) : (
+                <>
+                  <NavLink
+                    to={localStorage.getItem("userType") === "user" ? "/user/dashboard" : "/shopkeeper/dashboard"}
+                    onClick={() => setMenuOpen(false)}
+                    className="text-white bg-green-600 hover:bg-green-500 font-medium rounded-lg text-sm px-5 py-2"
+                  >
+                    Dashboard
+                  </NavLink>
+                  <button
+                    onClick={handleLogout}
+                    className="text-white bg-red-600 hover:bg-red-500 font-medium rounded-lg text-sm px-5 py-2"
+                  >
+                    Logout
+                  </button>
+                </>
+              )}
+            </div>
+          </div>
+        )}
       </nav>
     </header>
   );
