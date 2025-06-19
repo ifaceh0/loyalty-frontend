@@ -31,7 +31,7 @@ function User() {
   setError("");
 
   try {
-    const response = await fetch("https://loyalty-backend-java.onrender.com/api/login/registerUser", {
+    const response = await fetch("https://loyalty-backend-java.onrender.com/api/auth/registerUser", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

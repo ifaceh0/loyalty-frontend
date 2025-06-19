@@ -33,7 +33,7 @@ function Shopkeeper() {
     setError("");
 
     try {
-      const response = await fetch("https://loyalty-backend-java.onrender.com/api/login/registerShopkeeper", {
+      const response = await fetch("https://loyalty-backend-java.onrender.com/api/auth/registerShopkeeper", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
