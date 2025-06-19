@@ -70,18 +70,20 @@ function User() {
     setError("");
     setSuccess(false);
 
-    try {
-      const response = await fetch("https://loyalty-backend-java.onrender.com/api/login/registerUser", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          firstName: formData.firstName,
-          lastName: formData.lastName,
-          phoneNumber: formData.phoneNumber,
-          email: formData.email,
-          password: formData.password,
-        }),
-      });
+  try {
+    const response = await fetch("https://loyalty-backend-java.onrender.com/api/login/registerUser", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        phoneNumber: formData.phoneNumber,
+        email: formData.email,
+        password: formData.password,
+      }),
+    });
 
       const contentType = response.headers.get("content-type");
 
