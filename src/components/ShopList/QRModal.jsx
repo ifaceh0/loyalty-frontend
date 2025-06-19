@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import React, { useEffect, useState } from 'react';
+
+import { useEffect, useState } from 'react';
 
 export default function QRModal({ shop, isOpen, onClose }) {
   const [qrData, setQrData] = useState(null);
