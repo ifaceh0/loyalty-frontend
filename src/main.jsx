@@ -11,6 +11,7 @@ import Resources from './components/Resources/Resources.jsx'
 import Contact from './components/Contact/Contact.jsx'
 import Userdashboard from './components/Dashboards/Userdashboard.jsx'
 import ForgotPassword from './components/Forget_pass/ForgotPassword.jsx'
+import ResetPassword from './components/Reset_pass/ResetPassword.jsx'
 
 import Signin from './components/Signin/Signin.jsx'
 import Shopkeeper from './components/Signup/Shopkeeper.jsx'
@@ -76,6 +77,11 @@ const router = createBrowserRouter([
       {
         path:"/forgot-password",
         element:<ForgotPassword/>
+      },
+
+      {
+        path:"/reset-password",
+        element:<ResetPassword/>
       },
 
     ]

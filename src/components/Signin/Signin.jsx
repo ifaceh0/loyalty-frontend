@@ -53,6 +53,7 @@ const Signin = () => {
       // Save login status
       localStorage.setItem("isLoggedIn", "true");
       localStorage.setItem("token", data.token);
+      localStorage.setItem("id", data.id);     
       localStorage.setItem("userType", data.userType || "");
       localStorage.setItem("role", data.role || "");
 

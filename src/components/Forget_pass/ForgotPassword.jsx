@@ -11,19 +11,24 @@ const ForgotPassword = () => {
     setMessage("");
 
     try {
-      const res = await fetch("https://loyalty-backend-java.onrender.com/api/login/forgot-password", {
+      const res = await fetch("https://loyalty-backend-java.onrender.com/api/auth/forgot-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
       });
 
-      const data = await res.json();
+      // const data = await res.json();
+      const text = await res.text();
 
+      // if (!res.ok) {
+      //   throw new Error(data.message || "Something went wrong");
+      // }
       if (!res.ok) {
-        throw new Error(data.message || "Something went wrong");
-      }
+      throw new Error(text || "Something went wrong");
+    }
 
-      setMessage("Password reset instructions sent to your email.");
+      // setMessage("Password reset instructions sent to your email.");
+      setMessage(text); 
     } catch (err) {
       setError(err.message);
     }

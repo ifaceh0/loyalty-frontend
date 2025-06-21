@@ -71,7 +71,7 @@ function User() {
     setSuccess(false);
 
   try {
-    const response = await fetch("https://loyalty-backend-java.onrender.com/api/login/registerUser", {
+    const response = await fetch("https://loyalty-backend-java.onrender.com/api/auth/registerUser", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -79,7 +79,7 @@ function User() {
       body: JSON.stringify({
         firstName: formData.firstName,
         lastName: formData.lastName,
-        phoneNumber: formData.phoneNumber,
+        phone: formData.phoneNumber,
         email: formData.email,
         password: formData.password,
       }),

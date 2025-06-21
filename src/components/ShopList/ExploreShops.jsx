@@ -82,74 +82,84 @@
 
 
 
-import { useState, useEffect } from 'react';
+
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import QRModal from './QRModal';
 
-const API_BASE_URL = 'https://loyalty-backend-java.onrender.com/api/qrcode'; 
+const API_BASE_URL = 'https://loyalty-backend-java.onrender.com/api/qrcode';
 
 export default function ExploreShops() {
   const [shops, setShops] = useState([]);
   const [selectedShop, setSelectedShop] = useState(null);
-  const [qrData, setQrData] = useState(null); // Store QR code and profile data
+  const [qrData, setQrData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // Fetch shops on component mount
+  // Fetch all shops
   useEffect(() => {
     const fetchShops = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await fetch(`${API_BASE_URL}/shops`, {
-          method: 'GET',
+        const userId = localStorage.getItem('id');
+
+        if (!token || !userId) {
+          throw new Error("User not authenticated");
+        }
+
+        const response = await fetch(`${API_BASE_URL}/allShops?userId=${userId}`, {
           headers: {
-            'Authorization': `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
           },
         });
 
         if (!response.ok) {
-          throw new Error(response.status === 401 ? 'Unauthorized' : 'Failed to load shops');
+          throw new Error('Failed to load shops');
         }
 
         const data = await response.json();
         setShops(data);
       } catch (err) {
-        setError(err.message || 'Failed to load shops');
-        console.error(err);
+        setError(err.message || 'Something went wrong');
       }
     };
+
     fetchShops();
   }, []);
 
-  // Fetch QR code and profile data
+  // Handle QR button click
   const handleGenerateQR = async (shop) => {
-    setLoading(true);
-    setError(null);
     try {
+      setLoading(true);
+      setError(null);
       const token = localStorage.getItem('token');
-      const response = await fetch(`${API_BASE_URL}/generate/${shop.shopId}`, {
-        method: 'POST', // Match backend @PostMapping
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-      });
+      const userId = localStorage.getItem('id');
+
+      const response = await fetch(
+        `${API_BASE_URL}/generate?shopId=${shop.shopId}&userId=${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
 
       if (!response.ok) {
-        throw new Error(response.status === 401 ? 'Unauthorized' : 'Failed to generate QR code');
+        throw new Error('Failed to generate QR code');
       }
 
       const data = await response.json();
       setQrData({
-        qrCode: data.qrCode,
-        availablePoints: data.availablePoints,
-        customerId: `CUST-${data.userId}`, // Format userId as customerId
+        qrCode: data.qrCodeImage,
+        availablePoints: data.availableBalance,
+        customerId: `CUST-${data.customerId}`,
+        userInfo: data.qrRawData,
       });
       setSelectedShop(shop);
     } catch (err) {
-      setError(err.message || 'Failed to generate QR code');
-      console.error(err);
+      setError(err.message || 'QR generation failed');
     } finally {
       setLoading(false);
     }
@@ -185,32 +195,25 @@ export default function ExploreShops() {
             <div className="p-4">
               <img
                 src="/refer-earn.png"
-                alt="Refer & Earn"
+                alt="shop image"
                 className="w-full h-32 object-cover rounded mb-4"
               />
-              <p className="text-gray-700 text-sm mb-2"><strong>ID:</strong> {shop.id}</p>
-              <p className="text-gray-700 text-sm mb-4"><strong>📞</strong> {shop.phone}</p>
+              <p className="text-gray-700 text-sm mb-2"><strong>Shop Id:</strong> {shop.shopId}</p>
+              <p className="text-gray-700 text-sm mb-4"><strong>📞</strong> {shop.shopPhone}</p>
 
-              {/* QR Code Button - works only if qrToken exists */}
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                disabled={!shop.qrToken}
-                className={`w-full px-4 py-2 rounded transition font-medium text-sm ${
-                  shop.qrToken
-                    ? 'bg-blue-600 text-white hover:bg-blue-700'
-                    : 'bg-gray-400 text-gray-700 cursor-not-allowed'
-                }`}
-                onClick={() => shop.qrToken && setSelectedShop(shop)}
+                className="w-full px-4 py-2 rounded transition font-medium text-sm bg-blue-600 text-white hover:bg-blue-700"
+                onClick={() => handleGenerateQR(shop)}
               >
-                {loading ? 'Generating...' : 'QR Code'}
+                {loading && selectedShop?.shopId === shop.shopId ? 'Generating...' : 'QR Code'}
               </motion.button>
             </div>
           </motion.div>
         ))}
       </div>
 
-      {/* QR Modal */}
       <QRModal
         shop={selectedShop}
         qrData={qrData}
