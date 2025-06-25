@@ -138,9 +138,6 @@ const Shopdashboard = () => {
             <p className="text-lg mb-2">
             Total Registered Users: <span className="font-bold">123</span>
             </p>
-            <p className="text-lg mb-6">
-                Active Users This Week: <span className="font-bold">45</span>
-            </p>
 
             {/* 🔧 Backend Integration Point for Total Stats */}
 
@@ -154,6 +151,8 @@ const Shopdashboard = () => {
                     <th className="px-4 py-2 border">ID</th>
                     <th className="px-4 py-2 border">First Name</th>
                     <th className="px-4 py-2 border">Last Name</th>
+                    <th className="px-4 py-2 border">E-mail</th>
+                    <th className="px-4 py-2 border">Phone Number</th>
                     <th className="px-4 py-2 border">No. of Visiting</th>
                     </tr>
                 </thead>
@@ -163,12 +162,16 @@ const Shopdashboard = () => {
                     <td className="px-4 py-2 border">1</td>
                     <td className="px-4 py-2 border">x</td>
                     <td className="px-4 py-2 border">y</td>
+                    <td className="px-4 py-2 border">xy@mail.com</td>
+                    <td className="px-4 py-2 border">7894561233</td>
                     <td className="px-4 py-2 border">12</td>
                 </tr>
                 <tr className="text-center">
                     <td className="px-4 py-2 border">2</td>
                     <td className="px-4 py-2 border">a</td>
                     <td className="px-4 py-2 border">b</td>
+                    <td className="px-4 py-2 border">ab@mail.com</td>
+                    <td className="px-4 py-2 border">1123555745</td>
                     <td className="px-4 py-2 border">10</td>
                 </tr>
                 </tbody>
@@ -186,6 +189,8 @@ const Shopdashboard = () => {
                     <th className="px-4 py-2 border">ID</th>
                     <th className="px-4 py-2 border">First Name</th>
                     <th className="px-4 py-2 border">Last Name</th>
+                    <th className="px-4 py-2 border">E-mail</th>
+                    <th className="px-4 py-2 border">Phone Number</th>
                     <th className="px-4 py-2 border">Most Revenue</th>
                 </tr>
             </thead>
@@ -195,12 +200,16 @@ const Shopdashboard = () => {
               <td className="px-4 py-2 border">1</td>
               <td className="px-4 py-2 border">p</td>
               <td className="px-4 py-2 border">q</td>
+              <td className="px-4 py-2 border">pq@mail.com</td>
+              <td className="px-4 py-2 border">1234567890</td>
               <td className="px-4 py-2 border">$15,000</td>
             </tr>
             <tr className="text-center">
               <td className="px-4 py-2 border">2</td>
               <td className="px-4 py-2 border">r</td>
               <td className="px-4 py-2 border">s</td>
+              <td className="px-4 py-2 border">rs@mail.com</td>
+              <td className="px-4 py-2 border">9876543210</td>
               <td className="px-4 py-2 border">$12,300</td>
             </tr>
           </tbody>
