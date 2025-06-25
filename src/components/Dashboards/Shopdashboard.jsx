@@ -267,3 +267,184 @@ const Shopdashboard = () => {
 };
 
 export default Shopdashboard;
+
+
+
+
+
+// import React, { useEffect, useState } from "react";
+// import { useNavigate } from "react-router-dom";
+// import {
+//   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
+// } from "recharts";
+
+// import ShopkeeperProfile from "../Shopkeeper_profile/Shopkeeper_profile";
+// import Shopkeeper_setting from "../Shopkeeper-setting/Shopkeeper_setting";
+// import CustomerLookup from "../Customer/CustomerLookup";
+
+// const Shopdashboard = () => {
+//   const navigate = useNavigate();
+//   const [activeTab, setActiveTab] = useState("user_stats");
+
+//   const [summary, setSummary] = useState({ totalUsers: 0 });
+//   const [mostVisitors, setMostVisitors] = useState([]);
+//   const [mostRevenue, setMostRevenue] = useState([]);
+//   const [graphData, setGraphData] = useState([]);
+
+//   useEffect(() => {
+//     const token = localStorage.getItem("token");
+//     const shopId = localStorage.getItem("shopId");
+
+//     if (!token || !shopId) {
+//       navigate("/signin");
+//     } else {
+//       fetchDashboardData(token, shopId);
+//     }
+//   }, [navigate]);
+
+//   const fetchDashboardData = async (token, shopId) => {
+//     try {
+//       const res = await fetch(`https://your-backend.com/api/dashboardChat/${shopId}`, {
+//         headers: {
+//           Authorization: `Bearer ${token}`,
+//         },
+//       });
+
+//       const data = await res.json();
+//       setSummary({ totalUsers: data.totalUsers || 0 });
+//       setMostVisitors(data.mostVisitors || []);
+//       setMostRevenue(data.mostRevenue || []);
+//       setGraphData(data.graphData || []);
+//     } catch (error) {
+//       console.error("Error fetching dashboard data:", error);
+//     }
+//   };
+
+//   return (
+//     <div className="flex min-h-screen bg-gray-100">
+//       {/* Sidebar */}
+//       <aside className="w-64 bg-white p-6 shadow">
+//         <h2 className="text-xl font-bold text-fuchsia-600 mb-6">Dashboard</h2>
+//         <nav className="space-y-2">
+//           <button
+//             onClick={() => setActiveTab("user_stats")}
+//             className={`block w-full text-left px-4 py-2 rounded-lg ${
+//               activeTab === "user_stats" ? "bg-fuchsia-600 text-white" : "hover:bg-gray-200"
+//             }`}
+//           >
+//             User Stats
+//           </button>
+//           <button
+//             onClick={() => setActiveTab("shopkeeper")}
+//             className={`block w-full text-left px-4 py-2 rounded-lg ${
+//               activeTab === "shopkeeper" ? "bg-fuchsia-600 text-white" : "hover:bg-gray-200"
+//             }`}
+//           >
+//             Shopkeeper Profile
+//           </button>
+//           <button
+//             onClick={() => setActiveTab("shopkeeper_setting")}
+//             className={`block w-full text-left px-4 py-2 rounded-lg ${
+//               activeTab === "shopkeeper_setting" ? "bg-fuchsia-600 text-white" : "hover:bg-gray-200"
+//             }`}
+//           >
+//             Shopkeeper Setting
+//           </button>
+//           <button
+//             onClick={() => setActiveTab("interactions")}
+//             className={`block w-full text-left px-4 py-2 rounded-lg ${
+//               activeTab === "interactions" ? "bg-fuchsia-600 text-white" : "hover:bg-gray-200"
+//             }`}
+//           >
+//             Interactions Panel
+//           </button>
+//         </nav>
+//       </aside>
+
+//       <main className="flex-1 p-6">
+//         {activeTab === "user_stats" && (
+//           <div className="bg-white p-6 rounded-lg shadow">
+//             <h2 className="text-2xl font-bold text-fuchsia-600 mb-4">User Statistics</h2>
+//             <p className="text-lg mb-6">
+//               Total Registered Users: <span className="font-bold">{summary.totalUsers}</span>
+//             </p>
+
+//             {/* Most Visitors */}
+//             <div className="mb-8">
+//               <h3 className="text-xl font-semibold text-gray-800 mb-2">Most Visitors</h3>
+//               <div className="overflow-x-auto">
+//                 <table className="min-w-full border rounded-lg shadow-sm">
+//                   <thead className="bg-fuchsia-100 text-fuchsia-800 font-semibold">
+//                     <tr>
+//                       <th className="px-4 py-2 border">ID</th>
+//                       <th className="px-4 py-2 border">First Name</th>
+//                       <th className="px-4 py-2 border">Last Name</th>
+//                       <th className="px-4 py-2 border">E-mail</th>
+//                       <th className="px-4 py-2 border">Phone Number</th>
+//                       <th className="px-4 py-2 border">No. of Visiting</th>
+//                     </tr>
+//                   </thead>
+//                   <tbody>
+//                     {mostVisitors.map((visitor, index) => (
+//                       <tr key={visitor.id} className="text-center">
+//                         <td className="px-4 py-2 border">{index + 1}</td>
+//                         <td className="px-4 py-2 border">{visitor.firstName}</td>
+//                         <td className="px-4 py-2 border">{visitor.lastName}</td>
+//                         <td className="px-4 py-2 border">{visitor.email}</td>
+//                         <td className="px-4 py-2 border">{visitor.phone}</td>
+//                         <td className="px-4 py-2 border">{visitor.visitCount}</td>
+//                       </tr>
+//                     ))}
+//                   </tbody>
+//                 </table>
+//               </div>
+//             </div>
+
+//             {/* Most Revenue */}
+//             <div>
+//               <h3 className="text-xl font-semibold text-gray-800 mb-2">Most Revenue</h3>
+//               <div className="overflow-x-auto">
+//                 <table className="min-w-full border rounded-lg shadow-sm">
+//                   <thead className="bg-green-100 text-green-800 font-semibold">
+//                     <tr>
+//                       <th className="px-4 py-2 border">ID</th>
+//                       <th className="px-4 py-2 border">First Name</th>
+//                       <th className="px-4 py-2 border">Last Name</th>
+//                       <th className="px-4 py-2 border">E-mail</th>
+//                       <th className="px-4 py-2 border">Phone Number</th>
+//                       <th className="px-4 py-2 border">Most Revenue</th>
+//                     </tr>
+//                   </thead>
+//                   <tbody>
+//                     {mostRevenue.map((user, index) => (
+//                       <tr key={user.id} className="text-center">
+//                         <td className="px-4 py-2 border">{index + 1}</td>
+//                         <td className="px-4 py-2 border">{user.firstName}</td>
+//                         <td className="px-4 py-2 border">{user.lastName}</td>
+//                         <td className="px-4 py-2 border">{user.email}</td>
+//                         <td className="px-4 py-2 border">{user.phone}</td>
+//                         <td className="px-4 py-2 border">
+//                           {user.revenue?.toLocaleString("en-US", {
+//                             style: "currency",
+//                             currency: "USD",
+//                           })}
+//                         </td>
+//                       </tr>
+//                     ))}
+//                   </tbody>
+//                 </table>
+//               </div>
+//             </div>
+//           </div>
+//         )}
+
+//         {/* Optional Other Tabs */}
+//         {activeTab === "shopkeeper" && <ShopkeeperProfile />}
+//         {activeTab === "shopkeeper_setting" && <Shopkeeper_setting />}
+//         {activeTab === "interactions" && <CustomerLookup />}
+//       </main>
+//     </div>
+//   );
+// };
+
+// export default Shopdashboard;
