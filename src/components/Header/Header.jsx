@@ -62,12 +62,12 @@ export default function Header() {
             </>
           ) : (
             <>
-              <NavLink
+              {/* <NavLink
                 to={localStorage.getItem("userType") === "user" ? "/user/dashboard" : "/shopkeeper/dashboard"}
                 className="text-white bg-green-600 hover:bg-green-500 font-medium rounded-lg text-sm px-4 py-2"
               >
                 Dashboard
-              </NavLink>
+              </NavLink> */}
               <button onClick={handleLogout} className="text-white bg-red-600 hover:bg-red-500 font-medium rounded-lg text-sm px-4 py-2">
                 Logout
               </button>
@@ -103,13 +103,13 @@ export default function Header() {
                 </>
               ) : (
                 <>
-                  <NavLink
+                  {/* <NavLink
                     to={localStorage.getItem("userType") === "user" ? "/user/dashboard" : "/shopkeeper/dashboard"}
                     onClick={() => setMenuOpen(false)}
                     className="text-white bg-green-600 hover:bg-green-500 font-medium rounded-lg text-sm px-5 py-2"
                   >
                     Dashboard
-                  </NavLink>
+                  </NavLink> */}
                   <button
                     onClick={handleLogout}
                     className="text-white bg-red-600 hover:bg-red-500 font-medium rounded-lg text-sm px-5 py-2"

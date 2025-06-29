@@ -1,29 +1,45 @@
-import React, { useState, useEffect, useRef } from "react";
+
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { Lock, Mail, RefreshCw } from "lucide-react";
+import { jwtDecode } from "jwt-decode";
+import Confetti from "react-confetti";
+import { Fullscreen } from "lucide-react";
 
 const Signin = () => {
   const navigate = useNavigate();
-
+  const canvasRef = useRef(null);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    captcha: "",
+    captchaInput: "",
   });
 
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
   const [captchaText, setCaptchaText] = useState("");
-
-  const generateCaptcha = () => {
-    const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-    const text = Array.from({ length: 6 }, () => chars[Math.floor(Math.random() * chars.length)]).join("");
-    setCaptchaText(text);
-  };
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   useEffect(() => {
     generateCaptcha();
   }, []);
+
+  const generateCaptcha = () => {
+    const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+    let text = "";
+    for (let i = 0; i < 6; i++) {
+      text += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    setCaptchaText(text);
+
+    const canvas = canvasRef.current;
+    if (canvas) {
+      const ctx = canvas.getContext("2d");
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.font = "22px Arial";
+      ctx.fillStyle = "#4A90E2";
+      ctx.fillText(text, 10, 28);
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -32,14 +48,15 @@ const Signin = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
     setError("");
 
-    if (formData.captcha.trim().toUpperCase() !== captchaText.toUpperCase()) {
-      setError("Invalid captcha. Please try again.");
-      setLoading(false);
+    if (formData.captchaInput.trim().toUpperCase() !== captchaText.toUpperCase()) {
+      setError("Invalid CAPTCHA");
+      generateCaptcha();
       return;
     }
+
+    setLoading(true);
 
     try {
       const res = await fetch("https://loyalty-backend-java.onrender.com/api/auth/signIn", {
@@ -52,22 +69,29 @@ const Signin = () => {
       });
 
       const data = await res.json();
+      if (!res.ok) throw new Error(data.message || "Login failed");
 
-      if (!res.ok) {
-        throw new Error(data.message || "Login failed");
-      }
+      const token = data.token;
+      const decoded = jwtDecode(token);
+      const role = decoded.role;
 
+      // Save to localStorage
       localStorage.setItem("isLoggedIn", "true");
-      localStorage.setItem("token", data.token);
+      localStorage.setItem("token", token);
       localStorage.setItem("id", data.id);
-      localStorage.setItem("userType", data.userType || "");
-      localStorage.setItem("role", data.role || "");
+      localStorage.setItem("role", role);
 
-      if (data.userType === "shopkeeper") {
-        navigate("/shopkeeper/dashboard");
-      } else {
-        navigate("/user/dashboard");
-      }
+      setSuccess(true);
+
+      setTimeout(() => {
+        if (role === "SHOPKEEPER") {
+          navigate("/shopkeeper/dashboard");
+        } else if (role === "USER") {
+          navigate("/user/dashboard");
+        } else {
+          setError("Unrecognized role.");
+        }
+      }, 1500);
 
     } catch (err) {
       setError(err.message);
@@ -77,24 +101,57 @@ const Signin = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-200 via-white to-blue-200 flex items-center justify-center px-4 font-['Inter']">
-      <div className="backdrop-blur-xl bg-white/70 shadow-2xl p-8 rounded-2xl w-full max-w-md animate-fade-in">
-        <h2 className="text-3xl font-bold text-center text-purple-700 mb-2">Sign In</h2>
-        <p className="text-center text-sm text-gray-600 mb-6">Welcome back! Please enter your credentials.</p>
-        {error && <p className="text-red-500 text-sm text-center mb-4 animate-pulse">⚠️ {error}</p>}
+    <div className="min-h-screen bg-gradient-to-br from-blue-100 to-purple-200 flex items-center justify-center px-4 relative">
+      {success && <Confetti recycle={false} numberOfPieces={250} />}
+      <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md animate-fade-in">
+        <h2 className="text-3xl font-bold text-center text-purple-700 mb-6">Sign In</h2>
+        {error && <p className="text-red-500 text-sm mb-4 text-center animate-pulse">{error}</p>}
+        {success && <p className="text-green-600 text-sm mb-4 text-center animate-bounce">✅ Sign in successful!</p>}
 
-        <form onSubmit={handleSubmit} className="space-y-5">
-          <FloatingInput label="Email Address" name="email" type="email" value={formData.email} onChange={handleChange} Icon={Mail} />
-          <FloatingInput label="Password" name="password" type="password" value={formData.password} onChange={handleChange} Icon={Lock} />
-
-          <div className="flex items-center justify-between bg-gray-100 border border-gray-300 px-4 py-2 rounded-lg">
-            <span className="text-lg font-semibold tracking-widest text-gray-600 select-none">{captchaText}</span>
-            <button type="button" onClick={generateCaptcha} className="text-sm text-blue-500 hover:underline flex items-center gap-1">
-              <RefreshCw className="h-4 w-4" /> Refresh
-            </button>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="relative">
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              className="input peer w-full h-10 border border-gray-300"
+              required
+              placeholder=" "
+            />
+            <label className="floating-label">Email Address</label>
           </div>
 
-          <FloatingInput label="Enter Captcha" name="captcha" value={formData.captcha} onChange={handleChange} />
+          <div className="relative">
+            <input
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              className="input peer w-full h-10 border border-gray-300"
+              required
+              placeholder=" "
+            />
+            <label className="floating-label">Password</label>
+          </div>
+
+          <div className="flex items-center gap-4 mt-2">
+            <canvas ref={canvasRef} width={110} height={40} className="border border-gray-300 rounded" />
+            <button type="button" onClick={generateCaptcha} className="text-sm text-blue-500 hover:underline">Refresh Captcha</button>
+          </div>
+
+          <div className="relative">
+            <input
+              type="text"
+              name="captchaInput"
+              value={formData.captchaInput}
+              onChange={handleChange}
+              className="input peer w-full h-10 border border-gray-300"
+              required
+              placeholder=" "
+            />
+            <label className="floating-label">Enter Captcha</label>
+          </div>
 
           <div className="text-right">
             <button type="button" onClick={() => navigate("/forgot-password")} className="text-sm text-blue-500 hover:underline">
@@ -105,32 +162,65 @@ const Signin = () => {
           <button
             type="submit"
             disabled={loading}
-            className={`w-full flex justify-center items-center bg-purple-600 text-white py-2 rounded-lg transition duration-200 hover:bg-purple-700 ${loading ? "opacity-60 cursor-not-allowed" : ""}`}
+            className={`w-full flex justify-center items-center bg-purple-600 text-white py-2 rounded-lg transition duration-200 ${loading ? "opacity-70 cursor-not-allowed" : "hover:bg-purple-700"}`}
           >
             {loading ? (
               <span className="flex items-center gap-2">
-                <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4l3.5-3.5L12 0v4a8 8 0 00-8 8z"></path>
-                </svg>
-                Logging in...
+                <svg className="animate-spin h-5 w-5 text-white" viewBox="0 0 24 24" fill="none"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4l3.5-3.5L12 0v4a8 8 0 00-8 8z"></path></svg>
+                Signing in...
               </span>
-            ) : (
-              "Sign In"
-            )}
+            ) : "Sign In"}
           </button>
         </form>
       </div>
 
       <style>{`
+        .input {
+          @apply w-full px-4 py-2 border border-gray-300 rounded-lg bg-transparent focus:outline-none focus:ring-2 focus:ring-purple-300;
+        }
+        .floating-label {
+          position: absolute;
+          left: 16px;
+          top: 10px;
+          color: #999;
+          pointer-events: none;
+          transform: translateY(0);
+          transition: all 0.2s ease;
+        }
+        .peer:focus ~ .floating-label,
+        .peer:not(:placeholder-shown) ~ .floating-label {
+          top: -10px;
+          left: 12px;
+          font-size: 1rem;
+          color: #6B46C1;
+          background: white;
+          padding: 0 4px;
+        }
         @keyframes fade-in {
-          from { opacity: 0; transform: scale(0.95); }
+          from { opacity: 0; transform: scale(0.9); }
           to { opacity: 1; transform: scale(1); }
         }
         .animate-fade-in {
           animation: fade-in 0.5s ease-in-out;
         }
       `}</style>
+      {/* <style>{`
+        .input {
+          @apply w-full px-4 py-2 border border-gray-300 rounded-lg bg-transparent focus:outline-none focus:ring-2 focus:ring-purple-300;
+        }
+
+        .floating-label {
+          position: absolute;
+          left: 16px;
+          top: -10px;
+          font-size: 0.875rem;
+          color: #6B46C1;
+          background: white;
+          padding: 0 4px;
+          pointer-events: none;
+        }    
+      `}</style> */}
+      
     </div>
   );
 };

@@ -24,6 +24,7 @@ function Shopkeeper() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [step, setStep] = useState(1);
+  const [missingFields, setMissingFields] = useState([]);
   const [captchaText, setCaptchaText] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -62,7 +63,13 @@ function Shopkeeper() {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+
+    // If the field was previously marked missing and now has a value, remove it from missingFields
+    if (missingFields.includes(name) && value.trim() !== "") {
+      setMissingFields((prev) => prev.filter((field) => field !== name));
+    }
   };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -132,8 +139,26 @@ function Shopkeeper() {
     }
   };
 
-  const nextStep = () => setStep((prev) => prev + 1);
-  const prevStep = () => setStep((prev) => prev - 1);
+  // const nextStep = () => setStep((prev) => prev + 1);
+  const nextStep = () => {
+    let currentFields = [];
+    if (step === 1) currentFields = ["shopName", "email", "phone"];
+    if (step === 2) currentFields = ["companyName", "companyEmail", "companyPhone", "companyAddress"];
+
+    const missing = currentFields.filter(field => !formData[field].trim());
+    if (missing.length > 0) {
+      setMissingFields(missing);
+      setError("Please fill up all required fields.");
+      setTimeout(() => setError(""), 3000);
+      const firstMissingField = document.querySelector(`input[name="${missing[0]}"]`);
+      firstMissingField?.focus();
+      return;
+    }
+
+    setMissingFields([]);
+    setStep(prev => prev + 1);
+  };
+
   const getProgress = () => (step / 3) * 100;
 
   const stepLabel = ["Company Info", "Contact Info", "Security"];
@@ -155,41 +180,60 @@ function Shopkeeper() {
 
         <form onSubmit={handleSubmit} className="space-y-5 text-base">
           {step === 1 && (
-            <div className="grid gap-5 animate-fade-in">
-              <FloatingInput label="Shop Name" name="shopName" value={formData.shopName} onChange={handleChange} Icon={Store} />
-              <FloatingInput label="Company Name" name="companyName" value={formData.companyName} onChange={handleChange} Icon={Building2} />
-              <FloatingInput label="Company Email" name="companyEmail" type="email" value={formData.companyEmail} onChange={handleChange} Icon={Mail} />
-              <div className="flex justify-between gap-4">
-                <NextButton onClick={nextStep} />
+            <div className="grid grid-cols-1 gap-4 animate-fade-in">
+              <div className="relative">
+                <input name="shopName" value={formData.shopName} onChange={handleChange} className={`input peer w-full h-10 transition duration-150 ease-in-out ${missingFields.includes("shopName") ? "ring-2 ring-red-500 shadow-md" : "border border-gray-300"}`} required />
+                <label className="floating-label">Shop Name</label>
+              </div>
+              <div className="relative">
+                <input name="email" type="email" value={formData.email} onChange={handleChange} className={`input peer w-full h-10 transition duration-150 ease-in-out ${missingFields.includes("email") ? "ring-2 ring-red-500 shadow-md" : "border border-gray-300"}`} required />
+                <label className="floating-label">Personal Email</label>
+              </div>
+              <div className="relative">
+                <input name="phone" type="tel" value={formData.phone} onChange={handleChange} className={`input peer w-full h-10 transition duration-150 ease-in-out ${missingFields.includes("phone") ? "ring-2 ring-red-500 shadow-md" : "border border-gray-300"}`} required />
+                <label className="floating-label">Personal Phone</label>
               </div>
             </div>
           )}
 
           {step === 2 && (
-            <div className="grid gap-5 animate-fade-in">
-              <FloatingInput label="Company Address" name="companyAddress" value={formData.companyAddress} onChange={handleChange} Icon={MapPin} />
-              <FloatingInput label="Company Phone" name="companyPhone" type="tel" value={formData.companyPhone} onChange={handleChange} Icon={Phone} />
-              <FloatingInput label="Personal Email" name="email" type="email" value={formData.email} onChange={handleChange} Icon={Mail} />
-              <FloatingInput label="Personal Phone" name="phone" type="tel" value={formData.phone} onChange={handleChange} Icon={Phone} />
-              <div className="flex justify-between gap-4">
-                <button type="button" onClick={prevStep} className="w-1/2 py-3 bg-gray-300 text-gray-800 font-semibold rounded-xl transition">Back</button>
-                <NextButton onClick={nextStep} />
+            <div className="grid grid-cols-1 gap-4 animate-fade-in">
+              <div className="relative">
+                <input name="companyName" value={formData.companyName} onChange={handleChange} className={`input peer w-full h-10 transition duration-150 ease-in-out ${missingFields.includes("companyName") ? "ring-2 ring-red-500 shadow-md" : "border border-gray-300"}`} required />
+                <label className="floating-label">Company Name</label>
+              </div>
+              <div className="relative">
+                <input name="companyEmail" type="email" value={formData.companyEmail} onChange={handleChange} className={`input peer w-full h-10 transition duration-150 ease-in-out ${missingFields.includes("companyEmail") ? "ring-2 ring-red-500 shadow-md" : "border border-gray-300"}`} required />
+                <label className="floating-label">Company Email</label>
+              </div>
+              <div className="relative">
+                <input name="companyPhone" type="tel" value={formData.companyPhone} onChange={handleChange} className={`input peer w-full h-10 transition duration-150 ease-in-out ${missingFields.includes("companyPhone") ? "ring-2 ring-red-500 shadow-md" : "border border-gray-300"}`} required />
+                <label className="floating-label">Company Phone</label>
+              </div>
+              <div className="relative">
+                <input name="companyAddress" value={formData.companyAddress} onChange={handleChange} className={`input peer w-full h-10 transition duration-150 ease-in-out ${missingFields.includes("companyAddress") ? "ring-2 ring-red-500 shadow-md" : "border border-gray-300"}`} required />
+                <label className="floating-label">Company Address</label>
               </div>
             </div>
           )}
 
           {step === 3 && (
-            <div className="grid gap-5 animate-fade-in">
-              <FloatingInput label="Password" name="password" type={showPassword ? "text" : "password"} value={formData.password} onChange={handleChange} Icon={Lock} ToggleIcon={showPassword ? EyeOff : Eye} onToggle={() => setShowPassword(!showPassword)} />
-              <FloatingInput label="Confirm Password" name="confirmPassword" type={showConfirmPassword ? "text" : "password"} value={formData.confirmPassword} onChange={handleChange} Icon={Lock} ToggleIcon={showConfirmPassword ? EyeOff : Eye} onToggle={() => setShowConfirmPassword(!showConfirmPassword)} />
-              <div className="flex items-center gap-4">
-                <canvas ref={canvasRef} width={100} height={40} className="border border-gray-300 rounded-md" />
-                <button type="button" onClick={generateCaptcha} className="text-sm text-blue-500 hover:underline">Refresh</button>
+            <div className="grid grid-cols-1 gap-4 animate-fade-in">
+              <div className="relative">
+                <input name="password" type="password" value={formData.password} onChange={handleChange} className="input peer w-full h-10 border border-gray-300" required />
+                <label className="floating-label">Password</label>
               </div>
-              <FloatingInput label="Enter Captcha" name="captchaInput" value={formData.captchaInput} onChange={handleChange} />
-              <div className="flex justify-between gap-4">
-                <button type="button" onClick={prevStep} className="w-1/2 py-3 bg-gray-300 text-gray-800 font-semibold rounded-xl transition">Back</button>
-                <button type="submit" disabled={loading} className={`w-1/2 py-3 bg-gradient-to-r from-purple-500 to-blue-500 text-white font-semibold rounded-xl transition-all hover:opacity-90 ${loading ? "opacity-60 cursor-not-allowed" : ""}`}>{loading ? "Signing up..." : "Sign Up"}</button>
+              <div className="relative">
+                <input name="confirmPassword" type="password" value={formData.confirmPassword} onChange={handleChange} className="input peer w-full h-10 border border-gray-300" required />
+                <label className="floating-label">Confirm Password</label>
+              </div>
+              <div className="flex items-center gap-4 mt-2">
+                <canvas ref={canvasRef} width={100} height={40} className="border border-gray-300 rounded" />
+                <button type="button" onClick={generateCaptcha} className="text-sm text-blue-500 hover:underline">Refresh Captcha</button>
+              </div>
+              <div className="relative">
+                <input type="text" name="captchaInput" value={formData.captchaInput} onChange={handleChange} className="input peer w-full h-10 border border-gray-300" required />
+                <label className="floating-label">Enter Captcha</label>
               </div>
             </div>
           )}
@@ -199,6 +243,27 @@ function Shopkeeper() {
       </div>
 
       <style>{`
+        .input {
+          @apply w-full px-4 py-2 border border-gray-300 rounded-lg bg-transparent focus:outline-none focus:ring-2 focus:ring-purple-300;
+        }
+        .floating-label {
+          position: absolute;
+          left: 16px;
+          top: 10px;
+          color: #999;
+          pointer-events: none;
+          transform: translateY(0);
+          transition: all 0.2s ease;
+        }
+        .peer:focus ~ .floating-label,
+        .peer:not(:placeholder-shown) ~ .floating-label {
+          top: -10px;
+          left: 12px;
+          font-size: 1rem;
+          color: #6B46C1;
+          background: white;
+          padding: 0 4px;
+        }
         @keyframes fade-in {
           from { opacity: 0; transform: translateY(10px); }
           to { opacity: 1; transform: translateY(0); }
