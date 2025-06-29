@@ -1,10 +1,6 @@
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
-</style>
-
 import { useState, useEffect, useRef } from "react";
 import Confetti from "react-confetti";
-import { Mail, Phone, Lock, Eye, EyeOff, Building2, MapPin, Store } from "lucide-react";
+import { Mail, Phone, Lock, Eye, EyeOff, Building2, MapPin, Store, RefreshCw } from "lucide-react";
 
 function Shopkeeper() {
   const [formData, setFormData] = useState({
@@ -33,22 +29,12 @@ function Shopkeeper() {
   const audioRef = useRef(null);
 
   useEffect(() => {
-    if (step === 3) {
-      const timer = setTimeout(() => {
-        if (canvasRef.current) {
-          generateCaptcha();
-        }
-      }, 100);
-      return () => clearTimeout(timer);
-    }
+    if (step === 3) generateCaptcha();
   }, [step]);
 
   const generateCaptcha = () => {
     const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-    let text = "";
-    for (let i = 0; i < 5; i++) {
-      text += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
+    const text = Array.from({ length: 6 }, () => chars[Math.floor(Math.random() * chars.length)]).join("");
     setCaptchaText(text);
 
     if (canvasRef.current) {
@@ -64,12 +50,10 @@ function Shopkeeper() {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
 
-    // If the field was previously marked missing and now has a value, remove it from missingFields
     if (missingFields.includes(name) && value.trim() !== "") {
       setMissingFields((prev) => prev.filter((field) => field !== name));
     }
   };
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -94,16 +78,7 @@ function Shopkeeper() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          shopName: formData.shopName,
-          companyName: formData.companyName,
-          companyEmail: formData.companyEmail,
-          companyAddress: formData.companyAddress,
-          companyPhone: formData.companyPhone,
-          email: formData.email,
-          phone: formData.phone,
-          password: formData.password,
-        }),
+        body: JSON.stringify(formData),
       });
 
       const contentType = response.headers.get("content-type");
@@ -132,14 +107,12 @@ function Shopkeeper() {
         setError(errorMessage || "Signup failed!");
       }
     } catch (err) {
-      console.error("Error submitting shopkeeper form:", err);
       setError("Something went wrong. Please try again.");
     } finally {
       setLoading(false);
     }
   };
 
-  // const nextStep = () => setStep((prev) => prev + 1);
   const nextStep = () => {
     let currentFields = [];
     if (step === 1) currentFields = ["shopName", "email", "phone"];
@@ -148,7 +121,7 @@ function Shopkeeper() {
     const missing = currentFields.filter(field => !formData[field].trim());
     if (missing.length > 0) {
       setMissingFields(missing);
-      setError("Please fill up all required fields.");
+      setError("Please fill all required fields.");
       setTimeout(() => setError(""), 3000);
       const firstMissingField = document.querySelector(`input[name="${missing[0]}"]`);
       firstMissingField?.focus();
@@ -159,119 +132,57 @@ function Shopkeeper() {
     setStep(prev => prev + 1);
   };
 
-  const getProgress = () => (step / 3) * 100;
-
-  const stepLabel = ["Company Info", "Contact Info", "Security"];
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-200 via-white to-blue-200 flex items-center justify-center px-4 relative">
+    <div className="min-h-screen bg-gradient-to-br from-purple-200 via-white to-blue-200 flex items-center justify-center px-4 font-['Inter']">
       {success && <Confetti recycle={false} numberOfPieces={300} />}
-      {showModal && <ConfirmationModal onClose={() => setShowModal(false)} />}
-      <div className="backdrop-blur-xl bg-white/30 border border-white/40 shadow-xl rounded-3xl p-10 w-full max-w-xl animate-fade-in transition-all duration-300">
+      <div className="bg-white/70 backdrop-blur-lg p-10 rounded-3xl shadow-xl w-full max-w-xl">
         <h2 className="text-3xl font-bold text-center text-purple-700 mb-2">Shopkeeper Sign Up</h2>
-        <p className="text-center text-gray-700 mb-6 text-sm">Step {step} of 3 – {stepLabel[step - 1]}</p>
-
+        <p className="text-center text-gray-600 mb-4">Step {step} of 3</p>
         <div className="w-full h-2 bg-gray-300 rounded-full mb-6">
-          <div className="h-full bg-gradient-to-r from-purple-500 to-blue-500 rounded-full transition-all duration-500" style={{ width: `${getProgress()}%` }}></div>
+          <div className="h-full bg-gradient-to-r from-purple-500 to-blue-500 rounded-full" style={{ width: `${(step / 3) * 100}%` }}></div>
         </div>
-
         {error && <p className="text-red-500 text-sm text-center mb-4 animate-pulse">⚠️ {error}</p>}
-        {success && <p className="text-green-600 text-sm text-center mb-4 animate-bounce">✅ Signup successful!</p>}
 
-        <form onSubmit={handleSubmit} className="space-y-5 text-base">
+        <form onSubmit={handleSubmit} className="space-y-5">
           {step === 1 && (
-            <div className="grid grid-cols-1 gap-4 animate-fade-in">
-              <div className="relative">
-                <input name="shopName" value={formData.shopName} onChange={handleChange} className={`input peer w-full h-10 transition duration-150 ease-in-out ${missingFields.includes("shopName") ? "ring-2 ring-red-500 shadow-md" : "border border-gray-300"}`} required />
-                <label className="floating-label">Shop Name</label>
-              </div>
-              <div className="relative">
-                <input name="email" type="email" value={formData.email} onChange={handleChange} className={`input peer w-full h-10 transition duration-150 ease-in-out ${missingFields.includes("email") ? "ring-2 ring-red-500 shadow-md" : "border border-gray-300"}`} required />
-                <label className="floating-label">Personal Email</label>
-              </div>
-              <div className="relative">
-                <input name="phone" type="tel" value={formData.phone} onChange={handleChange} className={`input peer w-full h-10 transition duration-150 ease-in-out ${missingFields.includes("phone") ? "ring-2 ring-red-500 shadow-md" : "border border-gray-300"}`} required />
-                <label className="floating-label">Personal Phone</label>
-              </div>
-            </div>
+            <>
+              <FloatingInput label="Shop Name" name="shopName" value={formData.shopName} onChange={handleChange} Icon={Store} />
+              <FloatingInput label="Personal Email" name="email" type="email" value={formData.email} onChange={handleChange} Icon={Mail} />
+              <FloatingInput label="Personal Phone" name="phone" type="tel" value={formData.phone} onChange={handleChange} Icon={Phone} />
+            </>
           )}
 
           {step === 2 && (
-            <div className="grid grid-cols-1 gap-4 animate-fade-in">
-              <div className="relative">
-                <input name="companyName" value={formData.companyName} onChange={handleChange} className={`input peer w-full h-10 transition duration-150 ease-in-out ${missingFields.includes("companyName") ? "ring-2 ring-red-500 shadow-md" : "border border-gray-300"}`} required />
-                <label className="floating-label">Company Name</label>
-              </div>
-              <div className="relative">
-                <input name="companyEmail" type="email" value={formData.companyEmail} onChange={handleChange} className={`input peer w-full h-10 transition duration-150 ease-in-out ${missingFields.includes("companyEmail") ? "ring-2 ring-red-500 shadow-md" : "border border-gray-300"}`} required />
-                <label className="floating-label">Company Email</label>
-              </div>
-              <div className="relative">
-                <input name="companyPhone" type="tel" value={formData.companyPhone} onChange={handleChange} className={`input peer w-full h-10 transition duration-150 ease-in-out ${missingFields.includes("companyPhone") ? "ring-2 ring-red-500 shadow-md" : "border border-gray-300"}`} required />
-                <label className="floating-label">Company Phone</label>
-              </div>
-              <div className="relative">
-                <input name="companyAddress" value={formData.companyAddress} onChange={handleChange} className={`input peer w-full h-10 transition duration-150 ease-in-out ${missingFields.includes("companyAddress") ? "ring-2 ring-red-500 shadow-md" : "border border-gray-300"}`} required />
-                <label className="floating-label">Company Address</label>
-              </div>
-            </div>
+            <>
+              <FloatingInput label="Company Name" name="companyName" value={formData.companyName} onChange={handleChange} Icon={Building2} />
+              <FloatingInput label="Company Email" name="companyEmail" type="email" value={formData.companyEmail} onChange={handleChange} Icon={Mail} />
+              <FloatingInput label="Company Phone" name="companyPhone" type="tel" value={formData.companyPhone} onChange={handleChange} Icon={Phone} />
+              <FloatingInput label="Company Address" name="companyAddress" value={formData.companyAddress} onChange={handleChange} Icon={MapPin} />
+            </>
           )}
 
           {step === 3 && (
-            <div className="grid grid-cols-1 gap-4 animate-fade-in">
-              <div className="relative">
-                <input name="password" type="password" value={formData.password} onChange={handleChange} className="input peer w-full h-10 border border-gray-300" required />
-                <label className="floating-label">Password</label>
+            <>
+              <FloatingInput label="Password" name="password" type={showPassword ? "text" : "password"} value={formData.password} onChange={handleChange} Icon={Lock} ToggleIcon={showPassword ? EyeOff : Eye} onToggle={() => setShowPassword(!showPassword)} />
+              <FloatingInput label="Confirm Password" name="confirmPassword" type={showConfirmPassword ? "text" : "password"} value={formData.confirmPassword} onChange={handleChange} Icon={Lock} ToggleIcon={showConfirmPassword ? EyeOff : Eye} onToggle={() => setShowConfirmPassword(!showConfirmPassword)} />
+              <div className="flex items-center justify-between bg-gray-100 border border-gray-300 px-4 py-2 rounded-lg">
+                <span className="text-lg font-semibold tracking-widest text-gray-600 select-none">{captchaText}</span>
+                <button type="button" onClick={generateCaptcha} className="text-sm text-blue-500 hover:underline flex items-center gap-1">
+                  <RefreshCw className="h-4 w-4" /> Refresh
+                </button>
               </div>
-              <div className="relative">
-                <input name="confirmPassword" type="password" value={formData.confirmPassword} onChange={handleChange} className="input peer w-full h-10 border border-gray-300" required />
-                <label className="floating-label">Confirm Password</label>
-              </div>
-              <div className="flex items-center gap-4 mt-2">
-                <canvas ref={canvasRef} width={100} height={40} className="border border-gray-300 rounded" />
-                <button type="button" onClick={generateCaptcha} className="text-sm text-blue-500 hover:underline">Refresh Captcha</button>
-              </div>
-              <div className="relative">
-                <input type="text" name="captchaInput" value={formData.captchaInput} onChange={handleChange} className="input peer w-full h-10 border border-gray-300" required />
-                <label className="floating-label">Enter Captcha</label>
-              </div>
-            </div>
+              <FloatingInput label="Enter Captcha" name="captchaInput" value={formData.captchaInput} onChange={handleChange} />
+              <button type="submit" className="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 rounded-xl transition">
+                {loading ? "Signing up..." : "Submit"}
+              </button>
+            </>
           )}
         </form>
 
+        {step < 3 && <NextButton onClick={nextStep} />}
+
         <audio ref={audioRef} src="/sounds/correct.mp3" preload="auto" />
       </div>
-
-      <style>{`
-        .input {
-          @apply w-full px-4 py-2 border border-gray-300 rounded-lg bg-transparent focus:outline-none focus:ring-2 focus:ring-purple-300;
-        }
-        .floating-label {
-          position: absolute;
-          left: 16px;
-          top: 10px;
-          color: #999;
-          pointer-events: none;
-          transform: translateY(0);
-          transition: all 0.2s ease;
-        }
-        .peer:focus ~ .floating-label,
-        .peer:not(:placeholder-shown) ~ .floating-label {
-          top: -10px;
-          left: 12px;
-          font-size: 1rem;
-          color: #6B46C1;
-          background: white;
-          padding: 0 4px;
-        }
-        @keyframes fade-in {
-          from { opacity: 0; transform: translateY(10px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-fade-in {
-          animation: fade-in 0.5s ease-in-out;
-        }
-      `}</style>
     </div>
   );
 }
@@ -287,7 +198,7 @@ function FloatingInput({ label, name, value, onChange, type = "text", Icon, Togg
         onChange={onChange}
         required
         placeholder=" "
-        className={`peer w-full px-10 py-3 bg-white/60 backdrop-blur-md border border-gray-300 rounded-md text-gray-900 placeholder-transparent focus:outline-none focus:ring-2 focus:ring-purple-400`}
+        className="peer w-full px-10 py-3 bg-white/60 backdrop-blur-md border border-gray-300 rounded-md text-gray-900 placeholder-transparent focus:outline-none focus:ring-2 focus:ring-purple-400"
       />
       <label
         htmlFor={name}
@@ -313,7 +224,7 @@ function NextButton({ onClick }) {
     <button
       type="button"
       onClick={onClick}
-      className="w-1/2 py-3 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-xl transition"
+      className="w-full py-3 mt-4 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-xl transition"
     >
       Next
     </button>
