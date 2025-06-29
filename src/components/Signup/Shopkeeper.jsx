@@ -19,6 +19,7 @@ function Shopkeeper() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [step, setStep] = useState(1);
+  const [missingFields, setMissingFields] = useState([]);
   const [captchaText, setCaptchaText] = useState("");
   const canvasRef = useRef(null);
   const audioRef = useRef(null);
@@ -55,7 +56,13 @@ function Shopkeeper() {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+
+    // If the field was previously marked missing and now has a value, remove it from missingFields
+    if (missingFields.includes(name) && value.trim() !== "") {
+      setMissingFields((prev) => prev.filter((field) => field !== name));
+    }
   };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -124,7 +131,26 @@ function Shopkeeper() {
     }
   };
 
-  const nextStep = () => setStep((prev) => prev + 1);
+  // const nextStep = () => setStep((prev) => prev + 1);
+  const nextStep = () => {
+    let currentFields = [];
+    if (step === 1) currentFields = ["shopName", "email", "phone"];
+    if (step === 2) currentFields = ["companyName", "companyEmail", "companyPhone", "companyAddress"];
+
+    const missing = currentFields.filter(field => !formData[field].trim());
+    if (missing.length > 0) {
+      setMissingFields(missing);
+      setError("Please fill up all required fields.");
+      setTimeout(() => setError(""), 3000);
+      const firstMissingField = document.querySelector(`input[name="${missing[0]}"]`);
+      firstMissingField?.focus();
+      return;
+    }
+
+    setMissingFields([]);
+    setStep(prev => prev + 1);
+  };
+
   const getProgress = () => (step / 3) * 100;
 
   return (
@@ -141,16 +167,16 @@ function Shopkeeper() {
           {step === 1 && (
             <div className="grid grid-cols-1 gap-4 animate-fade-in">
               <div className="relative">
-                <input name="shopName" value={formData.shopName} onChange={handleChange} className="input peer" required />
+                <input name="shopName" value={formData.shopName} onChange={handleChange} className={`input peer w-full h-10 transition duration-150 ease-in-out ${missingFields.includes("shopName") ? "ring-2 ring-red-500 shadow-md" : "border border-gray-300"}`} required />
                 <label className="floating-label">Shop Name</label>
               </div>
               <div className="relative">
-                <input name="companyName" value={formData.companyName} onChange={handleChange} className="input peer" required />
-                <label className="floating-label">Company Name</label>
+                <input name="email" type="email" value={formData.email} onChange={handleChange} className={`input peer w-full h-10 transition duration-150 ease-in-out ${missingFields.includes("email") ? "ring-2 ring-red-500 shadow-md" : "border border-gray-300"}`} required />
+                <label className="floating-label">Personal Email</label>
               </div>
               <div className="relative">
-                <input name="companyEmail" type="email" value={formData.companyEmail} onChange={handleChange} className="input peer" required />
-                <label className="floating-label">Company Email</label>
+                <input name="phone" type="tel" value={formData.phone} onChange={handleChange} className={`input peer w-full h-10 transition duration-150 ease-in-out ${missingFields.includes("phone") ? "ring-2 ring-red-500 shadow-md" : "border border-gray-300"}`} required />
+                <label className="floating-label">Personal Phone</label>
               </div>
               <button type="button" onClick={nextStep} className="bg-blue-500 text-white rounded py-2 hover:bg-blue-600">Next</button>
             </div>
@@ -159,20 +185,20 @@ function Shopkeeper() {
           {step === 2 && (
             <div className="grid grid-cols-1 gap-4 animate-fade-in">
               <div className="relative">
-                <input name="companyAddress" value={formData.companyAddress} onChange={handleChange} className="input peer" required />
-                <label className="floating-label">Company Address</label>
+                <input name="companyName" value={formData.companyName} onChange={handleChange} className={`input peer w-full h-10 transition duration-150 ease-in-out ${missingFields.includes("companyName") ? "ring-2 ring-red-500 shadow-md" : "border border-gray-300"}`} required />
+                <label className="floating-label">Company Name</label>
               </div>
               <div className="relative">
-                <input name="companyPhone" type="tel" value={formData.companyPhone} onChange={handleChange} className="input peer" required />
+                <input name="companyEmail" type="email" value={formData.companyEmail} onChange={handleChange} className={`input peer w-full h-10 transition duration-150 ease-in-out ${missingFields.includes("companyEmail") ? "ring-2 ring-red-500 shadow-md" : "border border-gray-300"}`} required />
+                <label className="floating-label">Company Email</label>
+              </div>
+              <div className="relative">
+                <input name="companyPhone" type="tel" value={formData.companyPhone} onChange={handleChange} className={`input peer w-full h-10 transition duration-150 ease-in-out ${missingFields.includes("companyPhone") ? "ring-2 ring-red-500 shadow-md" : "border border-gray-300"}`} required />
                 <label className="floating-label">Company Phone</label>
               </div>
               <div className="relative">
-                <input name="email" type="email" value={formData.email} onChange={handleChange} className="input peer" required />
-                <label className="floating-label">Personal Email</label>
-              </div>
-              <div className="relative">
-                <input name="phone" type="tel" value={formData.phone} onChange={handleChange} className="input peer" required />
-                <label className="floating-label">Personal Phone</label>
+                <input name="companyAddress" value={formData.companyAddress} onChange={handleChange} className={`input peer w-full h-10 transition duration-150 ease-in-out ${missingFields.includes("companyAddress") ? "ring-2 ring-red-500 shadow-md" : "border border-gray-300"}`} required />
+                <label className="floating-label">Company Address</label>
               </div>
               <button type="button" onClick={nextStep} className="bg-blue-500 text-white rounded py-2 hover:bg-blue-600">Next</button>
             </div>
@@ -181,11 +207,11 @@ function Shopkeeper() {
           {step === 3 && (
             <div className="grid grid-cols-1 gap-4 animate-fade-in">
               <div className="relative">
-                <input name="password" type="password" value={formData.password} onChange={handleChange} className="input peer" required />
+                <input name="password" type="password" value={formData.password} onChange={handleChange} className="input peer w-full h-10 border border-gray-300" required />
                 <label className="floating-label">Password</label>
               </div>
               <div className="relative">
-                <input name="confirmPassword" type="password" value={formData.confirmPassword} onChange={handleChange} className="input peer" required />
+                <input name="confirmPassword" type="password" value={formData.confirmPassword} onChange={handleChange} className="input peer w-full h-10 border border-gray-300" required />
                 <label className="floating-label">Confirm Password</label>
               </div>
               <div className="flex items-center gap-4 mt-2">
@@ -193,7 +219,7 @@ function Shopkeeper() {
                 <button type="button" onClick={generateCaptcha} className="text-sm text-blue-500 hover:underline">Refresh Captcha</button>
               </div>
               <div className="relative">
-                <input type="text" name="captchaInput" value={formData.captchaInput} onChange={handleChange} className="input peer" required />
+                <input type="text" name="captchaInput" value={formData.captchaInput} onChange={handleChange} className="input peer w-full h-10 border border-gray-300" required />
                 <label className="floating-label">Enter Captcha</label>
               </div>
               <button
@@ -231,7 +257,7 @@ function Shopkeeper() {
         .peer:not(:placeholder-shown) ~ .floating-label {
           top: -10px;
           left: 12px;
-          font-size: 0.75rem;
+          font-size: 1rem;
           color: #6B46C1;
           background: white;
           padding: 0 4px;

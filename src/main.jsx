@@ -19,6 +19,7 @@ import User from './components/Signup/User.jsx'
 import Shopdashboard from './components/Dashboards/Shopdashboard.jsx'
 import CustomerLookup from './components/Customer/CustomerLookup.jsx'
 import QrScanner from './components/Customer/QrScanner.jsx';
+import ShopkeeperProfile from './components/Shopkeeper_profile/Shopkeeper_profile.jsx'
 
 const router = createBrowserRouter([
    {
@@ -83,6 +84,11 @@ const router = createBrowserRouter([
         path:"/reset-password",
         element:<ResetPassword/>
       },
+
+      {
+        path:"/shopkeeper/profile",
+        element:<ShopkeeperProfile/>
+      }
 
     ]
 

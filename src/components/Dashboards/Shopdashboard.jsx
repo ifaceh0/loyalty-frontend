@@ -270,24 +270,24 @@
 
 
 
-import {
-  LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
-} from "recharts";
 
-import { useNavigate } from "react-router-dom";
+
+
+
+
+
+
+
+
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import {
+  LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
+  BarChart, Bar, LabelList 
+} from "recharts";
 import ShopkeeperProfile from "../Shopkeeper_profile/Shopkeeper_profile";
 import Shopkeeper_setting from "../Shopkeeper-setting/Shopkeeper_setting";
 import CustomerLookup from "../Customer/CustomerLookup";
-
-const demoGraphData = [
-  { date: "2025-06-01", users: 10, points: 200 },
-  { date: "2025-06-02", users: 15, points: 300 },
-  { date: "2025-06-03", users: 20, points: 400 },
-  { date: "2025-06-04", users: 25, points: 350 },
-  { date: "2025-06-05", users: 30, points: 500 },
-  { date: "2025-06-06", users: 35, points: 600 },
-];
 
 const Shopdashboard = () => {
   const navigate = useNavigate();
@@ -296,6 +296,8 @@ const Shopdashboard = () => {
   const [totalUsers, setTotalUsers] = useState(0);
   const [topVisitedUsers, setTopVisitedUsers] = useState([]);
   const [topSpendingUsers, setTopSpendingUsers] = useState([]);
+  const [monthlySalesData, setMonthlySalesData] = useState([]);
+  const [customerComparisonData, setCustomerComparisonData] = useState([]);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -305,6 +307,8 @@ const Shopdashboard = () => {
       navigate("/signin");
     } else {
       fetchDashboardData(token, shopId);
+      fetchMonthlySales(token, shopId);
+      fetchCustomerComparison(token, shopId);
     }
   }, [navigate]);
 
@@ -325,11 +329,65 @@ const Shopdashboard = () => {
     }
   };
 
+  const fetchMonthlySales = async (token, shopId) => {
+    try {
+      const res = await fetch(`https://loyalty-backend-java.onrender.com/api/dashboard/monthlySales/${shopId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const data = await res.json();
+      const sortedData = rotateMonthsToEndWithCurrent(data);
+      const withGrowth = sortedData.map((d, i, arr) => ({
+        ...d,
+        growth: i === 0 ? 0 : d.sales - arr[i - 1].sales
+      }));
+      setMonthlySalesData(withGrowth);
+    } catch (error) {
+      console.error("Error fetching monthly sales data:", error);
+    }
+  };
+
+  const fetchCustomerComparison = async (token, shopId) => {
+    try {
+      const res = await fetch(`https://loyalty-backend-java.onrender.com/api/dashboard/customerCount/${shopId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const data = await res.json();
+      const formatted = Object.entries(data).map(([key, value], i, arr) => {
+        const prev = i > 0 ? arr[i - 1][1] : value;
+        const growth = value - prev;
+        return { name: key, customers: value, growth };
+      });
+      setCustomerComparisonData(formatted);
+    } catch (error) {
+      console.error("Error fetching customer comparison data:", error);
+    }
+  };
+
+  const rotateMonthsToEndWithCurrent = (rawData) => {
+    const monthOrder = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const currentMonth = new Date().toLocaleString("default", { month: "short" });
+
+    const currentIndex = monthOrder.indexOf(currentMonth);
+    const rotated = [...monthOrder.slice(currentIndex + 1), ...monthOrder.slice(0, currentIndex + 1)];
+
+    return rotated.map((month) => ({
+      month,
+      sales: rawData[month] || 0
+    }));
+  };
+
+const currentYear = new Date().getFullYear();
   return (
     <div className="flex min-h-screen bg-gray-100">
       {/* Sidebar */}
       <aside className="w-64 bg-white p-6 shadow">
-        <h2 className="text-xl font-bold text-fuchsia-600 mb-6">Dashboard</h2>
+        <h2 className="text-xl font-bold text-fuchsia-600 mb-6">Shop Dashboard</h2>
         <nav className="space-y-2">
           <button
             onClick={() => setActiveTab("shopkeeper")}
@@ -354,95 +412,134 @@ const Shopdashboard = () => {
 
       {/* Main Content */}
       <main className="flex-1 p-6">
-        <div className="bg-white p-6 rounded-lg shadow">
-          <h2 className="text-2xl font-bold text-fuchsia-600 mb-4">User Statistics</h2>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
-            <div className="bg-white p-6 rounded-lg shadow text-center">
-              <h3 className="text-lg font-semibold text-gray-700">Total Registered Users</h3>
-              <p className="text-3xl font-bold text-fuchsia-600">{totalUsers}</p>
+        {/* Statistics Card */}
+        <section className="bg-white p-6 rounded-2xl shadow-xl mb-6">
+          <h2 className="text-2xl font-bold text-gray-800 mb-4">📊 User Statistics</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div className="bg-gradient-to-r from-fuchsia-100 to-fuchsia-50 p-6 rounded-xl shadow text-center hover:shadow-md transition duration-300">
+              <h3 className="text-md font-medium text-gray-600">Total Registered Users</h3>
+              <p className="text-4xl font-bold text-fuchsia-700 mt-2">{totalUsers}</p>
             </div>
           </div>
+        </section>
 
-          {/* Most Visitors */}
-          <div className="mb-8">
-            <h3 className="text-xl font-semibold text-gray-800 mb-2">Most Visitors</h3>
-            <div className="overflow-x-auto">
-              <table className="min-w-full border rounded-lg shadow-sm">
-                <thead className="bg-fuchsia-100 text-fuchsia-800 font-semibold">
-                  <tr>
-                    <th className="px-4 py-2 border">ID</th>
-                    <th className="px-4 py-2 border">First Name</th>
-                    <th className="px-4 py-2 border">Last Name</th>
-                    <th className="px-4 py-2 border">E-mail</th>
-                    <th className="px-4 py-2 border">Phone Number</th>
-                    <th className="px-4 py-2 border">No. of Visiting</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {topVisitedUsers.map((user) => (
-                    <tr key={user.userId} className="text-center">
-                      <td className="px-4 py-2 border">{user.userId}</td>
-                      <td className="px-4 py-2 border">{user.firstName}</td>
-                      <td className="px-4 py-2 border">{user.lastName}</td>
-                      <td className="px-4 py-2 border">{user.email}</td>
-                      <td className="px-4 py-2 border">{user.phone}</td>
-                      <td className="px-4 py-2 border">{user.visitCount}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
+        {/* Monthly Sales Bar Chart */}
+        <section className="bg-white p-6 rounded-2xl shadow-xl mb-6">
+          <h3 className="text-2xl font-bold text-gray-800 mb-4">📊 Monthly Sales (Last 12 Months) - ({currentYear})</h3>
+          <ResponsiveContainer width="100%" height={320}>
+            <BarChart data={monthlySalesData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+              <defs>  
+                <linearGradient id="salesGradient" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#d946ef" stopOpacity={0.8} />
+                  <stop offset="95%" stopColor="#f0abfc" stopOpacity={0.3} />
+                </linearGradient>
+              </defs>
+              <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+              <XAxis dataKey="month" tick={{ fill: "#6b7280", fontSize: 12 }} />
+              <YAxis tickFormatter={(val) => `₹${val}`} tick={{ fill: "#6b7280", fontSize: 12 }} />
+              <Tooltip formatter={(value) => [`₹${value}`, "Sales"]} />
+              <Legend />
+              <Bar dataKey="sales" fill="url(#salesGradient)" radius={[8, 8, 0, 0]} name="Sales ₹">
+                <LabelList dataKey="growth" position="top" formatter={(val) => `${val >= 0 ? "+" : ""}${val}`} />
+              </Bar>
+            </BarChart>
+          </ResponsiveContainer>
+        </section>
 
-          {/* Most Revenue */}
-          <div>
-            <h3 className="text-xl font-semibold text-gray-800 mb-2">Most Revenue</h3>
-            <div className="overflow-x-auto">
-              <table className="min-w-full border rounded-lg shadow-sm">
-                <thead className="bg-green-100 text-green-800 font-semibold">
-                  <tr>
-                    <th className="px-4 py-2 border">ID</th>
-                    <th className="px-4 py-2 border">First Name</th>
-                    <th className="px-4 py-2 border">Last Name</th>
-                    <th className="px-4 py-2 border">E-mail</th>
-                    <th className="px-4 py-2 border">Phone Number</th>
-                    <th className="px-4 py-2 border">Most Revenue</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {topSpendingUsers.map((user) => (
-                    <tr key={user.userId} className="text-center">
-                      <td className="px-4 py-2 border">{user.userId}</td>
-                      <td className="px-4 py-2 border">{user.firstName}</td>
-                      <td className="px-4 py-2 border">{user.lastName}</td>
-                      <td className="px-4 py-2 border">{user.email}</td>
-                      <td className="px-4 py-2 border">{user.phone}</td>
-                      <td className="px-4 py-2 border">${user.totalSpent}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-        {/* Graph (Static for now) */}
-        <div className="bg-white p-6 rounded-lg shadow mb-8 mt-6">
-          <h3 className="text-xl font-bold text-gray-700 mb-4">User Growth & Loyalty Points</h3>
+        {/* Customer Count Comparison Bar Chart */}
+        {/* <section className="bg-white p-6 rounded-2xl shadow-xl mb-6">
+          <h3 className="text-2xl font-bold text-gray-800 mb-4">📈 Customer Count Comparison</h3>
           <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={demoGraphData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="date" />
-              <YAxis />
+            <BarChart data={customerComparisonData} margin={{ top: 10, right: 30, left: 0, bottom: 10 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+              <XAxis dataKey="name" tick={{ fill: "#6b7280" }} />
+              <YAxis tick={{ fill: "#6b7280" }} />
               <Tooltip />
               <Legend />
-              <Line type="monotone" dataKey="users" stroke="#8884d8" name="Users" />
-              <Line type="monotone" dataKey="points" stroke="#82ca9d" name="Loyalty Points" />
-            </LineChart>
+              <Bar dataKey="customers" fill="#9333ea" barSize={50} radius={[10, 10, 0, 0]} />
+            </BarChart>
           </ResponsiveContainer>
-        </div>
+        </section> */}
 
+        <section className="bg-white p-6 rounded-2xl shadow-xl mb-6">
+          <h3 className="text-2xl font-bold text-gray-800 mb-4">📈 Customer Count Comparison ({currentYear})</h3>
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={customerComparisonData} margin={{ top: 10, right: 30, left: 0, bottom: 10 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+              <XAxis dataKey="name" tick={{ fill: "#6b7280" }} />
+              <YAxis tick={{ fill: "#6b7280" }} />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="customers" fill="#9333ea" barSize={50} radius={[10, 10, 0, 0]}>
+                <LabelList dataKey="growth" position="top" formatter={(val) => `${val >= 0 ? "+" : ""}${val}`} />
+              </Bar>
+            </BarChart>
+          </ResponsiveContainer>
+        </section>
+
+        {/* Most Visitors Table */}
+        <section className="bg-white p-6 rounded-2xl shadow-xl mb-6">
+          <h3 className="text-xl font-semibold text-gray-800 mb-4">👥 Most Visitors</h3>
+          <div className="overflow-x-auto rounded-lg">
+            <table className="min-w-full bg-white text-sm border border-gray-200">
+              <thead className="bg-fuchsia-100 text-fuchsia-800">
+                <tr>
+                  <th className="px-4 py-3 text-left border-b">ID</th>
+                  <th className="px-4 py-3 text-left border-b">First Name</th>
+                  <th className="px-4 py-3 text-left border-b">Last Name</th>
+                  <th className="px-4 py-3 text-left border-b">Email</th>
+                  <th className="px-4 py-3 text-left border-b">Phone</th>
+                  <th className="px-4 py-3 text-left border-b">Visits</th>
+                </tr>
+              </thead>
+              <tbody className="text-gray-700">
+                {topVisitedUsers.map((user) => (
+                  <tr key={user.userId} className="hover:bg-fuchsia-50 transition">
+                    <td className="px-4 py-3 border-b">{user.userId}</td>
+                    <td className="px-4 py-3 border-b">{user.firstName}</td>
+                    <td className="px-4 py-3 border-b">{user.lastName}</td>
+                    <td className="px-4 py-3 border-b">{user.email}</td>
+                    <td className="px-4 py-3 border-b">{user.phone}</td>
+                    <td className="px-4 py-3 border-b">{user.visitCount}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        {/* Most Revenue Table */}
+        <section className="bg-white p-6 rounded-2xl shadow-xl mb-6">
+          <h3 className="text-xl font-semibold text-gray-800 mb-4">💰 Top Revenue Generators</h3>
+          <div className="overflow-x-auto rounded-lg">
+            <table className="min-w-full bg-white text-sm border border-gray-200">
+              <thead className="bg-green-100 text-green-800">
+                <tr>
+                  <th className="px-4 py-3 text-left border-b">ID</th>
+                  <th className="px-4 py-3 text-left border-b">First Name</th>
+                  <th className="px-4 py-3 text-left border-b">Last Name</th>
+                  <th className="px-4 py-3 text-left border-b">Email</th>
+                  <th className="px-4 py-3 text-left border-b">Phone</th>
+                  <th className="px-4 py-3 text-left border-b">Revenue</th>
+                </tr>
+              </thead>
+              <tbody className="text-gray-700">
+                {topSpendingUsers.map((user) => (
+                  <tr key={user.userId} className="hover:bg-green-50 transition">
+                    <td className="px-4 py-3 border-b">{user.userId}</td>
+                    <td className="px-4 py-3 border-b">{user.firstName}</td>
+                    <td className="px-4 py-3 border-b">{user.lastName}</td>
+                    <td className="px-4 py-3 border-b">{user.email}</td>
+                    <td className="px-4 py-3 border-b">{user.phone}</td>
+                    <td className="px-4 py-3 border-b font-semibold">₹{user.totalSpent}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        {/* Conditional Tabs */}
         {activeTab === "shopkeeper" && <ShopkeeperProfile />}
         {activeTab === "shopkeeper_setting" && <Shopkeeper_setting />}
         {activeTab === "interactions" && <CustomerLookup />}
