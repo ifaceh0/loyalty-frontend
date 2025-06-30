@@ -370,7 +370,7 @@ const QrScanner = ({ onClose }) => {
               <div className="absolute border-2 border-green-500 rounded w-60 h-56 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
             </div>
           ) : (
-            <div className="w-full border border-green-300 w-[350px] min-h-[380px] rounded p-4 text-sm mb-4">
+            <div className="w-full border border-green-300 min-h-[380px] rounded p-4 text-sm mb-4">
               <p><strong>Name:</strong> {scannedData.userName}</p><br />
               <p><strong>Email:</strong> {scannedData.email}</p><br />
               <p><strong>Phone:</strong> {scannedData.phone}</p><br />

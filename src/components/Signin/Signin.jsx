@@ -1,9 +1,8 @@
-
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import Confetti from "react-confetti";
-import { Fullscreen } from "lucide-react";
+import { Eye, EyeOff, Lock, Mail } from "lucide-react";
 
 const Signin = () => {
   const navigate = useNavigate();
@@ -18,9 +17,12 @@ const Signin = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
-    generateCaptcha();
+    setTimeout(() => {
+      generateCaptcha();
+    }, 100);
   }, []);
 
   const generateCaptcha = () => {
@@ -50,6 +52,12 @@ const Signin = () => {
     e.preventDefault();
     setError("");
 
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      setError("Please enter a valid email address.");
+      return;
+    }
+
     if (formData.captchaInput.trim().toUpperCase() !== captchaText.toUpperCase()) {
       setError("Invalid CAPTCHA");
       generateCaptcha();
@@ -75,7 +83,6 @@ const Signin = () => {
       const decoded = jwtDecode(token);
       const role = decoded.role;
 
-      // Save to localStorage
       localStorage.setItem("isLoggedIn", "true");
       localStorage.setItem("token", token);
       localStorage.setItem("id", data.id);
@@ -92,7 +99,6 @@ const Signin = () => {
           setError("Unrecognized role.");
         }
       }, 1500);
-
     } catch (err) {
       setError(err.message);
     } finally {
@@ -103,55 +109,36 @@ const Signin = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-100 to-purple-200 flex items-center justify-center px-4 relative">
       {success && <Confetti recycle={false} numberOfPieces={250} />}
-      <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md animate-fade-in">
+      <div className="bg-white p-10 rounded-3xl shadow-xl w-full max-w-md animate-fade-in">
         <h2 className="text-3xl font-bold text-center text-purple-700 mb-6">Sign In</h2>
         {error && <p className="text-red-500 text-sm mb-4 text-center animate-pulse">{error}</p>}
         {success && <p className="text-green-600 text-sm mb-4 text-center animate-bounce">✅ Sign in successful!</p>}
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="relative">
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              className="input peer w-full h-10 border border-gray-300"
-              required
-              placeholder=" "
-            />
-            <label className="floating-label">Email Address</label>
-          </div>
+        <form onSubmit={handleSubmit} className="space-y-5">
+          <FloatingInput label="Email Address" name="email" value={formData.email} onChange={handleChange} type="email" Icon={Mail} />
 
-          <div className="relative">
-            <input
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              className="input peer w-full h-10 border border-gray-300"
-              required
-              placeholder=" "
-            />
-            <label className="floating-label">Password</label>
-          </div>
+          <FloatingInput
+            label="Password"
+            name="password"
+            type={showPassword ? "text" : "password"}
+            value={formData.password}
+            onChange={handleChange}
+            Icon={Lock}
+            ToggleIcon={showPassword ? EyeOff : Eye}
+            onToggle={() => setShowPassword(!showPassword)}
+          />
 
           <div className="flex items-center gap-4 mt-2">
             <canvas ref={canvasRef} width={110} height={40} className="border border-gray-300 rounded" />
             <button type="button" onClick={generateCaptcha} className="text-sm text-blue-500 hover:underline">Refresh Captcha</button>
           </div>
 
-          <div className="relative">
-            <input
-              type="text"
-              name="captchaInput"
-              value={formData.captchaInput}
-              onChange={handleChange}
-              className="input peer w-full h-10 border border-gray-300"
-              required
-              placeholder=" "
-            />
-            <label className="floating-label">Enter Captcha</label>
-          </div>
+          <FloatingInput
+            label="Enter Captcha"
+            name="captchaInput"
+            value={formData.captchaInput}
+            onChange={handleChange}
+          />
 
           <div className="text-right">
             <button type="button" onClick={() => navigate("/forgot-password")} className="text-sm text-blue-500 hover:underline">
@@ -162,7 +149,7 @@ const Signin = () => {
           <button
             type="submit"
             disabled={loading}
-            className={`w-full flex justify-center items-center bg-purple-600 text-white py-2 rounded-lg transition duration-200 ${loading ? "opacity-70 cursor-not-allowed" : "hover:bg-purple-700"}`}
+            className={`w-full flex justify-center items-center bg-purple-600 text-white py-3 text-lg rounded-xl transition duration-200 ${loading ? "opacity-70 cursor-not-allowed" : "hover:bg-purple-700"}`}
           >
             {loading ? (
               <span className="flex items-center gap-2">
@@ -175,27 +162,6 @@ const Signin = () => {
       </div>
 
       <style>{`
-        .input {
-          @apply w-full px-4 py-2 border border-gray-300 rounded-lg bg-transparent focus:outline-none focus:ring-2 focus:ring-purple-300;
-        }
-        .floating-label {
-          position: absolute;
-          left: 16px;
-          top: 10px;
-          color: #999;
-          pointer-events: none;
-          transform: translateY(0);
-          transition: all 0.2s ease;
-        }
-        .peer:focus ~ .floating-label,
-        .peer:not(:placeholder-shown) ~ .floating-label {
-          top: -10px;
-          left: 12px;
-          font-size: 1rem;
-          color: #6B46C1;
-          background: white;
-          padding: 0 4px;
-        }
         @keyframes fade-in {
           from { opacity: 0; transform: scale(0.9); }
           to { opacity: 1; transform: scale(1); }
@@ -204,46 +170,38 @@ const Signin = () => {
           animation: fade-in 0.5s ease-in-out;
         }
       `}</style>
-      {/* <style>{`
-        .input {
-          @apply w-full px-4 py-2 border border-gray-300 rounded-lg bg-transparent focus:outline-none focus:ring-2 focus:ring-purple-300;
-        }
-
-        .floating-label {
-          position: absolute;
-          left: 16px;
-          top: -10px;
-          font-size: 0.875rem;
-          color: #6B46C1;
-          background: white;
-          padding: 0 4px;
-          pointer-events: none;
-        }    
-      `}</style> */}
-      
     </div>
   );
 };
 
-function FloatingInput({ label, name, value, onChange, type = "text", Icon }) {
+function FloatingInput({ label, name, value, onChange, type = "text", Icon, ToggleIcon, onToggle }) {
   return (
-    <div className="relative">
-      {Icon && <Icon className="absolute left-3 top-3.5 h-5 w-5 text-gray-400" />}
+    <div className="relative border border-purple-400 rounded-sm px-2 pt-2 mb-4 w-full group focus-within:border-2 focus-within:border-purple-600">
+      <label
+        htmlFor={name}
+        className="absolute -top-2 left-2 bg-white px-1 text-sm text-purple-600 group-focus-within:text-purple-800 transition-all"
+      >
+        {label}
+      </label>
+      {Icon && <Icon className="absolute left-3 top-3 h-5 w-5 text-purple-400" />}
       <input
         type={type}
         name={name}
         value={value}
         onChange={onChange}
-        required
         placeholder=" "
-        className="peer w-full px-10 py-3 bg-white/60 backdrop-blur-md border border-gray-300 rounded-md text-gray-900 placeholder-transparent focus:outline-none focus:ring-2 focus:ring-purple-400"
+        className="w-full px-10 py-3 text-lg text-gray-900 bg-transparent focus:outline-none"
+        required
       />
-      <label
-        htmlFor={name}
-        className="absolute left-10 top-3 text-gray-500 text-sm transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-focus:top-1 peer-focus:text-sm peer-focus:text-purple-600 bg-white/70 px-1"
-      >
-        {label}
-      </label>
+      {ToggleIcon && (
+        <button
+          type="button"
+          onClick={onToggle}
+          className="absolute right-3 top-3 text-gray-600 hover:text-purple-600"
+        >
+          <ToggleIcon className="h-5 w-5" />
+        </button>
+      )}
     </div>
   );
 }
