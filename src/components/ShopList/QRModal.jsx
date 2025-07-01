@@ -85,7 +85,7 @@ export default function QRModal({ shop, qrData, isOpen, onClose }) {
 
         {qrData.qrCode && (
           <div className="flex justify-center my-4">
-            <img src={qrData.qrCode} alt="QR Code" className="w-40 h-40" />
+            <img src={qrData.qrCode} alt="QR Code" className="w-50 h-40" />
           </div>
         )}
 

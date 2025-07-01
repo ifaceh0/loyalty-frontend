@@ -100,6 +100,7 @@ export default function ExploreShops() {
   useEffect(() => {
     const fetchShops = async () => {
       try {
+        setLoading(true);
         const token = localStorage.getItem('token');
         const userId = localStorage.getItem('id');
 
@@ -122,6 +123,8 @@ export default function ExploreShops() {
         setShops(data);
       } catch (err) {
         setError(err.message || 'Something went wrong');
+      }finally {
+      setLoading(false); 
       }
     };
 
@@ -131,7 +134,7 @@ export default function ExploreShops() {
   // Handle QR button click
   const handleGenerateQR = async (shop) => {
     try {
-      setLoading(true);
+      // setLoading(true);
       setError(null);
       const token = localStorage.getItem('token');
       const userId = localStorage.getItem('id');
@@ -177,7 +180,13 @@ export default function ExploreShops() {
       </motion.h1>
 
       {error && <p className="text-red-500 text-center">{error}</p>}
-      {loading && <p className="text-blue-600 text-center">Loading...</p>}
+      {/* {loading && <p className="text-blue-600 text-center">Loading...</p>} */}
+      {loading && (
+        <div className="flex justify-center mt-4 mb-6">
+          <div className="w-10 h-10 border-4 border-blue-300 border-t-blue-600 rounded-full animate-spin"></div>
+        </div>
+      )}
+
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {shops.map((shop, index) => (

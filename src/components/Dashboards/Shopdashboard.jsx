@@ -288,6 +288,7 @@ import {
 import ShopkeeperProfile from "../Shopkeeper_profile/Shopkeeper_profile";
 import Shopkeeper_setting from "../Shopkeeper-setting/Shopkeeper_setting";
 import CustomerLookup from "../Customer/CustomerLookup";
+import UserPurchaseChart from "../bar chart/UserPurchaseChart";
 
 const Shopdashboard = () => {
   const navigate = useNavigate();
@@ -360,7 +361,8 @@ const Shopdashboard = () => {
       const data = await res.json();
       const formatted = Object.entries(data).map(([key, value], i, arr) => {
         const prev = i > 0 ? arr[i - 1][1] : value;
-        const growth = value - prev;
+        // const growth = value - prev;
+        const growth = prev !== 0 ? ((value - prev) / prev) * 100 : 0;
         return { name: key, customers: value, growth };
       });
       setCustomerComparisonData(formatted);
@@ -412,73 +414,67 @@ const currentYear = new Date().getFullYear();
 
       {/* Main Content */}
       <main className="flex-1 p-6">
-        {/* Statistics Card */}
-        <section className="bg-white p-6 rounded-2xl shadow-xl mb-6">
-          <h2 className="text-2xl font-bold text-gray-800 mb-4">📊 User Statistics</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <div className="bg-gradient-to-r from-fuchsia-100 to-fuchsia-50 p-6 rounded-xl shadow text-center hover:shadow-md transition duration-300">
-              <h3 className="text-md font-medium text-gray-600">Total Registered Users</h3>
-              <p className="text-4xl font-bold text-fuchsia-700 mt-2">{totalUsers}</p>
-            </div>
-          </div>
-        </section>
+        <UserPurchaseChart />
 
         {/* Monthly Sales Bar Chart */}
-        <section className="bg-white p-6 rounded-2xl shadow-xl mb-6">
-          <h3 className="text-2xl font-bold text-gray-800 mb-4">📊 Monthly Sales (Last 12 Months) - ({currentYear})</h3>
+        {/* <section className="bg-white p-6 rounded-2xl shadow-xl mb-6"> */}
+          {/* <section className="mb-6">
+          <h3 className="text-2xl font-semibold text-gray-800 mb-4">Monthly Sales (Last 12 Months) - ({currentYear})</h3>
           <ResponsiveContainer width="100%" height={320}>
-            <BarChart data={monthlySalesData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+            <BarChart data={monthlySalesData} margin={{ top: 40, right: 30, left: 0, bottom: 0 }}>
               <defs>  
                 <linearGradient id="salesGradient" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="5%" stopColor="#d946ef" stopOpacity={0.8} />
-                  <stop offset="95%" stopColor="#f0abfc" stopOpacity={0.3} />
+                  
                 </linearGradient>
               </defs>
-              <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+              
               <XAxis dataKey="month" tick={{ fill: "#6b7280", fontSize: 12 }} />
               <YAxis tickFormatter={(val) => `₹${val}`} tick={{ fill: "#6b7280", fontSize: 12 }} />
               <Tooltip formatter={(value) => [`₹${value}`, "Sales"]} />
               <Legend />
-              <Bar dataKey="sales" fill="url(#salesGradient)" radius={[8, 8, 0, 0]} name="Sales ₹">
+              <Bar dataKey="sales" fill="url(#salesGradient)" barSize={40} radius={[8, 8, 0, 0]} name="Sales ₹">
                 <LabelList dataKey="growth" position="top" formatter={(val) => `${val >= 0 ? "+" : ""}${val}`} />
               </Bar>
             </BarChart>
           </ResponsiveContainer>
-        </section>
-
-        {/* Customer Count Comparison Bar Chart */}
-        {/* <section className="bg-white p-6 rounded-2xl shadow-xl mb-6">
-          <h3 className="text-2xl font-bold text-gray-800 mb-4">📈 Customer Count Comparison</h3>
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={customerComparisonData} margin={{ top: 10, right: 30, left: 0, bottom: 10 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-              <XAxis dataKey="name" tick={{ fill: "#6b7280" }} />
-              <YAxis tick={{ fill: "#6b7280" }} />
-              <Tooltip />
-              <Legend />
-              <Bar dataKey="customers" fill="#9333ea" barSize={50} radius={[10, 10, 0, 0]} />
-            </BarChart>
-          </ResponsiveContainer>
         </section> */}
-
-        <section className="bg-white p-6 rounded-2xl shadow-xl mb-6">
-          <h3 className="text-2xl font-bold text-gray-800 mb-4">📈 Customer Count Comparison ({currentYear})</h3>
+        
+        <section className="mb-6">
+          <h3 className="text-2xl font-semibold text-gray-800 mb-4">
+            Monthly Sales (Last 12 Months) - ({currentYear})
+          </h3>
+          <ResponsiveContainer width="100%" height={320}>
+            <LineChart data={monthlySalesData} margin={{ top: 40, right: 30, left: 0, bottom: 0 }}>
+              <XAxis dataKey="month" tick={{ fill: "#6b7280", fontSize: 12 }}/>
+              <YAxis tickFormatter={(val) => `₹${val}`} tick={{ fill: "#6b7280", fontSize: 12 }}/>
+              <Tooltip formatter={(value) => [`₹${value}`, "Sales"]} />
+              <Legend />
+              <Line type="monotone" dataKey="sales" stroke="#9333ea" strokeWidth={2} dot={{ r: 4 }} activeDot={{ r: 6 }} name="Sales ₹"/>
+            </LineChart>
+          </ResponsiveContainer>
+        </section>
+      
+        {/* Customer Count Comparison Bar Chart */}
+        <section className="mb-6">
+          <h3 className="text-2xl font-semibold text-gray-800 mb-4">Customer Count Comparison ({currentYear})</h3>
           <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={customerComparisonData} margin={{ top: 10, right: 30, left: 0, bottom: 10 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+            <BarChart data={customerComparisonData} margin={{ top: 40, right: 30, left: 0, bottom: 10 }}>
               <XAxis dataKey="name" tick={{ fill: "#6b7280" }} />
               <YAxis tick={{ fill: "#6b7280" }} />
               <Tooltip />
               <Legend />
-              <Bar dataKey="customers" fill="#9333ea" barSize={50} radius={[10, 10, 0, 0]}>
-                <LabelList dataKey="growth" position="top" formatter={(val) => `${val >= 0 ? "+" : ""}${val}`} />
+              <Bar dataKey="customers" fill="#9333ea" barSize={40} radius={[10, 10, 0, 0]}>
+                {/* <LabelList dataKey="growth" position="top" formatter={(val) => `${val >= 0 ? "+" : ""}${val}`} /> */}
+                <LabelList dataKey="growth" position="top" formatter={(val) => `${val >= 0 ? "+" : ""}${val.toFixed(1)}%`} />
               </Bar>
             </BarChart>
           </ResponsiveContainer>
         </section>
 
         {/* Most Visitors Table */}
-        <section className="bg-white p-6 rounded-2xl shadow-xl mb-6">
+        {/* <section className="bg-white p-6 rounded-2xl shadow-xl mb-6"> */}
+        <section className="mb-6">
           <h3 className="text-xl font-semibold text-gray-800 mb-4">👥 Most Visitors</h3>
           <div className="overflow-x-auto rounded-lg">
             <table className="min-w-full bg-white text-sm border border-gray-200">
@@ -509,7 +505,8 @@ const currentYear = new Date().getFullYear();
         </section>
 
         {/* Most Revenue Table */}
-        <section className="bg-white p-6 rounded-2xl shadow-xl mb-6">
+        {/* <section className="bg-white p-6 rounded-2xl shadow-xl mb-6"> */}
+        <section className="mb-6">
           <h3 className="text-xl font-semibold text-gray-800 mb-4">💰 Top Revenue Generators</h3>
           <div className="overflow-x-auto rounded-lg">
             <table className="min-w-full bg-white text-sm border border-gray-200">
