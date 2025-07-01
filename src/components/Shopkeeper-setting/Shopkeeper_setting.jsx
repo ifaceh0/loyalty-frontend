@@ -208,84 +208,202 @@ const Shopkeeper_setting = () => {
     }
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  // if (isLoading) return <div>Loading...</div>;
+  if (isLoading) {
+    return (
+      <div className="flex flex-col items-center justify-center h-[60vh]">
+        <svg
+          className="animate-spin h-10 w-10 text-blue-500 mb-4"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <circle
+            className="opacity-25"
+            cx="12" cy="12" r="10"
+            stroke="currentColor"
+            strokeWidth="4"
+          />
+          <path
+            className="opacity-75"
+            fill="currentColor"
+            d="M4 12a8 8 0 018-8v8z"
+          />
+        </svg>
+        <p className="text-blue-700 font-semibold text-lg animate-pulse">
+          Loading Shopkeeper Settings...
+        </p>
+      </div>
+    );
+  }
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-xl mx-auto p-4 bg-white shadow rounded-lg space-y-4">
-      <div className="flex justify-between items-center">
-        <h2 className="text-xl font-semibold text-gray-700">Shopkeeper Settings</h2>
+    <form onSubmit={handleSubmit} className="max-w-3xl mx-auto p-8 bg-white rounded-2xl shadow-xl space-y-6 border border-fuchsia-100">
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-2xl font-bold text-fuchsia-700">⚙️ Shopkeeper Settings</h2>
         {!isEditMode && (
-          <button type="button" onClick={() => setIsEditMode(true)} className="w-36 bg-green-500 text-white py-2 rounded-lg">
+          <button
+            type="button"
+            onClick={() => setIsEditMode(true)}
+            className="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg shadow transition"
+          >
             Edit
           </button>
         )}
       </div>
 
       <div>
-        <label className="block font-medium mb-1">Sign-up Bonus Points</label>
-        <input type="number" name="signUpBonusPoints" value={formData.signUpBonusPoints} onChange={handleChange} disabled={!isEditMode} className="w-full px-4 py-2 border rounded-lg" />
+        <label className="block text-sm font-medium text-gray-700 mb-1">Sign-up Bonus Points</label>
+        <input
+          type="number"
+          name="signUpBonusPoints"
+          value={formData.signUpBonusPoints}
+          onChange={handleChange}
+          disabled={!isEditMode}
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-fuchsia-400 focus:outline-none"
+        />
       </div>
 
-      <div className="flex gap-4">
-        <div className="w-full">
-          <label className="block font-medium mb-1">$ Amount (Fixed)</label>
-          <input type="number" name="dollarAmount" value={formData.dollarAmount} disabled className="w-full px-4 py-2 border rounded-lg bg-gray-100" />
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">$ Amount (Fixed)</label>
+          <input
+            type="number"
+            name="dollarAmount"
+            value={formData.dollarAmount}
+            disabled
+            className="w-full px-4 py-2 bg-gray-100 border border-gray-300 rounded-lg"
+          />
         </div>
-        <div className="w-full">
-          <label className="block font-medium mb-1">Points</label>
-          <input type="number" name="pointsAmount" value={formData.pointsAmount} onChange={handleChange} disabled={!isEditMode} className="w-full px-4 py-2 border rounded-lg" />
-        </div>
-      </div>
-
-      <div>
-        <label className="block font-medium mb-1">Milestone Bonus Amount ($)</label>
-        <input type="number" name="milestoneBonusAmount" value={formData.milestoneBonusAmount} onChange={handleChange} disabled={!isEditMode} className="w-full px-4 py-2 border rounded-lg" />
-      </div>
-
-      <div>
-        <label className="block font-medium mb-1">Special Bonus Name</label>
-        <input type="text" name="specialBonusName" value={formData.specialBonusName} onChange={handleChange} disabled={!isEditMode} className="w-full px-4 py-2 border rounded-lg" />
-      </div>
-
-      <div>
-        <label className="block font-medium mb-1">Special Bonus Points</label>
-        <input type="number" name="specialBonusPoints" value={formData.specialBonusPoints} onChange={handleChange} disabled={!isEditMode} className="w-full px-4 py-2 border rounded-lg" />
-      </div>
-
-      <div className="flex gap-4">
-        <div className="w-full">
-          <label className="block font-medium mb-1">Special Bonus Start Date</label>
-          <input type="date" name="specialBonusStartDate" value={formData.specialBonusStartDate} onChange={handleChange} disabled={!isEditMode} className="w-full px-4 py-2 border rounded-lg" />
-        </div>
-        <div className="w-full">
-          <label className="block font-medium mb-1">Special Bonus End Date</label>
-          <input type="date" name="specialBonusEndDate" value={formData.specialBonusEndDate} onChange={handleChange} disabled={!isEditMode} className="w-full px-4 py-2 border rounded-lg" />
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Points</label>
+          <input
+            type="number"
+            name="pointsAmount"
+            value={formData.pointsAmount}
+            onChange={handleChange}
+            disabled={!isEditMode}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-purple-400 focus:outline-none"
+          />
         </div>
       </div>
 
       <div>
-        <label className="block font-medium mb-1">Bonus Description</label>
-        <textarea name="bonusDescription" value={formData.bonusDescription} onChange={handleChange} disabled={!isEditMode} className="w-full px-4 py-2 border rounded-lg" />
+        <label className="block text-sm font-medium text-gray-700 mb-1">Milestone Bonus Amount ($)</label>
+        <input
+          type="number"
+          name="milestoneBonusAmount"
+          value={formData.milestoneBonusAmount}
+          onChange={handleChange}
+          disabled={!isEditMode}
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+        />
       </div>
 
-      <div className="flex gap-4">
-        <div className="w-full">
-          <label className="block font-medium mb-1">Begin Date</label>
-          <input type="date" name="beginDate" value={formData.beginDate} onChange={handleChange} disabled={!isEditMode} className="w-full px-4 py-2 border rounded-lg" />
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Special Bonus Name</label>
+          <input
+            type="text"
+            name="specialBonusName"
+            value={formData.specialBonusName}
+            onChange={handleChange}
+            disabled={!isEditMode}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+          />
         </div>
-        <div className="w-full">
-          <label className="block font-medium mb-1">End Date</label>
-          <input type="date" name="endDate" value={formData.endDate} onChange={handleChange} disabled={!isEditMode} className="w-full px-4 py-2 border rounded-lg" />
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Special Bonus Points</label>
+          <input
+            type="number"
+            name="specialBonusPoints"
+            value={formData.specialBonusPoints}
+            onChange={handleChange}
+            disabled={!isEditMode}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+          />
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Special Bonus Start Date</label>
+          <input
+            type="date"
+            name="specialBonusStartDate"
+            value={formData.specialBonusStartDate}
+            onChange={handleChange}
+            disabled={!isEditMode}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Special Bonus End Date</label>
+          <input
+            type="date"
+            name="specialBonusEndDate"
+            value={formData.specialBonusEndDate}
+            onChange={handleChange}
+            disabled={!isEditMode}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+          />
         </div>
       </div>
 
       <div>
-        <label className="block font-medium mb-1">Amount Off ($)</label>
-        <input type="number" name="amountOff" value={formData.amountOff} onChange={handleChange} disabled={!isEditMode} className="w-full px-4 py-2 border rounded-lg" />
+        <label className="block text-sm font-medium text-gray-700 mb-1">Bonus Description</label>
+        <textarea
+          name="bonusDescription"
+          value={formData.bonusDescription}
+          onChange={handleChange}
+          disabled={!isEditMode}
+          rows="3"
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+        />
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Begin Date</label>
+          <input
+            type="date"
+            name="beginDate"
+            value={formData.beginDate}
+            onChange={handleChange}
+            disabled={!isEditMode}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">End Date</label>
+          <input
+            type="date"
+            name="endDate"
+            value={formData.endDate}
+            onChange={handleChange}
+            disabled={!isEditMode}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+          />
+        </div>
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">Amount Off ($)</label>
+        <input
+          type="number"
+          name="amountOff"
+          value={formData.amountOff}
+          onChange={handleChange}
+          disabled={!isEditMode}
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg"
+        />
       </div>
 
       {isEditMode && (
-        <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">
+        <button
+          type="submit"
+          className="w-full bg-fuchsia-600 hover:bg-fuchsia-700 text-white font-semibold py-2 rounded-lg shadow transition"
+        >
           Save Settings
         </button>
       )}

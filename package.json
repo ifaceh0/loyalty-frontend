@@ -11,11 +11,13 @@
   },
   "dependencies": {
     "@zxing/browser": "^0.1.5",
+    "antd": "^5.26.3",
     "framer-motion": "^12.18.1",
     "jwt-decode": "^4.0.0",
     "lucide-react": "^0.515.0",
     "react": "^19.0.0",
     "react-confetti": "^6.4.0",
+    "react-countup": "^6.5.3",
     "react-dom": "^19.0.0",
     "react-icons": "^5.5.0",
     "react-phone-input-2": "^2.15.1",

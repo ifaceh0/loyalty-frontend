@@ -324,6 +324,8 @@ const QrScanner = ({ onClose }) => {
   const [successAnimation, setSuccessAnimation] = useState(false);
   const [associated, setAssociated] = useState(true);
   const [showErrorPopup, setShowErrorPopup] = useState(false);
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+
 
   const playBeep = () => {
     const context = new AudioContext();
@@ -532,6 +534,7 @@ const QrScanner = ({ onClose }) => {
           verifiedBalance: pointsResult.newBalance,
         }));
         setSuccessAnimation(true);
+        setShowSuccessPopup(true); // ✅ Show success popup
         setTimeout(() => setSuccessAnimation(false), 1000);
         e.target.reset();
       } else {
@@ -546,81 +549,102 @@ const QrScanner = ({ onClose }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
-      {/* Main Scanner UI */}
-      {!showErrorPopup && (
-        <div className="bg-white rounded-lg p-4 w-[450px] min-h-[580px] shadow-lg flex flex-col items-center justify-center">
-          <h2 className="text-lg font-semibold mb-2">Scan QR Code</h2>
+      {/* Relative container for overlap */}
+      <div className="relative">
+        {/* Main Scanner UI */}
+        {!showErrorPopup && (
+          <div className="bg-white rounded-lg p-4 w-[450px] min-h-[580px] shadow-lg flex flex-col items-center justify-center relative z-10">
+            <h2 className="text-lg font-semibold mb-2">Scan QR Code</h2>
 
-          {!scannedData ? (
-            <div className="relative w-[380px] h-[400px] border-4 border-blue-500 rounded overflow-hidden mb-2">
-              <video ref={videoRef} className="w-full h-full object-cover" />
-              <div className="absolute border-2 border-green-500 rounded w-60 h-56 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
-            </div>
-          ) : (
-            <div className="w-full border border-green-300 min-h-[380px] rounded p-4 text-sm mb-4">
-              <p><strong>Name:</strong> {scannedData.userName}</p><br />
-              <p><strong>Email:</strong> {scannedData.email}</p><br />
-              <p><strong>Phone:</strong> {scannedData.phone}</p><br />
-              <p><strong>Customer ID:</strong> {scannedData.customerId}</p><br />
-              <p><strong>Shop:</strong> {scannedData.shopName}</p><br />
-              <p className={`transition-all font-bold ${successAnimation ? "text-green-600 scale-110" : ""}`}>
-                Balance: ₹{scannedData.verifiedBalance ?? scannedData.availableBalance ?? 0}
-              </p><br />
+            {!scannedData ? (
+              <div className="relative w-[380px] h-[400px] border-4 border-blue-500 rounded overflow-hidden mb-2">
+                <video ref={videoRef} className="w-full h-full object-cover" />
+                <div className="absolute border-2 border-green-500 rounded w-60 h-56 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
+              </div>
+            ) : (
+              <div className="w-full border border-gray-500 min-h-[380px] rounded p-4 text-sm mb-2">
+                <p><strong>Customer ID :</strong> CUST-{scannedData.customerId}</p><br />
+                <p><strong>Name :</strong> {scannedData.userName}</p><br />
+                <p><strong>Email :</strong> {scannedData.email}</p><br />
+                <p><strong>Phone Number :</strong> {scannedData.phone}</p><br />
+                <p><strong>Shop Name :</strong> {scannedData.shopName}</p><br />
+                <p className={`transition-all ${successAnimation ? "text-green-600 scale-110" : ""}`}>
+                  <strong>Available Points : </strong> {scannedData.verifiedBalance ?? scannedData.availableBalance ?? 0}
+                </p><br />
 
-              {associated && (
-                <form onSubmit={handleSubmitBoth} className="mt-4 flex flex-col gap-2">
-                  <input
-                    type="number"
-                    name="amount"
-                    min="1"
-                    placeholder="Enter points"
-                    required
-                    className="w-full px-3 py-2 border rounded"
-                  />
-                  <div className="relative">
-                    <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">$</span>
+                {associated && (
+                  <form onSubmit={handleSubmitBoth} className="mt-4 flex flex-col gap-2">
                     <input
                       type="number"
-                      name="dollar"
+                      name="amount"
                       min="1"
-                      placeholder="Enter the purchase amount"
+                      placeholder="Enter points"
                       required
-                      className="w-full pl-8 pr-3 py-2 border rounded"
+                      className="w-full px-3 py-2 border border-gray-500 rounded"
                     />
-                  </div>
-                  {error && <p className="text-red-500 text-sm">{error}</p>}
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className={`bg-green-600 text-white py-2 rounded hover:bg-green-700 ${isSubmitting ? "opacity-50 cursor-not-allowed" : ""}`}
-                  >
-                    {isSubmitting ? "Submitting..." : "Add Points & Amount"}
-                  </button>
-                </form>
-              )}
-            </div>
-          )}
-
-          {guidance && !scannedData && (
-            <p className="text-xs text-gray-600 mt-2 text-center whitespace-pre-line">{guidance}</p>
-          )}
-
-          <div className="mt-4 flex gap-3">
-            {scannedData && (
-              <button onClick={handleScanAgain} className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
-                Scan Again
-              </button>
+                    <div className="relative">
+                      <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-black-500 font-bold">$</span>
+                      <input
+                        type="number"
+                        name="dollar"
+                        min="1"
+                        placeholder="Enter the purchase amount"
+                        required
+                        className="w-full pl-8 pr-3 py-2 border border-gray-500 rounded"
+                      />
+                    </div>
+                    {error && <p className="text-red-500 text-sm">{error}</p>}
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className={`bg-purple-500 text-white py-2 rounded hover:bg-purple-600 ${isSubmitting ? "opacity-50 cursor-not-allowed" : ""}`}
+                    >
+                      {isSubmitting ? "Submitting..." : "Submit"}
+                    </button>
+                  </form>
+                )}
+              </div>
             )}
-            <button onClick={onClose} className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">
-              Close
-            </button>
-          </div>
-        </div>
-      )}
 
-      {/* Error Popup Modal */}
+            {guidance && !scannedData && (
+              <p className="text-xs text-gray-600 mt-2 text-center whitespace-pre-line">{guidance}</p>
+            )}
+
+            <div className="mt-4 flex gap-3">
+              {scannedData && (
+                <button onClick={handleScanAgain} className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+                  Scan Again
+                </button>
+              )}
+              <button onClick={onClose} className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">
+                Close
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Success Popup (overlapping) */}
+        {showSuccessPopup && (
+          <div className="absolute inset-0 flex items-center justify-center z-20">
+            <div className="bg-white rounded-lg shadow-2xl p-6 w-[380px] flex flex-col items-center justify-center border border-green-300 animate-fade-in">
+              <h3 className="text-xl font-semibold text-green-600 mb-4">Success</h3>
+              <p className="text-center text-gray-700 mb-6">
+                Points and purchase amount added successfully!
+              </p>
+              <button
+                onClick={() => setShowSuccessPopup(false)}
+                className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Error Popup */}
       {showErrorPopup && (
-        <div className="bg-white rounded-lg shadow-2xl p-6 w-[380px] flex flex-col items-center justify-center border border-red-300 animate-fade-in">
+        <div className="bg-white rounded-lg shadow-2xl p-6 w-[380px] flex flex-col items-center justify-center border border-red-300 animate-fade-in z-50">
           <h3 className="text-xl font-semibold text-red-600 mb-4">Invalid QR Code</h3>
           <p className="text-center text-gray-700 mb-6">
             This code does not belong to your shop.

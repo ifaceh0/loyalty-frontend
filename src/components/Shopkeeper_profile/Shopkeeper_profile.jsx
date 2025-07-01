@@ -42,89 +42,121 @@ const ShopkeeperProfile = () => {
       );
 
       if (response.ok) {
-        alert('Shopkeeper profile saved successfully');
+        alert('✅ Shopkeeper profile saved successfully!');
       } else {
         const errorData = await response.json();
         console.error('Backend error response:', errorData);
-        alert('Failed to save shopkeeper profile');
+        alert('❌ Failed to save shopkeeper profile. Please try again.');
       }
     } catch (error) {
       console.error('Error submitting shopkeeper profile:', error);
-      alert('An error occurred while saving data');
+      alert('⚠️ An error occurred while saving data');
     }
   };
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-md max-w-2xl mx-auto">
-      <h3 className="text-2xl font-semibold mb-6">Shopkeeper Profile</h3>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <input
-          type="text"
-          name="shopName"
-          value={formData.shopName}
-          onChange={handleChange}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-          placeholder="Shop Name"
-        />
+     <div className="bg-white p-8 rounded-2xl shadow-xl max-w-3xl mx-auto border border-fuchsia-100">
+      <h3 className="text-3xl font-bold text-fuchsia-700 mb-6 text-center">
+        🧾 Shopkeeper Profile
+      </h3>
 
-        <input
-          type="text"
-          name="shopOwner"
-          value={formData.shopOwner}
-          onChange={handleChange}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-          placeholder="Shop Owner"
-        />
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div>
+            <label className="block text-sm text-gray-600 mb-1">Shop Name</label>
+            <input
+              type="text"
+              name="shopName"
+              value={formData.shopName}
+              onChange={handleChange}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-fuchsia-400"
+              placeholder="Shop Name"
+              required
+            />
+          </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <input
-            type="text"
-            name="street"
-            value={formData.street}
-            onChange={handleChange}
-            className="px-4 py-2 border border-gray-300 rounded-lg"
-            placeholder="Street"
-          />
-          <input
-            type="text"
-            name="city"
-            value={formData.city}
-            onChange={handleChange}
-            className="px-4 py-2 border border-gray-300 rounded-lg"
-            placeholder="City"
-          />
-          <input
-            type="text"
-            name="state"
-            value={formData.state}
-            onChange={handleChange}
-            className="px-4 py-2 border border-gray-300 rounded-lg"
-            placeholder="State"
-          />
-          <input
-            type="text"
-            name="zipCode"
-            value={formData.zipCode}
-            onChange={handleChange}
-            className="px-4 py-2 border border-gray-300 rounded-lg"
-            placeholder="ZIP Code"
-          />
-          <input
-            type="text"
-            name="country"
-            value={formData.country}
-            onChange={handleChange}
-            className="px-4 py-2 border border-gray-300 rounded-lg"
-            placeholder="Country"
-          />
+          <div>
+            <label className="block text-sm text-gray-600 mb-1">Shop Owner</label>
+            <input
+              type="text"
+              name="shopOwner"
+              value={formData.shopOwner}
+              onChange={handleChange}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-fuchsia-400"
+              placeholder="Shop Owner Name"
+              required
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm text-gray-600 mb-1">Street</label>
+            <input
+              type="text"
+              name="street"
+              value={formData.street}
+              onChange={handleChange}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400"
+              placeholder="Street Address"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm text-gray-600 mb-1">City</label>
+            <input
+              type="text"
+              name="city"
+              value={formData.city}
+              onChange={handleChange}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400"
+              placeholder="City"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm text-gray-600 mb-1">State</label>
+            <input
+              type="text"
+              name="state"
+              value={formData.state}
+              onChange={handleChange}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400"
+              placeholder="State"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm text-gray-600 mb-1">ZIP Code</label>
+            <input
+              type="text"
+              name="zipCode"
+              value={formData.zipCode}
+              onChange={handleChange}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400"
+              placeholder="ZIP Code"
+            />
+          </div>
+
+          <div className="sm:col-span-2">
+            <label className="block text-sm text-gray-600 mb-1">Country</label>
+            <input
+              type="text"
+              name="country"
+              value={formData.country}
+              onChange={handleChange}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400"
+              placeholder="Country"
+            />
+          </div>
         </div>
 
-        <button
-          type="submit"
-          className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700"
-        >
-          Save
-        </button>
+        <div className="text-center">
+          <button
+            type="submit"
+            className="bg-fuchsia-600 hover:bg-fuchsia-700 text-white font-semibold px-8 py-2 rounded-xl transition duration-300"
+          >
+            Save Profile
+          </button>
+        </div>
       </form>
     </div>
   );
