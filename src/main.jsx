@@ -20,6 +20,7 @@ import Shopdashboard from './components/Dashboards/Shopdashboard.jsx'
 import CustomerLookup from './components/Customer/CustomerLookup.jsx'
 import QrScanner from './components/Customer/QrScanner.jsx';
 import ShopkeeperProfile from './components/Shopkeeper_profile/Shopkeeper_profile.jsx'
+import { SidebarProvider } from './context/SidebarContext.jsx';
 
 const router = createBrowserRouter([
    {
@@ -97,6 +98,9 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-   <RouterProvider router={router}/>
+   {/* <RouterProvider router={router}/> */}
+   <SidebarProvider>
+      <RouterProvider router={router} />
+    </SidebarProvider>
   </StrictMode>,
 )

@@ -11,7 +11,6 @@ const User_profile = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    // If needed, you can auto-calculate totalPoints here
     setFormData((prev) => ({
       ...prev,
       [name]: value,
@@ -30,8 +29,6 @@ const User_profile = () => {
         body: JSON.stringify(formData),
       });
 
-      
-
       if (res.ok) {
         alert('Transaction submitted successfully!');
         setFormData({
@@ -41,7 +38,7 @@ const User_profile = () => {
           totalPoints: '',
         });
       } else {
-        alert(' submitting transaction!');
+        alert('Error submitting transaction!');
       }
     } catch (error) {
       console.error('Submission error:', error);
@@ -49,68 +46,67 @@ const User_profile = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-xl shadow-md">
-      <h2 className="text-xl font-bold mb-4">User Transaction Form</h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
-
+    <div className="max-w-xl mx-auto mt-10 p-8 rounded-2xl shadow-xl bg-gradient-to-br from-fuchsia-100 to-purple-50 border border-fuchsia-200">
+      <h2 className="text-2xl font-bold text-fuchsia-700 mb-6 text-center">🎁 Loyalty Transaction Form</h2>
+      <form onSubmit={handleSubmit} className="space-y-5">
+        
         <div>
-          <label className="block mb-1 font-medium">User ID</label>
+          <label className="block mb-1 font-semibold text-fuchsia-700">User ID</label>
           <input
             type="text"
             name="userId"
             value={formData.userId}
             onChange={handleChange}
-            className="w-full border border-gray-300 p-2 rounded"
+            className="w-full border border-fuchsia-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-fuchsia-400"
             required
           />
         </div>
 
         <div>
-          <label className="block mb-1 font-medium">Purchase Points ($)</label>
+          <label className="block mb-1 font-semibold text-fuchsia-700">Purchase Points ($)</label>
           <input
             type="number"
             name="purchasePoints"
             value={formData.purchasePoints}
             onChange={handleChange}
-            className="w-full border border-gray-300 p-2 rounded"
+            className="w-full border border-fuchsia-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-fuchsia-400"
             required
           />
         </div>
 
         <div>
-          <label className="block mb-1 font-medium">Transaction Date</label>
+          <label className="block mb-1 font-semibold text-fuchsia-700">Transaction Date</label>
           <input
             type="date"
             name="transactionDate"
             value={formData.transactionDate}
             onChange={handleChange}
-            className="w-full border border-gray-300 p-2 rounded"
+            className="w-full border border-fuchsia-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-fuchsia-400"
             required
           />
         </div>
 
         <div>
-          <label className="block mb-1 font-medium">Total Points</label>
+          <label className="block mb-1 font-semibold text-fuchsia-700">Total Points</label>
           <input
             type="number"
             name="totalPoints"
             value={formData.totalPoints}
             onChange={handleChange}
-            className="w-full border border-gray-300 p-2 rounded"
+            className="w-full border border-fuchsia-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-fuchsia-400"
             required
           />
         </div>
 
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
+          className="w-full bg-fuchsia-600 text-white py-3 rounded-xl font-semibold hover:bg-fuchsia-700 transition duration-300 shadow-md"
         >
-          Submit
+          🚀 Submit Transaction
         </button>
       </form>
     </div>
   );
 };
 
-export default User_profile
-;
+export default User_profile;

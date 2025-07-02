@@ -2,12 +2,14 @@ import { useState, useEffect } from 'react';
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { FaBars, FaTimes, FaUser, FaCog, FaBell, FaQrcode, FaStore } from "react-icons/fa";
 import { Menu, X } from 'lucide-react';
+import { useSidebar } from '../../context/SidebarContext';
 
 export default function Header() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+  const { setSidebarOpen } = useSidebar();
 
   useEffect(() => {
     const loginStatus = localStorage.getItem("isLoggedIn") === "true";
@@ -27,15 +29,35 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 bg-purple-700 shadow-md text-white">
-      <nav className="max-w-screen-xl mx-auto px-4 lg:px-8 py-3 flex items-center justify-between">
-        {/* Logo */}
-        <Link to="/" className="text-2xl font-bold text-white">LoyaltyHub</Link>
-
+      <nav className="px-4 lg:px-8 py-3 flex items-center justify-between">
+        
         {/* Hamburger (mobile) */}
         <div className="lg:hidden">
           <button onClick={() => setMenuOpen(!menuOpen)} className="text-white">
             {menuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
+        </div>
+
+        {/* Logo */}
+        {/* <div className="hidden lg:flex items-center gap-6">
+          {!isLoggedIn ? (
+            <>
+              <Link to="/" className="text-2xl font-bold text-white">LoyaltyHub</Link>
+            </>
+          ) : null}
+        </div> */}
+        <div className="flex items-center gap-4">
+          {isLoggedIn ? (
+            <>
+              <button onClick={() => setSidebarOpen(true)} className="text-white">
+              <Menu size={24} />
+            </button>
+            </>
+          ) : (
+            <>
+              <Link to="/" className="text-2xl font-bold text-white">LoyaltyHub</Link>
+            </>
+          )}
         </div>
 
         {/* Desktop Nav Links */}
@@ -74,6 +96,9 @@ export default function Header() {
             </>
           ) : (
             <>
+              {/* <button onClick={() => setSidebarOpen(true)} className="mr-4 text-white">
+                <Menu size={24} />
+              </button> */}
               {/* User Dropdown */}
               <div className="relative group">
                 <button className="flex items-center space-x-2 focus:outline-none hover:text-yellow-300">
