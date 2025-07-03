@@ -189,6 +189,68 @@ const QrScanner = ({ onClose }) => {
     }
   };
 
+  // const handleSubmitBoth = async (e) => {
+  //   e.preventDefault();
+  //   setError(null);
+
+  //   const pointsAmount = parseInt(e.target.amount.value);
+  //   const dollarAmount = parseFloat(e.target.dollar.value);
+
+  //   if (!pointsAmount || pointsAmount <= 0 || isNaN(dollarAmount) || dollarAmount <= 0) {
+  //     setError("Please enter valid points and dollar amount.");
+  //     return;
+  //   }
+
+  //   setIsSubmitting(true);
+
+  //   try {
+  //     // 1. Send points to /add-points
+  //     const pointsRes = await fetch("https://loyalty-backend-java.onrender.com/api/qrcode/add-points", {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify({
+  //         userId: scannedData.customerId,
+  //         shopId: scannedData.shopId,
+  //         pointsToAdd: pointsAmount,
+  //         dollarAmount: dollarAmount,
+  //       }),
+  //     });
+
+  //     const pointsResult = await pointsRes.json();
+
+  //     // 2. Send dollars to /api/qrcode/add-dollars
+  //     const dollarRes = await fetch("https://loyalty-backend-java.onrender.com/api/qrcode/add-dollars", {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify({
+  //         userId: scannedData.customerId,
+  //         shopId: scannedData.shopId,
+  //         transactionAmount: dollarAmount,
+  //       }),
+  //     });
+
+  //     const dollarResult = await dollarRes.json();
+
+  //     if (pointsRes.ok && dollarRes.ok) {
+  //       setScannedData((prev) => ({
+  //         ...prev,
+  //         verifiedBalance: pointsResult.newBalance,
+  //       }));
+  //       setSuccessAnimation(true);
+  //       setShowSuccessPopup(true); // ✅ Show success popup
+  //       setTimeout(() => setSuccessAnimation(false), 1000);
+  //       e.target.reset();
+  //     } else {
+  //       setError(pointsResult.message || dollarResult.message || "Submission failed.");
+  //     }
+  //   } catch (err) {
+  //     setError("Something went wrong while submitting.");
+  //   } finally {
+  //     setIsSubmitting(false);
+  //   }
+  // };
+
+  // ✅ UPDATED TO SEND DOLLAR WITH POINTS
   const handleSubmitBoth = async (e) => {
     e.preventDefault();
     setError(null);
@@ -204,7 +266,7 @@ const QrScanner = ({ onClose }) => {
     setIsSubmitting(true);
 
     try {
-      // 1. Send points to /add-points
+      // ✅ Send both points and dollars in ONE request
       const pointsRes = await fetch("https://loyalty-backend-java.onrender.com/api/qrcode/add-points", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -212,35 +274,23 @@ const QrScanner = ({ onClose }) => {
           userId: scannedData.customerId,
           shopId: scannedData.shopId,
           pointsToAdd: pointsAmount,
+          dollarAmount: dollarAmount, // ✅ CHANGED: sending dollar with points
         }),
       });
 
-      const pointsResult = await pointsRes.json();
+      const result = await pointsRes.json();
 
-      // 2. Send dollars to /api/qrcode/add-dollars
-      const dollarRes = await fetch("https://loyalty-backend-java.onrender.com/api/qrcode/add-dollars", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          userId: scannedData.customerId,
-          shopId: scannedData.shopId,
-          transactionAmount: dollarAmount,
-        }),
-      });
-
-      const dollarResult = await dollarRes.json();
-
-      if (pointsRes.ok && dollarRes.ok) {
+      if (pointsRes.ok) {
         setScannedData((prev) => ({
           ...prev,
-          verifiedBalance: pointsResult.newBalance,
+          verifiedBalance: result.newBalance,
         }));
         setSuccessAnimation(true);
-        setShowSuccessPopup(true); // ✅ Show success popup
+        setShowSuccessPopup(true);
         setTimeout(() => setSuccessAnimation(false), 1000);
         e.target.reset();
       } else {
-        setError(pointsResult.message || dollarResult.message || "Submission failed.");
+        setError(result.message || "Submission failed.");
       }
     } catch (err) {
       setError("Something went wrong while submitting.");

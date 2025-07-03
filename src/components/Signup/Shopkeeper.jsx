@@ -1,8 +1,8 @@
-// Shopkeeper.jsx
 import { useState, useEffect, useRef } from "react";
 import Confetti from "react-confetti";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
+import { useNavigate } from "react-router-dom";
 import {
   Mail,
   Phone,
@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 
 function Shopkeeper() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     shopName: "",
     companyName: "",
@@ -118,6 +119,7 @@ function Shopkeeper() {
         setSuccess(true);
         setShowModal(true);
         if (audioRef.current) audioRef.current.play();
+        setTimeout(() => {navigate("/signin");}, 2000);
       } else {
         const errorMessage = contentType && contentType.includes("application/json")
           ? (await response.json()).message
@@ -136,10 +138,10 @@ function Shopkeeper() {
     if (step === 1) currentFields = ["shopName", "email", "phone"];
     if (step === 2) currentFields = ["companyName", "companyEmail", "companyPhone", "companyAddress"];
 
-     const missing = currentFields.filter(field => {
-    const value = String(formData[field] ?? "").trim();
-    return value === "";
-  });
+    const missing = currentFields.filter(field => {
+      const value = String(formData[field] ?? "").trim();
+      return value === "";
+    });
 
     if (missing.length > 0) {
       setMissingFields(missing);
@@ -165,9 +167,9 @@ function Shopkeeper() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-200 via-white to-blue-200 flex items-center justify-center px-4 font-['Inter']">
+    <div className="min-h-screen bg-gradient-to-br from-blue-100 to-purple-200 flex items-center justify-center px-4">
       {success && <Confetti recycle={false} numberOfPieces={300} />}
-      <div className="bg-white/70 backdrop-blur-lg p-10 rounded-3xl shadow-xl w-full max-w-xl">
+      <div className="w-full max-w-md bg-white/60 backdrop-blur-lg border border-purple-200 rounded-3xl p-10 shadow-2xl">
         <h2 className="text-3xl font-bold text-center text-purple-700 mb-2">Shopkeeper Sign Up</h2>
         <p className="text-center text-gray-600 mb-4">Step {step} of 3</p>
         <div className="w-full h-2 bg-gray-300 rounded-full mb-6">
@@ -178,30 +180,28 @@ function Shopkeeper() {
         <form onSubmit={handleSubmit} className="space-y-5">
           {step === 1 && (
             <>
-              <FloatingInput label="Shop Name" name="shopName" value={formData.shopName} onChange={handleChange} Icon={Store} />
-              <FloatingInput label="Personal Email" name="email" type="email" value={formData.email} onChange={handleChange} Icon={Mail} />
-             <div className="relative border border-purple-400 rounded-sm px-2 pt-2 mb-4 w-full group focus-within:border-2 focus-within:border-purple-600">
-  <label className="absolute -top-2 left-2 bg-white px-1 text-sm text-purple-600 group-focus-within:text-purple-800 transition-all">
-    Personal Phone
-  </label>
-
-  <PhoneInput
-    country={"in"}
-    enableSearch
-    value={formData.phone}
-    onChange={(phone) =>
-      setFormData((prev) => ({ ...prev, phone }))
-    }
-    inputProps={{
-      name: "phone",
-      required: true,
-    }}
-    inputClass="!w-full !h-10 !pl-16 !pr-4 !bg-transparent !text-gray-900 !focus:outline-none !border-none"
-    buttonClass="!h-10 !rounded-l-sm"
-    containerClass="!w-full"
-  />
-</div>
-
+             <FloatingInput label="Shop Name" name="shopName" value={formData.shopName} onChange={handleChange} Icon={Store} />
+             <FloatingInput label="Personal Email" name="email" type="email" value={formData.email} onChange={handleChange} Icon={Mail} />
+             <div className="relative border border-purple-400 rounded-xl px-3 pt-4 pb-2 bg-white shadow-sm focus-within:ring-2 focus-within:ring-purple-500 transition">
+                <label className="absolute -top-2 left-3 bg-white px-1 text-xs font-medium text-purple-600">
+                  Personal Phone
+                </label>
+                <PhoneInput
+                  country={"in"}
+                  enableSearch
+                  value={formData.phone}
+                  onChange={(phone) =>
+                    setFormData((prev) => ({ ...prev, phone }))
+                  }
+                  inputProps={{
+                    name: "phone",
+                    required: true,
+                  }}
+                  inputClass="!w-full !h-5 !pl-16 !pr-4 !bg-transparent !text-gray-900 !focus:outline-none !border-none"
+                  buttonClass="!h-5 !rounded-l-sm"
+                  containerClass="!w-full"
+                />
+              </div>
             </>
           )}
 
@@ -210,13 +210,11 @@ function Shopkeeper() {
               <FloatingInput label="Company Name" name="companyName" value={formData.companyName} onChange={handleChange} Icon={Building2} />
               <FloatingInput label="Company Email" name="companyEmail" type="email" value={formData.companyEmail} onChange={handleChange} Icon={Mail} />
               <PhoneInputField
-  label="Company Phone"
-  name="companyPhone"
-  value={formData.companyPhone}
-  onChange={handleChange}
-/>
-
-
+                label="Company Phone"
+                name="companyPhone"
+                value={formData.companyPhone}
+                onChange={handleChange}
+              />
               <FloatingInput label="Company Address" name="companyAddress" value={formData.companyAddress} onChange={handleChange} Icon={MapPin} />
             </>
           )}
@@ -232,7 +230,7 @@ function Shopkeeper() {
                 </button>
               </div>
               <FloatingInput label="Enter Captcha" name="captchaInput" value={formData.captchaInput} onChange={handleChange} />
-              <button type="submit" className="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 rounded-xl transition">
+              <button type="submit" className="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 rounded-xl transition">
                 {loading ? "Signing up..." : "Submit"}
               </button>
             </>
@@ -241,14 +239,14 @@ function Shopkeeper() {
 
         {step < 3 && <NextButton onClick={nextStep} />}
         {step > 1 && step < 4 && (
-  <button
-    type="button"
-    onClick={() => setStep((prev) => prev - 1)}
-    className="w-full mt-2 py-2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold rounded-xl transition"
-  >
-    Back
-  </button>
-)}
+          <button
+            type="button"
+            onClick={() => setStep((prev) => prev - 1)}
+            className="w-full mt-2 py-3 bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold rounded-xl transition"
+          >
+            Back
+          </button>
+        )}
 
         <audio ref={audioRef} src="/sounds/correct.mp3" preload="auto" />
       </div>
@@ -258,11 +256,10 @@ function Shopkeeper() {
 
 function FloatingInput({ label, name, value, onChange, type = "text", Icon, ToggleIcon, onToggle }) {
   return (
-    <div className="relative border border-purple-400 rounded-sm px-2 pt-2 mb-4 w-full group focus-within:border-2 focus-within:border-purple-600">
+    <div className="relative border border-purple-400 rounded-xl px-3 pt-4 pb-2 bg-white shadow-sm focus-within:ring-2 focus-within:ring-purple-500 transition">
       <label
         htmlFor={name}
-        className="absolute -top-2 left-2 bg-white px-1 text-sm text-purple-600 group-focus-within:text-purple-800 transition-all"
-      >
+        className="absolute -top-2 left-3 bg-white px-1 text-xs font-medium text-purple-600">
         {label}
       </label>
       {Icon && <Icon className="absolute left-3 top-3 h-5 w-5 text-purple-400" />}
@@ -272,7 +269,7 @@ function FloatingInput({ label, name, value, onChange, type = "text", Icon, Togg
         value={value}
         onChange={onChange}
         placeholder=" "
-        className="w-full px-10 py-2 text-gray-900 bg-transparent focus:outline-none"
+        className="w-full h-5 px-8 py-2 text-gray-900 bg-transparent focus:outline-none"
         required
       />
       {ToggleIcon && (
@@ -291,8 +288,8 @@ function FloatingInput({ label, name, value, onChange, type = "text", Icon, Togg
 
 function PhoneInputField({ label, name, value, onChange }) {
   return (
-    <div className="relative z-20 border border-purple-400 rounded-sm px-2 pt-5 pb-1 mb-4 w-full group focus-within:border-2 focus-within:border-purple-600">
-      <label className="absolute top-1 left-3 bg-white px-1 text-sm text-purple-600 group-focus-within:text-purple-800 transition-all z-30">
+    <div className="relative border border-purple-400 rounded-xl px-3 pt-4 pb-2 bg-white shadow-sm focus-within:ring-2 focus-within:ring-purple-500 transition">
+      <label className="absolute -top-2 left-3 bg-white px-1 text-xs font-medium text-purple-600">
         {label}
       </label>
       <PhoneInput
@@ -313,16 +310,14 @@ function PhoneInputField({ label, name, value, onChange }) {
           autoComplete: "tel",
           placeholder: "",
         }}
-        inputClass="!w-full !h-10 !pl-16 !pr-4 !bg-transparent !text-gray-900 !focus:outline-none !border-none"
-        buttonClass="!h-10 !rounded-l-sm"
+        inputClass="!w-full !h-5 !pl-16 !pr-4 !bg-transparent !text-gray-900 !focus:outline-none !border-none"
+        buttonClass="!h-5 !square-l-xl"
         containerClass="!w-full !relative z-20"
         dropdownClass="!z-50"
       />
     </div>
   );
 }
-
-
 
 function NextButton({ onClick }) {
   return (
@@ -335,5 +330,4 @@ function NextButton({ onClick }) {
     </button>
   );
 }
-
 export default Shopkeeper;

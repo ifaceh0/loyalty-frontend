@@ -1,86 +1,17 @@
-// import React, { useState } from "react";
-
-// const ForgotPassword = () => {
-//   const [email, setEmail] = useState("");
-//   const [message, setMessage] = useState("");
-//   const [error, setError] = useState("");
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     setError("");
-//     setMessage("");
-
-//     try {
-//       const res = await fetch("https://loyalty-backend-java.onrender.com/api/auth/forgot-password", {
-//         method: "POST",
-//         headers: { "Content-Type": "application/json" },
-//         body: JSON.stringify({ email }),
-//       });
-
-//       // const data = await res.json();
-//       const text = await res.text();
-
-//       // if (!res.ok) {
-//       //   throw new Error(data.message || "Something went wrong");
-//       // }
-//       if (!res.ok) {
-//       throw new Error(text || "Something went wrong");
-//     }
-
-//       // setMessage("Password reset instructions sent to your email.");
-//       setMessage(text); 
-//     } catch (err) {
-//       setError(err.message);
-//     }
-//   };
-
-//   return (
-//     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-//       <div className="bg-white p-8 rounded-xl shadow-md w-full max-w-md">
-//         <h2 className="text-xl font-bold text-center text-gray-700 mb-4">
-//           Forgot Password
-//         </h2>
-//         {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
-//         {message && <p className="text-green-500 text-sm mb-2">{message}</p>}
-//         <form onSubmit={handleSubmit} className="space-y-4">
-//           <input
-//             type="email"
-//             name="email"
-//             placeholder="Enter your registered email"
-//             value={email}
-//             onChange={(e) => setEmail(e.target.value)}
-//             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200"
-//             required
-//           />
-//           <button
-//             type="submit"
-//             className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600"
-//           >
-//             Send Reset Link
-//           </button>
-//         </form>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default ForgotPassword;
-
-
-
 import React, { useState } from "react";
+import { Mail } from "lucide-react";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false); // ← Loading state
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     setMessage("");
-    setLoading(true); // Start loading
+    setLoading(true);
 
     try {
       const res = await fetch("https://loyalty-backend-java.onrender.com/api/auth/forgot-password", {
@@ -90,43 +21,57 @@ const ForgotPassword = () => {
       });
 
       const text = await res.text();
-
-      if (!res.ok) {
-        throw new Error(text || "Something went wrong");
-      }
-
+      if (!res.ok) throw new Error(text || "Something went wrong");
       setMessage(text);
     } catch (err) {
       setError(err.message);
     } finally {
-      setLoading(false); // End loading
+      setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-      <div className="bg-white p-8 rounded-xl shadow-md w-full max-w-md">
-        <h2 className="text-xl font-bold text-center text-gray-700 mb-4">
-          Forgot Password
-        </h2>
-        {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
-        {message && <p className="text-green-500 text-sm mb-2">{message}</p>}
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <input
-            type="email"
-            name="email"
-            placeholder="Enter your registered email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200"
-            required
-            disabled={loading}
-          />
+    <div className="min-h-screen bg-gradient-to-br from-fuchsia-100 to-blue-100 flex items-center justify-center px-4 font-['Inter']">
+      <div className="w-full max-w-md bg-white/60 backdrop-blur-lg border border-purple-200 rounded-3xl p-8 shadow-2xl animate-fade-in">
+        <h2 className="text-3xl font-bold text-center text-purple-700 mb-2">Forgot Password</h2>
+        <p className="text-center text-gray-600 mb-6">Enter your registered email to receive a reset link.</p>
+
+        {error && (
+          <p className="text-red-500 text-sm text-center mb-4 animate-pulse">
+            ⚠️ {error}
+          </p>
+        )}
+        {message && (
+          <p className="text-green-600 text-sm text-center mb-4">
+            ✅ {message}
+          </p>
+        )}
+
+        <form onSubmit={handleSubmit} className="space-y-5">
+          <div className="relative border border-purple-400 rounded-lg px-3 pt-4 pb-2 bg-white shadow-sm group focus-within:ring-2 focus-within:ring-purple-500 transition">
+            <label className="absolute -top-2 left-3 bg-white px-1 text-xs font-medium text-purple-600">
+              Email
+            </label>
+            <Mail className="absolute left-3 top-4 h-5 w-5 text-purple-400" />
+            <input
+              type="email"
+              name="email"
+              placeholder="you@example.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full h-5 pl-10 pr-4 py-2 text-gray-900 bg-transparent focus:outline-none"
+              required
+              disabled={loading}
+            />
+          </div>
+
           <button
             type="submit"
             disabled={loading}
-            className={`w-full flex justify-center items-center gap-2 py-2 rounded-lg text-white ${
-              loading ? "bg-blue-400 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"
+            className={`w-full flex justify-center items-center gap-2 py-2 text-lg rounded-xl font-semibold text-white transition shadow ${
+              loading
+                ? "bg-purple-400 cursor-not-allowed"
+                : "bg-purple-600 hover:bg-purple-700"
             }`}
           >
             {loading && (
@@ -160,3 +105,4 @@ const ForgotPassword = () => {
 };
 
 export default ForgotPassword;
+

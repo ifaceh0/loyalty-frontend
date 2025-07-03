@@ -39,7 +39,7 @@ const ContactUs = () => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto bg-white p-8 rounded-2xl shadow-xl border border-fuchsia-100 mt-12">
+    <div className="max-w-2xl mx-auto bg-white p-8 rounded-2xl shadow-xl border border-fuchsia-100 mt-12 mb-8">
       <h2 className="text-3xl font-bold text-fuchsia-700 mb-6 text-center">
         📬 Contact Loyalty Support
       </h2>

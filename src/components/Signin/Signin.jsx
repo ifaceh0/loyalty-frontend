@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import Confetti from "react-confetti";
-import { Eye, EyeOff, Lock, Mail } from "lucide-react";
+import { Eye, EyeOff, Lock, Mail, RefreshCw } from "lucide-react";
 
 const Signin = () => {
   const navigate = useNavigate();
@@ -107,14 +107,14 @@ const Signin = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-100 to-purple-200 flex items-center justify-center px-4 relative">
+    <div className="min-h-screen bg-gradient-to-br from-blue-100 to-purple-200 flex items-center justify-center px-4">
       {success && <Confetti recycle={false} numberOfPieces={250} />}
-      <div className="bg-white p-10 rounded-3xl shadow-xl w-full max-w-md animate-fade-in">
+      <div className="w-full max-w-md backdrop-blur-xl bg-white/60 border border-purple-200 shadow-2xl p-10 rounded-3xl animate-fade-in">
         <h2 className="text-3xl font-bold text-center text-purple-700 mb-6">Sign In</h2>
-        {error && <p className="text-red-500 text-sm mb-4 text-center animate-pulse">{error}</p>}
-        {success && <p className="text-green-600 text-sm mb-4 text-center animate-bounce">✅ Sign in successful!</p>}
+        {error && <p className="text-red-500 text-sm mb-4 text-center">{error}</p>}
+        {success && <p className="text-green-600 text-sm mb-4 text-center animate-bounce">✅ Signed in successfully!</p>}
 
-        <form onSubmit={handleSubmit} className="space-y-5">
+        <form onSubmit={handleSubmit} className="space-y-6">
           <FloatingInput label="Email Address" name="email" value={formData.email} onChange={handleChange} type="email" Icon={Mail} />
 
           <FloatingInput
@@ -128,9 +128,15 @@ const Signin = () => {
             onToggle={() => setShowPassword(!showPassword)}
           />
 
-          <div className="flex items-center gap-4 mt-2">
-            <canvas ref={canvasRef} width={110} height={40} className="border border-gray-300 rounded" />
-            <button type="button" onClick={generateCaptcha} className="text-sm text-blue-500 hover:underline">Refresh Captcha</button>
+          <div className="flex items-center gap-4">
+            <canvas ref={canvasRef} width={110} height={40} className="border border-gray-300 rounded-md shadow-sm" />
+            <button
+              type="button"
+              onClick={generateCaptcha}
+              className="flex items-center gap-2 text-sm bg-blue-100 text-blue-700 px-3 py-1.5 rounded-md hover:bg-blue-200 transition"
+            >
+              <RefreshCw className="w-4 h-4" /> Refresh
+            </button>
           </div>
 
           <FloatingInput
@@ -141,7 +147,11 @@ const Signin = () => {
           />
 
           <div className="text-right">
-            <button type="button" onClick={() => navigate("/forgot-password")} className="text-sm text-blue-500 hover:underline">
+            <button
+              type="button"
+              onClick={() => navigate("/forgot-password")}
+              className="text-sm text-blue-500 hover:underline hover:text-blue-600"
+            >
               Forgot Password?
             </button>
           </div>
@@ -149,25 +159,32 @@ const Signin = () => {
           <button
             type="submit"
             disabled={loading}
-            className={`w-full flex justify-center items-center bg-purple-600 text-white py-3 text-lg rounded-xl transition duration-200 ${loading ? "opacity-70 cursor-not-allowed" : "hover:bg-purple-700"}`}
+            className={`w-full bg-purple-600 text-white py-2 text-lg rounded-xl shadow-lg transition duration-200 ${
+              loading ? "opacity-70 cursor-not-allowed" : "hover:bg-purple-700"
+            }`}
           >
             {loading ? (
-              <span className="flex items-center gap-2">
-                <svg className="animate-spin h-5 w-5 text-white" viewBox="0 0 24 24" fill="none"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4l3.5-3.5L12 0v4a8 8 0 00-8 8z"></path></svg>
+              <span className="flex items-center justify-center gap-2">
+                <svg className="animate-spin h-5 w-5 text-white" viewBox="0 0 24 24" fill="none">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4l3.5-3.5L12 0v4a8 8 0 00-8 8z"></path>
+                </svg>
                 Signing in...
               </span>
-            ) : "Sign In"}
+            ) : (
+              "Sign In"
+            )}
           </button>
         </form>
       </div>
 
       <style>{`
         @keyframes fade-in {
-          from { opacity: 0; transform: scale(0.9); }
-          to { opacity: 1; transform: scale(1); }
+          from { opacity: 0; transform: translateY(10px); }
+          to { opacity: 1; transform: translateY(0); }
         }
         .animate-fade-in {
-          animation: fade-in 0.5s ease-in-out;
+          animation: fade-in 0.6s ease-in-out;
         }
       `}</style>
     </div>
@@ -176,21 +193,21 @@ const Signin = () => {
 
 function FloatingInput({ label, name, value, onChange, type = "text", Icon, ToggleIcon, onToggle }) {
   return (
-    <div className="relative border border-purple-400 rounded-sm px-2 pt-2 mb-4 w-full group focus-within:border-2 focus-within:border-purple-600">
+    <div className="relative border border-purple-300 rounded-xl px-3 pt-4 pb-2 bg-white shadow-sm focus-within:ring-2 focus-within:ring-purple-500 transition">
       <label
         htmlFor={name}
-        className="absolute -top-2 left-2 bg-white px-1 text-sm text-purple-600 group-focus-within:text-purple-800 transition-all"
+        className="absolute -top-2 left-3 bg-white px-1 text-xs font-medium text-purple-600"
       >
         {label}
       </label>
-      {Icon && <Icon className="absolute left-3 top-3 h-5 w-5 text-purple-400" />}
+      {Icon && <Icon className="absolute left-3 top-3.5 h-5 w-5 text-purple-400" />}
       <input
         type={type}
         name={name}
         value={value}
         onChange={onChange}
         placeholder=" "
-        className="w-full px-10 py-3 text-lg text-gray-900 bg-transparent focus:outline-none"
+        className="w-full h-5 px-8 py-2 text-base text-gray-800 bg-transparent focus:outline-none"
         required
       />
       {ToggleIcon && (
