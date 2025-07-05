@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Phone, Mail, QrCode } from "lucide-react";
 import QrScanner from "./QrScanner";
 
@@ -10,12 +10,22 @@ const CustomerLookup = () => {
   const [sendingInvite, setSendingInvite] = useState(false); // ✅ ADDED
   const [showScanner, setShowScanner] = useState(false);
   const [scannedResult, setScannedResult] = useState(null);
+  const [shopId, setShopId] = useState(null); // ✅ ADDED
+  const [shopName, setShopName] = useState(""); // ✅ ADDED
 
   const [loading, setLoading] = useState({
     phone: false,
     email: false,
     code: false,
   });
+
+  // ✅ HINT: Fetch shop info from localStorage
+  useEffect(() => {
+    const id = localStorage.getItem("id");
+    const name = localStorage.getItem("name");
+    if (id) setShopId(Number(id));
+    if (name) setShopName(name);
+  }, []);
 
   const handleSearch = (type) => {
     if (type === "phone") {
@@ -50,8 +60,8 @@ const CustomerLookup = () => {
         email: email || "arjun@ifaceh.com",
         referralCode: code || "R000839210537",
         customerId: 29,
-        shopName: "testShopkeeper",
-        shopID: 8,
+        shopName: shopName || "testShopkeeper", 
+        shopID: shopId || 8,
         availableBalance: 10.0,
       };
 
@@ -74,8 +84,8 @@ const CustomerLookup = () => {
       email: "arjun@ifaceh.com",
       referralCode: scannedValue,
       customerId: 29,
-      shopName: "testShopkeeper",
-      shopID: 8,
+      shopName: shopName || "testShopkeeper", // ✅ dynamic
+      shopID: shopId || 8, // ✅ dynamic
       availableBalance: 10.0,
     };
 
@@ -92,10 +102,15 @@ const CustomerLookup = () => {
       return;
     }
 
+    if (!shopId || !shopName) {
+      alert("Shop details not found. Please login again.");
+      return;
+    }
+
     setSendingInvite(true);
     try {
       const response = await fetch(
-        "https://loyalty-backend-java.onrender.com/api/referral/invite",
+        "https://loyalty-backend-java.onrender.com/api/dashboard/invite",
         {
           method: "POST",
           headers: {
@@ -103,7 +118,8 @@ const CustomerLookup = () => {
           },
           body: JSON.stringify({
             email: inviteEmail,
-            shopId: 8, // Replace with dynamic ID if needed
+            shopId: shopId,
+            shopName: shopName,
           }),
         }
       );
@@ -128,8 +144,8 @@ const CustomerLookup = () => {
         <QrScanner onScan={handleScan} onClose={() => setShowScanner(false)} />
       ) : (
         <div className="p-6 md:p-10">
-          <h1 className="text-3xl font-bold text-center text-black-700 mb-1">testShopkeeper</h1>
-          <p className="text-center text-gray-500 mb-8">Shop ID: 8</p>
+          <h1 className="text-3xl font-bold text-center text-black-700 mb-1">{shopName || "Shop Name"}</h1>
+          <p className="text-center text-gray-500 mb-8">Shop ID: {shopId || 0}</p>
 
           <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4 max-w-7xl mx-auto">
             {/* Referral Code */}

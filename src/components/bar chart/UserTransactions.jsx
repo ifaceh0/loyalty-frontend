@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import jsPDF from "jspdf";
-import autoTable from "jspdf-autotable"; 
+import * as XLSX from "xlsx";
 
 const API_BASE_URL = "https://loyalty-backend-java.onrender.com/api";
 const ITEMS_PER_PAGE = 5;
@@ -57,29 +56,23 @@ const UserTransactions = () => {
     (transactionsByShop[selectedShop]?.length || 0) / ITEMS_PER_PAGE
   );
 
-  // ✅ PDF Download: ALL Transactions of Selected Shop
-  const downloadPDF = () => {
+  //ALL Transactions of Selected Shop
+  const downloadExcel = () => {
     if (!selectedShop || !transactionsByShop[selectedShop]?.length) return;
 
-    const doc = new jsPDF();
-    doc.setFontSize(16);
-    doc.text(`Transaction History - ${selectedShop}`, 14, 20);
+    const data = transactionsByShop[selectedShop].map((txn) => ({
+      Date: new Date(txn.date).toLocaleDateString(),
+      "Transaction Amount ($)": txn.transactionAmount,
+      "Points Received": txn.pointsReceived,
+    }));
 
-    const rows = transactionsByShop[selectedShop].map((txn) => [
-      new Date(txn.date).toLocaleDateString(),
-      `$${txn.transactionAmount}`,
-      txn.pointsReceived,
-    ]);
+    const worksheet = XLSX.utils.json_to_sheet(data);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, selectedShop);
 
-    autoTable(doc, {
-      startY: 30,
-      head: [["Date", "Transaction Amount ($)", "Points Received"]],
-      body: rows,
-      styles: { fontSize: 10 },
-    });
-
-    doc.save(`${selectedShop.replace(/\s+/g, "_")}_Transactions.pdf`);
+    XLSX.writeFile(workbook, `${selectedShop.replace(/\s+/g, "_")}_Transactions.xlsx`);
   };
+
 
   const shopNames = Object.keys(transactionsByShop).sort();
 
@@ -95,8 +88,8 @@ const UserTransactions = () => {
         <>
         <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-6">
           {/* 🔽 Shop Dropdown */}
-          <div className="mb-4 w-full max-w-xs">
-            <label className="block text-sm p-2 font-medium text-gray-700 mb-1">Select Shop:</label>
+          <div className="bg-gradient-to-r w-full max-w-xs from-purple-100 to-blue-100 border border-purple-300 rounded-xl shadow-md p-4 mb-6 text-center">
+            <label className="block text-xl p-2 font-medium text-gray-700 mb-1 font-semibold">Select Shop:</label>
             <select
               value={selectedShop}
               onChange={handleShopChange}
@@ -111,7 +104,7 @@ const UserTransactions = () => {
           </div>
 
           {/* 💳 Total Points Card */}
-          <div className="bg-gradient-to-r w-full max-w-xs from-purple-100 to-blue-100 border border-purple-300 rounded-xl shadow-md p-4 mb-6 text-center">
+          <div className="bg-gradient-to-r w-full max-w-xs h-24  from-purple-100 to-blue-100 border border-purple-300 rounded-xl shadow-md p-4 mb-6 text-center">
             <p className="text-gray-700 text-sm mb-1">
               Total Points from <span className="font-semibold">{selectedShop}</span>
             </p>
@@ -120,14 +113,14 @@ const UserTransactions = () => {
 
           {/* ⬇️ Download PDF Button */}
           <div className="mb-4 flex gap-4">
-            <button
-              onClick={downloadPDF}
-              disabled={!transactionsByShop[selectedShop]?.length}
-              className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded shadow disabled:opacity-50"
-            >
-              📄 Download PDF
-            </button>
-          </div>
+              <button
+                onClick={downloadExcel}
+                disabled={!transactionsByShop[selectedShop]?.length}
+                className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded shadow disabled:opacity-50"
+              >
+                📥 Download XLS
+              </button>
+            </div>
         </div>
 
           {/* 🧾 Transactions Table */}

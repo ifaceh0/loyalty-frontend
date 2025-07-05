@@ -87,6 +87,7 @@ const Signin = () => {
       localStorage.setItem("token", token);
       localStorage.setItem("id", data.id);
       localStorage.setItem("role", role);
+      localStorage.setItem("name", data.name);
 
       setSuccess(true);
 

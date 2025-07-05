@@ -10,11 +10,16 @@ export default function Header() {
   const location = useLocation();
   const navigate = useNavigate();
   const { setSidebarOpen } = useSidebar();
+  const [userName, setUserName] = useState("");
 
   useEffect(() => {
     const loginStatus = localStorage.getItem("isLoggedIn") === "true";
     setIsLoggedIn(loginStatus);
-    setMenuOpen(false); // Close menu on route change
+    const storedName = localStorage.getItem("name"); 
+    if (storedName) {
+      setUserName(storedName); 
+    }
+    setMenuOpen(false); 
   }, [location]);
 
   const handleLogout = () => {
@@ -103,7 +108,9 @@ export default function Header() {
               <div className="relative group">
                 <button className="flex items-center space-x-2 focus:outline-none hover:text-yellow-300">
                   <FaUser />
-                  <span className="hidden md:inline">User</span>
+                  <span className="hidden md:inline">
+                    {userName || "User"}
+                  </span>
                 </button>
                 <div className="hidden group-hover:block absolute top-full right-0 w-40 bg-white shadow-lg text-gray-800 rounded-md p-2 z-50">
                   <button
