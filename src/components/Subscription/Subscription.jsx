@@ -5,98 +5,74 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const Subscription = () => {
   const [billingCycle, setBillingCycle] = useState('monthly');
-  const [planType, setPlanType] = useState('loyalty');
+  const [selectedTypes, setSelectedTypes] = useState(['loyalty']); // default
+
+  const handleCheckboxChange = (type) => {
+    setSelectedTypes((prev) =>
+      prev.includes(type)
+        ? prev.filter((t) => t !== type)
+        : [...prev, type]
+    );
+  };
 
   const pricingData = {
     loyalty: {
-      Basic: {
-        monthly: '$9.99 /month',
-        quarterly: '$26.99 /quarter',
-        yearly: '$89.99 /year',
-      },
-      Pro: {
-        monthly: '$19.99 /month',
-        quarterly: '$54.99 /quarter',
-        yearly: '$184.99 /year',
-      },
-      Enterprise: {
-        monthly: '$49.99 /month',
-        quarterly: '$139.99 /quarter',
-        yearly: '$429.99 /year',
-      },
+      Basic: { monthly: 9.99, quarterly: 26.99, yearly: 89.99 },
+      Pro: { monthly: 19.99, quarterly: 54.99, yearly: 184.99 },
+      Enterprise: { monthly: 49.99, quarterly: 139.99, yearly: 429.99 },
     },
     referral: {
-      Basic: {
-        monthly: '$5.99 /month',
-        quarterly: '$15.99 /quarter',
-        yearly: '$55.99 /year',
-      },
-      Pro: {
-        monthly: '$14.99 /month',
-        quarterly: '$39.99 /quarter',
-        yearly: '$144.99 /year',
-      },
-      Enterprise: {
-        monthly: '$39.99 /month',
-        quarterly: '$104.99 /quarter',
-        yearly: '$379.99 /year',
-      },
-    },
-    both: {
-      Basic: {
-        monthly: '$13.99 /month',
-        quarterly: '$36.99 /quarter',
-        yearly: '$119.99 /year',
-      },
-      Pro: {
-        monthly: '$24.99 /month',
-        quarterly: '$69.99 /quarter',
-        yearly: '$239.99 /year',
-      },
-      Enterprise: {
-        monthly: '$59.99 /month',
-        quarterly: '$159.99 /quarter',
-        yearly: '$499.99 /year',
-      },
+      Basic: { monthly: 5.99, quarterly: 15.99, yearly: 55.99 },
+      Pro: { monthly: 14.99, quarterly: 39.99, yearly: 144.99 },
+      Enterprise: { monthly: 39.99, quarterly: 104.99, yearly: 379.99 },
     },
   };
 
-  const plans = [
-    {
-      title: 'Basic',
-      description: 'Perfect for individuals and small teams',
-      price: pricingData[planType].Basic,
-      features: ['Up to 5 users', '5GB storage', 'Basic support', 'Access to core features'],
-      buttonText: 'Select Basic Plan',
-      color: 'bg-purple-500',
-      icon: User,
+  const mergedPricing = {
+    Basic: { monthly: 0, quarterly: 0, yearly: 0 },
+    Pro: { monthly: 0, quarterly: 0, yearly: 0 },
+    Enterprise: { monthly: 0, quarterly: 0, yearly: 0 },
+  };
+
+  selectedTypes.forEach((type) => {
+    ['Basic', 'Pro', 'Enterprise'].forEach((tier) => {
+      mergedPricing[tier].monthly += pricingData[type][tier].monthly;
+      mergedPricing[tier].quarterly += pricingData[type][tier].quarterly;
+      mergedPricing[tier].yearly += pricingData[type][tier].yearly;
+    });
+  });
+
+  const formatPrice = (price) => `$${price.toFixed(2)}`;
+
+  const plans = ['Basic', 'Pro', 'Enterprise'].map((tier) => ({
+    title: tier,
+    price: {
+      monthly: `${formatPrice(mergedPricing[tier].monthly)} /month`,
+      quarterly: `${formatPrice(mergedPricing[tier].quarterly)} /quarter`,
+      yearly: `${formatPrice(mergedPricing[tier].yearly)} /year`,
     },
-    {
-      title: 'Pro',
-      description: 'Ideal for growing businesses',
-      price: pricingData[planType].Pro,
-      features: ['Up to 20 users', '50GB storage', 'Priority support', 'Advanced analytics', 'Custom integrations'],
-      buttonText: 'Select Pro Plan',
-      color: 'bg-gradient-to-r from-orange-400 to-yellow-400',
-      icon: Briefcase,
-    },
-    {
-      title: 'Enterprise',
-      description: 'For large organizations with complex needs',
-      price: pricingData[planType].Enterprise,
-      features: [
-        'Unlimited users',
-        'Unlimited storage',
-        '24/7 dedicated support',
-        'Advanced security features',
-        'Custom development',
-        'On-premise deployment option',
-      ],
-      buttonText: 'Contact Sales',
-      color: 'bg-blue-600',
-      icon: Building2,
-    },
-  ];
+    features:
+      tier === 'Basic'
+        ? ['Up to 5 users', '5GB storage', 'Basic support', 'Access to core features']
+        : tier === 'Pro'
+        ? ['Up to 20 users', '50GB storage', 'Priority support', 'Advanced analytics', 'Custom integrations']
+        : [
+            'Unlimited users',
+            'Unlimited storage',
+            '24/7 dedicated support',
+            'Advanced security features',
+            'Custom development',
+            'On-premise deployment option',
+          ],
+    buttonText: `Select ${tier} Plan`,
+    color:
+      tier === 'Basic'
+        ? 'bg-purple-500'
+        : tier === 'Pro'
+        ? 'bg-gradient-to-r from-orange-400 to-yellow-400'
+        : 'bg-blue-600',
+    icon: tier === 'Basic' ? User : tier === 'Pro' ? Briefcase : Building2,
+  }));
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-violet-100 to-white px-6 py-8">
@@ -133,49 +109,67 @@ const Subscription = () => {
 
       {/* Layout: Sidebar + Cards */}
       <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-10">
-        {/* Left Sidebar */}
-        <div className="flex lg:flex-col justify-center items-center gap-4 w-full lg:w-[20%]">
-          {['loyalty', 'referral', 'both'].map((type) => (
-            <button
+        {/* Left Sidebar (Checkboxes) */}
+        <div className="flex lg:flex-col justify-center items-start gap-4 w-full lg:w-[20%]">
+          {['loyalty', 'referral'].map((type) => (
+            <label
               key={type}
-              onClick={() => setPlanType(type)}
-              className={`w-full px-5 py-3 text-lg rounded-full font-semibold transition-all duration-200 text-center ${
-                planType === type
-                  ? 'bg-purple-700 text-white'
-                  : 'bg-white text-purple-700 border border-purple-300'
-              }`}
+              className="inline-flex items-center gap-3 text-purple-800 text-lg font-medium cursor-pointer"
             >
-              {type === 'loyalty' ? 'Loyalty' : type === 'referral' ? 'Referral' : 'Loyalty + Referral'}
-            </button>
+              <input
+                type="checkbox"
+                checked={selectedTypes.includes(type)}
+                onChange={() => handleCheckboxChange(type)}
+                className="accent-purple-600 w-5 h-5"
+              />
+              {type === 'loyalty' ? 'Loyalty' : 'Referral'}
+            </label>
           ))}
         </div>
 
-        {/* Pricing Cards */}
+        {/* Right Side Cards */}
         <div className="flex-1">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={planType + billingCycle}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.3 }}
-              className="flex flex-wrap justify-center gap-8 px-2"
-            >
-              {plans.map((plan, index) => (
-                <div key={index} className="w-full sm:w-[48%] lg:w-[32%] xl:w-[30%] flex">
-                  <SubscriptionCard
-                    title={plan.title}
-                    price={plan.price}
-                    features={plan.features}
-                    buttonText={plan.buttonText}
-                    color={plan.color}
-                    billingCycle={billingCycle}
-                    icon={plan.icon}
-                  />
-                </div>
-              ))}
-            </motion.div>
-          </AnimatePresence>
+          {selectedTypes.length > 0 ? (
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={selectedTypes.join('-') + billingCycle}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.3 }}
+                className="flex flex-wrap justify-center gap-8 px-2"
+              >
+                {plans.map((plan, index) => (
+                  <div key={index} className="w-full sm:w-[48%] lg:w-[32%] xl:w-[30%] flex">
+                    <SubscriptionCard
+                      title={plan.title}
+                      price={plan.price}
+                      features={plan.features}
+                      buttonText={plan.buttonText}
+                      color={plan.color}
+                      billingCycle={billingCycle}
+                      icon={plan.icon}
+                    />
+                  </div>
+                ))}
+              </motion.div>
+            </AnimatePresence>
+          ) : (
+            <AnimatePresence mode="wait">
+              <motion.div
+                key="no-plan"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.3 }}
+                className="flex justify-center items-center h-full min-h-[200px] text-center"
+              >
+                <p className="text-purple-600 font-medium text-lg">
+                  Please select at least one plan type to view pricing.
+                </p>
+              </motion.div>
+            </AnimatePresence>
+          )}
         </div>
       </div>
     </div>
