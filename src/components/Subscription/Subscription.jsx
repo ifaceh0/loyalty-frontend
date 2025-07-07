@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const Subscription = () => {
   const [billingCycle, setBillingCycle] = useState('monthly');
-  const [selectedTypes, setSelectedTypes] = useState(['loyalty']); // default
+  const [selectedTypes, setSelectedTypes] = useState(['loyalty']);
 
   const handleCheckboxChange = (type) => {
     setSelectedTypes((prev) =>
@@ -109,8 +109,11 @@ const Subscription = () => {
 
       {/* Layout: Sidebar + Cards */}
       <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-10">
-        {/* Left Sidebar (Checkboxes) */}
-        <div className="flex lg:flex-col justify-center items-start gap-4 w-full lg:w-[20%]">
+        {/* Left Sidebar (Checkboxes in a Tile with Recommendation) */}
+        <div className="w-full lg:w-[22%] bg-white rounded-xl shadow p-6 flex flex-col gap-4 border border-purple-200">
+          <div className="text-purple-800 font-semibold text-lg">
+            Want full flexibility? Try selecting both options.
+          </div>
           {['loyalty', 'referral'].map((type) => (
             <label
               key={type}
