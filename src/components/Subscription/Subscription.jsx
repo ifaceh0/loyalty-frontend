@@ -112,7 +112,7 @@ const Subscription = () => {
         {/* Left Sidebar (Checkboxes in a Tile with Recommendation) */}
         <div className="w-full lg:w-[22%] bg-white rounded-xl shadow p-6 flex flex-col gap-4 border border-purple-200">
           <div className="text-purple-800 font-semibold text-lg">
-            Want full flexibility? Try selecting both options.
+            The more products you subscribe, the more you save — tailored for growing business.
           </div>
           {['loyalty', 'referral'].map((type) => (
             <label
