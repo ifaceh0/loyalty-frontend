@@ -6,7 +6,13 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import Layout from './Layout.jsx'
 import Features from './components/Features/Features.jsx'
 import Home from './components/Home/Home.jsx'
-import Subscription from './components/Subscription/Subscription.jsx'
+//import Subscription from './components/Subscription/Subscription.jsx'
+// ✅ CORRECT
+import {Subscription} from "global-subscription"; // ✅ Correct
+
+
+
+
 import Resources from './components/Resources/Resources.jsx'
 import Contact from './components/Contact/Contact.jsx'
 import Userdashboard from './components/Dashboards/Userdashboard.jsx'

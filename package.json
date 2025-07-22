@@ -16,6 +16,7 @@
     "@zxing/browser": "^0.1.5",
     "antd": "^5.26.3",
     "framer-motion": "^12.18.1",
+    "global-subscription": "github:ifaceh0/Subscription_Frontend",
     "jspdf": "^3.0.1",
     "jspdf-autotable": "^5.0.2",
     "jwt-decode": "^4.0.0",
