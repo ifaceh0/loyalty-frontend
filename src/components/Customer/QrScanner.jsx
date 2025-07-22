@@ -747,7 +747,8 @@ const QrScanner = ({ onClose }) => {
         )}
 
         {showErrorPopup && (
-          <div className="absolute inset-0 flex items-center justify-center z-50">
+          // <div className="absolute inset-0 flex items-center justify-center z-50">
+          <div className="px-6 py-6 w-full min-h-[580px] flex flex-col items-center justify-center z-10">
             <div className="bg-white/90 backdrop-blur-md p-6 rounded-2xl shadow-2xl text-center border border-red-400 w-[360px]">
               <FontAwesomeIcon icon={faExclamationCircle} className="text-red-600 text-3xl mb-2" />
               <h3 className="text-lg font-semibold text-red-600">Invalid QR</h3>
