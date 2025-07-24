@@ -10,7 +10,7 @@ import Home from './components/Home/Home.jsx'
 // ✅ CORRECT
 import {Subscription} from "global-subscription"; // ✅ Correct
 
-
+import  {PlanDetails}  from "global-subscription"; // ✅ Correct import PlanDetails from "global-subscription";
 
 
 import Resources from './components/Resources/Resources.jsx'
@@ -45,6 +45,11 @@ const router = createBrowserRouter([
         path:"subscription",
         element:<Subscription/>
       },
+      {
+        path: "/plan/:planType",
+        element: <PlanDetails />
+      },
+
       {
         path:"resources",
         element:<Resources/>
