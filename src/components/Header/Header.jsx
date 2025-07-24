@@ -71,7 +71,7 @@ export default function Header() {
             <>
               <NavLink to="/" className={({ isActive }) => isActive ? "text-yellow-300 font-semibold" : "hover:text-yellow-200"}>Home</NavLink>
               <NavLink to="/features" className={({ isActive }) => isActive ? "text-yellow-300 font-semibold" : "hover:text-yellow-200"}>Features</NavLink>
-              <NavLink to="/subscription" className={({ isActive }) => isActive ? "text-yellow-300 font-semibold" : "hover:text-yellow-200"}>Subscription</NavLink>
+              <NavLink to="/subscription?app=loyalty" className="hover:text-yellow-300">Subscription</NavLink>
               <NavLink to="/resources" className={({ isActive }) => isActive ? "text-yellow-300 font-semibold" : "hover:text-yellow-200"}>Resources</NavLink>
               <NavLink to="/contact" className={({ isActive }) => isActive ? "text-yellow-300 font-semibold" : "hover:text-yellow-200"}>Contact</NavLink>
             </>
@@ -133,7 +133,7 @@ export default function Header() {
                 <>
                   <NavLink to="/" onClick={() => setMenuOpen(false)} className="text-white hover:text-yellow-300">Home</NavLink>
                   <NavLink to="/features" onClick={() => setMenuOpen(false)} className="text-white hover:text-yellow-300">Features</NavLink>
-                  <NavLink to="/subscription" onClick={() => setMenuOpen(false)} className="text-white hover:text-yellow-300">Plans</NavLink>
+<NavLink to="/subscription?app=loyalty" className="hover:text-yellow-300">Subscription</NavLink>
                   <NavLink to="/resources" onClick={() => setMenuOpen(false)} className="text-white hover:text-yellow-300">Resources</NavLink>
                   <NavLink to="/contact" onClick={() => setMenuOpen(false)} className="text-white hover:text-yellow-300">Contact</NavLink>
                   <NavLink to="/signup-shopkeeper" onClick={() => setMenuOpen(false)} className="text-white hover:text-yellow-300">Sign up (Shopkeeper)</NavLink>
