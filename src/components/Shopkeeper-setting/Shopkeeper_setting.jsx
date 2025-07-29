@@ -410,7 +410,6 @@
 
 
 
-// ✅ Filename: Shopkeeper_setting.jsx
 import React, { useState, useEffect } from "react";
 import { FiTrash2 } from "react-icons/fi";
 
@@ -491,11 +490,11 @@ const Shopkeeper_setting = () => {
   };
 
   const isValid = () => {
-    const today = new Date().toISOString().split("T")[0];
-    if (formData.endDate && formData.endDate < today) {
-      alert("❌ End date should not be in the past.");
-      return false;
-    }
+    // const today = new Date().toISOString().split("T")[0];
+    // if (formData.endDate && formData.endDate < today) {
+    //   alert("❌ End date should not be in the past.");
+    //   return false;
+    // }
 
     const hasNegative = [...formData.purchaseRewards, ...formData.milestoneRewards, ...formData.specialBonuses]
       .some((item) => parseFloat(item.points || item.amount || item.threshold) < 0);
@@ -720,6 +719,7 @@ const Shopkeeper_setting = () => {
                 disabled={!isEditMode}
                 onChange={(e) => handleDynamicChange("specialBonuses", i, "startDate", e.target.value)}
                 className={inputStyle}
+                min={new Date().toISOString().split("T")[0]} // today
               />
               <input
                 type="date"
@@ -727,7 +727,7 @@ const Shopkeeper_setting = () => {
                 disabled={!isEditMode}
                 onChange={(e) => handleDynamicChange("specialBonuses", i, "endDate", e.target.value)}
                 className={inputStyle}
-                min={new Date().toISOString().split("T")[0]}
+                min={b.startDate || new Date().toISOString().split("T")[0]} // endDate ≥ beginDate
               />
               {isEditMode && (
                 <FiTrash2
@@ -778,6 +778,7 @@ const Shopkeeper_setting = () => {
                 onChange={handleChange}
                 disabled={!isEditMode}
                 className={inputStyle}
+                min={new Date().toISOString().split("T")[0]} // today
               />
             </div>
             <div>
@@ -789,7 +790,7 @@ const Shopkeeper_setting = () => {
                 onChange={handleChange}
                 disabled={!isEditMode}
                 className={inputStyle}
-                min={new Date().toISOString().split("T")[0]}
+                min={formData.beginDate || new Date().toISOString().split("T")[0]} // endDate ≥ beginDate
               />
             </div>
             <div>

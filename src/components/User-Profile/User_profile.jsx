@@ -1,112 +1,253 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-const User_profile = () => {
-  const [formData, setFormData] = useState({
-    userId: '',
-    purchasePoints: '',
-    transactionDate: '',
-    totalPoints: '',
+const UserProfile = () => {
+  const [userData, setUserData] = useState({
+    userId: null,
+    firstName: '',
+    lastName: '',
+    phone: '',
+    email: '',
   });
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
 
+  // Fetch user ID from localStorage and user details on mount
+  useEffect(() => {
+    const userId = localStorage.getItem('id');
+    if (userId) {
+      fetchUserDetails(userId);
+    } else {
+      setError('No user ID found. Please log in.');
+    }
+  }, []);
+
+  // Fetch user details using the GET /get-profile endpoint
+  const fetchUserDetails = async (userId) => {
+    setIsLoading(true);
+    try {
+      const response = await fetch(
+        `https://loyalty-backend-java.onrender.com/api/user/get-profile?userId=${userId}`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+
+      if (response.ok) {
+        const user = await response.json();
+        setUserData({
+          userId: user.userId || null,
+          firstName: user.firstName || '',
+          lastName: user.lastName || '',
+          phone: user.phone || '',
+          email: user.email || '',
+        });
+      } else {
+        const errorData = await response.json();
+        setError(errorData.message || 'Failed to fetch user details');
+      }
+    } catch (error) {
+      setError('Error fetching user details');
+      console.error('Fetch error:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
-
-    setFormData((prev) => ({
+    setUserData((prev) => ({
       ...prev,
       [name]: value,
     }));
   };
 
+  // Validate form data
+  const validateForm = () => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRegex = /^\d{10}$/;
+    if (!userData.firstName.trim()) return 'First name is required';
+    if (!userData.lastName.trim()) return 'Last name is required';
+    if (!phoneRegex.test(userData.phone)) return 'Phone number must be 10 digits';
+    if (!emailRegex.test(userData.email)) return 'Invalid email format';
+    return null;
+  };
+
+  // Submit updated profile using the PUT /update-profile endpoint
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
+    setError(null);
+
+    // Client-side validation
+    const validationError = validateForm();
+    if (validationError) {
+      setError(validationError);
+      setIsLoading(false);
+      return;
+    }
 
     try {
-      const res = await fetch('https://your-backend-api.com/transactions', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
+      const userId = parseInt(localStorage.getItem('id'), 10); // Ensure userId is a number
+      if (isNaN(userId)) {
+        throw new Error('Invalid user ID');
+      }
 
-      if (res.ok) {
-        alert('Transaction submitted successfully!');
-        setFormData({
-          userId: '',
-          purchasePoints: '',
-          transactionDate: '',
-          totalPoints: '',
-        });
+      const payload = {
+        userId,
+        firstName: userData.firstName.trim(),
+        lastName: userData.lastName.trim(),
+        phone: userData.phone.trim(),
+        email: userData.email.trim(),
+      };
+
+      const response = await fetch(
+        'https://loyalty-backend-java.onrender.com/api/user/update-profile',
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(payload),
+        }
+      );
+
+      if (response.ok) {
+        alert('Profile updated successfully!');
+        setIsEditing(false);
+        fetchUserDetails(userId); // Refresh data
       } else {
-        alert('Error submitting transaction!');
+        const errorData = await response.json();
+        console.error('Update error response:', errorData); // Log for debugging
+        setError(errorData.message || 'Error updating profile');
       }
     } catch (error) {
+      setError('Submission error: ' + error.message);
       console.error('Submission error:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
+  const handleEditToggle = () => {
+    setIsEditing(!isEditing);
+    setError(null); // Clear errors when toggling edit mode
+  };
+
   return (
-    <div className="max-w-xl mx-auto mt-10 p-8 rounded-2xl shadow-xl bg-gradient-to-br from-fuchsia-100 to-purple-50 border border-fuchsia-200">
-      <h2 className="text-2xl font-bold text-fuchsia-700 mb-6 text-center">🎁 Loyalty Transaction Form</h2>
-      <form onSubmit={handleSubmit} className="space-y-5">
-        
-        <div>
-          <label className="block mb-1 font-semibold text-fuchsia-700">User ID</label>
-          <input
-            type="text"
-            name="userId"
-            value={formData.userId}
-            onChange={handleChange}
-            className="w-full border border-fuchsia-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-fuchsia-400"
-            required
-          />
+    <div className="flex items-center justify-center p-4 sm:p-6">
+      <div className="max-w-md w-full bg-white/95 backdrop-blur-lg rounded-3xl shadow-xl p-6 sm:p-8 space-y-6 transition-all duration-300 hover:shadow-2xl">
+        <div className="text-center space-y-2">
+          <h2 className="text-2xl sm:text-3xl font-bold text-indigo-900 tracking-tight">
+            User Profile
+          </h2>
         </div>
 
-        <div>
-          <label className="block mb-1 font-semibold text-fuchsia-700">Purchase Points ($)</label>
-          <input
-            type="number"
-            name="purchasePoints"
-            value={formData.purchasePoints}
-            onChange={handleChange}
-            className="w-full border border-fuchsia-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-fuchsia-400"
-            required
-          />
-        </div>
+        {error && (
+          <div className="bg-red-50 border-l-4 border-red-500 text-red-700 p-4 rounded-lg text-sm">
+            {error}
+          </div>
+        )}
 
-        <div>
-          <label className="block mb-1 font-semibold text-fuchsia-700">Transaction Date</label>
-          <input
-            type="date"
-            name="transactionDate"
-            value={formData.transactionDate}
-            onChange={handleChange}
-            className="w-full border border-fuchsia-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-fuchsia-400"
-            required
-          />
-        </div>
+        {isLoading && (
+          <div className="text-center text-gray-600">
+            <span>Loading...</span>
+          </div>
+        )}
 
-        <div>
-          <label className="block mb-1 font-semibold text-fuchsia-700">Total Points</label>
-          <input
-            type="number"
-            name="totalPoints"
-            value={formData.totalPoints}
-            onChange={handleChange}
-            className="w-full border border-fuchsia-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-fuchsia-400"
-            required
-          />
-        </div>
+        <form onSubmit={handleSubmit} className="space-y-5">
+          <div>
+            <label className="block text-sm font-medium text-indigo-800">First Name</label>
+            <input
+              type="text"
+              name="firstName"
+              value={userData.firstName}
+              onChange={handleChange}
+              className={`mt-1 w-full border-2 ${
+                isEditing ? 'border-indigo-300' : 'border-gray-200'
+              } rounded-lg p-3 bg-gray-50 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors duration-200`}
+              placeholder="Enter first name"
+              disabled={!isEditing}
+              required
+            />
+          </div>
 
-        <button
-          type="submit"
-          className="w-full bg-fuchsia-600 text-white py-3 rounded-xl font-semibold hover:bg-fuchsia-700 transition duration-300 shadow-md"
-        >
-          🚀 Submit Transaction
-        </button>
-      </form>
+          <div>
+            <label className="block text-sm font-medium text-indigo-800">Last Name</label>
+            <input
+              type="text"
+              name="lastName"
+              value={userData.lastName}
+              onChange={handleChange}
+              className={`mt-1 w-full border-2 ${
+                isEditing ? 'border-indigo-300' : 'border-gray-200'
+              } rounded-lg p-3 bg-gray-50 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors duration-200`}
+              placeholder="Enter last name"
+              disabled={!isEditing}
+              required
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-indigo-800">Phone</label>
+            <input
+              type="tel"
+              name="phone"
+              value={userData.phone}
+              onChange={handleChange}
+              className={`mt-1 w-full border-2 ${
+                isEditing ? 'border-indigo-300' : 'border-gray-200'
+              } rounded-lg p-3 bg-gray-50 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors duration-200`}
+              placeholder="Enter 10-digit phone number"
+              disabled={!isEditing}
+              required
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-indigo-800">Email</label>
+            <input
+              type="email"
+              name="email"
+              value={userData.email}
+              onChange={handleChange}
+              className={`mt-1 w-full border-2 ${
+                isEditing ? 'border-indigo-300' : 'border-gray-200'
+              } rounded-lg p-3 bg-gray-50 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors duration-200`}
+              placeholder="Enter email address"
+              disabled={!isEditing}
+              required
+            />
+          </div>
+
+          <div className="flex flex-col sm:flex-row gap-3">
+            <button
+              type="button"
+              onClick={handleEditToggle}
+              className="w-full py-3 rounded-xl font-semibold text-white bg-indigo-600 hover:bg-indigo-700 shadow-md transition-all duration-300 hover:shadow-lg flex items-center justify-center gap-2"
+            >
+              {isEditing ? 'Cancel' : <span>✏️ Edit Profile</span>}
+            </button>
+            {isEditing && (
+              <button
+                type="submit"
+                disabled={isLoading}
+                className={`w-full py-3 rounded-xl font-semibold text-white shadow-md transition-all duration-300 flex items-center justify-center gap-2 ${
+                  isLoading ? 'bg-gray-400 cursor-not-allowed' : 'bg-pink-600 hover:bg-pink-700 hover:shadow-lg'
+                }`}
+              >
+                {isLoading ? 'Updating...' : <span>💾 Save Changes</span>}
+              </button>
+            )}
+          </div>
+        </form>
+      </div>
     </div>
   );
 };
 
-export default User_profile;
+export default UserProfile;

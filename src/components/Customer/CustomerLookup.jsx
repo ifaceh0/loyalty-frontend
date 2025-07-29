@@ -456,7 +456,7 @@ const CustomerLookup = () => {
 
           <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4 max-w-7xl mx-auto">
             {/* Referral Code (not connected) */}
-            <div className="rounded-2xl border border-fuchsia-100 bg-white p-6 shadow-lg">
+            {/* <div className="rounded-2xl border border-fuchsia-100 bg-white p-6 shadow-lg">
               <h2 className="text-lg font-semibold text-black-500 mb-3">🔖 Search by Code</h2>
               <input
                 type="text"
@@ -471,6 +471,19 @@ const CustomerLookup = () => {
                 className="w-full py-2 rounded-lg text-white font-medium bg-fuchsia-300 cursor-not-allowed"
               >
                 Coming Soon
+              </button>
+            </div> */}
+
+            {/* QR Scanner */}
+            <div className="rounded-2xl border border-blue-100 bg-blue-50 p-6 shadow-lg text-center">
+              <QrCode className="text-blue-600 mx-auto mb-3" size={36} />
+              <h2 className="text-lg font-semibold mb-2 text-black-500">📷 Scan Code</h2>
+              <p className="text-sm text-gray-600 mb-4">Scan QR or barcode to lookup</p>
+              <button
+                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium"
+                onClick={() => setShowScanner(true)}
+              >
+                Open Scanner
               </button>
             </div>
 
@@ -516,19 +529,6 @@ const CustomerLookup = () => {
                 {loading.email ? "Searching..." : "Search"}
               </button>
               <p className="text-xs text-gray-500 mt-2">Used for identity verification</p>
-            </div>
-
-            {/* QR Scanner */}
-            <div className="rounded-2xl border border-blue-100 bg-blue-50 p-6 shadow-lg text-center">
-              <QrCode className="text-blue-600 mx-auto mb-3" size={36} />
-              <h2 className="text-lg font-semibold mb-2 text-black-500">📷 Scan Code</h2>
-              <p className="text-sm text-gray-600 mb-4">Scan QR or barcode to lookup</p>
-              <button
-                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium"
-                onClick={() => setShowScanner(true)}
-              >
-                Open Scanner
-              </button>
             </div>
 
             {/* Refer by Email */}
