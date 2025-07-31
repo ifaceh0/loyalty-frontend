@@ -1,18 +1,10 @@
 // import React, { useEffect, useRef, useState } from "react";
 // import { BrowserMultiFormatReader } from "@zxing/library";
-// import { FaCheckCircle, FaTimesCircle, FaRedo } from "react-icons/fa";
-// import {
-//   faTimes,
-//   faUser,
-//   faIdCard,
-//   faWallet,
-//   faEnvelope,
-//   faPhone,
-//   faRedo,
-//   faCheckCircle,
-//   faExclamationCircle
-// } from "@fortawesome/free-solid-svg-icons";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import {
+//   faCheckCircle,
+//   faExclamationCircle,
+// } from "@fortawesome/free-solid-svg-icons";
 
 // const QrScanner = ({ onClose }) => {
 //   const videoRef = useRef(null);
@@ -27,7 +19,6 @@
 //   const [associated, setAssociated] = useState(true);
 //   const [showErrorPopup, setShowErrorPopup] = useState(false);
 //   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
-
 
 //   const playBeep = () => {
 //     const context = new AudioContext();
@@ -89,27 +80,25 @@
 //       }));
 //       setAssociated(verified.associated ?? true);
 //     } catch (e) {
-//       console.error("Scan/Decode error:", e.message);
 //       setError("Scanned QR is not valid or verification failed.");
 //     }
 //   };
 
 //   useEffect(() => {
 //     codeReader.current = new BrowserMultiFormatReader();
-
 //     codeReader.current
 //       .listVideoInputDevices()
 //       .then((devices) => {
 //         if (!devices.length) {
 //           setError("No camera devices found.");
-//           setGuidance("Make sure your device has a working camera and permissions are granted.");
+//           setGuidance("Ensure your device has camera permissions enabled.");
 //           return;
 //         }
 
 //         const preferredDevice =
 //           devices.find((device) => /back|rear/i.test(device.label)) || devices[0];
 
-//         setGuidance("Allow camera access. Prefer rear camera on mobile for better scanning.");
+//         setGuidance("Allow camera access. Prefer rear camera for better scan.");
 
 //         codeReader.current
 //           .decodeFromVideoDevice(
@@ -121,27 +110,17 @@
 //                   const parsed = JSON.parse(result.getText());
 //                   await handleQrScan(parsed);
 //                 } catch (e) {
-//                   console.error("Invalid QR data:", e.message);
+//                   setError("Invalid QR Code.");
 //                 }
-//               }
-
-//               const ignoredErrors = ["NotFoundException", "ChecksumException", "FormatException"];
-//               if (err && !hasScannedRef.current && !ignoredErrors.includes(err?.name)) {
-//                 console.warn("Scan error (non-critical):", err.name);
-//                 setError(null);
 //               }
 //             }
 //           )
 //           .catch((error) => {
-//             console.error("Camera startup failed:", error);
-//             setError("Camera failed to start. Please refresh the page or try another device.");
-//             setGuidance("Ensure camera permissions are enabled and no other app is using the camera.");
+//             setError("Camera failed to start. Please refresh or allow permissions.");
 //           });
 //       })
-//       .catch((err) => {
-//         console.error("Camera access error:", err);
-//         setError("Unable to access camera.");
-//         setGuidance("Please enable camera permissions.");
+//       .catch(() => {
+//         setError("Unable to access camera. Please enable permissions.");
 //       });
 
 //     return () => {
@@ -174,83 +153,19 @@
 //                 const parsed = JSON.parse(result.getText());
 //                 await handleQrScan(parsed);
 //               } catch (e) {
-//                 console.error("Invalid QR data:", e.message);
+//                 setError("Invalid QR Code.");
 //               }
 //             }
 //           }
 //         )
-//         .catch((e) => {
-//           console.error("Error restarting scanner:", e);
+//         .catch(() => {
 //           setError("Unable to restart camera. Please refresh the page.");
 //         });
-//     } catch (e) {
-//       console.error("Error listing devices:", e);
-//       setError("Camera error. Please refresh or check permissions.");
+//     } catch {
+//       setError("Camera error. Please refresh.");
 //     }
 //   };
 
-//   // const handleSubmitBoth = async (e) => {
-//   //   e.preventDefault();
-//   //   setError(null);
-
-//   //   const pointsAmount = parseInt(e.target.amount.value);
-//   //   const dollarAmount = parseFloat(e.target.dollar.value);
-
-//   //   if (!pointsAmount || pointsAmount <= 0 || isNaN(dollarAmount) || dollarAmount <= 0) {
-//   //     setError("Please enter valid points and dollar amount.");
-//   //     return;
-//   //   }
-
-//   //   setIsSubmitting(true);
-
-//   //   try {
-//   //     // 1. Send points to /add-points
-//   //     const pointsRes = await fetch("https://loyalty-backend-java.onrender.com/api/qrcode/add-points", {
-//   //       method: "POST",
-//   //       headers: { "Content-Type": "application/json" },
-//   //       body: JSON.stringify({
-//   //         userId: scannedData.customerId,
-//   //         shopId: scannedData.shopId,
-//   //         pointsToAdd: pointsAmount,
-//   //         dollarAmount: dollarAmount,
-//   //       }),
-//   //     });
-
-//   //     const pointsResult = await pointsRes.json();
-
-//   //     // 2. Send dollars to /api/qrcode/add-dollars
-//   //     const dollarRes = await fetch("https://loyalty-backend-java.onrender.com/api/qrcode/add-dollars", {
-//   //       method: "POST",
-//   //       headers: { "Content-Type": "application/json" },
-//   //       body: JSON.stringify({
-//   //         userId: scannedData.customerId,
-//   //         shopId: scannedData.shopId,
-//   //         transactionAmount: dollarAmount,
-//   //       }),
-//   //     });
-
-//   //     const dollarResult = await dollarRes.json();
-
-//   //     if (pointsRes.ok && dollarRes.ok) {
-//   //       setScannedData((prev) => ({
-//   //         ...prev,
-//   //         verifiedBalance: pointsResult.newBalance,
-//   //       }));
-//   //       setSuccessAnimation(true);
-//   //       setShowSuccessPopup(true); // ✅ Show success popup
-//   //       setTimeout(() => setSuccessAnimation(false), 1000);
-//   //       e.target.reset();
-//   //     } else {
-//   //       setError(pointsResult.message || dollarResult.message || "Submission failed.");
-//   //     }
-//   //   } catch (err) {
-//   //     setError("Something went wrong while submitting.");
-//   //   } finally {
-//   //     setIsSubmitting(false);
-//   //   }
-//   // };
-
-//   // ✅ UPDATED TO SEND DOLLAR WITH POINTS
 //   const handleSubmitBoth = async (e) => {
 //     e.preventDefault();
 //     setError(null);
@@ -266,21 +181,20 @@
 //     setIsSubmitting(true);
 
 //     try {
-//       // ✅ Send both points and dollars in ONE request
-//       const pointsRes = await fetch("https://loyalty-backend-java.onrender.com/api/qrcode/add-points", {
+//       const res = await fetch("https://loyalty-backend-java.onrender.com/api/qrcode/add-points", {
 //         method: "POST",
 //         headers: { "Content-Type": "application/json" },
 //         body: JSON.stringify({
 //           userId: scannedData.customerId,
 //           shopId: scannedData.shopId,
 //           pointsToAdd: pointsAmount,
-//           dollarAmount: dollarAmount, // ✅ CHANGED: sending dollar with points
+//           dollarAmount: dollarAmount,
 //         }),
 //       });
 
-//       const result = await pointsRes.json();
+//       const result = await res.json();
 
-//       if (pointsRes.ok) {
+//       if (res.ok) {
 //         setScannedData((prev) => ({
 //           ...prev,
 //           verifiedBalance: result.newBalance,
@@ -292,64 +206,61 @@
 //       } else {
 //         setError(result.message || "Submission failed.");
 //       }
-//     } catch (err) {
-//       setError("Something went wrong while submitting.");
+//     } catch {
+//       setError("Something went wrong.");
 //     } finally {
 //       setIsSubmitting(false);
 //     }
 //   };
 
 //   return (
-//     <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
-//       {/* Relative container for overlap */}
-//       <div className="relative">
-//         {/* Main Scanner UI */}
+//     <div className=" inset-0 flex items-center justify-center  z-50">
+//       <div className="relative w-full max-w-lg px-4">
 //         {!showErrorPopup && (
-//           <div className="bg-white rounded-lg p-4 w-[450px] min-h-[580px] shadow-lg flex flex-col items-center justify-center relative z-10">
-//             <h2 className="text-lg font-semibold mb-2">Scan QR Code</h2>
+//           <div className="bg-white/80 backdrop-blur-lg border border-gray-200 shadow-xl rounded-2xl px-6 py-6 w-full min-h-[580px] flex flex-col items-center justify-center z-10">
+//             <h2 className="text-2xl font-bold text-gray-800 mb-4">Scan QR Code</h2>
 
 //             {!scannedData ? (
-//               <div className="relative w-[380px] h-[400px] border-4 border-blue-500 rounded overflow-hidden mb-2">
+//               <div className="relative w-[360px] h-[380px] border-4 border-dashed border-blue-500 rounded-2xl overflow-hidden mb-4 shadow-lg">
 //                 <video ref={videoRef} className="w-full h-full object-cover" />
-//                 <div className="absolute border-2 border-black-500 rounded w-60 h-56 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
 //               </div>
 //             ) : (
-//               <div className="w-full border border-gray-500 min-h-[380px] rounded p-4 text-sm mb-2">
-//                 <p><strong>Customer ID :</strong> CUST-{scannedData.customerId}</p><br />
-//                 <p><strong>Name :</strong> {scannedData.userName}</p><br />
-//                 <p><strong>Email :</strong> {scannedData.email}</p><br />
-//                 <p><strong>Phone Number :</strong> {scannedData.phone}</p><br />
-//                 <p><strong>Shop Name :</strong> {scannedData.shopName}</p><br />
+//               <div className="w-full border border-gray-400 rounded-xl p-4 text-sm bg-white/80 shadow-sm mb-4">
+//                 <p><strong>Customer ID:</strong> CUST-{scannedData.customerId}</p>
+//                 <p><strong>Name:</strong> {scannedData.userName}</p>
+//                 <p><strong>Email:</strong> {scannedData.email}</p>
+//                 <p><strong>Phone:</strong> {scannedData.phone}</p>
+//                 <p><strong>Shop Name:</strong> {scannedData.shopName}</p>
 //                 <p className={`transition-all ${successAnimation ? "text-green-600 scale-110" : ""}`}>
-//                   <strong>Available Points : </strong> {scannedData.verifiedBalance ?? scannedData.availableBalance ?? 0}
-//                 </p><br />
+//                   <strong>Available Points:</strong> {scannedData.verifiedBalance ?? scannedData.availableBalance ?? 0}
+//                 </p>
 
 //                 {associated && (
-//                   <form onSubmit={handleSubmitBoth} className="mt-4 flex flex-col gap-2">
+//                   <form onSubmit={handleSubmitBoth} className="mt-4 flex flex-col gap-3">
 //                     <input
 //                       type="number"
 //                       name="amount"
 //                       min="1"
 //                       placeholder="Enter points"
 //                       required
-//                       className="w-full px-3 py-2 border border-gray-500 rounded"
+//                       className="w-full px-4 py-2 bg-white border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-purple-400"
 //                     />
 //                     <div className="relative">
-//                       <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-black-500 font-bold">$</span>
-//                       <input
-//                         type="number"
-//                         name="dollar"
-//                         min="1"
-//                         placeholder="Enter the purchase amount"
-//                         required
-//                         className="w-full pl-8 pr-3 py-2 border border-gray-500 rounded"
-//                       />
+//                     <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-black-500 font-bold">$</span>
+//                     <input
+//                       type="number"
+//                       name="dollar"
+//                       min="1"
+//                       placeholder="Enter purchase amount"
+//                       required
+//                       className="w-full px-8 py-2 bg-white border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-400"
+//                     />
 //                     </div>
 //                     {error && <p className="text-red-500 text-sm">{error}</p>}
 //                     <button
 //                       type="submit"
 //                       disabled={isSubmitting}
-//                       className={`bg-purple-500 text-white py-2 rounded hover:bg-purple-600 ${isSubmitting ? "opacity-50 cursor-not-allowed" : ""}`}
+//                       className="bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-600 hover:to-indigo-600 text-white font-semibold py-2 rounded-xl shadow-md transition duration-300"
 //                     >
 //                       {isSubmitting ? "Submitting..." : "Submit"}
 //                     </button>
@@ -359,82 +270,55 @@
 //             )}
 
 //             {guidance && !scannedData && (
-//               <p className="text-xs text-gray-600 mt-2 text-center whitespace-pre-line">{guidance}</p>
+//               <p className="text-xs text-gray-600 text-center">{guidance}</p>
 //             )}
 
 //             <div className="mt-4 flex gap-3">
 //               {scannedData && (
-//                 <button onClick={handleScanAgain} className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
-//                   {/* <FaRedo />Scan Again */}
-//                  Scan Again
+//                 <button onClick={handleScanAgain} className="px-4 py-2 bg-blue-500 text-white rounded-xl hover:bg-blue-600 shadow">
+//                   Scan Again
 //                 </button>
 //               )}
-//               <button onClick={onClose} className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">
+//               <button onClick={onClose} className="px-4 py-2 bg-gray-400 text-white rounded-xl hover:bg-gray-500 shadow">
 //                 Close
 //               </button>
 //             </div>
 //           </div>
 //         )}
 
-//         {/* Success Popup (overlapping) */}
-//         {/* {showSuccessPopup && (
-//           <div className="absolute inset-0 flex items-center justify-center z-20">
-//             <div className="bg-white rounded-lg shadow-2xl p-6 w-[380px] flex flex-col items-center justify-center border border-green-300 animate-fade-in">
-//               <h3 className="text-xl font-semibold text-green-600 mb-4">Success</h3>
-//               <p className="text-center text-gray-700 mb-6">
-//                 Points and purchase amount added successfully!
-//               </p>
-//               <button
-//                 onClick={() => setShowSuccessPopup(false)}
-//                 className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded"
-//               >
-//                 Close
-//               </button>
-//             </div>
-//           </div>
-//         )} */}
 //         {showSuccessPopup && (
 //           <div className="absolute inset-0 flex items-center justify-center z-50">
-//             <div className="bg-white p-6 rounded-xl shadow-xl text-center border border-green-400">
+//             <div className="bg-white/90 backdrop-blur-md p-6 rounded-2xl shadow-2xl text-center border border-green-400 w-[360px]">
 //               <FontAwesomeIcon icon={faCheckCircle} className="text-green-600 text-3xl mb-2" />
 //               <h3 className="text-lg font-semibold text-green-600">Points & Dollars Added</h3>
-//               <button onClick={() => setShowSuccessPopup(false)} className="mt-4 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded">
+//               <button onClick={() => setShowSuccessPopup(false)} className="mt-4 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-xl">
 //                 OK
 //               </button>
 //             </div>
 //           </div>
 //         )}
-//       </div>
-//       {/* {showErrorPopup && (
-//           <div className="absolute bg-white p-6 rounded-xl shadow-lg border border-red-300 text-center animate-fade-in z-50">
-//             <FaTimesCircle className="text-red-600 text-3xl mx-auto mb-2" />
-//             <h3 className="text-lg font-bold text-red-600">Invalid QR</h3>
-//             <p className="text-gray-700 mt-1 mb-4">This QR doesn't belong to your shop.</p>
-//             <button
-//               onClick={onClose}
-//               className="bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded"
-//             >
-//               Close
-//             </button>
-//           </div>
-//         )} */}
+
 //         {showErrorPopup && (
-//           <div className="absolute inset-0 flex items-center justify-center z-50">
-//             <div className="bg-white p-6 rounded-xl shadow-xl text-center border border-red-400">
+//           // <div className="absolute inset-0 flex items-center justify-center z-50">
+//           <div className="px-6 py-6 w-full min-h-[580px] flex flex-col items-center justify-center z-10">
+//             <div className="bg-white/90 backdrop-blur-md p-6 rounded-2xl shadow-2xl text-center border border-red-400 w-[360px]">
 //               <FontAwesomeIcon icon={faExclamationCircle} className="text-red-600 text-3xl mb-2" />
 //               <h3 className="text-lg font-semibold text-red-600">Invalid QR</h3>
 //               <p className="text-sm mt-1">This QR doesn't belong to your shop.</p>
-//               <button onClick={onClose} className="mt-4 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded">
+//               <button onClick={onClose} className="mt-4 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-xl">
 //                 Close
 //               </button>
 //             </div>
 //           </div>
 //         )}
+//       </div>
 //     </div>
 //   );
 // };
 
 // export default QrScanner;
+
+
 
 
 
@@ -662,25 +546,26 @@ const QrScanner = ({ onClose }) => {
   };
 
   return (
-    <div className=" inset-0 flex items-center justify-center  z-50">
-      <div className="relative w-full max-w-lg px-4">
+    <div className="inset-0 flex items-center justify-center bg-gray-100/70 z-50">
+      <div className="relative w-full max-w-md px-4">
         {!showErrorPopup && (
-          <div className="bg-white/80 backdrop-blur-lg border border-gray-200 shadow-xl rounded-2xl px-6 py-6 w-full min-h-[580px] flex flex-col items-center justify-center z-10">
-            <h2 className="text-2xl font-bold text-gray-800 mb-4">Scan QR Code</h2>
+          <div className="bg-white shadow-xl rounded-xl p-6 w-full min-h-[580px] flex flex-col items-center justify-between z-10 transition-all duration-200">
+            <h2 className="text-2xl font-semibold text-purple-700 mb-6">Scan QR Code</h2>
 
             {!scannedData ? (
-              <div className="relative w-[360px] h-[380px] border-4 border-dashed border-blue-500 rounded-2xl overflow-hidden mb-4 shadow-lg">
+              <div className="relative w-full aspect-square max-w-[340px] border-2 border-dashed border-blue-500 rounded-xl overflow-hidden mb-6 shadow-md">
                 <video ref={videoRef} className="w-full h-full object-cover" />
+                <div className="absolute inset-0 border-blue-200/50 rounded-xl pointer-events-none" />
               </div>
             ) : (
-              <div className="w-full border border-gray-400 rounded-xl p-4 text-sm bg-white/80 shadow-sm mb-4">
-                <p><strong>Customer ID:</strong> CUST-{scannedData.customerId}</p>
-                <p><strong>Name:</strong> {scannedData.userName}</p>
-                <p><strong>Email:</strong> {scannedData.email}</p>
-                <p><strong>Phone:</strong> {scannedData.phone}</p>
-                <p><strong>Shop Name:</strong> {scannedData.shopName}</p>
-                <p className={`transition-all ${successAnimation ? "text-green-600 scale-110" : ""}`}>
-                  <strong>Available Points:</strong> {scannedData.verifiedBalance ?? scannedData.availableBalance ?? 0}
+              <div className="w-full bg-gray-50 border border-blue-500 rounded-xl p-4 text-sm text-gray-700 shadow-sm mb-6">
+                <p className="mb-4"><strong className="text-blue-600">Customer ID :</strong> CUST-{scannedData.customerId}</p>
+                <p className="mb-4"><strong className="text-blue-600">Customer Name :</strong> {scannedData.userName}</p>
+                <p className="mb-4"><strong className="text-blue-600">Customer Email :</strong> {scannedData.email}</p>
+                <p className="mb-4"><strong className="text-blue-600">Customer Phone :</strong> {scannedData.phone}</p>
+                <p className="mb-4"><strong className="text-blue-600">Shop Name :</strong> {scannedData.shopName}</p>
+                <p className={`transition-all duration-200 ${successAnimation ? "text-orange-500 scale-105" : ""}`}>
+                  <strong className="text-blue-600">Available Points :</strong> {scannedData.verifiedBalance ?? scannedData.availableBalance ?? 0}
                 </p>
 
                 {associated && (
@@ -691,24 +576,24 @@ const QrScanner = ({ onClose }) => {
                       min="1"
                       placeholder="Enter points"
                       required
-                      className="w-full px-4 py-2 bg-white border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-purple-400"
+                      className="w-full px-4 py-2 bg-white border border-gray-300 rounded-lg text-gray-700 placeholder-gray-400 focus:ring-2 focus:ring-blue-400 focus:outline-none transition duration-150"
                     />
                     <div className="relative">
-                    <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-black-500 font-bold">$</span>
-                    <input
-                      type="number"
-                      name="dollar"
-                      min="1"
-                      placeholder="Enter purchase amount"
-                      required
-                      className="w-full px-8 py-2 bg-white border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-400"
-                    />
+                      <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 font-semibold">$</span>
+                      <input
+                        type="number"
+                        name="dollar"
+                        min="1"
+                        placeholder="Enter purchase amount"
+                        required
+                        className="w-full pl-10 pr-4 py-2 bg-white border border-gray-300 rounded-lg text-gray-700 placeholder-gray-400 focus:ring-2 focus:ring-blue-400 focus:outline-none transition duration-150"
+                      />
                     </div>
                     {error && <p className="text-red-500 text-sm">{error}</p>}
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-600 hover:to-indigo-600 text-white font-semibold py-2 rounded-xl shadow-md transition duration-300"
+                      className="bg-gradient-to-r from-blue-500 to-orange-500 hover:from-blue-600 hover:to-orange-600 text-white font-semibold py-2 rounded-lg shadow-sm transition duration-200 disabled:opacity-60"
                     >
                       {isSubmitting ? "Submitting..." : "Submit"}
                     </button>
@@ -718,16 +603,22 @@ const QrScanner = ({ onClose }) => {
             )}
 
             {guidance && !scannedData && (
-              <p className="text-xs text-gray-600 text-center">{guidance}</p>
+              <p className="text-sm text-gray-500 text-center">{guidance}</p>
             )}
 
             <div className="mt-4 flex gap-3">
               {scannedData && (
-                <button onClick={handleScanAgain} className="px-4 py-2 bg-blue-500 text-white rounded-xl hover:bg-blue-600 shadow">
+                <button
+                  onClick={handleScanAgain}
+                  className="px-5 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 shadow-sm transition duration-200"
+                >
                   Scan Again
                 </button>
               )}
-              <button onClick={onClose} className="px-4 py-2 bg-gray-400 text-white rounded-xl hover:bg-gray-500 shadow">
+              <button
+                onClick={onClose}
+                className="px-5 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 shadow-sm transition duration-200"
+              >
                 Close
               </button>
             </div>
@@ -736,10 +627,13 @@ const QrScanner = ({ onClose }) => {
 
         {showSuccessPopup && (
           <div className="absolute inset-0 flex items-center justify-center z-50">
-            <div className="bg-white/90 backdrop-blur-md p-6 rounded-2xl shadow-2xl text-center border border-green-400 w-[360px]">
-              <FontAwesomeIcon icon={faCheckCircle} className="text-green-600 text-3xl mb-2" />
-              <h3 className="text-lg font-semibold text-green-600">Points & Dollars Added</h3>
-              <button onClick={() => setShowSuccessPopup(false)} className="mt-4 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-xl">
+            <div className="bg-white p-6 rounded-2xl shadow-xl text-center border border-blue-300 w-[340px]">
+              <FontAwesomeIcon icon={faCheckCircle} className="text-blue-500 text-3xl mb-3" />
+              <h3 className="text-lg font-semibold text-blue-600">Purchased Successfully</h3>
+              <button
+                onClick={() => setShowSuccessPopup(false)}
+                className="mt-4 bg-blue-500 hover:bg-blue-600 text-white px-5 py-2 rounded-lg transition duration-200"
+              >
                 OK
               </button>
             </div>
@@ -747,13 +641,15 @@ const QrScanner = ({ onClose }) => {
         )}
 
         {showErrorPopup && (
-          // <div className="absolute inset-0 flex items-center justify-center z-50">
-          <div className="px-6 py-6 w-full min-h-[580px] flex flex-col items-center justify-center z-10">
-            <div className="bg-white/90 backdrop-blur-md p-6 rounded-2xl shadow-2xl text-center border border-red-400 w-[360px]">
-              <FontAwesomeIcon icon={faExclamationCircle} className="text-red-600 text-3xl mb-2" />
+          <div className="fixed inset-0 flex items-center justify-center z-50">
+            <div className="bg-white p-6 rounded-2xl shadow-xl text-center border border-red-300 w-[340px]">
+              <FontAwesomeIcon icon={faExclamationCircle} className="text-red-500 text-3xl mb-3" />
               <h3 className="text-lg font-semibold text-red-600">Invalid QR</h3>
-              <p className="text-sm mt-1">This QR doesn't belong to your shop.</p>
-              <button onClick={onClose} className="mt-4 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-xl">
+              <p className="text-sm text-gray-600 mt-1">This QR doesn't belong to your shop !</p>
+              <button
+                onClick={onClose}
+                className="mt-4 bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-lg transition duration-200"
+              >
                 Close
               </button>
             </div>
