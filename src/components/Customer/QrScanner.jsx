@@ -548,12 +548,12 @@ const QrScanner = ({ onClose }) => {
   return (
     <div className="inset-0 flex items-center justify-center bg-gray-100/70 z-50">
       <div className="relative w-full max-w-md px-4">
-        {!showErrorPopup && (
+        {/* {!showErrorPopup && (
           <div className="bg-white shadow-xl rounded-xl p-6 w-full min-h-[580px] flex flex-col items-center justify-between z-10 transition-all duration-200">
             <h2 className="text-2xl font-semibold text-purple-700 mb-6">Scan QR Code</h2>
 
             {!scannedData ? (
-              <div className="relative w-full aspect-square max-w-[340px] border-2 border-dashed border-blue-500 rounded-xl overflow-hidden mb-6 shadow-md">
+              <div className="relative w-full aspect-square max-w-[340px] border-2 border-dashed border-purple-500 rounded-xl overflow-hidden mb-6 shadow-md">
                 <video ref={videoRef} className="w-full h-full object-cover" />
                 <div className="absolute inset-0 border-blue-200/50 rounded-xl pointer-events-none" />
               </div>
@@ -621,6 +621,89 @@ const QrScanner = ({ onClose }) => {
               >
                 Close
               </button>
+            </div>
+          </div>
+        )} */}
+        {!showErrorPopup && (
+          <div className="bg-white shadow-xl rounded-xl w-full min-h-[580px] flex flex-col z-10 transition-all duration-200">
+            <nav className="bg-purple-700 text-white px-4 py-2 rounded-t-xl flex justify-between items-center mb-10">
+              <h2 className="text-2xl font-semibold">Scan QR Code</h2>
+              <button
+                onClick={onClose}
+                className="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-lg transition duration-200 flex items-center gap-2"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+                {/* <span>Close</span> */}
+              </button>
+            </nav>
+
+            <div className="p-6 flex flex-col items-center justify-between flex-1">
+              {!scannedData ? (
+                <div className="relative w-full aspect-square max-w-[340px] border-2 border-dashed border-purple-500 rounded-xl overflow-hidden mb-6 shadow-md">
+                  <video ref={videoRef} className="w-full h-full object-cover" />
+                  <div className="absolute inset-0 border-purple-200/50 rounded-xl pointer-events-none" />
+                </div>
+              ) : (
+                <div className="w-full bg-gray-50 border border-purple-500 rounded-xl p-4 text-sm text-gray-700 shadow-sm mb-6">
+                  <p className="mb-4"><strong className="text-purple-600">Customer ID :</strong> CUST-{scannedData.customerId}</p>
+                  <p className="mb-4"><strong className="text-purple-600">Customer Name :</strong> {scannedData.userName}</p>
+                  <p className="mb-4"><strong className="text-purple-600">Customer Email :</strong> {scannedData.email}</p>
+                  <p className="mb-4"><strong className="text-purple-600">Customer Phone :</strong> {scannedData.phone}</p>
+                  <p className="mb-4"><strong className="text-purple-600">Shop Name :</strong> {scannedData.shopName}</p>
+                  <p className={`transition-all duration-200 ${successAnimation ? "text-orange-500 scale-105" : ""}`}>
+                    <strong className="text-purple-600">Available Points :</strong> {scannedData.verifiedBalance ?? scannedData.availableBalance ?? 0}
+                  </p>
+
+                  {associated && (
+                    <form onSubmit={handleSubmitBoth} className="mt-4 flex flex-col gap-3">
+                      {/* <input
+                        type="number"
+                        name="amount"
+                        min="1"
+                        placeholder="Enter points"
+                        required
+                        className="w-full px-4 py-2 bg-white border border-gray-300 rounded-lg text-gray-700 placeholder-gray-400 focus:ring-2 focus:ring-purple-400 focus:outline-none transition duration-150"
+                      /> */}
+                      <div className="relative">
+                        <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 font-semibold">$</span>
+                        <input
+                          type="number"
+                          name="dollar"
+                          min="1"
+                          placeholder="Enter purchase amount"
+                          required
+                          className="w-full pl-10 pr-4 py-2 bg-white border border-gray-300 rounded-lg text-gray-700 placeholder-gray-400 focus:ring-2 focus:ring-purple-400 focus:outline-none transition duration-150"
+                        />
+                      </div>
+                      {error && <p className="text-red-500 text-sm">{error}</p>}
+                      <button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className="bg-gradient-to-r from-purple-500 to-orange-500 hover:from-purple-600 hover:to-orange-600 text-white font-semibold py-2 rounded-lg shadow-sm transition duration-200 disabled:opacity-60"
+                      >
+                        {isSubmitting ? "Submitting..." : "Submit"}
+                      </button>
+                    </form>
+                  )}
+                </div>
+              )}
+
+              {guidance && !scannedData && (
+                <p className="text-sm text-gray-500 text-center">{guidance}</p>
+              )}
+
+              {scannedData && (
+                <div className="mt-4 flex gap-3">
+                  <button
+                    onClick={handleScanAgain}
+                    className="px-5 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 shadow-sm transition duration-200"
+                  >
+                    Scan Again
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         )}

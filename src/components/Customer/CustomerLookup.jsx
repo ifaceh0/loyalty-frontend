@@ -158,10 +158,10 @@ const CustomerLookup = () => {
         <div className="p-6 md:p-10">
           <div className="flex justify-center">
             <div className="border-2 max-w-[800px] w-full rounded-xl p-4 mb-8">
-              <h1 className="text-2xl font-bold text-center text-black-900 mb-2">
+              <h1 className="text-2xl font-bold text-center text-black mb-1">
                 Shop Name : {shopName || "Shop Name"}
               </h1>
-              <p className="text-center text-gray-500 mb-2">
+              <p className="text-center text-black mb-1">
                 Shop ID : {shopId || 0}
               </p>
             </div>
@@ -274,25 +274,29 @@ const CustomerLookup = () => {
       {/* Customer Modal */}
       {scannedResult && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
-          <div className="bg-white rounded-2xl w-full shadow-xl max-w-[400px] border border-purple-300 p-6 transition-all duration-300 transform hover:scale-[1.01]">
-            <h2 className="text-xl font-semibold mb-8 text-center text-purple-800 flex items-center justify-center gap-2">
-              <FontAwesomeIcon icon={faCheckCircle} className="text-purple-600 text-lg" />
-              Customer Matched
-            </h2>
-            <div className="space-y-3 text-gray-700 text-sm leading-relaxed">
-              <p><span className="font-semibold text-purple-600">Customer ID :</span> CUST-{scannedResult.customerId}</p>
-              <p><span className="font-semibold text-purple-600">Customer Name :</span> {scannedResult.name}</p>
-              <p><span className="font-semibold text-purple-600">Customer Email :</span> {scannedResult.email}</p>
-              <p><span className="font-semibold text-purple-600">Customer Phone :</span> {scannedResult.phone}</p>
-              <p><span className="font-semibold text-purple-600">Shop Name :</span> {scannedResult.shopName}</p>
-              <p><span className="font-semibold text-purple-600">Available Balance :</span> ₹ {scannedResult.availableBalance}</p>
+          <div className="bg-white rounded-xl w-full shadow-xl max-w-[400px] transition-all duration-300 transform hover:scale-[1.01]">
+            <nav className="bg-purple-700 text-white px-6 py-2 rounded-t-xl flex justify-between items-center">
+              <h2 className="text-xl font-semibold text-center flex items-center gap-2">
+                <FontAwesomeIcon icon={faCheckCircle} className="text-white text-lg" />
+                Customer Matched
+              </h2>
+            </nav>
+            <div className="p-6">
+              <div className="space-y-3 text-gray-700 text-sm leading-relaxed">
+                <p><span className="font-semibold text-purple-600">Customer ID :</span> CUST-{scannedResult.customerId}</p>
+                <p><span className="font-semibold text-purple-600">Customer Name :</span> {scannedResult.name}</p>
+                <p><span className="font-semibold text-purple-600">Customer Email :</span> {scannedResult.email}</p>
+                <p><span className="font-semibold text-purple-600">Customer Phone :</span> {scannedResult.phone}</p>
+                <p><span className="font-semibold text-purple-600">Shop Name :</span> {scannedResult.shopName}</p>
+                <p><span className="font-semibold text-purple-600">Available Balance :</span> ₹ {scannedResult.availableBalance}</p>
+              </div>
+              <button
+                className="mt-8 w-full py-2.5 px-4 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-semibold shadow-md transition-all duration-200"
+                onClick={() => setScannedResult(null)}
+              >
+                Close
+              </button>
             </div>
-            <button
-              className="mt-8 w-full py-2.5 px-4 bg-purple-600 hover:purple-300 text-white rounded-lg font-semibold shadow-md transition-all duration-200"
-              onClick={() => setScannedResult(null)}
-            >
-              Close
-            </button>
           </div>
         </div>
       )}
