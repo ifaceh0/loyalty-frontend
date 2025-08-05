@@ -332,6 +332,7 @@ function User() {
 
   const [referralShopId, setReferralShopId] = useState(null);
   const [error, setError] = useState("");
+  const [phoneError, setPhoneError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [captchaText, setCaptchaText] = useState("");
   const [success, setSuccess] = useState(false);
@@ -363,6 +364,11 @@ function User() {
 
 
   const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+  const hasLeadingZeroAfterCountryCode = (phone, dialCode) => {
+    const numberWithoutPlus = phone.replace("+", "");
+    return numberWithoutPlus.startsWith(dialCode + "0");
+  };
 
   const generateCaptcha = () => {
     const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
@@ -396,6 +402,10 @@ function User() {
       return;
     }
 
+    if (phoneError) {
+      setError("Please correct your phone number.");
+      return;
+    }
     setLoading(true);
     setError("");
     setSuccess(false);
@@ -494,18 +504,40 @@ function User() {
 
           {step === 2 && (
             <>
-              <div className="relative border border-purple-300 rounded-xl px-3 pt-4 pb-2 bg-white shadow-sm focus-within:ring-2 focus-within:ring-purple-500 transition">
+                <div className="relative border border-purple-300 rounded-xl px-3 pt-4 pb-2 bg-white shadow-sm focus-within:ring-2 focus-within:ring-purple-500 transition">
                 <label className="absolute -top-2 left-3 bg-white px-1 text-xs font-medium text-purple-600">Phone Number</label>
                 <PhoneInput
-                  country={"in"}
+                  country={"us"}
                   enableSearch
                   value={formData.phoneNumber}
-                  onChange={(phone) => setFormData((prev) => ({ ...prev, phoneNumber: phone }))}
+                  onChange={(phone, data) => {
+                    const newPhone = `+${String(phone || "").replace("+", "")}`;
+                    const currentDialCode = data?.dialCode;
+
+                    // If dial code is missing, just update raw value
+                    if (!currentDialCode) {
+                      setFormData((prev) => ({ ...prev, phoneNumber: newPhone }));
+                      return;
+                    }
+
+                    // Validate leading 0
+                    if (hasLeadingZeroAfterCountryCode(newPhone, currentDialCode)) {
+                      setPhoneError(true);
+                      setError("Phone number area code cannot start with 0.");
+                    } else {
+                      setPhoneError(false);
+                      setError("");
+                      setFormData((prev) => ({ ...prev, phoneNumber: newPhone }));
+                    }
+                  }}
                   inputClass="!w-full !h-5 !pl-16 !pr-4 !bg-transparent !text-gray-900 !focus:outline-none !border-none"
                   buttonClass="!h-5 !square-l-xl"
                   containerClass="!w-full"
                 />
-              </div>
+                </div>
+                {phoneError && (
+                  <p className="text-red-500 text-xs mt-1 ml-1">⚠️ Invalid phone number format.</p>
+                )}
               <FloatingInput label="Email" name="email" value={formData.email} onChange={handleChange} Icon={Mail} />
               <NextButton onClick={nextStep} />
             </>

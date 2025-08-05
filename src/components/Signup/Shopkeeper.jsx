@@ -34,6 +34,10 @@ function Shopkeeper() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [step, setStep] = useState(1);
+  const [dialCode, setDialCode] = useState("1"); // default to US
+  const [companyDialCode, setCompanyDialCode] = useState("1"); // default for US
+  const [phoneError, setPhoneError] = useState(false);
+  const [companyPhoneError, setCompanyPhoneError] = useState(false);
   const [missingFields, setMissingFields] = useState([]);
   const [captchaText, setCaptchaText] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -65,6 +69,16 @@ function Shopkeeper() {
     return regex.test(email);
   };
 
+  const hasLeadingZeroAfterCountryCode = (phone, dialCode) => {
+  const digitsOnly = phone.replace(/\D/g, ""); // Remove non-digits
+  const countryCodeLength = dialCode.length;
+
+  const afterCountryCode = digitsOnly.slice(countryCodeLength);
+  return afterCountryCode.startsWith("0");
+};
+
+
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -87,6 +101,10 @@ function Shopkeeper() {
       return;
     }
 
+    if (hasLeadingZeroAfterCountryCode(formData.phone, dialCode)) {
+        setError("Phone number area code should not start with 0.");
+        return;
+      }
     setLoading(true);
     setError("");
     setSuccess(false);
@@ -162,6 +180,16 @@ function Shopkeeper() {
       return;
     }
 
+    if (step === 1 && hasLeadingZeroAfterCountryCode(formData.phone, dialCode)) {
+      setError("Phone number should not start with 0 after the country code.");
+      return;
+    }
+
+    if (step === 2 && hasLeadingZeroAfterCountryCode(formData.companyPhone, companyDialCode)) {
+      setError("Phone number should not start with 0 after the country code."); 
+      return;
+    }
+
     setMissingFields([]);
     setStep(prev => prev + 1);
   };
@@ -187,12 +215,26 @@ function Shopkeeper() {
                   Personal Phone
                 </label>
                 <PhoneInput
-                  country={"in"}
+                  country={"us"}
                   enableSearch
                   value={formData.phone}
-                  onChange={(phone) =>
-                    setFormData((prev) => ({ ...prev, phone }))
+                  onChange={(phone, data) => {
+                    const newPhone = `+${phone.replace('+', '')}`;
+                    const currentDialCode = data.dialCode;
+
+                    // Validate
+                    if (hasLeadingZeroAfterCountryCode(newPhone, currentDialCode)) {
+                    setError("Personal phone number area code cannot start with 0.");
+                    setPhoneError(true);
+                  } else {
+                    setError("");
+                    setPhoneError(false);
+                    setFormData((prev) => ({ ...prev, phone: newPhone }));
                   }
+
+                  setDialCode(currentDialCode);
+                  }}
+
                   inputProps={{
                     name: "phone",
                     required: true,
@@ -210,11 +252,41 @@ function Shopkeeper() {
               <FloatingInput label="Company Name" name="companyName" value={formData.companyName} onChange={handleChange} Icon={Building2} />
               <FloatingInput label="Company Email" name="companyEmail" type="email" value={formData.companyEmail} onChange={handleChange} Icon={Mail} />
               <PhoneInputField
+                country={"us"}
+                enableSearch
                 label="Company Phone"
                 name="companyPhone"
                 value={formData.companyPhone}
-                onChange={handleChange}
-              />
+                onChange={(phone, data) => {
+                  const newPhone = `+${String(phone || "").replace("+", "")}`;
+                  const currentDialCode = data?.dialCode;
+
+                  // Guard for missing dialCode
+                  if (!currentDialCode) {
+                    setFormData((prev) => ({
+                      ...prev,
+                      companyPhone: newPhone,
+                    }));
+                    return;
+                  }
+
+                  if (hasLeadingZeroAfterCountryCode(newPhone, currentDialCode)) {
+                    setCompanyPhoneError(true);
+                    setError("Company phone number area code cannot start with 0.");
+                  } else {
+                    setCompanyPhoneError(false);
+                    setError("");
+                    setFormData((prev) => ({
+                      ...prev,
+                      companyPhone: newPhone,
+                      }));
+                    }
+
+                    if (onDialCodeChange && currentDialCode) {
+                      onDialCodeChange(currentDialCode);
+                    }
+                  }}
+                />
               <FloatingInput label="Company Address" name="companyAddress" value={formData.companyAddress} onChange={handleChange} Icon={MapPin} />
             </>
           )}
@@ -286,24 +358,25 @@ function FloatingInput({ label, name, value, onChange, type = "text", Icon, Togg
 }
 
 
-function PhoneInputField({ label, name, value, onChange }) {
+function PhoneInputField({ label, name, value, onChange, onDialCodeChange }) {
   return (
     <div className="relative border border-purple-400 rounded-xl px-3 pt-4 pb-2 bg-white shadow-sm focus-within:ring-2 focus-within:ring-purple-500 transition">
       <label className="absolute -top-2 left-3 bg-white px-1 text-xs font-medium text-purple-600">
         {label}
       </label>
       <PhoneInput
-        country={"in"}
+        country={"us"}
         enableSearch
         value={value.replace('+', '')}
-        onChange={(phone) =>
+        onChange={(phone, data) => {
           onChange({
             target: {
               name,
               value: `+${phone}`,
             },
-          })
-        }
+          });
+          if (onDialCodeChange) onDialCodeChange(data.dialCode); // 💡 pass dialCode
+        }}
         inputProps={{
           name,
           required: true,
@@ -318,6 +391,7 @@ function PhoneInputField({ label, name, value, onChange }) {
     </div>
   );
 }
+
 
 function NextButton({ onClick }) {
   return (
