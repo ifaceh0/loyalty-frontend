@@ -143,7 +143,7 @@ export default function QRModal({ shop, qrData, isOpen, onClose }) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm px-4">
-      <div className="bg-white w-full max-w-md rounded-2xl shadow-xl overflow-hidden">
+      <div className="bg-white w-full max-w-md shadow-xl overflow-hidden">
         <nav className="bg-blue-700 text-white px-6 py-4 flex justify-between items-center">
           <h2 className="text-xl font-bold flex items-center gap-2">
             <FontAwesomeIcon icon={faQrcode} className="text-white" />

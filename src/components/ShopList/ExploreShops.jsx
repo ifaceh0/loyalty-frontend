@@ -10,7 +10,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 const API_BASE_URL = 'https://loyalty-backend-java.onrender.com/api/qrcode';
-const ITEMS_PER_PAGE = 6;
+const ITEMS_PER_PAGE = 8;
 
 export default function ExploreShops() {
   const [shops, setShops] = useState([]);
@@ -113,9 +113,9 @@ export default function ExploreShops() {
   }
 
   return (
-    <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-2xl shadow-inner min-h-screen">
+    <div className="bg-gradient-to-br from-blue-100 to-blue-50 p-6 rounded-xl shadow-inner min-h-screen">
       <motion.h1
-        className="text-3xl font-extrabold text-center text-blue-700 mb-6"
+        className="text-3xl font-extrabold text-center text-blue-700 mb-8"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
@@ -123,7 +123,7 @@ export default function ExploreShops() {
         🛍️ Explore Loyalty Shops
       </motion.h1>
 
-      <div className="flex justify-center mb-6">
+      <div className="flex justify-center mb-10">
         <input
           type="text"
           value={searchTerm}
@@ -140,18 +140,18 @@ export default function ExploreShops() {
           No shops found matching your search.
         </p>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-14">
           {currentShops.map((shop, index) => (
             <motion.div
               key={shop.shopId}
-              className="bg-white rounded-2xl shadow-lg border border-blue-100 overflow-hidden hover:shadow-xl transition w-80 min-h-[340px] flex flex-col"
+              className="bg-white shadow-lg border border-blue-100 overflow-hidden hover:shadow-xl transition w-full max-w-sm min-h-[340px] flex flex-col"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
             >
               <div className="bg-gradient-to-r from-blue-600 to-blue-500 text-white px-4 py-3 flex items-center gap-2">
                 <FontAwesomeIcon icon={faStore} className="text-xl" />
-                <h3 className="text-lg font-semibold truncate">{shop.shopName}</h3>
+                <h3 className="text-lg  font-semibold truncate">{shop.shopName}</h3>
               </div>
               <div className="p-5 flex flex-col flex-1 justify-between">
                 <div>
@@ -169,7 +169,7 @@ export default function ExploreShops() {
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="mt-auto w-full flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-white font-medium text-sm bg-blue-600 hover:bg-blue-700 transition"
+                  className="mt-auto w-full flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-white font-medium text-sm bg-blue-600 hover:bg-blue-700 transition"
                   onClick={() => handleGenerateQR(shop)}
                   disabled={loadingShopId === shop.shopId}
                 >

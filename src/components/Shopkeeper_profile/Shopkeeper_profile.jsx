@@ -256,7 +256,7 @@ const ShopkeeperProfile = () => {
         <div className="flex items-center gap-4">
           {!isEditing ? (
             <button
-              className="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-lg transition duration-200 flex items-center gap-2"
+              className="bg-purple-700 hover:bg-purple-600 text-white px-4 py-2 rounded-lg transition duration-200 flex items-center gap-2"
               onClick={() => setIsEditing(true)}
             >
               <span>✏️ Edit</span>
@@ -264,7 +264,7 @@ const ShopkeeperProfile = () => {
           ) : (
             <button
               type="button"
-              className="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-lg transition duration-200 flex items-center gap-2"
+              className="bg-purple-700 hover:bg-purple-600 text-white px-4 py-2 rounded-lg transition duration-200 flex items-center gap-2"
               onClick={handleCancel}
             >
               {/* <FiX className="w-5 h-5" /> */}

@@ -263,11 +263,12 @@ import {
 import ShopkeeperProfile from "../Shopkeeper_profile/Shopkeeper_profile";
 import Shopkeeper_setting from "../Shopkeeper-setting/Shopkeeper_setting";
 import CustomerLookup from "../Customer/CustomerLookup";
+import SubscriptionDashboard from "../Subscription/SubscriptionDashboard";
 import UserPurchaseChart from "../bar chart/UserPurchaseChart";
 import { useSidebar } from "../../context/SidebarContext";
 import { X } from "lucide-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChartBar, faUser, faCog, faUsers } from "@fortawesome/free-solid-svg-icons";
+import { faChartBar, faUser, faCog, faUsers, faCreditCard } from "@fortawesome/free-solid-svg-icons";
 
 const Shopdashboard = () => {
   const navigate = useNavigate();
@@ -446,6 +447,19 @@ const Shopdashboard = () => {
           >
             <FontAwesomeIcon icon={faUsers} className="mr-2" /> Interactions
           </button>
+          <button
+            onClick={() => {
+              setActiveTab("subscription");
+              setSidebarOpen(false);
+            }}
+            className={`flex items-center w-full text-left px-4 py-2 rounded-lg transition text-sm sm:text-base ${
+              activeTab === "subscription"
+                ? "bg-purple-100 text-purple-800 font-semibold"
+                : "hover:bg-purple-500"
+            }`}
+          >
+            <FontAwesomeIcon icon={faCreditCard} className="mr-2" /> Subscription
+          </button>
         </nav>
       </aside>
 
@@ -512,6 +526,7 @@ const Shopdashboard = () => {
         {activeTab === "shopkeeper" && <ShopkeeperProfile />}
         {activeTab === "shopkeeper_setting" && <Shopkeeper_setting />}
         {activeTab === "interactions" && <CustomerLookup />}
+        {activeTab === "subscription" && <SubscriptionDashboard/>}
       </main>
     </div>
   );
