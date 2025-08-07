@@ -346,6 +346,7 @@ const Signin = () => {
       localStorage.setItem("id", data.id);
       localStorage.setItem("role", role);
       localStorage.setItem("name", data.name);
+      localStorage.setItem("CompanyEmail", data.companyEmail);
 
       setSuccess(true);
 

@@ -7,13 +7,15 @@ const SubscriptionDashboard = () => {
   const [subscriptionDetails, setSubscriptionDetails] = useState(null);
   const [error, setError] = useState("");
   const [userName, setUserName] = useState("");
-  // CHANGE: Added loading state for cancellation
   const [isCanceling, setIsCanceling] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const API_URL = import.meta.env.VITE_API_URL || "https://subscription-backend-e8gq.onrender.com";
 
   useEffect(() => {
     const role = localStorage.getItem("role");
     const name = localStorage.getItem("name");
-    const subscription = localStorage.getItem("subscriptionDetails");
+    const email = localStorage.getItem("CompanyEmail");
 
     if (role !== "SHOPKEEPER") {
       setError("Access denied. Please sign in as a shopkeeper.");
@@ -25,17 +27,39 @@ const SubscriptionDashboard = () => {
       setUserName(name);
     }
 
-    if (subscription) {
-      try {
-        const parsedSubscription = JSON.parse(subscription);
-        setSubscriptionDetails(parsedSubscription);
-      } catch (err) {
-        setError("Failed to load subscription details.");
-      }
+    if (email) {
+      const fetchSubscriptionDetails = async () => {
+        setIsLoading(true);
+        try {
+          const response = await fetch(`${API_URL}/api/subscription/details?email=${encodeURIComponent(email)}`, {
+            headers: { "Content-Type": "application/json" },
+          });
+
+          if (!response.ok) {
+            throw new Error(await response.text());
+          }
+          const data = await response.json();
+          setSubscriptionDetails(data);
+          localStorage.setItem("subscriptionDetails", JSON.stringify(data));
+        } catch (err) {
+          setError("Failed to load subscription details.");
+        } finally {
+          setIsLoading(false);
+        }
+      };
+      fetchSubscriptionDetails();
     } else {
-      setError("No subscription details found. Please ensure you have an active subscription.");
+      setError("No email found. Please sign in again.");
+      setTimeout(() => navigate("/signin"), 2000);
     }
   }, [navigate]);
+
+  useEffect(() => {
+    if (error && error !== "Access denied. Please sign in as a shopkeeper." && error !== "No email found. Please sign in again.") {
+      const timer = setTimeout(() => setError(""), 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [error]);
 
   const formatDate = (dateString) => {
     if (!dateString) return "N/A";
@@ -56,7 +80,6 @@ const SubscriptionDashboard = () => {
     return applications.join(", ");
   };
 
-  // CHANGE: Added cancel subscription function
   const cancelSubscription = async () => {
     if (!subscriptionDetails?.stripeSubscriptionId) {
       setError("No subscription ID available.");
@@ -88,7 +111,7 @@ const SubscriptionDashboard = () => {
 
     try {
       const response = await fetchWithBackoff(
-        "",
+        `${API_URL}/api/subscription/cancel`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -106,7 +129,6 @@ const SubscriptionDashboard = () => {
           JSON.stringify({ ...subscriptionDetails, cancelAtPeriodEnd: true })
         );
         setError("Subscription scheduled for cancellation.");
-        setTimeout(() => setError(""), 3000);
       } else {
         setError(data.message || "Failed to cancel subscription.");
       }
@@ -120,164 +142,160 @@ const SubscriptionDashboard = () => {
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-4xl bg-white rounded-lg shadow-lg">
-        
         <div className="bg-purple-700 text-white p-4 rounded-t-lg">
-          <h2 className="text-2xl font-bold">Subscription Detailes</h2>
+          <h2 className="text-2xl font-bold">Subscription Details</h2>
         </div>
         <div className="p-8">
-          
-          {subscriptionDetails && (
-            <div className="mb-8 flex items-center space-x-2">
+          {isLoading ? (
+            <p className="text-center text-gray-600 text-lg">Loading...</p>
+          ) : subscriptionDetails ? (
+            <>
+              <div className="mb-8 flex items-center space-x-2">
                 <div className="text-gray-600 font-bold text-2xl">Status :</div>
                 <div className="bg-green-200 text-green-800 px-4 py-1 shadow-sm">
-                {subscriptionDetails.status || "N/A"}
-                </div>
-            </div>
-         )}
-
-          {/* <h2 className="text-2xl font-bold text-gray-800 mb-6">
-            {userName || "Shopkeeper"}
-          </h2> */}
-          {error && (
-            <p className="text-red-600 text-sm mb-6 text-center bg-red-50 p-3 rounded-md">{error}</p>
-          )}
-          {subscriptionDetails ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-              <div className="bg-white border border-gray-200 p-4 rounded-md shadow-sm hover:shadow-md transition-shadow">
-                <div className="flex items-center gap-3">
-                  <DollarSign className="h-6 w-6 text-purple-600" />
-                  <div>
-                    <p className="text-sm font-medium text-gray-600">Plan</p>
-                    <p className="text-lg font-semibold text-gray-800">
-                      {subscriptionDetails.planName} ({subscriptionDetails.interval})
-                    </p>
-                  </div>
+                  {subscriptionDetails.status || "N/A"}
                 </div>
               </div>
-              <div className="bg-white border border-gray-200 p-4 rounded-md shadow-sm hover:shadow-md transition-shadow">
-                <div className="flex items-center gap-3">
-                  <DollarSign className="h-6 w-6 text-purple-600" />
-                  <div>
-                    <p className="text-sm font-medium text-gray-600">Price</p>
-                    <p className="text-lg font-semibold text-gray-800">
-                      {formatPrice(subscriptionDetails.price)}
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className="bg-white border border-gray-200 p-4 rounded-md shadow-sm hover:shadow-md transition-shadow">
-                <div className="flex items-center gap-3">
-                  <Package className="h-6 w-6 text-purple-600" />
-                  <div>
-                    <p className="text-sm font-medium text-gray-600">Applications</p>
-                    <p className="text-lg font-semibold text-gray-800">
-                      {formatApplications(subscriptionDetails.applications)}
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className="bg-white border border-gray-200 p-4 rounded-md shadow-sm hover:shadow-md transition-shadow">
-                <div className="flex items-center gap-3">
-                  <Calendar className="h-6 w-6 text-purple-600" />
-                  <div>
-                    <p className="text-sm font-medium text-gray-600">Start Date</p>
-                    <p className="text-lg font-semibold text-gray-800">
-                      {formatDate(subscriptionDetails.startDate)}
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className="bg-white border border-gray-200 p-4 rounded-md shadow-sm hover:shadow-md transition-shadow">
-                <div className="flex items-center gap-3">
-                  <Calendar className="h-6 w-6 text-purple-600" />
-                  <div>
-                    <p className="text-sm font-medium text-gray-600">End Date</p>
-                    <p className="text-lg font-semibold text-gray-800">
-                      {formatDate(subscriptionDetails.endDate)}
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className="bg-white border border-gray-200 p-4 rounded-md shadow-sm hover:shadow-md transition-shadow">
-                <div className="flex items-center gap-3">
-                  <RefreshCw className="h-6 w-6 text-purple-600" />
-                  <div>
-                    <p className="text-sm font-medium text-gray-600">Auto Renew</p>
-                    <p className="text-lg font-semibold text-gray-800">
-                      {subscriptionDetails.autoRenew ? "Enabled" : "Disabled"}
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className="bg-white border border-gray-200 p-4 rounded-md shadow-sm hover:shadow-md transition-shadow">
-                <div className="flex items-center gap-3">
-                  <User className="h-6 w-6 text-purple-600" />
-                  <div>
-                    <p className="text-sm font-medium text-gray-600">Customer ID</p>
-                    <p className="text-lg font-semibold text-gray-800">
-                      {subscriptionDetails.stripeCustomerId || "N/A"}
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className="bg-white border border-gray-200 p-4 rounded-md shadow-sm hover:shadow-md transition-shadow">
-                <div className="flex items-center gap-3">
-                  <User className="h-6 w-6 text-purple-600" />
-                  <div>
-                    <p className="text-sm font-medium text-gray-600">Subscription ID</p>
-                    <p className="text-lg font-semibold text-gray-800">
-                      {subscriptionDetails.stripeSubscriptionId || "N/A"}
-                    </p>
-                  </div>
-                </div>
-              </div>
-              {subscriptionDetails.nextPlanName && (
+              {error && (
+                <p className="text-red-600 text-sm mb-6 text-center bg-red-50 p-3 rounded-md">{error}</p>
+              )}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                 <div className="bg-white border border-gray-200 p-4 rounded-md shadow-sm hover:shadow-md transition-shadow">
                   <div className="flex items-center gap-3">
                     <DollarSign className="h-6 w-6 text-purple-600" />
                     <div>
-                      <p className="text-sm font-medium text-gray-600">Next Plan</p>
+                      <p className="text-sm font-medium text-gray-600">Plan</p>
                       <p className="text-lg font-semibold text-gray-800">
-                        {subscriptionDetails.nextPlanName} ({subscriptionDetails.nextInterval})
+                        {subscriptionDetails.planName} ({subscriptionDetails.interval})
                       </p>
                     </div>
                   </div>
                 </div>
-              )}
-              <div className="bg-white border border-gray-200 p-4 rounded-md shadow-sm hover:shadow-md transition-shadow">
-                <div className="flex items-center gap-3">
-                  <RefreshCw className="h-6 w-6 text-purple-600" />
-                  <div>
-                    <p className="text-sm font-medium text-gray-600">Cancel at Period End</p>
-                    <p className="text-lg font-semibold text-gray-800">
-                      {subscriptionDetails.cancelAtPeriodEnd ? "Yes" : "No"}
-                    </p>
+                <div className="bg-white border border-gray-200 p-4 rounded-md shadow-sm hover:shadow-md transition-shadow">
+                  <div className="flex items-center gap-3">
+                    <DollarSign className="h-6 w-6 text-purple-600" />
+                    <div>
+                      <p className="text-sm font-medium text-gray-600">Price</p>
+                      <p className="text-lg font-semibold text-gray-800">
+                        {formatPrice(subscriptionDetails.price)}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div className="bg-white border border-gray-200 p-4 rounded-md shadow-sm hover:shadow-md transition-shadow">
+                  <div className="flex items-center gap-3">
+                    <Package className="h-6 w-6 text-purple-600" />
+                    <div>
+                      <p className="text-sm font-medium text-gray-600">Applications</p>
+                      <p className="text-lg font-semibold text-gray-800">
+                        {formatApplications(subscriptionDetails.applications)}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div className="bg-white border border-gray-200 p-4 rounded-md shadow-sm hover:shadow-md transition-shadow">
+                  <div className="flex items-center gap-3">
+                    <RefreshCw className="h-6 w-6 text-purple-600" />
+                    <div>
+                      <p className="text-sm font-medium text-gray-600">Auto Renew</p>
+                      <p className="text-lg font-semibold text-gray-800">
+                        {subscriptionDetails.autoRenew ? "Enabled" : "Disabled"}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div className="bg-white border border-gray-200 p-4 rounded-md shadow-sm hover:shadow-md transition-shadow">
+                  <div className="flex items-center gap-3">
+                    <Calendar className="h-6 w-6 text-purple-600" />
+                    <div>
+                      <p className="text-sm font-medium text-gray-600">Start Date</p>
+                      <p className="text-lg font-semibold text-gray-800">
+                        {formatDate(subscriptionDetails.startDate)}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div className="bg-white border border-gray-200 p-4 rounded-md shadow-sm hover:shadow-md transition-shadow">
+                  <div className="flex items-center gap-3">
+                    <Calendar className="h-6 w-6 text-purple-600" />
+                    <div>
+                      <p className="text-sm font-medium text-gray-600">End Date</p>
+                      <p className="text-lg font-semibold text-gray-800">
+                        {formatDate(subscriptionDetails.endDate)}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="bg-white border border-gray-200 p-4 rounded-md shadow-sm hover:shadow-md transition-shadow">
+                  <div className="flex items-center gap-3">
+                    <User className="h-6 w-6 text-purple-600" />
+                    <div>
+                      <p className="text-sm font-medium text-gray-600">Customer ID</p>
+                      <p className="text-lg font-semibold text-gray-800">
+                        {subscriptionDetails.stripeCustomerId || "N/A"}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div className="bg-white border border-gray-200 p-4 rounded-md shadow-sm hover:shadow-md transition-shadow">
+                  <div className="flex items-center gap-3">
+                    <User className="h-6 w-6 text-purple-600" />
+                    <div>
+                      <p className="text-sm font-medium text-gray-600">Subscription ID</p>
+                      <p className="text-lg font-semibold text-gray-800">
+                        {subscriptionDetails.stripeSubscriptionId || "N/A"}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                {subscriptionDetails.nextPlanName && (
+                  <div className="bg-white border border-gray-200 p-4 rounded-md shadow-sm hover:shadow-md transition-shadow">
+                    <div className="flex items-center gap-3">
+                      <DollarSign className="h-6 w-6 text-purple-600" />
+                      <div>
+                        <p className="text-sm font-medium text-gray-600">Next Plan</p>
+                        <p className="text-lg font-semibold text-gray-800">
+                          {subscriptionDetails.nextPlanName} ({subscriptionDetails.nextInterval})
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                <div className="bg-white border border-gray-200 p-4 rounded-md shadow-sm hover:shadow-md transition-shadow">
+                  <div className="flex items-center gap-3">
+                    <RefreshCw className="h-6 w-6 text-purple-600" />
+                    <div>
+                      <p className="text-sm font-medium text-gray-600">Cancel at Period End</p>
+                      <p className="text-lg font-semibold text-gray-800">
+                        {subscriptionDetails.cancelAtPeriodEnd ? "Yes" : "No"}
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+              <div className="flex justify-between mt-6">
+                <button
+                  // onClick={() => navigate("/change-plan")}
+                  className="bg-green-500 text-white font-semibold py-2 px-4 rounded-md hover:bg-green-600 transition"
+                >
+                  Change Plan
+                </button>
+                <button
+                  onClick={cancelSubscription}
+                  disabled={isCanceling || subscriptionDetails?.cancelAtPeriodEnd}
+                  className={`bg-red-500 text-white font-semibold py-2 px-4 rounded-md transition
+                    ${isCanceling || subscriptionDetails?.cancelAtPeriodEnd ? "opacity-50 cursor-not-allowed" : "hover:bg-red-600"}`}
+                >
+                  {isCanceling ? "Canceling..." : "Cancel Subscription"}
+                </button>
+              </div>
+            </>
           ) : (
             <p className="text-gray-600 text-center text-lg">
               No subscription details available.
             </p>
           )}
-          {/* CHANGE: Added buttons for Change Plan and Cancel Subscription */}
-          <div className="flex justify-between mt-6">
-            <button
-              onClick={() => navigate("/change-plan")}
-              className="bg-purple-600 text-white font-semibold py-2 px-4 rounded-md hover:bg-purple-700 transition"
-            >
-              Change Plan
-            </button>
-            <button
-              onClick={cancelSubscription}
-              disabled={isCanceling || subscriptionDetails?.cancelAtPeriodEnd}
-              className={`bg-red-600 text-white font-semibold py-2 px-4 rounded-md transition
-                ${isCanceling || subscriptionDetails?.cancelAtPeriodEnd ? "opacity-50 cursor-not-allowed" : "hover:bg-red-700"}`}
-            >
-              {isCanceling ? "Canceling..." : "Cancel Subscription"}
-            </button>
-          </div>
         </div>
       </div>
     </div>

@@ -28,6 +28,7 @@ import QrScanner from './components/Customer/QrScanner.jsx';
 import ShopkeeperProfile from './components/Shopkeeper_profile/Shopkeeper_profile.jsx'
 import { SidebarProvider } from './context/SidebarContext.jsx';
 import SubscriptionDashboard from './components/Subscription/SubscriptionDashboard.jsx';
+import UserShopList from './components/ShopList/UserShopList.jsx';
 
 const router = createBrowserRouter([
    {
@@ -101,6 +102,11 @@ const router = createBrowserRouter([
       {
         path:"/shopkeeper/subscription-dashboard",
         element:<SubscriptionDashboard/>
+      },
+
+      {
+        path:"shop-list",
+        element:<UserShopList/>
       }
 
     ]

@@ -386,8 +386,8 @@ const QrScanner = ({ onClose }) => {
               <FontAwesomeIcon icon={faCheckCircle} className="text-blue-500 text-3xl mb-3" />
               <h3 className="text-lg font-semibold text-blue-600">Purchased Successfully</h3>
               <button
-                // onClick={() => setShowSuccessPopup(false)}
-                onClick={onClose}
+                onClick={() => setShowSuccessPopup(false)}
+                // onClick={onClose}
                 className="mt-4 bg-blue-500 hover:bg-blue-600 text-white px-5 py-2 rounded-lg transition duration-200"
               >
                 Close

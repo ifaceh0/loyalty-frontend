@@ -155,7 +155,7 @@
 
 import { useState, useEffect } from 'react';
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
-import { FaUser } from 'react-icons/fa';
+import { FaUser, FaCog, FaSignOutAlt } from 'react-icons/fa';
 import { Menu } from 'lucide-react';
 import { useSidebar } from '../../context/SidebarContext';
 
@@ -240,6 +240,14 @@ export default function Header() {
               >
                 Contact
               </NavLink>
+              <NavLink
+                to="/shop-list"
+                className={({ isActive }) =>
+                  isActive ? 'text-yellow-300 font-semibold' : 'hover:text-yellow-200'
+                }
+              >
+                Shop List
+              </NavLink>
             </>
           ) : null}
         </div>
@@ -276,24 +284,24 @@ export default function Header() {
               </NavLink>
             </>
           ) : (
-            <div className="relative">
-              <button
-                onClick={() => setUserDropdownOpen(!userDropdownOpen)}
-                className="flex items-center space-x-2 focus:outline-none hover:text-yellow-300"
-              >
-                <FaUser />
-                <span className="text-sm md:text-base">{userName || 'User'}</span>
-              </button>
-              {userDropdownOpen && (
-                <div className="absolute right-0 mt-2 bg-white rounded-lg shadow-lg z-10 min-w-[150px] text-gray-800">
-                  <button
+            <div className="relative group">
+              <button className="flex items-center space-x-2 focus:outline-none">
+                  <FaUser className="text-white" />
+                  <span className="hidden lg:inline">{userName || 'Username'}</span>
+                </button>
+                <div className="hidden group-hover:block absolute top-full right-0 w-40 bg-white shadow-lg border rounded-md p-2">
+                  {/* <NavLink to="shopkeeper/profile" className="block py-1 px-2 text-sm hover:bg-gray-100">
+                    <FaUser className="inline mr-2 text-blue-800" /> <span className="text-gray-800">Profile</span>
+                  </NavLink>
+                  <NavLink to="shopkeeper/dashboard" className="block py-1 px-2 text-sm hover:bg-gray-100">
+                    <FaCog className="inline mr-2 text-blue-800" /> <span className="text-gray-800">Settings</span>
+                  </NavLink> */}
+                  <button 
                     onClick={handleLogout}
-                    className="block py-2 px-4 text-sm hover:bg-gray-100 w-full text-left"
-                  >
-                    Logout
+                    className="block py-1 px-2 text-sm hover:bg-gray-100 w-full text-left">
+                    <FaSignOutAlt className="inline mr-2 text-blue-800" /> <span className="text-gray-800">Logout</span>
                   </button>
                 </div>
-              )}
             </div>
           )}
         </div>
