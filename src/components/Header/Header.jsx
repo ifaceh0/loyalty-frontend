@@ -240,14 +240,6 @@ export default function Header() {
               >
                 Contact
               </NavLink>
-              <NavLink
-                to="/shop-list"
-                className={({ isActive }) =>
-                  isActive ? 'text-yellow-300 font-semibold' : 'hover:text-yellow-200'
-                }
-              >
-                Shop List
-              </NavLink>
             </>
           ) : null}
         </div>

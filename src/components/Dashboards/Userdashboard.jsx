@@ -2,9 +2,11 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faHome, faStore } from "@fortawesome/free-solid-svg-icons";
+import { FaExchangeAlt } from 'react-icons/fa';
 import User_profile from "../User-Profile/User_profile";
 import { X } from "lucide-react";
 import ExploreShops from "../ShopList/ExploreShops";
+import UserShopList from "../ShopList/UserShopList";
 import UserTransactions from "../bar chart/UserTransactions";
 import { useSidebar } from "../../context/SidebarContext";
 
@@ -68,6 +70,19 @@ const Userdashboard = () => {
           </button>
           <button
             onClick={() => {
+              setActiveTab("transactions");
+              setSidebarOpen(false);
+            }}
+            className={`flex items-center w-full text-left px-4 py-2 rounded-lg transition text-sm sm:text-base ${
+              activeTab === "transactions"
+                ? "bg-indigo-100 text-indigo-900 font-semibold"
+                : "hover:bg-indigo-700"
+            }`}
+          >
+            <FaExchangeAlt className="mr-2" /> Transactions
+          </button>
+          <button
+            onClick={() => {
               setActiveTab("shop");
               setSidebarOpen(false);
             }}
@@ -77,7 +92,7 @@ const Userdashboard = () => {
                 : "hover:bg-indigo-700"
             }`}
           >
-            <FontAwesomeIcon icon={faStore} className="mr-2" /> Explore Shops
+            <FontAwesomeIcon icon={faStore} className="mr-2" /> Visited Shops
           </button>
         </nav>
       </aside>
@@ -95,11 +110,12 @@ const Userdashboard = () => {
                 User Dashboard
               </h1>
             </div>
-            <UserTransactions />
+            <ExploreShops />
           </>
         )}
         {activeTab === "user_profile" && <User_profile />}
-        {activeTab === "shop" && <ExploreShops />}
+        {activeTab === "shop" && <UserShopList />}
+        {activeTab === "transactions" && <UserTransactions />}
       </main>
     </div>
   );

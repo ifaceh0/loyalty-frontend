@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { motion } from 'framer-motion';
+import { Loader2 } from 'lucide-react';
 import * as XLSX from "xlsx";
 
 const API_BASE_URL = "https://loyalty-backend-java.onrender.com/api";
@@ -84,11 +86,18 @@ const UserTransactions = () => {
       <div className="p-6 max-w-5xl mx-auto">
         {loading ? (
           <div className="flex flex-col items-center justify-center h-64">
-            <svg className="animate-spin h-10 w-10 text-blue-600 mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
-            </svg>
-            <p className="text-blue-800 font-semibold">Loading...</p>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.3 }}
+              className="p-8 max-w-md w-full text-center"
+            >
+              <div className="flex items-center justify-center gap-3 mb-4">
+                <Loader2 className="w-8 h-8 text-blue-600 animate-spin" />
+                <span className="text-xl font-semibold text-gray-800">Loading transactions...</span>
+              </div>
+              <p className="text-gray-600">Please wait while we fetch the transaction details.</p>
+            </motion.div>
           </div>
         ) : error ? (
           <p className="text-red-500 bg-red-50 py-3 px-4 rounded-lg text-center">{error}</p>
