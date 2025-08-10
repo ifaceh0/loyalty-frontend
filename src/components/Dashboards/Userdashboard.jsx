@@ -106,7 +106,7 @@ const Userdashboard = () => {
         {activeTab === "user-stats" && (
           <>
             <div>
-              <h1 className="mb-6 text-xl sm:text-2xl font-bold text-gray-800 flex items-center">
+              <h1 className="mb-6 text-3xl sm:text-3xl font-bold text-gray-800 flex items-center">
                 User Dashboard
               </h1>
             </div>

@@ -179,7 +179,7 @@ export default function ExploreShops() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        🛍️ Explore Loyalty Shops
+        🛍️ Explore Other Loyalty Shops
       </motion.h1>
 
       <div className="flex justify-center mb-10 space-x-4 relative">

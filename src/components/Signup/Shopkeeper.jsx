@@ -417,6 +417,21 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import { useState, useEffect, useRef } from "react";
 import Confetti from "react-confetti";
 import PhoneInput from "react-phone-input-2";
@@ -449,14 +464,16 @@ function Shopkeeper() {
     password: "",
     confirmPassword: "",
     captchaInput: "",
+    city: "", // Added city field
+    country: "", // Added country field
   });
 
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [step, setStep] = useState(1);
-  const [dialCode, setDialCode] = useState("1"); // default to US
-  const [companyDialCode, setCompanyDialCode] = useState("1"); // default for US
+  const [dialCode, setDialCode] = useState("1");
+  const [companyDialCode, setCompanyDialCode] = useState("1");
   const [phoneError, setPhoneError] = useState(false);
   const [companyPhoneError, setCompanyPhoneError] = useState(false);
   const [missingFields, setMissingFields] = useState([]);
@@ -466,7 +483,6 @@ function Shopkeeper() {
   const [showModal, setShowModal] = useState(false);
   const canvasRef = useRef(null);
   const audioRef = useRef(null);
-  // CHANGE: Added state for email verification
   const [isEmailVerified, setIsEmailVerified] = useState(false);
   const [isVerifying, setIsVerifying] = useState(false);
 
@@ -500,7 +516,6 @@ function Shopkeeper() {
     return afterCountryCode.startsWith("0");
   };
 
-  // CHANGE: Added email verification function
   const verifyEmail = async () => {
     if (!validateEmail(formData.companyEmail)) {
       setError("Please enter a valid company email.");
@@ -560,7 +575,7 @@ function Shopkeeper() {
     setFormData((prev) => ({ ...prev, [name]: value }));
 
     if (name === "companyEmail") {
-      setIsEmailVerified(false); // Reset verification on email change
+      setIsEmailVerified(false);
     }
 
     if (missingFields.includes(name) && value.trim() !== "") {
@@ -613,8 +628,10 @@ function Shopkeeper() {
           password: "",
           confirmPassword: "",
           captchaInput: "",
+          city: "", // Reset city
+          country: "", // Reset country
         });
-        setIsEmailVerified(false); // CHANGE: Reset verification on submit
+        setIsEmailVerified(false);
         generateCaptcha();
         setSuccess(true);
         setShowModal(true);
@@ -637,7 +654,7 @@ function Shopkeeper() {
 
   const nextStep = () => {
     let currentFields = [];
-    if (step === 1) currentFields = ["shopName", "email", "phone"];
+    if (step === 1) currentFields = ["shopName", "email", "phone", "city", "country"]; // Added city and country
     if (step === 2) currentFields = ["companyName", "companyEmail", "companyPhone", "companyAddress"];
 
     const missing = currentFields.filter((field) => {
@@ -674,7 +691,6 @@ function Shopkeeper() {
       return;
     }
 
-    // CHANGE: Require email verification in Step 2
     if (step === 2 && !isEmailVerified) {
       setError("Please verify the company email before proceeding.");
       return;
@@ -732,13 +748,14 @@ function Shopkeeper() {
                   containerClass="!w-full"
                 />
               </div>
+              <FloatingInput label="City" name="city" value={formData.city} onChange={handleChange} Icon={MapPin} />
+              <FloatingInput label="Country" name="country" value={formData.country} onChange={handleChange} Icon={MapPin} />
             </>
           )}
 
           {step === 2 && (
             <>
               <FloatingInput label="Company Name" name="companyName" value={formData.companyName} onChange={handleChange} Icon={Building2} />
-              {/* CHANGE: Added Verify button for companyEmail */}
               <div className="relative">
                 <FloatingInput
                   label="Company Email"
@@ -748,7 +765,6 @@ function Shopkeeper() {
                   onChange={handleChange}
                   Icon={Mail}
                 />
-                {/* Info button */}
                 <div className="absolute left-full top-1/2 ml-2 -translate-y-1/2 group">
                   <FaInfoCircle className="text-gray-500 cursor-pointer" />
                   <div className="absolute left-full top-1/2 -translate-y-1/2 ml-2 w-60 text-sm text-white bg-black px-3 py-2 rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10">
@@ -848,7 +864,7 @@ function Shopkeeper() {
           <button
             type="button"
             onClick={nextStep}
-            disabled={step === 2 && !isEmailVerified} // CHANGE: Disable Next button until email verified
+            disabled={step === 2 && !isEmailVerified}
             className={`w-full py-3 mt-4 bg-purple-600 text-white font-semibold rounded-xl transition
               ${step === 2 && !isEmailVerified ? "opacity-50 cursor-not-allowed" : "hover:bg-purple-700"}`}
           >
@@ -860,7 +876,7 @@ function Shopkeeper() {
             type="button"
             onClick={() => {
               setStep((prev) => prev - 1);
-              if (step === 2) setIsEmailVerified(false); // CHANGE: Reset verification on back
+              if (step === 2) setIsEmailVerified(false);
             }}
             className="w-full mt-2 py-3 bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold rounded-xl transition"
           >
