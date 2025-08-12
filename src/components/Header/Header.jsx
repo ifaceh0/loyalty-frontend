@@ -221,9 +221,10 @@ export default function Header() {
               >
                 Features
               </NavLink>
-              <NavLink to="/subscription?app=loyalty" className="hover:text-yellow-300">
+              <a
+              href="https://subscription-frontend-psi.vercel.app/"  className="hover:text-yellow-300">
                 Subscription
-              </NavLink>
+              </a>
               <NavLink
                 to="/resources"
                 className={({ isActive }) =>
