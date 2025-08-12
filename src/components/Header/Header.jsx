@@ -188,7 +188,7 @@ export default function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-purple-700 shadow-md text-white">
+    <header className="sticky top-0 z-50 bg-purple-800 shadow-md text-white">
       <nav className="px-4 lg:px-8 py-3 flex items-center justify-between">
         {/* Logo or Sidebar Toggle */}
         <div className="flex items-center gap-4">

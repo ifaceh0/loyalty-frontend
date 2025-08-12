@@ -16,11 +16,12 @@
 // import ShopkeeperProfile from "../Shopkeeper_profile/Shopkeeper_profile";
 // import Shopkeeper_setting from "../Shopkeeper-setting/Shopkeeper_setting";
 // import CustomerLookup from "../Customer/CustomerLookup";
+// import SubscriptionDashboard from "../Subscription/SubscriptionDashboard";
 // import UserPurchaseChart from "../bar chart/UserPurchaseChart";
 // import { useSidebar } from "../../context/SidebarContext";
 // import { X } from "lucide-react";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faChartBar, faUser, faCog, faUsers } from "@fortawesome/free-solid-svg-icons";
+// import { faChartBar, faUser, faCog, faUsers, faCreditCard } from "@fortawesome/free-solid-svg-icons";
 
 // const Shopdashboard = () => {
 //   const navigate = useNavigate();
@@ -129,51 +130,109 @@
 
 //   return (
 //     <div className="flex h-[calc(100vh-64px)] bg-gray-100">
-//       {/* Toggleable Sidebar */}
-//       {sidebarOpen && (
-//         <aside className="absolute h-[calc(100vh-64px)] left-0 w-64 bg-purple-600 text-white p-6 shadow-lg z-40">
-//           <div className="flex justify-between items-center mb-4">
-//             <h2 className="text-xl font-bold text-white">Shopkeeper Panel</h2>
-//             <button
-//               onClick={() => setSidebarOpen(false)}
-//               className="p-1 rounded hover:bg-purple-700 hover:text-white transition flex items-center justify-center"
-//             >
-//               <X className="w-5 h-5 align-middle" />
-//             </button>
-//           </div>
-
-//           <nav className="space-y-2">
-//             <button onClick={() => { setActiveTab("user_stats"); setSidebarOpen(false); }}
-//               className={`block w-full text-left px-4 py-2 rounded-lg transition ${activeTab === "user_stats" ? "bg-purple-100 text-purple-800 font-semibold" : "hover:bg-purple-500"}`}>
-//               <FontAwesomeIcon icon={faChartBar} className="mr-2" /> Dashboard
-//             </button>
-//             <button onClick={() => { setActiveTab("shopkeeper"); setSidebarOpen(false); }}
-//               className={`block w-full text-left px-4 py-2 rounded-lg transition ${activeTab === "shopkeeper" ? "bg-purple-100 text-purple-800 font-semibold" : "hover:bg-purple-500"}`}>
-//               <FontAwesomeIcon icon={faUser} className="mr-2" /> Shopkeeper Profile
-//             </button>
-//             <button onClick={() => { setActiveTab("shopkeeper_setting"); setSidebarOpen(false); }}
-//               className={`block w-full text-left px-4 py-2 rounded-lg transition ${activeTab === "shopkeeper_setting" ? "bg-purple-100 text-purple-800 font-semibold" : "hover:bg-purple-500"}`}>
-//               <FontAwesomeIcon icon={faCog} className="mr-2" /> Shop Settings
-//             </button>
-//             <button onClick={() => { setActiveTab("interactions"); setSidebarOpen(false); }}
-//               className={`block w-full text-left px-4 py-2 rounded-lg transition ${activeTab === "interactions" ? "bg-purple-100 text-purple-800 font-semibold" : "hover:bg-purple-500"}`}>
-//               <FontAwesomeIcon icon={faUsers} className="mr-2" /> Interactions
-//             </button>
-//           </nav>
-//         </aside>
-//       )}
+//       {/* Sidebar */}
+//       <aside
+//         className={`fixed h-full w-3/4 sm:w-64 bg-purple-700 text-white p-4 sm:p-6 shadow-lg z-50 transform transition-all duration-300 ease-in-out ${
+//           sidebarOpen ? "translate-x-0" : "-translate-x-full"
+//         }`}
+//       >
+//         <div className="flex justify-between items-center mb-6">
+//           <h2 className="text-xl sm:text-2x font-bold">Shopkeeper Panel</h2>
+//           {/* Close Button (visible in all views) */}
+//           <button
+//             onClick={() => setSidebarOpen(false)}
+//             className="p-2 rounded-full bg-purple-700 hover:bg-purple-800 text-white transition flex items-center justify-center"
+//             aria-label="Close sidebar"
+//           >
+//             <X className="w-6 h-6" />
+//           </button>
+//         </div>
+//         <nav className="space-y-2">
+//           <button
+//             onClick={() => {
+//               setActiveTab("user_stats");
+//               setSidebarOpen(false);
+//             }}
+//             className={`flex items-center w-full text-left px-4 py-2 rounded-lg transition text-sm sm:text-base ${
+//               activeTab === "user_stats"
+//                 ? "bg-purple-100 text-purple-800 font-semibold"
+//                 : "hover:bg-purple-500"
+//             }`}
+//           >
+//             <FontAwesomeIcon icon={faChartBar} className="mr-2" /> Dashboard
+//           </button>
+//           <button
+//             onClick={() => {
+//               setActiveTab("shopkeeper");
+//               setSidebarOpen(false);
+//             }}
+//             className={`flex items-center w-full text-left px-4 py-2 rounded-lg transition text-sm sm:text-base ${
+//               activeTab === "shopkeeper"
+//                 ? "bg-purple-100 text-purple-800 font-semibold"
+//                 : "hover:bg-purple-500"
+//             }`}
+//           >
+//             <FontAwesomeIcon icon={faUser} className="mr-2" /> Shopkeeper Profile
+//           </button>
+//           <button
+//             onClick={() => {
+//               setActiveTab("shopkeeper_setting");
+//               setSidebarOpen(false);
+//             }}
+//             className={`flex items-center w-full text-left px-4 py-2 rounded-lg transition text-sm sm:text-base ${
+//               activeTab === "shopkeeper_setting"
+//                 ? "bg-purple-100 text-purple-800 font-semibold"
+//                 : "hover:bg-purple-500"
+//             }`}
+//           >
+//             <FontAwesomeIcon icon={faCog} className="mr-2" /> Shop Settings
+//           </button>
+//           <button
+//             onClick={() => {
+//               setActiveTab("interactions");
+//               setSidebarOpen(false);
+//             }}
+//             className={`flex items-center w-full text-left px-4 py-2 rounded-lg transition text-sm sm:text-base ${
+//               activeTab === "interactions"
+//                 ? "bg-purple-100 text-purple-800 font-semibold"
+//                 : "hover:bg-purple-500"
+//             }`}
+//           >
+//             <FontAwesomeIcon icon={faUsers} className="mr-2" /> Interactions
+//           </button>
+//           <button
+//             onClick={() => {
+//               setActiveTab("subscription");
+//               setSidebarOpen(false);
+//             }}
+//             className={`flex items-center w-full text-left px-4 py-2 rounded-lg transition text-sm sm:text-base ${
+//               activeTab === "subscription"
+//                 ? "bg-purple-100 text-purple-800 font-semibold"
+//                 : "hover:bg-purple-500"
+//             }`}
+//           >
+//             <FontAwesomeIcon icon={faCreditCard} className="mr-2" /> Subscription
+//           </button>
+//         </nav>
+//       </aside>
 
 //       {/* Main Content */}
-//       <main className="flex-1 overflow-y-auto p-6">
+//       <main
+//         className={`flex-1 overflow-y-auto p-4 sm:p-6 transition-all duration-300 ease-in-out ${
+//           sidebarOpen ? "ml-0 sm:ml-64" : "ml-0"
+//         }`}
+//       >
 //         {activeTab === "user_stats" && (
 //           <>
-//           <div >
-//             <h1 className="mb-6 text-2xl font-bold text-gray-800 flex items-center">Shopkeeper Dashboard</h1>
-//           </div>
+//             <div>
+//               <h1 className="mb-6 text-xl sm:text-2xl font-bold text-gray-800 flex items-center">
+//                 Shopkeeper Dashboard
+//               </h1>
+//             </div>
 //             <UserPurchaseChart />
 //             <section className="mb-6">
 //               <h3 className="text-2x font-semibold text-gray-800 mb-4">
-//                 Monthly Sales (Last 12 Months) - ({currentYear})
+//                 Monthly Sales (Last 12 Months) - {currentYear}
 //               </h3>
 //               <ResponsiveContainer width="100%" height={320}>
 //                 <LineChart data={monthlySalesData} margin={{ top: 40, right: 30, left: 0, bottom: 0 }}>
@@ -187,7 +246,9 @@
 //             </section>
 
 //             <section className="mb-6">
-//               <h3 className="text-2x font-semibold text-gray-800 mb-4">Customer Count Comparison ({currentYear})</h3>
+//               <h3 className="text-2x font-semibold text-gray-800 mb-4">
+//                 Customer Count Comparison ({currentYear})
+//               </h3>
 //               <ResponsiveContainer width="100%" height={300}>
 //                 <BarChart data={customerComparisonData} margin={{ top: 40, right: 30, left: 0, bottom: 10 }}>
 //                   <XAxis dataKey="name" tick={{ fill: "#6b7280" }} />
@@ -218,21 +279,13 @@
 //         {activeTab === "shopkeeper" && <ShopkeeperProfile />}
 //         {activeTab === "shopkeeper_setting" && <Shopkeeper_setting />}
 //         {activeTab === "interactions" && <CustomerLookup />}
+//         {activeTab === "subscription" && <SubscriptionDashboard/>}
 //       </main>
 //     </div>
 //   );
 // };
 
 // export default Shopdashboard;
-
-
-
-
-
-
-
-
-
 
 
 
@@ -266,7 +319,7 @@ import CustomerLookup from "../Customer/CustomerLookup";
 import SubscriptionDashboard from "../Subscription/SubscriptionDashboard";
 import UserPurchaseChart from "../bar chart/UserPurchaseChart";
 import { useSidebar } from "../../context/SidebarContext";
-import { X } from "lucide-react";
+import { X, Menu } from "lucide-react"; // Added Menu icon for hamburger
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChartBar, faUser, faCog, faUsers, faCreditCard } from "@fortawesome/free-solid-svg-icons";
 
@@ -274,6 +327,7 @@ const Shopdashboard = () => {
   const navigate = useNavigate();
   const { sidebarOpen, setSidebarOpen } = useSidebar();
   const [activeTab, setActiveTab] = useState("user_stats");
+  const [isSidebarExpanded, setIsSidebarExpanded] = useState(false); // New state for sidebar expansion
 
   const [totalUsers, setTotalUsers] = useState(0);
   const [topVisitedUsers, setTopVisitedUsers] = useState([]);
@@ -375,98 +429,94 @@ const Shopdashboard = () => {
 
   const currentYear = new Date().getFullYear();
 
+  // Toggle sidebar expansion (icon-only to full mode)
+  const toggleSidebarExpansion = () => {
+    setIsSidebarExpanded(!isSidebarExpanded);
+  };
+
   return (
     <div className="flex h-[calc(100vh-64px)] bg-gray-100">
       {/* Sidebar */}
       <aside
-        className={`fixed h-full w-3/4 sm:w-64 bg-purple-700 text-white p-4 sm:p-6 shadow-lg z-50 transform transition-all duration-300 ease-in-out ${
+        className={`fixed h-screen top-0 bg-purple-600 text-white p-4 sm:p-4 shadow-lg z-50 transform transition-all duration-300 ease-in-out ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
-        }`}
+        } ${isSidebarExpanded ? "w-64" : "w-16"} rounded-r-xl`} // Curved right border and dynamic width
       >
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-xl sm:text-2x font-bold">Shopkeeper Panel</h2>
-          {/* Close Button (visible in all views) */}
-          <button
-            onClick={() => setSidebarOpen(false)}
-            className="p-2 rounded-full bg-purple-700 hover:bg-purple-800 text-white transition flex items-center justify-center"
-            aria-label="Close sidebar"
-          >
-            <X className="w-6 h-6" />
-          </button>
+          {/* Show title only when expanded */}
+          {isSidebarExpanded && (
+            <h2 className="text-xl sm:text-2xl font-bold">Shopkeeper Panel</h2>
+          )}
+          <div className="flex items-center">
+            {/* Hamburger Menu (visible when sidebar is closed) */}
+            {!sidebarOpen && (
+              <button
+                onClick={() => setSidebarOpen(true)}
+                className="p-2 rounded-full bg-purple-700 hover:bg-purple-800 text-white transition flex items-center justify-center absolute left-4 top-4"
+                aria-label="Open sidebar"
+              >
+                <Menu className="w-6 h-6" />
+              </button>
+            )}
+            {/* Close Button (visible when sidebar is open) */}
+            {sidebarOpen && (
+              <div className="relative group">
+                <button
+                  onClick={() => {
+                    setSidebarOpen(false);
+                    setIsSidebarExpanded(false); // Reset to icon-only when closing
+                  }}
+                  className="p-1 rounded-full bg-purple-700 hover:bg-purple-800 text-white transition flex items-center justify-center"
+                  aria-label="Close sidebar"
+                >
+                  <X className="w-6 h-6" />
+                </button>
+                <span className="absolute left-full ml-2 top-1/2 transform -translate-y-1/2 bg-purple-800 text-white text-xs rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
+                    Close
+                </span>
+              </div>
+            )}
+          </div>
         </div>
         <nav className="space-y-2">
-          <button
-            onClick={() => {
-              setActiveTab("user_stats");
-              setSidebarOpen(false);
-            }}
-            className={`flex items-center w-full text-left px-4 py-2 rounded-lg transition text-sm sm:text-base ${
-              activeTab === "user_stats"
-                ? "bg-purple-100 text-purple-800 font-semibold"
-                : "hover:bg-purple-500"
-            }`}
-          >
-            <FontAwesomeIcon icon={faChartBar} className="mr-2" /> Dashboard
-          </button>
-          <button
-            onClick={() => {
-              setActiveTab("shopkeeper");
-              setSidebarOpen(false);
-            }}
-            className={`flex items-center w-full text-left px-4 py-2 rounded-lg transition text-sm sm:text-base ${
-              activeTab === "shopkeeper"
-                ? "bg-purple-100 text-purple-800 font-semibold"
-                : "hover:bg-purple-500"
-            }`}
-          >
-            <FontAwesomeIcon icon={faUser} className="mr-2" /> Shopkeeper Profile
-          </button>
-          <button
-            onClick={() => {
-              setActiveTab("shopkeeper_setting");
-              setSidebarOpen(false);
-            }}
-            className={`flex items-center w-full text-left px-4 py-2 rounded-lg transition text-sm sm:text-base ${
-              activeTab === "shopkeeper_setting"
-                ? "bg-purple-100 text-purple-800 font-semibold"
-                : "hover:bg-purple-500"
-            }`}
-          >
-            <FontAwesomeIcon icon={faCog} className="mr-2" /> Shop Settings
-          </button>
-          <button
-            onClick={() => {
-              setActiveTab("interactions");
-              setSidebarOpen(false);
-            }}
-            className={`flex items-center w-full text-left px-4 py-2 rounded-lg transition text-sm sm:text-base ${
-              activeTab === "interactions"
-                ? "bg-purple-100 text-purple-800 font-semibold"
-                : "hover:bg-purple-500"
-            }`}
-          >
-            <FontAwesomeIcon icon={faUsers} className="mr-2" /> Interactions
-          </button>
-          <button
-            onClick={() => {
-              setActiveTab("subscription");
-              setSidebarOpen(false);
-            }}
-            className={`flex items-center w-full text-left px-4 py-2 rounded-lg transition text-sm sm:text-base ${
-              activeTab === "subscription"
-                ? "bg-purple-100 text-purple-800 font-semibold"
-                : "hover:bg-purple-500"
-            }`}
-          >
-            <FontAwesomeIcon icon={faCreditCard} className="mr-2" /> Subscription
-          </button>
+          {[
+            { tab: "user_stats", icon: faChartBar, label: "Dashboard" },
+            { tab: "shopkeeper", icon: faUser, label: "Shopkeeper Profile" },
+            { tab: "shopkeeper_setting", icon: faCog, label: "Shop Settings" },
+            { tab: "interactions", icon: faUsers, label: "Interactions" },
+            { tab: "subscription", icon: faCreditCard, label: "Subscription" },
+          ].map(({ tab, icon, label }) => (
+            <div key={tab} className="relative group">
+            <button
+              key={tab}
+              onClick={() => {
+                setActiveTab(tab);
+                setSidebarOpen(true); // Ensure sidebar stays open
+                toggleSidebarExpansion(); // Toggle expansion on click
+              }}
+              className={`flex items-center w-full text-left px-4 py-2 rounded-lg transition text-sm sm:text-base ${
+                activeTab === tab
+                  ? "bg-purple-100 text-purple-800 font-semibold"
+                  : "hover:bg-purple-500"
+              } ${isSidebarExpanded ? "" : "justify-center"}`} // Center icon when collapsed
+            >
+              <FontAwesomeIcon icon={icon} className={`${isSidebarExpanded ? "mr-2" : ""}`} />
+              {isSidebarExpanded && <span>{label}</span>} {/* Show label only when expanded */}
+            </button>
+            {!isSidebarExpanded && (
+                <span className="absolute left-full ml-2 top-1/2 transform -translate-y-1/2 bg-purple-800 text-white text-xs rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
+                  {label}
+                </span>
+            )}
+          </div>
+          ))}
         </nav>
       </aside>
 
       {/* Main Content */}
       <main
         className={`flex-1 overflow-y-auto p-4 sm:p-6 transition-all duration-300 ease-in-out ${
-          sidebarOpen ? "ml-0 sm:ml-64" : "ml-0"
+          sidebarOpen && isSidebarExpanded ? "ml-64" : sidebarOpen ? "ml-16" : "ml-0"
         }`}
       >
         {activeTab === "user_stats" && (
@@ -526,7 +576,7 @@ const Shopdashboard = () => {
         {activeTab === "shopkeeper" && <ShopkeeperProfile />}
         {activeTab === "shopkeeper_setting" && <Shopkeeper_setting />}
         {activeTab === "interactions" && <CustomerLookup />}
-        {activeTab === "subscription" && <SubscriptionDashboard/>}
+        {activeTab === "subscription" && <SubscriptionDashboard />}
       </main>
     </div>
   );

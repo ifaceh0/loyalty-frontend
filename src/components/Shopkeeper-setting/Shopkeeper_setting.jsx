@@ -14,7 +14,7 @@
 //     beginDate: "",
 //     endDate: "",
 //     amountOff: "",
-//     dollarToPointsMapping: "", 
+//     dollarToPointsMapping: "",
 //   });
 
 //   const [isEditMode, setIsEditMode] = useState(false);
@@ -31,26 +31,26 @@
 //         if (response.ok) {
 //           const data = await response.json();
 //           setFormData({
-//             signUpBonusPoints: data.sign_upBonuspoints?.toString() || "",
+//             signUpBonusPoints: data.sign_upBonuspoints ? Math.floor(data.sign_upBonuspoints).toString() : "",
 //             purchaseRewards: data.purchaseRewards?.map((r) => ({
-//               threshold: r.threshold?.toString() || "",
-//               points: r.points?.toString() || "",
+//               threshold: r.threshold ? Math.floor(r.threshold).toString() : "",
+//               points: r.points ? Math.floor(r.points).toString() : "",
 //             })) || [{ threshold: "", points: "" }],
 //             milestoneRewards: data.milestoneRewards?.map((m) => ({
-//               threshold: m.threshold?.toString() || "",
-//               amount: m.amount?.toString() || "",
+//               threshold: m.threshold ? Math.floor(m.threshold).toString() : "",
+//               amount: m.amount ? Math.floor(m.amount).toString() : "",
 //             })) || [{ threshold: "", amount: "" }],
 //             specialBonuses: data.specialBonuses?.map((b) => ({
 //               name: b.name || "",
-//               points: b.points?.toString() || "",
-//               startDate: b.startDate || "", 
+//               points: b.points ? Math.floor(b.points).toString() : "",
+//               startDate: b.startDate || "",
 //               endDate: b.endDate || "",
 //             })) || [{ name: "", points: "", startDate: "", endDate: "" }],
 //             bonusDescription: data.bonusdescription || "",
 //             beginDate: data.beginDate || "",
 //             endDate: data.endDate || "",
-//             amountOff: data.amountOff?.toString() || "",
-//             dollarToPointsMapping: data.dollarToPointsMapping?.toString() || "", 
+//             amountOff: data.amountOff ? Math.floor(data.amountOff).toString() : "",
+//             dollarToPointsMapping: data.dollarToPointsMapping ? Math.floor(data.dollarToPointsMapping).toString() : "",
 //           });
 //         } else if (response.status === 404) {
 //           setIsEditMode(true);
@@ -67,17 +67,27 @@
 
 //   const handleChange = (e) => {
 //     const { name, value } = e.target;
-//     if (name.toLowerCase().includes("points") && parseFloat(value) < 0) return;
-//     if (name === "dollarToPointsMapping" && parseFloat(value) < 0) return; // CHANGE: Added validation for dollarToPointsMapping
-//     setFormData((prev) => ({ ...prev, [name]: value }));
+//     if (name.toLowerCase().includes("points") || name === "amountOff" || name === "dollarToPointsMapping") {
+//       if (value === "" || (parseInt(value) >= 0 && Number.isInteger(parseFloat(value)))) {
+//         setFormData((prev) => ({ ...prev, [name]: value }));
+//       }
+//     } else {
+//       setFormData((prev) => ({ ...prev, [name]: value }));
+//     }
 //   };
 
-//   // CHANGE: Removed handleDollarToPointChange since dollarToPointsMapping is now a single field
 //   const handleDynamicChange = (type, index, field, value) => {
-//     if ((field === "points" || field === "threshold" || field === "amount") && parseFloat(value) < 0) return;
-//     const updated = [...formData[type]];
-//     updated[index][field] = value;
-//     setFormData((prev) => ({ ...prev, [type]: updated }));
+//     if (field === "points" || field === "threshold" || field === "amount") {
+//       if (value === "" || (parseInt(value) >= 0 && Number.isInteger(parseFloat(value)))) {
+//         const updated = [...formData[type]];
+//         updated[index][field] = value;
+//         setFormData((prev) => ({ ...prev, [type]: updated }));
+//       }
+//     } else {
+//       const updated = [...formData[type]];
+//       updated[index][field] = value;
+//       setFormData((prev) => ({ ...prev, [type]: updated }));
+//     }
 //   };
 
 //   const addField = (type, emptyObj) => {
@@ -90,20 +100,19 @@
 //   };
 
 //   const isValid = () => {
-//     const hasNegative = [
+//     const hasInvalidNumber = [
 //       formData.signUpBonusPoints,
-//       formData.dollarToPointsMapping, // CHANGE: Added validation for dollarToPointsMapping
+//       formData.dollarToPointsMapping,
 //       ...formData.purchaseRewards.map((r) => [r.threshold, r.points]),
 //       ...formData.milestoneRewards.map((m) => [m.threshold, m.amount]),
 //       ...formData.specialBonuses.map((b) => [b.points]),
-//     ].flat().some((val) => parseFloat(val) < 0);
+//     ].flat().some((val) => val !== "" && (isNaN(parseInt(val)) || parseInt(val) < 0));
 
-//     if (hasNegative) {
-//       alert("❌ Points, thresholds, or amounts cannot be negative.");
+//     if (hasInvalidNumber) {
+//       alert("❌ Numeric fields must be non-negative integers.");
 //       return false;
 //     }
 
-//     // CHANGE: Validate date fields to ensure they are valid ISO dates
 //     const hasInvalidDates = [
 //       formData.beginDate,
 //       formData.endDate,
@@ -125,26 +134,26 @@
 
 //     const payload = {
 //       shopId: parseInt(shopId),
-//       sign_upBonuspoints: parseFloat(formData.signUpBonusPoints) || 0,
+//       sign_upBonuspoints: parseInt(formData.signUpBonusPoints) || 0,
 //       purchaseRewards: formData.purchaseRewards.map((r) => ({
-//         threshold: parseFloat(r.threshold) || 0,
-//         points: parseFloat(r.points) || 0,
+//         threshold: parseInt(r.threshold) || 0,
+//         points: parseInt(r.points) || 0,
 //       })),
 //       milestoneRewards: formData.milestoneRewards.map((m) => ({
-//         threshold: parseFloat(m.threshold) || 0,
-//         amount: parseFloat(m.amount) || 0,
+//         threshold: parseInt(m.threshold) || 0,
+//         amount: parseInt(m.amount) || 0,
 //       })),
 //       specialBonuses: formData.specialBonuses.map((b) => ({
 //         name: b.name,
-//         points: parseFloat(b.points) || 0,
-//         startDate: b.startDate || null, // CHANGE: Send null if empty to match LocalDate
-//         endDate: b.endDate || null, // CHANGE: Send null if empty to match LocalDate
+//         points: parseInt(b.points) || 0,
+//         startDate: b.startDate || null,
+//         endDate: b.endDate || null,
 //       })),
 //       bonusdescription: formData.bonusDescription || null,
-//       beginDate: formData.beginDate || null, // CHANGE: Send null if empty to match LocalDate
-//       endDate: formData.endDate || null, // CHANGE: Send null if empty to match LocalDate
-//       amountOff: parseFloat(formData.amountOff) || 0,
-//       dollarToPointsMapping: parseFloat(formData.dollarToPointsMapping) || 0, // CHANGE: Map to single Double field
+//       beginDate: formData.beginDate || null,
+//       endDate: formData.endDate || null,
+//       amountOff: parseInt(formData.amountOff) || 0,
+//       dollarToPointsMapping: parseInt(formData.dollarToPointsMapping) || 0,
 //     };
 
 //     try {
@@ -167,7 +176,7 @@
 //       console.error("Save error:", err);
 //       alert("⚠️ Server error");
 //     } finally {
-//       setIsSaving(false); // CHANGE: Reset saving state
+//       setIsSaving(false);
 //     }
 //   };
 
@@ -200,8 +209,7 @@
 //               onClick={handleCloseEdit}
 //               className="bg-purple-700 hover:bg-purple-600 text-white px-4 py-2 rounded-lg transition duration-200 flex items-center gap-2"
 //             >
-//               <FiX className="w-5 h-5" /> {/* CHANGE: Uncommented FiX icon for consistency */}
-//               {/* <span>Close</span> */}
+//               <FiX className="w-5 h-5" />
 //             </button>
 //           )}
 //         </div>
@@ -211,7 +219,7 @@
 //         <form onSubmit={handleSubmit} className="space-y-8">
 //           {/* Signup Bonus */}
 //           <div>
-//             <label className="block font-medium mb-2 text-purple-700">Sign-up Bonus Points</label>
+//             <label className="block text-sm font-medium mb-1 text-purple-700">Sign-up Bonus Points</label>
 //             <input
 //               type="number"
 //               name="signUpBonusPoints"
@@ -220,30 +228,39 @@
 //               disabled={!isEditMode}
 //               className={inputStyle}
 //               min="0"
+//               step="1"
 //             />
 //           </div>
 
 //           {/* Dollar to Point Mapping */}
 //           <div>
-//             <label className="block font-medium mb-2 text-purple-700">Dollar to Point Mapping</label>
+//             <label className="block text-sm font-medium mb-1 text-purple-700">Dollar to Points Conversion</label>
 //             <div className="grid grid-cols-2 gap-4">
-//               <input
-//                 type="number"
-//                 value="1"
-//                 disabled
-//                 className={inputStyle + " bg-gray-100"}
-//                 min="0"
-//               />
-//               <input
-//                 type="number"
-//                 placeholder="Points per $1"
-//                 name="dollarToPointsMapping" // CHANGE: Updated to match single field
-//                 value={formData.dollarToPointsMapping}
-//                 onChange={handleChange} // CHANGE: Use handleChange instead of handleDollarToPointChange
-//                 disabled={!isEditMode}
-//                 className={inputStyle}
-//                 min="0"
-//               />
+//               <div>
+//                 <label className="block text-sm font-medium mb-1 text-purple-700">Dollars</label>
+//                 <input
+//                   type="number"
+//                   value="1"
+//                   disabled
+//                   className={inputStyle + " bg-gray-100"}
+//                   min="0"
+//                   step="1"
+//                 />
+//               </div>
+//               <div>
+//                 <label className="block text-sm font-medium mb-1 text-purple-700">Points per Dollar</label>
+//                 <input
+//                   type="number"
+//                   name="dollarToPointsMapping"
+//                   value={formData.dollarToPointsMapping}
+//                   onChange={handleChange}
+//                   disabled={!isEditMode}
+//                   className={inputStyle}
+//                   min="0"
+//                   step="1"
+//                   placeholder="Points per $1"
+//                 />
+//               </div>
 //             </div>
 //           </div>
 
@@ -253,27 +270,35 @@
 //             {formData.purchaseRewards.map((r, i) => (
 //               <div key={i} className="flex items-center gap-2 mb-3">
 //                 <span className="w-6 text-sm font-medium text-purple-700">{i + 1}.</span>
-//                 <input
-//                   type="number"
-//                   placeholder="Threshold ($)"
-//                   value={r.threshold}
-//                   disabled={!isEditMode}
-//                   onChange={(e) => handleDynamicChange("purchaseRewards", i, "threshold", e.target.value)}
-//                   className={inputStyle}
-//                   min="0"
-//                 />
-//                 <input
-//                   type="number"
-//                   placeholder="Points"
-//                   value={r.points}
-//                   disabled={!isEditMode}
-//                   onChange={(e) => handleDynamicChange("purchaseRewards", i, "points", e.target.value)}
-//                   className={inputStyle}
-//                   min="0"
-//                 />
+//                 <div className="flex-1">
+//                   <label className="block text-sm font-medium mb-1 text-purple-700">Purchase Threshold ($)</label>
+//                   <input
+//                     type="number"
+//                     value={r.threshold}
+//                     disabled={!isEditMode}
+//                     onChange={(e) => handleDynamicChange("purchaseRewards", i, "threshold", e.target.value)}
+//                     className={inputStyle}
+//                     min="0"
+//                     step="1"
+//                     placeholder="Threshold ($)"
+//                   />
+//                 </div>
+//                 <div className="flex-1">
+//                   <label className="block text-sm font-medium mb-1 text-purple-700">Reward Points</label>
+//                   <input
+//                     type="number"
+//                     value={r.points}
+//                     disabled={!isEditMode}
+//                     onChange={(e) => handleDynamicChange("purchaseRewards", i, "points", e.target.value)}
+//                     className={inputStyle}
+//                     min="0"
+//                     step="1"
+//                     placeholder="Points"
+//                   />
+//                 </div>
 //                 {isEditMode && (
 //                   <FiTrash2
-//                     className="text-red-500 hover:text-red-600 cursor-pointer w-8 h-10"
+//                     className="text-red-500 hover:text-red-600 cursor-pointer w-5 h-5"
 //                     onClick={() => removeField("purchaseRewards", i)}
 //                   />
 //                 )}
@@ -296,27 +321,35 @@
 //             {formData.milestoneRewards.map((m, i) => (
 //               <div key={i} className="flex items-center gap-2 mb-3">
 //                 <span className="w-6 text-sm font-medium text-purple-700">{i + 1}.</span>
-//                 <input
-//                   type="number"
-//                   placeholder="Point Threshold"
-//                   value={m.threshold}
-//                   disabled={!isEditMode}
-//                   onChange={(e) => handleDynamicChange("milestoneRewards", i, "threshold", e.target.value)}
-//                   className={inputStyle}
-//                   min="0"
-//                 />
-//                 <input
-//                   type="number"
-//                   placeholder="$ Amount"
-//                   value={m.amount}
-//                   disabled={!isEditMode}
-//                   onChange={(e) => handleDynamicChange("milestoneRewards", i, "amount", e.target.value)}
-//                   className={inputStyle}
-//                   min="0"
-//                 />
+//                 <div className="flex-1">
+//                   <label className="block text-sm font-medium mb-1 text-purple-700">Point Threshold</label>
+//                   <input
+//                     type="number"
+//                     value={m.threshold}
+//                     disabled={!isEditMode}
+//                     onChange={(e) => handleDynamicChange("milestoneRewards", i, "threshold", e.target.value)}
+//                     className={inputStyle}
+//                     min="0"
+//                     step="1"
+//                     placeholder="Point Threshold"
+//                   />
+//                 </div>
+//                 <div className="flex-1">
+//                   <label className="block text-sm font-medium mb-1 text-purple-700">Reward Amount ($)</label>
+//                   <input
+//                     type="number"
+//                     value={m.amount}
+//                     disabled={!isEditMode}
+//                     onChange={(e) => handleDynamicChange("milestoneRewards", i, "amount", e.target.value)}
+//                     className={inputStyle}
+//                     min="0"
+//                     step="1"
+//                     placeholder="$ Amount"
+//                   />
+//                 </div>
 //                 {isEditMode && (
 //                   <FiTrash2
-//                     className="text-red-500 hover:text-red-600 cursor-pointer w-8 h-10"
+//                     className="text-red-500 hover:text-red-600 cursor-pointer w-5 h-5"
 //                     onClick={() => removeField("milestoneRewards", i)}
 //                   />
 //                 )}
@@ -339,42 +372,55 @@
 //             {formData.specialBonuses.map((b, i) => (
 //               <div key={i} className="flex items-center gap-2 mb-3">
 //                 <span className="w-6 text-sm font-medium text-purple-700">{i + 1}.</span>
-//                 <input
-//                   type="text"
-//                   placeholder="Bonus Name"
-//                   value={b.name}
-//                   disabled={!isEditMode}
-//                   onChange={(e) => handleDynamicChange("specialBonuses", i, "name", e.target.value)}
-//                   className={inputStyle}
-//                 />
-//                 <input
-//                   type="number"
-//                   placeholder="Points"
-//                   value={b.points}
-//                   disabled={!isEditMode}
-//                   onChange={(e) => handleDynamicChange("specialBonuses", i, "points", e.target.value)}
-//                   className={inputStyle}
-//                   min="0"
-//                 />
-//                 <input
-//                   type="date"
-//                   value={b.startDate}
-//                   disabled={!isEditMode}
-//                   onChange={(e) => handleDynamicChange("specialBonuses", i, "startDate", e.target.value)}
-//                   className={inputStyle}
-//                   min={new Date().toISOString().split("T")[0]}
-//                 />
-//                 <input
-//                   type="date"
-//                   value={b.endDate}
-//                   disabled={!isEditMode}
-//                   onChange={(e) => handleDynamicChange("specialBonuses", i, "endDate", e.target.value)}
-//                   className={inputStyle}
-//                   min={b.startDate || new Date().toISOString().split("T")[0]}
-//                 />
+//                 <div className="flex-1">
+//                   <label className="block text-sm font-medium mb-1 text-purple-700">Bonus Name</label>
+//                   <input
+//                     type="text"
+//                     value={b.name}
+//                     disabled={!isEditMode}
+//                     onChange={(e) => handleDynamicChange("specialBonuses", i, "name", e.target.value)}
+//                     className={inputStyle}
+//                     placeholder="Bonus Name"
+//                   />
+//                 </div>
+//                 <div className="flex-1">
+//                   <label className="block text-sm font-medium mb-1 text-purple-700">Bonus Points</label>
+//                   <input
+//                     type="number"
+//                     value={b.points}
+//                     disabled={!isEditMode}
+//                     onChange={(e) => handleDynamicChange("specialBonuses", i, "points", e.target.value)}
+//                     className={inputStyle}
+//                     min="0"
+//                     step="1"
+//                     placeholder="Points"
+//                   />
+//                 </div>
+//                 <div className="flex-1">
+//                   <label className="block text-sm font-medium mb-1 text-purple-700">Start Date</label>
+//                   <input
+//                     type="date"
+//                     value={b.startDate}
+//                     disabled={!isEditMode}
+//                     onChange={(e) => handleDynamicChange("specialBonuses", i, "startDate", e.target.value)}
+//                     className={inputStyle}
+//                     min={new Date().toISOString().split("T")[0]}
+//                   />
+//                 </div>
+//                 <div className="flex-1">
+//                   <label className="block text-sm font-medium mb-1 text-purple-700">End Date</label>
+//                   <input
+//                     type="date"
+//                     value={b.endDate}
+//                     disabled={!isEditMode}
+//                     onChange={(e) => handleDynamicChange("specialBonuses", i, "endDate", e.target.value)}
+//                     className={inputStyle}
+//                     min={b.startDate || new Date().toISOString().split("T")[0]}
+//                   />
+//                 </div>
 //                 {isEditMode && (
 //                   <FiTrash2
-//                     className="text-red-500 hover:text-red-600 cursor-pointer w-20 h-24"
+//                     className="text-red-500 hover:text-red-600 cursor-pointer w-5 h-5"
 //                     onClick={() => removeField("specialBonuses", i)}
 //                   />
 //                 )}
@@ -401,17 +447,19 @@
 //           {/* Coupon Promo Section */}
 //           <div>
 //             <label className="block font-medium mb-2 text-purple-700">Special Bonus Coupon Promotion</label>
-//             <label className="block text-sm font-medium mb-1 text-purple-700">Description</label>
-//             <textarea
-//               name="bonusDescription"
-//               rows="3"
-//               placeholder="Bonus Description"
-//               value={formData.bonusDescription}
-//               onChange={handleChange}
-//               disabled={!isEditMode}
-//               className={inputStyle}
-//             />
-//             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-3">
+//             <div className="mb-3">
+//               <label className="block text-sm font-medium mb-1 text-purple-700">Description</label>
+//               <textarea
+//                 name="bonusDescription"
+//                 rows="3"
+//                 placeholder="Bonus Description"
+//                 value={formData.bonusDescription}
+//                 onChange={handleChange}
+//                 disabled={!isEditMode}
+//                 className={inputStyle}
+//               />
+//             </div>
+//             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
 //               <div>
 //                 <label className="block text-sm font-medium mb-1 text-purple-700">Begin Date</label>
 //                 <input
@@ -446,6 +494,8 @@
 //                   disabled={!isEditMode}
 //                   className={inputStyle}
 //                   min="0"
+//                   step="1"
+//                   placeholder="Amount Off ($)"
 //                 />
 //               </div>
 //             </div>
@@ -455,12 +505,12 @@
 //             <button
 //               type="submit"
 //               onClick={handleSubmit}
-//               disabled={isSaving} 
+//               disabled={isSaving}
 //               className={`w-full bg-purple-600 text-white py-3 rounded-lg font-semibold transition duration-200 ${
 //                 isSaving ? "opacity-50 cursor-not-allowed" : "hover:bg-purple-700"
-//               }`} 
+//               }`}
 //             >
-//               {isSaving ? "Saving..." : "💾 Save Settings"} 
+//               {isSaving ? "Saving..." : "💾 Save Settings"}
 //             </button>
 //           )}
 //         </form>
@@ -470,20 +520,6 @@
 // };
 
 // export default ShopkeeperSetting;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -508,11 +544,7 @@ const ShopkeeperSetting = () => {
     signUpBonusPoints: "",
     purchaseRewards: [{ threshold: "", points: "" }],
     milestoneRewards: [{ threshold: "", amount: "" }],
-    specialBonuses: [{ name: "", points: "", startDate: "", endDate: "" }],
-    bonusDescription: "",
-    beginDate: "",
-    endDate: "",
-    amountOff: "",
+    specialBonuses: [{ name: "", dollartoPointsMapping: "", startDate: "", endDate: "" }],
     dollarToPointsMapping: "",
   });
 
@@ -541,14 +573,10 @@ const ShopkeeperSetting = () => {
             })) || [{ threshold: "", amount: "" }],
             specialBonuses: data.specialBonuses?.map((b) => ({
               name: b.name || "",
-              points: b.points ? Math.floor(b.points).toString() : "",
+              dollartoPointsMapping: b.dollartoPointsMapping ? Math.floor(b.dollartoPointsMapping).toString() : "",
               startDate: b.startDate || "",
               endDate: b.endDate || "",
-            })) || [{ name: "", points: "", startDate: "", endDate: "" }],
-            bonusDescription: data.bonusdescription || "",
-            beginDate: data.beginDate || "",
-            endDate: data.endDate || "",
-            amountOff: data.amountOff ? Math.floor(data.amountOff).toString() : "",
+            })) || [{ name: "", dollartoPointsMapping: "", startDate: "", endDate: "" }],
             dollarToPointsMapping: data.dollarToPointsMapping ? Math.floor(data.dollarToPointsMapping).toString() : "",
           });
         } else if (response.status === 404) {
@@ -566,7 +594,7 @@ const ShopkeeperSetting = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (name.toLowerCase().includes("points") || name === "amountOff" || name === "dollarToPointsMapping") {
+    if (name.toLowerCase().includes("points") || name === "dollarToPointsMapping") {
       if (value === "" || (parseInt(value) >= 0 && Number.isInteger(parseFloat(value)))) {
         setFormData((prev) => ({ ...prev, [name]: value }));
       }
@@ -576,7 +604,7 @@ const ShopkeeperSetting = () => {
   };
 
   const handleDynamicChange = (type, index, field, value) => {
-    if (field === "points" || field === "threshold" || field === "amount") {
+    if (field === "dollartoPointsMapping" || field === "threshold" || field === "amount") {
       if (value === "" || (parseInt(value) >= 0 && Number.isInteger(parseFloat(value)))) {
         const updated = [...formData[type]];
         updated[index][field] = value;
@@ -604,7 +632,7 @@ const ShopkeeperSetting = () => {
       formData.dollarToPointsMapping,
       ...formData.purchaseRewards.map((r) => [r.threshold, r.points]),
       ...formData.milestoneRewards.map((m) => [m.threshold, m.amount]),
-      ...formData.specialBonuses.map((b) => [b.points]),
+      ...formData.specialBonuses.map((b) => [b.dollartoPointsMapping]),
     ].flat().some((val) => val !== "" && (isNaN(parseInt(val)) || parseInt(val) < 0));
 
     if (hasInvalidNumber) {
@@ -613,8 +641,6 @@ const ShopkeeperSetting = () => {
     }
 
     const hasInvalidDates = [
-      formData.beginDate,
-      formData.endDate,
       ...formData.specialBonuses.map((b) => [b.startDate, b.endDate]),
     ].flat().some((date) => date && isNaN(Date.parse(date)));
 
@@ -644,14 +670,10 @@ const ShopkeeperSetting = () => {
       })),
       specialBonuses: formData.specialBonuses.map((b) => ({
         name: b.name,
-        points: parseInt(b.points) || 0,
+        dollartoPointsMapping: parseInt(b.dollartoPointsMapping) || 0,
         startDate: b.startDate || null,
         endDate: b.endDate || null,
       })),
-      bonusdescription: formData.bonusDescription || null,
-      beginDate: formData.beginDate || null,
-      endDate: formData.endDate || null,
-      amountOff: parseInt(formData.amountOff) || 0,
       dollarToPointsMapping: parseInt(formData.dollarToPointsMapping) || 0,
     };
 
@@ -736,7 +758,7 @@ const ShopkeeperSetting = () => {
             <label className="block text-sm font-medium mb-1 text-purple-700">Dollar to Points Conversion</label>
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium mb-1 text-purple-700">Dollars</label>
+                <label className="block text-sm font-medium mb-1 text-blue-700">Dollars</label>
                 <input
                   type="number"
                   value="1"
@@ -747,7 +769,7 @@ const ShopkeeperSetting = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium mb-1 text-purple-700">Points per Dollar</label>
+                <label className="block text-sm font-medium mb-1 text-blue-700">Points per Dollar</label>
                 <input
                   type="number"
                   name="dollarToPointsMapping"
@@ -768,9 +790,9 @@ const ShopkeeperSetting = () => {
             <label className="block font-medium mb-2 text-purple-700">Purchase-Based Rewards</label>
             {formData.purchaseRewards.map((r, i) => (
               <div key={i} className="flex items-center gap-2 mb-3">
-                <span className="w-6 text-sm font-medium text-purple-700">{i + 1}.</span>
+                <span className="w-6 text-sm font-medium text-blue-700">{i + 1} .</span>
                 <div className="flex-1">
-                  <label className="block text-sm font-medium mb-1 text-purple-700">Purchase Threshold ($)</label>
+                  <label className="block text-sm font-medium mb-1 text-blue-700">Purchase Threshold ($)</label>
                   <input
                     type="number"
                     value={r.threshold}
@@ -783,7 +805,7 @@ const ShopkeeperSetting = () => {
                   />
                 </div>
                 <div className="flex-1">
-                  <label className="block text-sm font-medium mb-1 text-purple-700">Reward Points</label>
+                  <label className="block text-sm font-medium mb-1 text-blue-700">Bonus Reward Points</label>
                   <input
                     type="number"
                     value={r.points}
@@ -819,9 +841,9 @@ const ShopkeeperSetting = () => {
             <label className="block font-medium mb-2 text-purple-700">Milestone Rewards</label>
             {formData.milestoneRewards.map((m, i) => (
               <div key={i} className="flex items-center gap-2 mb-3">
-                <span className="w-6 text-sm font-medium text-purple-700">{i + 1}.</span>
+                <span className="w-6 text-sm font-medium text-blue-700">{i + 1} .</span>
                 <div className="flex-1">
-                  <label className="block text-sm font-medium mb-1 text-purple-700">Point Threshold</label>
+                  <label className="block text-sm font-medium mb-1 text-blue-700">Point Threshold</label>
                   <input
                     type="number"
                     value={m.threshold}
@@ -834,7 +856,7 @@ const ShopkeeperSetting = () => {
                   />
                 </div>
                 <div className="flex-1">
-                  <label className="block text-sm font-medium mb-1 text-purple-700">Reward Amount ($)</label>
+                  <label className="block text-sm font-medium mb-1 text-blue-700">Reward Amount ($)</label>
                   <input
                     type="number"
                     value={m.amount}
@@ -870,9 +892,9 @@ const ShopkeeperSetting = () => {
             <label className="block font-medium mb-2 text-purple-700">Special Bonuses</label>
             {formData.specialBonuses.map((b, i) => (
               <div key={i} className="flex items-center gap-2 mb-3">
-                <span className="w-6 text-sm font-medium text-purple-700">{i + 1}.</span>
+                <span className="w-6 text-sm font-medium text-blue-700">{i + 1} .</span>
                 <div className="flex-1">
-                  <label className="block text-sm font-medium mb-1 text-purple-700">Bonus Name</label>
+                  <label className="block text-sm font-medium mb-1 text-blue-700">Bonus Name</label>
                   <input
                     type="text"
                     value={b.name}
@@ -883,12 +905,12 @@ const ShopkeeperSetting = () => {
                   />
                 </div>
                 <div className="flex-1">
-                  <label className="block text-sm font-medium mb-1 text-purple-700">Bonus Points</label>
+                  <label className="block text-sm font-medium mb-1 text-blue-700">Points per Dollar</label>
                   <input
                     type="number"
-                    value={b.points}
+                    value={b.dollartoPointsMapping}
                     disabled={!isEditMode}
-                    onChange={(e) => handleDynamicChange("specialBonuses", i, "points", e.target.value)}
+                    onChange={(e) => handleDynamicChange("specialBonuses", i, "dollartoPointsMapping", e.target.value)}
                     className={inputStyle}
                     min="0"
                     step="1"
@@ -896,7 +918,7 @@ const ShopkeeperSetting = () => {
                   />
                 </div>
                 <div className="flex-1">
-                  <label className="block text-sm font-medium mb-1 text-purple-700">Start Date</label>
+                  <label className="block text-sm font-medium mb-1 text-blue-700">Start Date</label>
                   <input
                     type="date"
                     value={b.startDate}
@@ -907,7 +929,7 @@ const ShopkeeperSetting = () => {
                   />
                 </div>
                 <div className="flex-1">
-                  <label className="block text-sm font-medium mb-1 text-purple-700">End Date</label>
+                  <label className="block text-sm font-medium mb-1 text-blue-700">End Date</label>
                   <input
                     type="date"
                     value={b.endDate}
@@ -931,7 +953,7 @@ const ShopkeeperSetting = () => {
                 onClick={() =>
                   addField("specialBonuses", {
                     name: "",
-                    points: "",
+                    dollartoPointsMapping: "",
                     startDate: "",
                     endDate: "",
                   })
@@ -941,63 +963,6 @@ const ShopkeeperSetting = () => {
                 + Add Special Bonus
               </button>
             )}
-          </div>
-
-          {/* Coupon Promo Section */}
-          <div>
-            <label className="block font-medium mb-2 text-purple-700">Special Bonus Coupon Promotion</label>
-            <div className="mb-3">
-              <label className="block text-sm font-medium mb-1 text-purple-700">Description</label>
-              <textarea
-                name="bonusDescription"
-                rows="3"
-                placeholder="Bonus Description"
-                value={formData.bonusDescription}
-                onChange={handleChange}
-                disabled={!isEditMode}
-                className={inputStyle}
-              />
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div>
-                <label className="block text-sm font-medium mb-1 text-purple-700">Begin Date</label>
-                <input
-                  type="date"
-                  name="beginDate"
-                  value={formData.beginDate}
-                  onChange={handleChange}
-                  disabled={!isEditMode}
-                  className={inputStyle}
-                  min={new Date().toISOString().split("T")[0]}
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-1 text-purple-700">End Date</label>
-                <input
-                  type="date"
-                  name="endDate"
-                  value={formData.endDate}
-                  onChange={handleChange}
-                  disabled={!isEditMode}
-                  className={inputStyle}
-                  min={formData.beginDate || new Date().toISOString().split("T")[0]}
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-1 text-purple-700">Amount Off ($)</label>
-                <input
-                  type="number"
-                  name="amountOff"
-                  value={formData.amountOff}
-                  onChange={handleChange}
-                  disabled={!isEditMode}
-                  className={inputStyle}
-                  min="0"
-                  step="1"
-                  placeholder="Amount Off ($)"
-                />
-              </div>
-            </div>
           </div>
 
           {isEditMode && (
