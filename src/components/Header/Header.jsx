@@ -222,7 +222,7 @@ export default function Header() {
                 Features
               </NavLink>
               <a
-              href="https://subscription-frontend-psi.vercel.app/"  className="hover:text-yellow-300">
+              href="https://subscription-frontend-psi.vercel.app/subscription"  className="hover:text-yellow-300">
                 Subscription
               </a>
               <NavLink

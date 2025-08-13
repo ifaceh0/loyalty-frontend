@@ -519,6 +519,18 @@ const Shopdashboard = () => {
           sidebarOpen && isSidebarExpanded ? "ml-64" : sidebarOpen ? "ml-16" : "ml-0"
         }`}
       >
+      {activeTab === "user_stats" && (
+        <div className="mb-4 p-3 bg-yellow-100 border border-yellow-300 rounded text-center text-sm">
+          Not a subscriber yet?{" "}
+          <a
+            href="https://subscription-frontend-psi.vercel.app/subscription"
+            className="text-blue-600 underline hover:text-blue-800"
+          >
+            Click here to subscribe
+          </a>
+        </div>
+      )}
+
         {activeTab === "user_stats" && (
           <>
             <div>
