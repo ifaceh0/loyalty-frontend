@@ -298,7 +298,7 @@ const Signin = () => {
       return;
     }
 
-    if (formData.captchaInput.trim().toUpperCase() !== captchaText.toUpperCase()) {
+    if (formData.captchaInput.trim() !== captchaText) {
       setError("Invalid CAPTCHA");
       generateCaptcha();
       return;
