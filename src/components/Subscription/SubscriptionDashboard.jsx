@@ -22,6 +22,12 @@ const SubscriptionDashboard = () => {
     },
   ];
 
+  // Retrieve company email from local storage
+  const companyEmail = localStorage.getItem("companyEmail") || "";
+
+  // Construct the subscription URL with the company email as a query parameter
+  const subscriptionUrl = `https://subscription-frontend-psi.vercel.app/subscription-dashboard?email=${encodeURIComponent(companyEmail)}`;
+
   return (
     <div className="flex flex-col items-center justify-center px-4 py-12">
       <div className="w-full max-w-5xl text-center">
@@ -47,7 +53,7 @@ const SubscriptionDashboard = () => {
         </div>
 
         <a
-            href="https://subscription-frontend-psi.vercel.app/subscription-dashboard"
+            href={subscriptionUrl}
             className="bg-indigo-600 text-white font-semibold text-lg py-4 px-10 rounded-lg hover:bg-indigo-700 transition transform hover:scale-105 shadow-lg"
         >Access My Subscription</a>
       </div>
