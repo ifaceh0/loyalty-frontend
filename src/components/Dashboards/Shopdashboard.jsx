@@ -319,7 +319,7 @@ import CustomerLookup from "../Customer/CustomerLookup";
 import SubscriptionDashboard from "../Subscription/SubscriptionDashboard";
 import UserPurchaseChart from "../bar chart/UserPurchaseChart";
 import { useSidebar } from "../../context/SidebarContext";
-import { X, Menu } from "lucide-react"; // Added Menu icon for hamburger
+import { X, Menu } from "lucide-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChartBar, faUser, faCog, faUsers, faCreditCard } from "@fortawesome/free-solid-svg-icons";
 
@@ -327,7 +327,7 @@ const Shopdashboard = () => {
   const navigate = useNavigate();
   const { sidebarOpen, setSidebarOpen } = useSidebar();
   const [activeTab, setActiveTab] = useState("user_stats");
-  const [isSidebarExpanded, setIsSidebarExpanded] = useState(false); // New state for sidebar expansion
+  const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);
 
   const [totalUsers, setTotalUsers] = useState(0);
   const [topVisitedUsers, setTopVisitedUsers] = useState([]);
@@ -429,7 +429,6 @@ const Shopdashboard = () => {
 
   const currentYear = new Date().getFullYear();
 
-  // Toggle sidebar expansion (icon-only to full mode)
   const toggleSidebarExpansion = () => {
     setIsSidebarExpanded(!isSidebarExpanded);
   };
@@ -438,35 +437,32 @@ const Shopdashboard = () => {
     <div className="flex h-[calc(100vh-64px)] bg-gray-100">
       {/* Sidebar */}
       <aside
-        className={`fixed h-screen top-0 bg-purple-600 text-white p-4 sm:p-4 shadow-lg z-50 transform transition-all duration-300 ease-in-out ${
+        className={`fixed h-screen top-0 bg-gradient-to-b from-[#4F46E5] to-[#7C3AED] text-white p-4 sm:p-4 shadow-lg z-50 transform transition-all duration-300 ease-in-out ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
-        } ${isSidebarExpanded ? "w-64" : "w-16"} rounded-r-xl`} // Curved right border and dynamic width
+        } ${isSidebarExpanded ? "w-64" : "w-16"} rounded-r-xl`}
       >
         <div className="flex justify-between items-center mb-6">
-          {/* Show title only when expanded */}
           {isSidebarExpanded && (
-            <h2 className="text-xl sm:text-2xl font-bold">Shopkeeper Panel</h2>
+            <h2 className="text-xl sm:text-2xl font-bold text-yellow-300">Shopkeeper Panel</h2>
           )}
           <div className="flex items-center">
-            {/* Hamburger Menu (visible when sidebar is closed) */}
             {!sidebarOpen && (
               <button
                 onClick={() => setSidebarOpen(true)}
-                className="p-2 rounded-full bg-purple-700 hover:bg-purple-800 text-white transition flex items-center justify-center absolute left-4 top-4"
+                className="p-2 rounded-full bg-yellow-400 hover:bg-yellow-500 text-purple-900 transition flex items-center justify-center absolute left-4 top-4"
                 aria-label="Open sidebar"
               >
                 <Menu className="w-6 h-6" />
               </button>
             )}
-            {/* Close Button (visible when sidebar is open) */}
             {sidebarOpen && (
               <div className="relative group">
                 <button
                   onClick={() => {
                     setSidebarOpen(false);
-                    setIsSidebarExpanded(false); // Reset to icon-only when closing
+                    setIsSidebarExpanded(false);
                   }}
-                  className="p-1 rounded-full bg-purple-700 hover:bg-purple-800 text-white transition flex items-center justify-center"
+                  className="p-1 rounded-full bg-yellow-400 hover:bg-yellow-500 text-purple-900 transition flex items-center justify-center"
                   aria-label="Close sidebar"
                 >
                   <X className="w-6 h-6" />
@@ -491,17 +487,17 @@ const Shopdashboard = () => {
               key={tab}
               onClick={() => {
                 setActiveTab(tab);
-                setSidebarOpen(true); // Ensure sidebar stays open
-                toggleSidebarExpansion(); // Toggle expansion on click
+                setSidebarOpen(true);
+                toggleSidebarExpansion();
               }}
               className={`flex items-center w-full text-left px-4 py-2 rounded-lg transition text-sm sm:text-base ${
                 activeTab === tab
-                  ? "bg-purple-100 text-purple-800 font-semibold"
-                  : "hover:bg-purple-500"
-              } ${isSidebarExpanded ? "" : "justify-center"}`} // Center icon when collapsed
+                  ? "bg-yellow-300 text-purple-900 font-semibold"
+                  : "hover:bg-yellow-200 hover:text-purple-900"
+              } ${isSidebarExpanded ? "" : "justify-center"}`}
             >
               <FontAwesomeIcon icon={icon} className={`${isSidebarExpanded ? "mr-2" : ""}`} />
-              {isSidebarExpanded && <span>{label}</span>} {/* Show label only when expanded */}
+              {isSidebarExpanded && <span>{label}</span>}
             </button>
             {!isSidebarExpanded && (
                 <span className="absolute left-full ml-2 top-1/2 transform -translate-y-1/2 bg-purple-800 text-white text-xs rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
@@ -524,7 +520,7 @@ const Shopdashboard = () => {
           Not a subscriber yet?{" "}
           <a
             href="https://subscription-frontend-psi.vercel.app/subscription"
-            className="text-blue-600 underline hover:text-blue-800"
+            className="text-purple-800 font-semibold underline hover:text-purple-900"
           >
             Click here to subscribe
           </a>
@@ -534,13 +530,13 @@ const Shopdashboard = () => {
         {activeTab === "user_stats" && (
           <>
             <div>
-              <h1 className="mb-6 text-xl sm:text-2xl font-bold text-gray-800 flex items-center">
+              <h1 className="mb-6 text-xl sm:text-2xl font-bold text-purple-800 flex items-center">
                 Shopkeeper Dashboard
               </h1>
             </div>
             <UserPurchaseChart />
             <section className="mb-6">
-              <h3 className="text-2x font-semibold text-gray-800 mb-4">
+              <h3 className="text-2x font-semibold text-purple-800 mb-4">
                 Monthly Sales (Last 12 Months) - {currentYear}
               </h3>
               <ResponsiveContainer width="100%" height={320}>
@@ -549,13 +545,13 @@ const Shopdashboard = () => {
                   <YAxis tickFormatter={(val) => `₹${val}`} tick={{ fill: "#6b7280", fontSize: 12 }} />
                   <Tooltip formatter={(value) => [`₹${value}`, "Sales"]} />
                   <Legend />
-                  <Line type="monotone" dataKey="sales" stroke="#4f46e5" strokeWidth={2} dot={{ r: 4 }} activeDot={{ r: 6 }} name="Sales ₹" />
+                  <Line type="monotone" dataKey="sales" stroke="#FACC15" strokeWidth={2} dot={{ r: 4, fill: "#7C3AED" }} activeDot={{ r: 6, fill: "#FACC15" }} name="Sales ₹" />
                 </LineChart>
               </ResponsiveContainer>
             </section>
 
             <section className="mb-6">
-              <h3 className="text-2x font-semibold text-gray-800 mb-4">
+              <h3 className="text-2x font-semibold text-purple-800 mb-4">
                 Customer Count Comparison ({currentYear})
               </h3>
               <ResponsiveContainer width="100%" height={300}>
@@ -564,8 +560,8 @@ const Shopdashboard = () => {
                   <YAxis tick={{ fill: "#6b7280" }} />
                   <Tooltip />
                   <Legend />
-                  <Bar dataKey="customers" fill="#0284c7" barSize={40} radius={[10, 10, 0, 0]}>
-                    <LabelList dataKey="growth" position="top" formatter={(val) => `${val >= 0 ? "+" : ""}${val.toFixed(1)}%`} fill="#0284c7" />
+                  <Bar dataKey="customers" fill="#7C3AED" barSize={40} radius={[10, 10, 0, 0]}>
+                    <LabelList dataKey="growth" position="top" formatter={(val) => `${val >= 0 ? "+" : ""}${val.toFixed(1)}%`} fill="#FACC15" />
                   </Bar>
                 </BarChart>
               </ResponsiveContainer>
@@ -573,12 +569,12 @@ const Shopdashboard = () => {
 
             <Row gutter={[16, 16]}>
               <Col span={24}>
-                <Card title="👥 Most Visitors" bordered={false}>
+                <Card title="👥 Most Visitors" bordered={false} headStyle={{ backgroundColor: "#FACC15", color: "#4F46E5" }}>
                   <Table columns={mostVisitorsColumns} dataSource={topVisitedUsers} pagination={{ pageSize: 5 }} rowKey="userId" size="small" scroll={{ x: "max-content" }} />
                 </Card>
               </Col>
               <Col span={24}>
-                <Card title="💰 Top Revenue Generators" bordered={false}>
+                <Card title="💰 Top Revenue Generators" bordered={false} headStyle={{ backgroundColor: "#FACC15", color: "#4F46E5" }}>
                   <Table columns={topRevenueColumns} dataSource={topSpendingUsers} pagination={false} rowKey="userId" size="small" scroll={{ y: 250 }} />
                 </Card>
               </Col>

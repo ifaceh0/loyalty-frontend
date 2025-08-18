@@ -1,36 +1,36 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react"; 
 import Confetti from "react-confetti";
-import { Eye, EyeOff, Lock, Mail, Phone, RefreshCw } from "lucide-react";
+import { Eye, EyeOff, Lock, Mail, RefreshCw, User } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 
 function FloatingInput({ label, name, value, onChange, type = "text", Icon, ToggleIcon, onToggle }) {
   return (
-    <div className="relative border border-purple-300 rounded-xl px-3 pt-4 pb-2 bg-white shadow-sm focus-within:ring-2 focus-within:ring-purple-500 transition">
-      <label htmlFor={name} className="absolute -top-2 left-3 bg-white px-1 text-xs font-medium text-purple-600">
+    <div className="relative border border-blue-300 rounded-2xl px-4 pt-5 pb-3 bg-white/70 shadow-md backdrop-blur-sm focus-within:ring-2 focus-within:ring-blue-500 transition hover:shadow-lg">
+      <label htmlFor={name} className="absolute -top-3 left-4 bg-white px-2 text-sm font-semibold text-blue-600">
         {label}
       </label>
-      {Icon && <Icon className="absolute left-3 top-3.5 h-5 w-5 text-purple-400" />}
+      {Icon && <Icon className="absolute left-4 top-4.5 h-6 w-6 text-blue-400" />}
       <input
         type={type}
         name={name}
         value={value}
         onChange={onChange}
         placeholder=" "
-        className="w-full h-5 px-8 py-2 text-base text-gray-800 bg-transparent focus:outline-none"
+        className="w-full h-12 px-12 text-lg text-gray-800 bg-transparent focus:outline-none"
         required
       />
       {ToggleIcon && (
-        <button type="button" onClick={onToggle} className="absolute right-3 top-3 text-gray-600 hover:text-purple-600">
-          <ToggleIcon className="h-5 w-5" />
+        <button type="button" onClick={onToggle} className="absolute right-4 top-4 text-gray-600 hover:text-blue-600">
+          <ToggleIcon className="h-6 w-6" />
         </button>
       )}
     </div>
   );
 }
 
-function User() {
+function UserSignup() {
   const navigate = useNavigate();
   const location = useLocation();
   const [formData, setFormData] = useState({
@@ -55,26 +55,14 @@ function User() {
   const canvasRef = useRef(null);
   const audioRef = useRef(null);
 
-  // useEffect(() => {
-  //   const queryParams = new URLSearchParams(location.search);
-  //   const shopId = queryParams.get("shopId"); // ✅ Extract shopId from URL
-  //   if (shopId) {
-  //     setReferralShopId(shopId);
-  //   }
-
-  // useEffect(() => {
-  //   if (step === 3) generateCaptcha();
-  // }, [step]);
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
-    const shopId = queryParams.get("referralShopId"); // Extract shopId from URL
+    const shopId = queryParams.get("referralShopId"); 
     if (shopId) {
       setReferralShopId(shopId);
     }
-
     if (step === 3) generateCaptcha();
   }, [step, location.search]);
-
 
   const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
@@ -93,9 +81,9 @@ function User() {
     if (canvasRef.current) {
       const ctx = canvasRef.current.getContext("2d");
       ctx.clearRect(0, 0, 100, 40);
-      ctx.font = "22px Arial";
-      ctx.fillStyle = "#4A90E2";
-      ctx.fillText(text, 10, 28);
+      ctx.font = "28px Arial";
+      ctx.fillStyle = "#2563EB"; // blue-600
+      ctx.fillText(text, 10, 30);
     }
   };
 
@@ -114,7 +102,6 @@ function User() {
       setError("Invalid CAPTCHA");
       return;
     }
-
     if (phoneError) {
       setError("Please correct your phone number.");
       return;
@@ -197,28 +184,33 @@ function User() {
   const getProgress = () => (step / 3) * 100;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-100 to-purple-200 flex items-center justify-center px-4">
+    <div className="min-h-screen flex items-center justify-center px-6 
+      bg-[linear-gradient(135deg,#d0f4de,#a9def9)] 
+      [background-image:linear-gradient(to_right,rgba(0,0,0,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.05)_1px,transparent_1px)] 
+      [background-size:40px_40px] bg-blend-overlay">
       {success && <Confetti recycle={false} numberOfPieces={300} />}
-      <div className="w-full max-w-md bg-white/60 backdrop-blur-xl border border-purple-200 rounded-3xl p-10 shadow-2xl animate-fade-in">
-        <h2 className="text-3xl font-bold text-center text-purple-700 mb-2">User Sign Up</h2>
-        <p className="text-center text-gray-600 mb-4">Step {step} of 3</p>
-        <div className="w-full h-2 bg-gray-300 rounded-full mb-6">
-          <div className="h-full bg-gradient-to-r from-purple-500 to-blue-500 rounded-full" style={{ width: `${getProgress()}%` }}></div>
+      <div className="w-full max-w-3xl bg-white/70 backdrop-blur-xl border border-blue-200 rounded-3xl p-14 shadow-2xl animate-fade-in">
+        <h2 className="text-4xl font-bold text-center text-blue-700 mb-4">User Sign Up</h2>
+        <p className="text-center text-gray-600 mb-6 text-lg">Step {step} of 3</p>
+        <div className="w-full h-3 bg-gray-300 rounded-full mb-8">
+          <div className="h-full bg-gradient-to-r from-green-500 to-blue-600 rounded-full" style={{ width: `${getProgress()}%` }}></div>
         </div>
-        {error && <p className="text-red-500 text-sm text-center mb-4 animate-pulse">⚠️ {error}</p>}
-        <form onSubmit={handleSubmit} className="space-y-5">
+        {error && <p className="text-red-500 text-lg text-center mb-4 animate-pulse">⚠️ {error}</p>}
+        <form onSubmit={handleSubmit} className="space-y-8">
           {step === 1 && (
-            <>
-              <FloatingInput label="First Name" name="firstName" value={formData.firstName} onChange={handleChange} Icon={Mail} />
-              <FloatingInput label="Last Name" name="lastName" value={formData.lastName} onChange={handleChange} Icon={Mail} />
-              <NextButton onClick={nextStep} />
-            </>
+            <div className="grid grid-cols-2 gap-6">
+              <FloatingInput label="First Name" name="firstName" value={formData.firstName} onChange={handleChange} Icon={User} />
+              <FloatingInput label="Last Name" name="lastName" value={formData.lastName} onChange={handleChange} Icon={User} />
+              <div className="col-span-2">
+                <NextButton onClick={nextStep} />
+              </div>
+            </div>
           )}
 
           {step === 2 && (
             <>
-                <div className="relative border border-purple-300 rounded-xl px-3 pt-4 pb-2 bg-white shadow-sm focus-within:ring-2 focus-within:ring-purple-500 transition">
-                <label className="absolute -top-2 left-3 bg-white px-1 text-xs font-medium text-purple-600">Phone Number</label>
+              <div className="relative border border-blue-300 rounded-2xl px-4 pt-5 pb-3 bg-white/70 shadow-md backdrop-blur-sm focus-within:ring-2 focus-within:ring-blue-500 transition hover:shadow-lg">
+                <label className="absolute -top-3 left-4 bg-white px-2 text-sm font-semibold text-blue-600">Phone Number</label>
                 <PhoneInput
                   country={"us"}
                   enableSearch
@@ -226,14 +218,10 @@ function User() {
                   onChange={(phone, data) => {
                     const newPhone = `+${String(phone || "").replace("+", "")}`;
                     const currentDialCode = data?.dialCode;
-
-                    // If dial code is missing, just update raw value
                     if (!currentDialCode) {
                       setFormData((prev) => ({ ...prev, phoneNumber: newPhone }));
                       return;
                     }
-
-                    // Validate leading 0
                     if (hasLeadingZeroAfterCountryCode(newPhone, currentDialCode)) {
                       setPhoneError(true);
                       setError("Phone number area code cannot start with 0.");
@@ -243,21 +231,21 @@ function User() {
                       setFormData((prev) => ({ ...prev, phoneNumber: newPhone }));
                     }
                   }}
-                  inputClass="!w-full !h-5 !pl-16 !pr-4 !bg-transparent !text-gray-900 !focus:outline-none !border-none"
-                  buttonClass="!h-5 !square-l-xl"
+                  inputClass="!w-full !h-12 !pl-16 !pr-4 !bg-transparent !text-lg !text-gray-900 !focus:outline-none !border-none"
+                  buttonClass="!h-12"
                   containerClass="!w-full"
                 />
-                </div>
-                {phoneError && (
-                  <p className="text-red-500 text-xs mt-1 ml-1">⚠️ Invalid phone number format.</p>
-                )}
+              </div>
+              {phoneError && (
+                <p className="text-red-500 text-sm mt-1 ml-1">⚠️ Invalid phone number format.</p>
+              )}
               <FloatingInput label="Email" name="email" value={formData.email} onChange={handleChange} Icon={Mail} />
               <NextButton onClick={nextStep} />
             </>
           )}
 
           {step === 3 && (
-            <>
+            <div className="grid grid-cols-2 gap-6">
               <FloatingInput
                 label="Password"
                 name="password"
@@ -278,23 +266,24 @@ function User() {
                 ToggleIcon={showConfirmPassword ? EyeOff : Eye}
                 onToggle={() => setShowConfirmPassword(!showConfirmPassword)}
               />
-              <div className="flex items-center justify-between border border-gray-300 bg-white px-4 py-2 rounded-xl shadow-sm">
-                <span className="text-lg font-mono tracking-widest text-gray-700 select-none">{captchaText}</span>
-                <button type="button" onClick={generateCaptcha} className="flex items-center text-sm text-blue-500 hover:text-blue-600">
-                  <RefreshCw className="w-4 h-4 mr-1" /> Refresh
+              <div className="col-span-2 flex items-center justify-between border border-blue-300 bg-white/70 px-6 py-4 rounded-2xl shadow-md backdrop-blur-sm hover:shadow-lg">
+                <span className="text-xl font-mono tracking-widest text-gray-700 select-none">{captchaText}</span>
+                <button type="button" onClick={generateCaptcha} className="flex items-center text-base text-blue-500 hover:text-blue-600">
+                  <RefreshCw className="w-5 h-5 mr-1" /> Refresh
                 </button>
               </div>
               <FloatingInput label="Enter Captcha" name="captchaInput" value={formData.captchaInput} onChange={handleChange} />
               <button
                 type="submit"
                 disabled={loading}
-                className={`w-full bg-purple-600 text-white py-2 text-lg rounded-xl shadow-md transition duration-200 ${
-                  loading ? "opacity-70 cursor-not-allowed" : "hover:bg-purple-700"
-                }`}
+                className={`col-span-2 w-full py-4 text-xl font-semibold rounded-2xl shadow-md transition duration-200 
+                  ${loading 
+                    ? "opacity-70 cursor-not-allowed bg-gradient-to-r from-green-400 to-blue-400" 
+                    : "bg-gradient-to-r from-green-500 to-blue-600 text-white hover:scale-[1.02] hover:shadow-xl"}`}
               >
                 {loading ? "Signing up..." : "Submit"}
               </button>
-            </>
+            </div>
           )}
         </form>
 
@@ -302,7 +291,7 @@ function User() {
           <button
             type="button"
             onClick={() => setStep((prev) => prev - 1)}
-            className="w-full mt-2 py-3 bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold rounded-xl transition"
+            className="w-full mt-4 py-4 bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold rounded-2xl transition"
           >
             Back
           </button>
@@ -318,11 +307,12 @@ function NextButton({ onClick }) {
     <button
       type="button"
       onClick={onClick}
-      className="w-full py-3 mt-4 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-xl shadow-md transition"
+      className="w-full py-4 font-semibold text-lg rounded-2xl shadow-md transition 
+        bg-gradient-to-r from-green-500 to-blue-600 text-white hover:scale-[1.02] hover:shadow-xl"
     >
       Next
     </button>
   );
 }
 
-export default User;
+export default UserSignup;

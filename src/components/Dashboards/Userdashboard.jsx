@@ -166,26 +166,26 @@ const Userdashboard = () => {
   };
 
   return (
-    <div className="flex h-[calc(100vh-64px)] bg-gray-100">
+    <div className="flex h-[calc(100vh-64px)] bg-slate-100">
       {/* Sidebar */}
       <aside
-        className={`fixed h-screen top-0 bg-purple-600 text-white p-4 sm:p-4 shadow-lg z-50 transform transition-all duration-300 ease-in-out ${
+        className={`fixed h-screen top-0 bg-blue-800 text-white p-4 sm:p-4 shadow-lg z-50 transform transition-all duration-300 ease-in-out ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
-        } ${isSidebarExpanded ? "w-64" : "w-16"} rounded-r-xl`} 
+        } ${isSidebarExpanded ? "w-64" : "w-16"} rounded-r-xl`}
       >
         <div className="flex justify-between items-center mb-6">
           {isSidebarExpanded && (
-            <h2 className="text-xl sm:text-2xl font-bold">User Panel</h2>
+            <h2 className="text-xl sm:text-2xl font-bold text-teal-300">User Panel</h2>
           )}
           <div className="flex items-center">
             {!sidebarOpen && (
-                <button
-                  onClick={() => setSidebarOpen(true)}
-                  className="p-2 rounded-full bg-purple-700 hover:bg-purple-800 text-white transition flex items-center justify-center absolute left-4 top-4"
-                  aria-label="Open sidebar"
-                >
-                  <Menu className="w-6 h-6" />
-                </button>
+              <button
+                onClick={() => setSidebarOpen(true)}
+                className="p-2 rounded-full bg-blue-700 hover:bg-blue-900 text-white transition flex items-center justify-center absolute left-4 top-4"
+                aria-label="Open sidebar"
+              >
+                <Menu className="w-6 h-6" />
+              </button>
             )}
             {sidebarOpen && (
               <div className="relative group">
@@ -194,12 +194,12 @@ const Userdashboard = () => {
                     setSidebarOpen(false);
                     setIsSidebarExpanded(false);
                   }}
-                  className="p-1 rounded-full bg-purple-700 hover:bg-purple-800 text-white transition flex items-center justify-center"
+                  className="p-1 rounded-full bg-blue-700 hover:bg-blue-900 text-white transition flex items-center justify-center"
                   aria-label="Close sidebar"
                 >
                   <X className="w-6 h-6" />
                 </button>
-                <span className="absolute left-full ml-2 top-1/2 transform -translate-y-1/2 bg-purple-800 text-white text-xs rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
+                <span className="absolute left-full ml-2 top-1/2 transform -translate-y-1/2 bg-slate-800 text-white text-xs rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
                   Close
                 </span>
               </div>
@@ -222,15 +222,15 @@ const Userdashboard = () => {
                 }}
                 className={`flex items-center w-full text-left px-4 py-2 rounded-lg transition text-sm sm:text-base ${
                   activeTab === tab
-                    ? "bg-purple-100 text-purple-800 font-semibold"
-                    : "hover:bg-purple-500"
+                    ? "bg-teal-200 text-blue-900 font-semibold"
+                    : "hover:bg-blue-600"
                 } ${isSidebarExpanded ? "" : "justify-center"}`}
               >
-                  <FontAwesomeIcon icon={Icon} className={`${isSidebarExpanded ? "mr-2" : ""}`} />
+                <FontAwesomeIcon icon={Icon} className={`${isSidebarExpanded ? "mr-2" : ""}`} />
                 {isSidebarExpanded && <span>{label}</span>}
               </button>
               {!isSidebarExpanded && (
-                <span className="absolute left-full ml-2 top-1/2 transform -translate-y-1/2 bg-purple-800 text-white text-xs rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
+                <span className="absolute left-full ml-2 top-1/2 transform -translate-y-1/2 bg-slate-800 text-white text-xs rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
                   {label}
                 </span>
               )}
@@ -248,7 +248,7 @@ const Userdashboard = () => {
         {activeTab === "user-stats" && (
           <>
             <div>
-              <h1 className="mb-6 text-xl sm:text-2xl font-bold text-gray-800 flex items-center">
+              <h1 className="mb-6 text-xl sm:text-2xl font-bold text-blue-900 flex items-center">
                 User Dashboard
               </h1>
             </div>

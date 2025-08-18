@@ -128,7 +128,7 @@ export default function UserShopList() {
           className="p-8 max-w-md w-full text-center"
         >
           <div className="flex items-center justify-center gap-3 mb-4">
-            <Loader2 className="w-8 h-8 text-blue-600 animate-spin" />
+            <Loader2 className="w-8 h-8 text-blue-700 animate-spin" />
             <span className="text-xl font-semibold text-gray-800">Loading Shops...</span>
           </div>
           <p className="text-gray-600">Please wait while we fetch your visited shop details.</p>
@@ -138,9 +138,9 @@ export default function UserShopList() {
   }
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-[#f2f5fc]">
       <motion.h1
-        className="text-4xl font-extrabold text-center text-indigo-700 mb-10"
+        className="text-4xl font-extrabold text-center text-blue-700 mb-10"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
@@ -154,7 +154,7 @@ export default function UserShopList() {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           placeholder="Search your visited shops..."
-          className="w-full md:w-1/2 px-5 py-3 rounded-xl border-2 border-indigo-200 focus:outline-none focus:ring-2 focus:ring-indigo-400 shadow-md text-lg"
+          className="w-full md:w-1/2 px-5 py-3 rounded-xl border-2 border-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-400 shadow-md text-lg"
         />
       </div>
 
@@ -169,17 +169,17 @@ export default function UserShopList() {
           {currentShops.map((shop, index) => (
             <motion.div
               key={shop.shopId}
-              className="bg-white shadow-xl border border-indigo-100 rounded-lg overflow-hidden hover:shadow-2xl hover:-translate-y-1 transition-all w-full max-w-sm min-h-[480px] flex flex-col"
+              className="card-glow bg-[#faf7ff] shadow-xl border border-purple-100 rounded-lg overflow-hidden hover:-translate-y-1 transition-all w-full max-w-sm min-h-[480px] flex flex-col"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
             >
-              <div className="bg-gradient-to-r from-indigo-600 to-indigo-500 text-white px-5 py-4 flex items-center gap-2 relative">
-                <FontAwesomeIcon icon={faStore} className="text-2xl" />
-                <h3 className="text-xl font-bold truncate">{shop.shopName}</h3>
+              <div className="bg-gradient-to-r from-purple-700 via-purple-600 to-pink-500 text-white px-5 py-4 flex items-center gap-2 relative">
+                <FontAwesomeIcon icon={faStore} className="text-2xl text-yellow-400" />
+                <h3 className="text-xl font-bold truncate capitalize">{shop.shopName}</h3>
                 <FontAwesomeIcon
                   icon={faCheckCircle}
-                  className="absolute right-4 text-green-300 text-lg"
+                  className="absolute right-4 text-yellow-300 text-lg"
                   title="Visited Shop"
                 />
               </div>
@@ -193,29 +193,26 @@ export default function UserShopList() {
               <div className="p-6 flex flex-col flex-1 justify-between">
                 <div>
                   <p className="text-gray-700 text-sm mb-2 flex items-center gap-2">
-                    <FontAwesomeIcon icon={faIdBadge} className="text-indigo-600" />
+                    <FontAwesomeIcon icon={faIdBadge} className="text-purple-700" />
                     <span><strong>Shop ID:</strong> {shop.shopId}</span>
                   </p>
                   <p className="text-gray-700 text-sm mb-2 flex items-center gap-2">
-                    <FontAwesomeIcon icon={faGlobe} className="text-indigo-600" />
+                    <FontAwesomeIcon icon={faGlobe} className="text-purple-700" />
                     <span><strong>Country:</strong> {shop.country || 'N/A'}</span>
                   </p>
                   <p className="text-gray-700 text-sm mb-2 flex items-center gap-2">
-                    <FontAwesomeIcon icon={faCity} className="text-indigo-600" />
+                    <FontAwesomeIcon icon={faCity} className="text-purple-700" />
                     <span><strong>City:</strong> {shop.city || 'N/A'}</span>
                   </p>
                   <p className="text-gray-700 text-sm mb-2 flex items-center gap-2">
-                    <FontAwesomeIcon icon={faPhoneAlt} className="text-indigo-600" />
+                    <FontAwesomeIcon icon={faPhoneAlt} className="text-purple-700" />
                     <span><strong>Phone:</strong> {shop.shopPhone || 'N/A'}</span>
                   </p>
-                  {/* <p className="text-gray-500 text-xs mb-4">
-                    <strong>Last Visited:</strong> {shop.lastVisited ? new Date(shop.lastVisited).toLocaleDateString() : 'Unknown'}
-                  </p> */}
                 </div>
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="mt-auto w-full flex items-center justify-center gap-2 px-5 py-3 rounded-lg text-white font-semibold text-sm bg-indigo-600 hover:bg-indigo-700 transition shadow-md"
+                  className="button-glow mt-auto w-full flex items-center justify-center gap-2 px-5 py-3 rounded-lg text-white font-semibold text-sm bg-purple-700 hover:bg-purple-800 transition shadow-md"
                   onClick={() => handleGenerateQR(shop)}
                   disabled={loadingShopId === shop.shopId}
                 >
@@ -242,7 +239,7 @@ export default function UserShopList() {
                     </svg>
                   ) : (
                     <>
-                      <FontAwesomeIcon icon={faQrcode} className="text-white" />
+                      <FontAwesomeIcon icon={faQrcode} className="text-yellow-400" />
                       Get QR Code
                     </>
                   )}
@@ -264,7 +261,7 @@ export default function UserShopList() {
             className={`px-5 py-2 rounded-xl font-medium flex items-center gap-2 ${
               currentPage === 1
                 ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                : 'bg-indigo-600 text-white hover:bg-indigo-700'
+                : 'bg-purple-700 text-white hover:bg-purple-800'
             } transition shadow-md`}
           >
             <FontAwesomeIcon icon={faArrowLeft} />
@@ -279,8 +276,8 @@ export default function UserShopList() {
                 whileTap={{ scale: 0.95 }}
                 className={`w-10 h-10 rounded-full text-sm font-semibold flex items-center justify-center transition-all ${
                   currentPage === index + 1
-                    ? 'bg-indigo-600 text-white shadow-lg border-2 border-indigo-600'
-                    : 'bg-white text-indigo-600 border-2 border-indigo-200 hover:bg-indigo-100 hover:shadow'
+                    ? 'bg-purple-700 text-white shadow-lg border-2 border-purple-700'
+                    : 'bg-white text-purple-700 border-2 border-blue-200 hover:bg-blue-100 hover:shadow'
                 }`}
               >
                 {index + 1}
@@ -295,7 +292,7 @@ export default function UserShopList() {
             className={`px-5 py-2 rounded-xl font-medium flex items-center gap-2 ${
               currentPage === totalPages
                 ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                : 'bg-indigo-600 text-white hover:bg-indigo-700'
+                : 'bg-purple-700 text-white hover:bg-purple-800'
             } transition shadow-md`}
           >
             Next
