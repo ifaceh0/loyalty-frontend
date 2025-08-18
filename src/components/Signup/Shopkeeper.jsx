@@ -439,33 +439,16 @@ import "react-phone-input-2/lib/style.css";
 import { useNavigate } from "react-router-dom";
 import { FaInfoCircle } from "react-icons/fa";
 import {
-  Mail,
-  Phone,
-  Lock,
-  Eye,
-  EyeOff,
-  Building2,
-  MapPin,
-  Store,
-  RefreshCw,
-  CheckCircle,
+  Mail, Lock, Eye, EyeOff, Building2, MapPin, Store,
+  RefreshCw, CheckCircle,
 } from "lucide-react";
 
 function Shopkeeper() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    shopName: "",
-    companyName: "",
-    companyEmail: "",
-    companyAddress: "",
-    companyPhone: "",
-    email: "",
-    phone: "",
-    password: "",
-    confirmPassword: "",
-    captchaInput: "",
-    city: "", // Added city field
-    country: "", // Added country field
+    shopName: "", companyName: "", companyEmail: "", companyAddress: "",
+    companyPhone: "", email: "", phone: "", password: "",
+    confirmPassword: "", captchaInput: "", city: "", country: ""
   });
 
   const [error, setError] = useState("");
@@ -480,71 +463,50 @@ function Shopkeeper() {
   const [captchaText, setCaptchaText] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [showModal, setShowModal] = useState(false);
-  const canvasRef = useRef(null);
   const audioRef = useRef(null);
   const [isEmailVerified, setIsEmailVerified] = useState(false);
   const [isVerifying, setIsVerifying] = useState(false);
 
-  useEffect(() => {
-    if (step === 3) generateCaptcha();
-  }, [step]);
+  useEffect(() => { if (step === 3) generateCaptcha(); }, [step]);
 
   const generateCaptcha = () => {
     const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-    const text = Array.from({ length: 6 }, () => chars[Math.floor(Math.random() * chars.length)]).join("");
+    const text = Array.from({ length: 6 }, () =>
+      chars[Math.floor(Math.random() * chars.length)]).join("");
     setCaptchaText(text);
-
-    if (canvasRef.current) {
-      const ctx = canvasRef.current.getContext("2d");
-      ctx.clearRect(0, 0, 100, 40);
-      ctx.font = "22px Arial";
-      ctx.fillStyle = "#4A90E2";
-      ctx.fillText(text, 10, 28);
-    }
   };
 
-  const validateEmail = (email) => {
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return regex.test(email);
-  };
+  const validateEmail = (email) =>
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
   const hasLeadingZeroAfterCountryCode = (phone, dialCode) => {
     const digitsOnly = phone.replace(/\D/g, "");
-    const countryCodeLength = dialCode.length;
-    const afterCountryCode = digitsOnly.slice(countryCodeLength);
+    const afterCountryCode = digitsOnly.slice(dialCode.length);
     return afterCountryCode.startsWith("0");
   };
 
   const verifyEmail = async () => {
     if (!validateEmail(formData.companyEmail)) {
-      setError("Please enter a valid company email.");
-      return;
+      setError("Please enter a valid company email."); return;
     }
-
-    setIsVerifying(true);
-    setError("");
-
+    setIsVerifying(true); setError("");
     const fetchWithBackoff = async (url, options, retries = 3, delay = 1000) => {
       for (let i = 0; i < retries; i++) {
         try {
           const response = await fetch(url, options);
           if (response.status === 429) {
-            const retryAfter = response.headers.get("Retry-After") || delay * Math.pow(2, i);
-            await new Promise((resolve) => setTimeout(resolve, retryAfter * 1000));
+            const retryAfter = response.headers.get("Retry-After") || (delay * Math.pow(2, i));
+            await new Promise((res) => setTimeout(res, +retryAfter * 1000));
             continue;
           }
-          if (!response.ok) {
-            throw new Error(await response.text());
-          }
+          if (!response.ok) throw new Error(await response.text());
           return response;
         } catch (err) {
           if (i === retries - 1) throw err;
-          await new Promise((resolve) => setTimeout(resolve, delay * Math.pow(2, i)));
+          await new Promise((res) => setTimeout(res, delay * Math.pow(2, i)));
         }
       }
     };
-
     try {
       const response = await fetchWithBackoff(
         "https://subscription-backend-e8gq.onrender.com/api/subscription/verifyShopSubscriptionEmail",
@@ -555,159 +517,113 @@ function Shopkeeper() {
         }
       );
       const data = await response.json();
-      if (data.success) {
-        setIsEmailVerified(true);
-        setError("");
-      } else {
-        setIsEmailVerified(false);
-        setError(data.message || "Email verification failed.");
-      }
+      if (data.success) { setIsEmailVerified(true); setError(""); }
+      else { setIsEmailVerified(false); setError(data.message || "Email verification failed."); }
     } catch (err) {
       setIsEmailVerified(false);
       setError("you don't have a subscription. Please use a different email.");
-    } finally {
-      setIsVerifying(false);
-    }
+    } finally { setIsVerifying(false); }
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-
-    if (name === "companyEmail") {
-      setIsEmailVerified(false);
-    }
-
-    if (missingFields.includes(name) && value.trim() !== "") {
-      setMissingFields((prev) => prev.filter((field) => field !== name));
-    }
+    if (name === "companyEmail") setIsEmailVerified(false);
+    if (missingFields.includes(name) && value.trim() !== "")
+      setMissingFields((prev) => prev.filter((f) => f !== name));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (formData.password !== formData.confirmPassword)
+      return setError("Passwords do not match!");
+    if (formData.captchaInput.trim().toUpperCase() !== captchaText.toUpperCase())
+      return setError("Invalid CAPTCHA");
+    if (hasLeadingZeroAfterCountryCode(formData.phone, dialCode))
+      return setError("Phone number area code should not start with 0.");
 
-    if (formData.password !== formData.confirmPassword) {
-      setError("Passwords do not match!");
-      return;
-    }
-
-    if (formData.captchaInput.trim().toUpperCase() !== captchaText.toUpperCase()) {
-      setError("Invalid CAPTCHA");
-      return;
-    }
-
-    if (hasLeadingZeroAfterCountryCode(formData.phone, dialCode)) {
-      setError("Phone number area code should not start with 0.");
-      return;
-    }
-
-    setLoading(true);
-    setError("");
-    setSuccess(false);
-
+    setLoading(true); setError(""); setSuccess(false);
     try {
-      const response = await fetch("https://loyalty-backend-java.onrender.com/api/auth/registerShopkeeper", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
+      const res = await fetch("https://loyalty-backend-java.onrender.com/api/auth/registerShopkeeper", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData)
       });
-
-      const contentType = response.headers.get("content-type");
-
-      if (response.ok) {
+      const contentType = res.headers.get("content-type");
+      if (res.ok) {
         setFormData({
-          shopName: "",
-          companyName: "",
-          companyEmail: "",
-          companyAddress: "",
-          companyPhone: "",
-          email: "",
-          phone: "",
-          password: "",
-          confirmPassword: "",
-          captchaInput: "",
-          city: "", // Reset city
-          country: "", // Reset country
+          shopName: "", companyName: "", companyEmail: "", companyAddress: "",
+          companyPhone: "", email: "", phone: "", password: "",
+          confirmPassword: "", captchaInput: "", city: "", country: ""
         });
         setIsEmailVerified(false);
         generateCaptcha();
         setSuccess(true);
-        setShowModal(true);
         if (audioRef.current) audioRef.current.play();
-        setTimeout(() => {
-          navigate("/signin");
-        }, 2000);
+        setTimeout(() => navigate("/signin"), 2000);
       } else {
-        const errorMessage = contentType && contentType.includes("application/json")
-          ? (await response.json()).message
-          : await response.text();
-        setError(errorMessage || "Signup failed!");
+        const msg = contentType && contentType.includes("application/json")
+          ? (await res.json()).message : await res.text();
+        setError(msg || "Signup failed!");
       }
     } catch (err) {
       setError("Something went wrong. Please try again.");
-    } finally {
-      setLoading(false);
-    }
+    } finally { setLoading(false); }
   };
 
   const nextStep = () => {
     let currentFields = [];
-    if (step === 1) currentFields = ["shopName", "email", "phone", "city", "country"]; // Added city and country
-    if (step === 2) currentFields = ["companyName", "companyEmail", "companyPhone", "companyAddress"];
-
-    const missing = currentFields.filter((field) => {
-      const value = String(formData[field] ?? "").trim();
-      return value === "";
-    });
-
-    if (missing.length > 0) {
-      setMissingFields(missing);
+    if (step === 1) currentFields = [
+      "shopName", "email", "phone", "city", "country"
+    ];
+    if (step === 2) currentFields = [
+      "companyName", "companyEmail", "companyPhone", "companyAddress"
+    ];
+    const miss = currentFields.filter((field) =>
+      !String(formData[field] || "").trim());
+    if (miss.length > 0) {
+      setMissingFields(miss);
       setError("Please fill all required fields.");
-      setTimeout(() => setError(""), 3000);
-      const firstMissingField = document.querySelector(`input[name="${missing[0]}"]`);
-      firstMissingField?.focus();
       return;
     }
-
-    if ((step === 1 && !validateEmail(formData.email)) || (step === 2 && !validateEmail(formData.companyEmail))) {
-      setError("Please enter a valid email address.");
-      return;
-    }
-
-    if ((step === 1 && formData.phone.length < 10) || (step === 2 && formData.companyPhone.length < 10)) {
-      setError("Please enter a valid phone number.");
-      return;
-    }
-
-    if (step === 1 && hasLeadingZeroAfterCountryCode(formData.phone, dialCode)) {
-      setError("Phone number should not start with 0 after the country code.");
-      return;
-    }
-
-    if (step === 2 && hasLeadingZeroAfterCountryCode(formData.companyPhone, companyDialCode)) {
-      setError("Phone number should not start with 0 after the country code.");
-      return;
-    }
-
-    if (step === 2 && !isEmailVerified) {
-      setError("Please verify the company email before proceeding.");
-      return;
-    }
-
-    setMissingFields([]);
+    if ((step === 1 && !validateEmail(formData.email)) ||
+      (step === 2 && !validateEmail(formData.companyEmail)))
+      return setError("Please enter a valid email address.");
+    if ((step === 1 && formData.phone.length < 10) ||
+      (step === 2 && formData.companyPhone.length < 10))
+      return setError("Please enter a valid phone number.");
+    if (step === 1 && hasLeadingZeroAfterCountryCode(formData.phone, dialCode))
+      return setError("Phone number should not start with 0 after the country code.");
+    if (step === 2 && hasLeadingZeroAfterCountryCode(formData.companyPhone, companyDialCode))
+      return setError("Phone number should not start with 0 after the country code.");
+    if (step === 2 && !isEmailVerified)
+      return setError("Please verify the company email before proceeding.");
     setStep((prev) => prev + 1);
+    setMissingFields([]); setError("");
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-100 to-purple-200 flex items-center justify-center px-4">
+    <div
+      className="min-h-screen flex items-center justify-center px-4"
+      style={{
+        /* subtle gradient + grid background */
+        backgroundImage: `
+          linear-gradient(to right, rgba(0,0,0,0.06) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(0,0,0,0.06) 1px, transparent 1px),
+          linear-gradient(135deg, #d0f4de, #a9def9)
+        `,
+        backgroundSize: "40px 40px, 40px 40px, 100% 100%",
+        backgroundAttachment: "fixed",
+      }}
+    >
       {success && <Confetti recycle={false} numberOfPieces={300} />}
-      <div className="w-full max-w-md bg-white/60 backdrop-blur-lg border border-purple-200 rounded-3xl p-10 shadow-2xl">
-        <h2 className="text-3xl font-bold text-center text-purple-700 mb-2">Shopkeeper Sign Up</h2>
+      <div className="w-full max-w-lg bg-white/60 backdrop-blur-lg border border-[#bdefff] rounded-3xl p-10 shadow-[0_30px_50px_rgba(0,0,0,0.15)]">
+        <h2 className="text-3xl font-bold text-center text-blue-700 mb-2">Shopkeeper Sign Up</h2>
         <p className="text-center text-gray-600 mb-4">Step {step} of 3</p>
         <div className="w-full h-2 bg-gray-300 rounded-full mb-6">
-          <div className="h-full bg-gradient-to-r from-purple-500 to-blue-500 rounded-full" style={{ width: `${(step / 3) * 100}%` }}></div>
+          <div
+            className="h-full bg-gradient-to-r from-green-400 to-blue-500 rounded-full"
+            style={{ width: `${(step / 3) * 100}%` }}
+          ></div>
         </div>
         {error && <p className="text-red-500 text-sm text-center mb-4 animate-pulse">⚠️ {error}</p>}
 
@@ -716,33 +632,27 @@ function Shopkeeper() {
             <>
               <FloatingInput label="Shop Name" name="shopName" value={formData.shopName} onChange={handleChange} Icon={Store} />
               <FloatingInput label="Personal Email" name="email" type="email" value={formData.email} onChange={handleChange} Icon={Mail} />
-              <div className="relative border border-purple-400 rounded-xl px-3 pt-4 pb-2 bg-white shadow-sm focus-within:ring-2 focus-within:ring-purple-500 transition">
-                <label className="absolute -top-2 left-3 bg-white px-1 text-xs font-medium text-purple-600">
+              <div className="group relative border border-blue-300 rounded-xl px-3 pt-4 pb-2 bg-white/90 shadow-sm transition-all duration-200 focus-within:ring-2 focus-within:ring-blue-500 hover:border-blue-400 hover:shadow-md">
+                <label className="absolute -top-2 left-3 bg-white px-1 text-xs font-medium text-blue-600">
                   Personal Phone
                 </label>
                 <PhoneInput
                   country={"us"}
                   enableSearch
                   value={formData.phone}
-                  onChange={(phone, data) => {
-                    const newPhone = `+${phone.replace('+', '')}`;
-                    const currentDialCode = data.dialCode;
-
-                    if (hasLeadingZeroAfterCountryCode(newPhone, currentDialCode)) {
+                  onChange={(phone,data)=>{
+                    const newPhone = `+${phone.replace('+','')}`;
+                    const code=data.dialCode;
+                    if(hasLeadingZeroAfterCountryCode(newPhone,code)){
                       setError("Personal phone number area code cannot start with 0.");
                       setPhoneError(true);
-                    } else {
-                      setError("");
-                      setPhoneError(false);
-                      setFormData((prev) => ({ ...prev, phone: newPhone }));
+                    }else{
+                      setError(""); setPhoneError(false);
+                      setFormData(prev=>({...prev,phone:newPhone}));
                     }
-
-                    setDialCode(currentDialCode);
+                    setDialCode(code);
                   }}
-                  inputProps={{
-                    name: "phone",
-                    required: true,
-                  }}
+                  inputProps={{ name:"phone", required:true }}
                   inputClass="!w-full !h-5 !pl-16 !pr-4 !bg-transparent !text-gray-900 !focus:outline-none !border-none"
                   buttonClass="!h-5 !rounded-l-sm"
                   containerClass="!w-full"
@@ -757,17 +667,10 @@ function Shopkeeper() {
             <>
               <FloatingInput label="Company Name" name="companyName" value={formData.companyName} onChange={handleChange} Icon={Building2} />
               <div className="relative">
-                <FloatingInput
-                  label="Company Email"
-                  name="companyEmail"
-                  type="email"
-                  value={formData.companyEmail}
-                  onChange={handleChange}
-                  Icon={Mail}
-                />
+                <FloatingInput label="Company Email" name="companyEmail" type="email" value={formData.companyEmail} onChange={handleChange} Icon={Mail} />
                 <div className="absolute left-full top-1/2 ml-2 -translate-y-1/2 group">
                   <FaInfoCircle className="text-gray-500 cursor-pointer" />
-                  <div className="absolute left-full top-1/2 -translate-y-1/2 ml-2 w-60 text-sm text-white bg-black px-3 py-2 rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10">
+                  <div className="absolute left-full top-1/2 -translate-y-1/2 ml-2 w-60 text-sm text-white bg-black/80 px-3 py-2 rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10">
                     This email is used to verify the subscription. Make sure it’s linked with a valid subscription.
                   </div>
                 </div>
@@ -776,40 +679,34 @@ function Shopkeeper() {
                   onClick={verifyEmail}
                   disabled={isVerifying || !formData.companyEmail || !validateEmail(formData.companyEmail)}
                   className={`absolute right-2 top-1/2 -translate-y-1/2 px-4 py-1 rounded-md text-sm font-medium transition
-                    ${isEmailVerified ? "bg-green-100 text-green-700" : "bg-purple-600 text-white hover:bg-purple-700"}
-                    ${isVerifying || !formData.companyEmail || !validateEmail(formData.companyEmail) ? "opacity-50 cursor-not-allowed" : ""}`}
+                    ${isEmailVerified ? "bg-green-100 text-green-700" : "bg-blue-600 text-white hover:bg-blue-700"}
+                    ${(isVerifying || !formData.companyEmail || !validateEmail(formData.companyEmail)) && "opacity-50 cursor-not-allowed"}`}
                 >
                   {isVerifying ? "Verifying..." : isEmailVerified ? "Verified" : "Verify"}
                   {isEmailVerified && <CheckCircle className="inline ml-1 h-4 w-4" />}
                 </button>
               </div>
-              <div className="relative border border-purple-400 rounded-xl px-3 pt-4 pb-2 bg-white shadow-sm focus-within:ring-2 focus-within:ring-purple-500 transition">
-                <label className="absolute -top-2 left-3 bg-white px-1 text-xs font-medium text-purple-600">
+              <div className="group relative border border-blue-300 rounded-xl px-3 pt-4 pb-2 bg-white/90 shadow-sm transition-all duration-200 focus-within:ring-2 focus-within:ring-blue-500 hover:border-blue-400 hover:shadow-md">
+                <label className="absolute -top-2 left-3 bg-white px-1 text-xs font-medium text-blue-600">
                   Company Phone
                 </label>
                 <PhoneInput
                   country={"us"}
                   enableSearch
                   value={formData.companyPhone}
-                  onChange={(phone, data) => {
-                    const newPhone = `+${phone.replace('+', '')}`;
-                    const currentDialCode = data.dialCode;
-
-                    if (hasLeadingZeroAfterCountryCode(newPhone, currentDialCode)) {
+                  onChange={(phone,data)=>{
+                    const newPhone=`+${phone.replace('+','')}`;
+                    const code=data.dialCode;
+                    if(hasLeadingZeroAfterCountryCode(newPhone,code)){
                       setError("Company phone number area code cannot start with 0.");
                       setCompanyPhoneError(true);
-                    } else {
-                      setError("");
-                      setCompanyPhoneError(false);
-                      setFormData((prev) => ({ ...prev, companyPhone: newPhone }));
+                    }else{
+                      setError(""); setCompanyPhoneError(false);
+                      setFormData(prev=>({...prev,companyPhone:newPhone}));
                     }
-
-                    setCompanyDialCode(currentDialCode);
+                    setCompanyDialCode(code);
                   }}
-                  inputProps={{
-                    name: "companyPhone",
-                    required: true,
-                  }}
+                  inputProps={{ name:"companyPhone", required:true }}
                   inputClass="!w-full !h-5 !pl-16 !pr-4 !bg-transparent !text-gray-900 !focus:outline-none !border-none"
                   buttonClass="!h-5 !rounded-l-sm"
                   containerClass="!w-full"
@@ -821,26 +718,8 @@ function Shopkeeper() {
 
           {step === 3 && (
             <>
-              <FloatingInput
-                label="Password"
-                name="password"
-                type={showPassword ? "text" : "password"}
-                value={formData.password}
-                onChange={handleChange}
-                Icon={Lock}
-                ToggleIcon={showPassword ? EyeOff : Eye}
-                onToggle={() => setShowPassword(!showPassword)}
-              />
-              <FloatingInput
-                label="Confirm Password"
-                name="confirmPassword"
-                type={showConfirmPassword ? "text" : "password"}
-                value={formData.confirmPassword}
-                onChange={handleChange}
-                Icon={Lock}
-                ToggleIcon={showConfirmPassword ? EyeOff : Eye}
-                onToggle={() => setShowConfirmPassword(!showConfirmPassword)}
-              />
+              <FloatingInput label="Password" name="password" type={showPassword ? "text" : "password"} value={formData.password} onChange={handleChange} Icon={Lock} ToggleIcon={showPassword ? EyeOff : Eye} onToggle={() => setShowPassword(!showPassword)} />
+              <FloatingInput label="Confirm Password" name="confirmPassword" type={showConfirmPassword ? "text" : "password"} value={formData.confirmPassword} onChange={handleChange} Icon={Lock} ToggleIcon={showConfirmPassword ? EyeOff : Eye} onToggle={() => setShowConfirmPassword(!showConfirmPassword)} />
               <div className="flex items-center justify-between bg-gray-100 border border-gray-300 px-4 py-2 rounded-lg">
                 <span className="text-lg font-semibold tracking-widest text-gray-600 select-none">{captchaText}</span>
                 <button type="button" onClick={generateCaptcha} className="text-sm text-blue-500 hover:underline flex items-center gap-1">
@@ -851,8 +730,8 @@ function Shopkeeper() {
               <button
                 type="submit"
                 disabled={loading}
-                className={`w-full bg-purple-600 text-white font-semibold py-3 rounded-xl transition
-                  ${loading ? "opacity-50 cursor-not-allowed" : "hover:bg-purple-700"}`}
+                className={`w-full bg-gradient-to-r from-green-500 to-blue-600 text-white font-semibold py-3 rounded-xl transition-all duration-200
+                ${loading ? "opacity-50 cursor-not-allowed" : "hover:from-green-600 hover:to-blue-700 hover:shadow-lg hover:scale-[1.01] active:scale-[0.99]"}`}
               >
                 {loading ? "Signing up..." : "Submit"}
               </button>
@@ -865,20 +744,18 @@ function Shopkeeper() {
             type="button"
             onClick={nextStep}
             disabled={step === 2 && !isEmailVerified}
-            className={`w-full py-3 mt-4 bg-purple-600 text-white font-semibold rounded-xl transition
-              ${step === 2 && !isEmailVerified ? "opacity-50 cursor-not-allowed" : "hover:bg-purple-700"}`}
+            className={`w-full py-3 mt-4 bg-gradient-to-r from-green-500 to-blue-600 text-white font-semibold rounded-xl transition-all duration-200
+            ${(step === 2 && !isEmailVerified) ? "opacity-50 cursor-not-allowed" : "hover:from-green-600 hover:to-blue-700 hover:shadow-lg hover:scale-[1.01] active:scale-[0.99]"}`}
           >
             Next
           </button>
         )}
+
         {step > 1 && step < 4 && (
           <button
             type="button"
-            onClick={() => {
-              setStep((prev) => prev - 1);
-              if (step === 2) setIsEmailVerified(false);
-            }}
-            className="w-full mt-2 py-3 bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold rounded-xl transition"
+            onClick={() => { setStep((p) => p - 1); if (step === 2) setIsEmailVerified(false); }}
+            className="w-full mt-2 py-3 bg-gray-300 hover:bg-gray-400 hover:shadow-md hover:scale-[1.01] active:scale-[0.99] text-gray-800 font-semibold rounded-xl transition-all duration-200"
           >
             Back
           </button>
@@ -892,29 +769,22 @@ function Shopkeeper() {
 
 function FloatingInput({ label, name, value, onChange, type = "text", Icon, ToggleIcon, onToggle }) {
   return (
-    <div className="relative border border-purple-400 rounded-xl px-3 pt-4 pb-2 bg-white shadow-sm focus-within:ring-2 focus-within:ring-purple-500 transition">
-      <label
-        htmlFor={name}
-        className="absolute -top-2 left-3 bg-white px-1 text-xs font-medium text-purple-600"
-      >
+    <div className="group relative border border-blue-300 rounded-xl px-3 pt-4 pb-2 bg-white/90 shadow-sm transition-all duration-200 focus-within:ring-2 focus-within:ring-blue-500 hover:border-blue-400 hover:shadow-md">
+      <label htmlFor={name} className="absolute -top-2 left-3 bg-white px-1 text-xs font-medium text-blue-600">
         {label}
       </label>
-      {Icon && <Icon className="absolute left-3 top-3 h-5 w-5 text-purple-400" />}
+      {Icon && <Icon className="absolute left-3 top-3 h-5 w-5 text-blue-400 group-hover:text-blue-500 transition-colors duration-200" />}
       <input
         type={type}
         name={name}
         value={value}
         onChange={onChange}
         placeholder=" "
-        className="w-full h-5 px-8 py-2 text-gray-900 bg-transparent focus:outline-none"
+        className="w-full h-5 px-8 py-2 text-gray-900 bg-transparent outline-none transition-colors duration-200"
         required
       />
       {ToggleIcon && (
-        <button
-          type="button"
-          onClick={onToggle}
-          className="absolute right-3 top-2.5 text-gray-600 hover:text-purple-600"
-        >
+        <button type="button" onClick={onToggle} className="absolute right-3 top-2.5 text-gray-600 hover:text-blue-600 transition-colors duration-200">
           <ToggleIcon className="h-5 w-5" />
         </button>
       )}

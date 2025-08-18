@@ -2,3 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Card glow animation */
+.card-glow:hover {
+  box-shadow: 0 0 18px 4px rgba(128, 0, 128, 0.45);
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+/* Button glow animation */
+.button-glow:hover {
+  box-shadow: 0 0 16px 4px rgba(255, 193, 7, 0.6);
+  transition: box-shadow 0.3s ease-in-out;
+}
