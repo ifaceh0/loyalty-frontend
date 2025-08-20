@@ -163,13 +163,13 @@ const UserProfile = () => {
   return (
     <div className="flex items-center justify-center p-4 sm:p-6">
       <div className="max-w-md w-full bg-white/95 backdrop-blur-lg rounded-xl shadow-xl transition-all duration-300 hover:shadow-2xl">
-        <nav className="bg-blue-600 text-white px-4 py-3 rounded-t-xl flex justify-between items-center">
+        <nav className="bg-gradient-to-r from-green-400 via-teal-500 to-blue-600 text-white px-5 py-4 flex items-center gap-20">
           <h2 className="text-2xl font-bold">Update User Profile</h2>
           <div className="flex items-center gap-4">
             {!isEditing ? (
               <button
                 onClick={handleEditToggle}
-                className="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg transition duration-200 flex items-center gap-2"
+                className="bg-white text-teal-600 border border-teal-500 hover:bg-gray-100 font-semibold px-4 py-2 rounded-lg shadow-md transition duration-200"
               >
                 <span>✏️ Edit</span>
               </button>

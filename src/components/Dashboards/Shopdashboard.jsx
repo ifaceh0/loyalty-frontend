@@ -322,6 +322,7 @@ import { useSidebar } from "../../context/SidebarContext";
 import { X, Menu } from "lucide-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChartBar, faUser, faCog, faUsers, faCreditCard } from "@fortawesome/free-solid-svg-icons";
+import ChatBot from "../ChatBot/ChatBot";
 
 const Shopdashboard = () => {
   const navigate = useNavigate();
@@ -434,7 +435,17 @@ const Shopdashboard = () => {
   };
 
   return (
-    <div className="flex h-[calc(100vh-64px)] bg-gray-100">
+    <div className="flex h-[calc(100vh-64px)] bg-gray-100"
+    style={{
+        /* subtle gradient + grid background */
+        backgroundImage: `
+          linear-gradient(to right, rgba(0,0,0,0.06) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(0,0,0,0.06) 1px, transparent 1px),
+          linear-gradient(135deg, #d0f4de, #a9def9)
+        `,
+        backgroundSize: "40px 40px, 40px 40px, 100% 100%",
+        backgroundAttachment: "fixed",
+      }}>
       {/* Sidebar */}
       <aside
         className={`fixed h-screen top-0 bg-gradient-to-b from-[#4F46E5] to-[#7C3AED] text-white p-4 sm:p-4 shadow-lg z-50 transform transition-all duration-300 ease-in-out ${
@@ -586,6 +597,7 @@ const Shopdashboard = () => {
         {activeTab === "interactions" && <CustomerLookup />}
         {activeTab === "subscription" && <SubscriptionDashboard />}
       </main>
+      <ChatBot />
     </div>
   );
 };

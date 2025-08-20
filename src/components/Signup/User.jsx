@@ -184,10 +184,18 @@ function UserSignup() {
   const getProgress = () => (step / 3) * 100;
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-6 
-      bg-[linear-gradient(135deg,#d0f4de,#a9def9)] 
-      [background-image:linear-gradient(to_right,rgba(0,0,0,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.05)_1px,transparent_1px)] 
-      [background-size:40px_40px] bg-blend-overlay">
+    <div className="min-h-screen flex items-center justify-center px-4" 
+      style={{
+        /* subtle gradient + grid background */
+        backgroundImage: `
+          linear-gradient(to right, rgba(0,0,0,0.06) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(0,0,0,0.06) 1px, transparent 1px),
+          linear-gradient(135deg, #d0f4de, #a9def9)
+        `,
+        backgroundSize: "40px 40px, 40px 40px, 100% 100%",
+        backgroundAttachment: "fixed",
+      }}
+      >
       {success && <Confetti recycle={false} numberOfPieces={300} />}
       <div className="w-full max-w-3xl bg-white/70 backdrop-blur-xl border border-blue-200 rounded-3xl p-14 shadow-2xl animate-fade-in">
         <h2 className="text-4xl font-bold text-center text-blue-700 mb-4">User Sign Up</h2>

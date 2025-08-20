@@ -172,7 +172,17 @@ export default function ExploreShops() {
   }
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen"
+    style={{
+        /* subtle gradient + grid background */
+        backgroundImage: `
+          linear-gradient(to right, rgba(0,0,0,0.06) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(0,0,0,0.06) 1px, transparent 1px),
+          linear-gradient(135deg, #d0f4de, #a9def9)
+        `,
+        backgroundSize: "40px 40px, 40px 40px, 100% 100%",
+        backgroundAttachment: "fixed",
+      }}>
       <motion.h1
         className="text-4xl font-extrabold text-center text-blue-700 mb-8"
         initial={{ opacity: 0, y: -20 }}
@@ -264,16 +274,16 @@ export default function ExploreShops() {
           {currentShops.map((shop, index) => (
             <motion.div
               key={shop.shopId}
-              className="bg-white shadow-lg rounded-lg border border-blue-100 overflow-hidden hover:shadow-xl transition w-full max-w-sm min-h-[450px] flex flex-col"
+              className="card-glow bg-gradient-to-br from-white via-[#ade4c9] to-[#e0faff] shadow-xl border border-purple-100 rounded-lg"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
             >
-              <div className="bg-gradient-to-r from-blue-600 to-blue-500 text-white px-4 py-3 flex items-center gap-2">
-                <FontAwesomeIcon icon={faStore} className="text-xl" />
+              <div className="bg-gradient-to-r from-green-400 via-teal-500 to-blue-600 text-white px-5 py-4 flex items-center gap-2 relative">
+                <FontAwesomeIcon icon={faStore} className="text-2xl text-yellow-400" />
                 <h3 className="text-lg font-semibold truncate">{shop.shopName}</h3>
               </div>
-              <div className="flex justify-center py-4">
+              <div className="flex justify-center py-4 text-green-300 text-lg">
                 <img
                   src={shop.imageUrl || 'https://images.unsplash.com/photo-1555529771-835f59fc5efe?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&h=150'}
                   alt={shop.shopName}
@@ -283,26 +293,29 @@ export default function ExploreShops() {
               <div className="p-5 flex flex-col flex-1 justify-between">
                 <div>
                   <p className="text-gray-800 text-sm mb-2 flex items-center gap-2">
-                    <FontAwesomeIcon icon={faIdBadge} className="text-blue-600" />
+                    <FontAwesomeIcon icon={faIdBadge} className="text-red-400" />
                     <strong>Shop ID:</strong> {shop.shopId}
                   </p>
                   <p className="text-gray-800 text-sm mb-2 flex items-center gap-2">
-                    <FontAwesomeIcon icon={faGlobe} className="text-blue-600" />
+                    <FontAwesomeIcon icon={faGlobe} className="text-blue-500" />
                     <span><strong>Country:</strong> {shop.country || 'N/A'}</span>
                   </p>
                   <p className="text-gray-800 text-sm mb-2 flex items-center gap-2">
-                    <FontAwesomeIcon icon={faCity} className="text-blue-600" />
+                    <FontAwesomeIcon icon={faCity} className="text-brown-200" />
                     <span><strong>City:</strong> {shop.city || 'N/A'}</span>
                   </p>
                   <p className="text-gray-800 text-sm mb-2 flex items-center gap-2">
-                    <FontAwesomeIcon icon={faPhoneAlt} className="text-blue-600" />
+                    <FontAwesomeIcon icon={faPhoneAlt} className="text-green-400" />
                     <strong>Phone:</strong> {shop.shopPhone}
                   </p>
                 </div>
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="mt-auto w-full flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-white font-medium text-sm bg-blue-600 hover:bg-blue-700 transition"
+                  className="mt-auto w-full flex items-center justify-center gap-2 px-5 py-3 rounded-lg 
+                            text-white font-semibold text-sm 
+                              bg-gradient-to-r from-green-500 to-blue-600 
+                            hover:from-green-600 hover:to-blue-700 transition shadow-md"
                   onClick={() => handleGenerateQR(shop)}
                   disabled={loadingShopId === shop.shopId}
                 >

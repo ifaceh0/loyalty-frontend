@@ -138,7 +138,17 @@ export default function UserShopList() {
   }
 
   return (
-    <div className="min-h-screen bg-[#f2f5fc]">
+    <div className="min-h-screen bg-[#f2f5fc]"
+    style={{
+        /* subtle gradient + grid background */
+        backgroundImage: `
+          linear-gradient(to right, rgba(0,0,0,0.06) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(0,0,0,0.06) 1px, transparent 1px),
+          linear-gradient(135deg, #d0f4de, #a9def9)
+        `,
+        backgroundSize: "40px 40px, 40px 40px, 100% 100%",
+        backgroundAttachment: "fixed",
+      }}>
       <motion.h1
         className="text-4xl font-extrabold text-center text-blue-700 mb-10"
         initial={{ opacity: 0, y: -20 }}
@@ -169,17 +179,17 @@ export default function UserShopList() {
           {currentShops.map((shop, index) => (
             <motion.div
               key={shop.shopId}
-              className="card-glow bg-[#faf7ff] shadow-xl border border-purple-100 rounded-lg overflow-hidden hover:-translate-y-1 transition-all w-full max-w-sm min-h-[480px] flex flex-col"
+              className="card-glow bg-gradient-to-br from-white via-[#ade4c9] to-[#e0faff] shadow-xl border border-purple-100 rounded-lg"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
             >
-              <div className="bg-gradient-to-r from-purple-700 via-purple-600 to-pink-500 text-white px-5 py-4 flex items-center gap-2 relative">
+              <div className="bg-gradient-to-r from-green-400 via-teal-500 to-blue-600 text-white px-5 py-4 flex items-center gap-2 relative">
                 <FontAwesomeIcon icon={faStore} className="text-2xl text-yellow-400" />
                 <h3 className="text-xl font-bold truncate capitalize">{shop.shopName}</h3>
                 <FontAwesomeIcon
                   icon={faCheckCircle}
-                  className="absolute right-4 text-yellow-300 text-lg"
+                  className="absolute right-4 text-green-300 text-lg"
                   title="Visited Shop"
                 />
               </div>
@@ -193,26 +203,29 @@ export default function UserShopList() {
               <div className="p-6 flex flex-col flex-1 justify-between">
                 <div>
                   <p className="text-gray-700 text-sm mb-2 flex items-center gap-2">
-                    <FontAwesomeIcon icon={faIdBadge} className="text-purple-700" />
+                    <FontAwesomeIcon icon={faIdBadge} className="text-red-400" />
                     <span><strong>Shop ID:</strong> {shop.shopId}</span>
                   </p>
                   <p className="text-gray-700 text-sm mb-2 flex items-center gap-2">
-                    <FontAwesomeIcon icon={faGlobe} className="text-purple-700" />
+                    <FontAwesomeIcon icon={faGlobe} className="text-blue-500" />
                     <span><strong>Country:</strong> {shop.country || 'N/A'}</span>
                   </p>
                   <p className="text-gray-700 text-sm mb-2 flex items-center gap-2">
-                    <FontAwesomeIcon icon={faCity} className="text-purple-700" />
+                    <FontAwesomeIcon icon={faCity} className="text-brown-200" />
                     <span><strong>City:</strong> {shop.city || 'N/A'}</span>
                   </p>
                   <p className="text-gray-700 text-sm mb-2 flex items-center gap-2">
-                    <FontAwesomeIcon icon={faPhoneAlt} className="text-purple-700" />
+                    <FontAwesomeIcon icon={faPhoneAlt} className="text-green-400" />
                     <span><strong>Phone:</strong> {shop.shopPhone || 'N/A'}</span>
                   </p>
                 </div>
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="button-glow mt-auto w-full flex items-center justify-center gap-2 px-5 py-3 rounded-lg text-white font-semibold text-sm bg-purple-700 hover:bg-purple-800 transition shadow-md"
+                  className="mt-auto w-full flex items-center justify-center gap-2 px-5 py-3 rounded-lg 
+                            text-white font-semibold text-sm 
+                              bg-gradient-to-r from-green-500 to-blue-600 
+                            hover:from-green-600 hover:to-blue-700 transition shadow-md"
                   onClick={() => handleGenerateQR(shop)}
                   disabled={loadingShopId === shop.shopId}
                 >

@@ -147,6 +147,7 @@ import ExploreShops from "../ShopList/ExploreShops";
 import UserShopList from "../ShopList/UserShopList";
 import UserTransactions from "../bar chart/UserTransactions";
 import { useSidebar } from "../../context/SidebarContext";
+import ChatBot from "../ChatBot/ChatBot";
 
 const Userdashboard = () => {
   const navigate = useNavigate();
@@ -166,7 +167,17 @@ const Userdashboard = () => {
   };
 
   return (
-    <div className="flex h-[calc(100vh-64px)] bg-slate-100">
+    <div className="flex h-[calc(100vh-64px)] bg-slate-100"
+    style={{
+        /* subtle gradient + grid background */
+        backgroundImage: `
+          linear-gradient(to right, rgba(0,0,0,0.06) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(0,0,0,0.06) 1px, transparent 1px),
+          linear-gradient(135deg, #d0f4de, #a9def9)
+        `,
+        backgroundSize: "40px 40px, 40px 40px, 100% 100%",
+        backgroundAttachment: "fixed",
+      }}>
       {/* Sidebar */}
       <aside
         className={`fixed h-screen top-0 bg-blue-800 text-white p-4 sm:p-4 shadow-lg z-50 transform transition-all duration-300 ease-in-out ${
@@ -248,7 +259,7 @@ const Userdashboard = () => {
         {activeTab === "user-stats" && (
           <>
             <div>
-              <h1 className="mb-6 text-xl sm:text-2xl font-bold text-blue-900 flex items-center">
+              <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-500 via-cyan-300 to-green-600 bg-clip-text text-transparent drop-shadow-md">
                 User Dashboard
               </h1>
             </div>
@@ -259,6 +270,7 @@ const Userdashboard = () => {
         {activeTab === "shop" && <UserShopList />}
         {activeTab === "transactions" && <UserTransactions />}
       </main>
+      <ChatBot />
     </div>
   );
 };
