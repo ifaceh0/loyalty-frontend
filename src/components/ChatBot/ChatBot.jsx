@@ -9,28 +9,33 @@ export default function ChatBot() {
   const audioRef = useRef(null);
 
   const role = localStorage.getItem("role") || "USER";
+  const id = localStorage.getItem("id");                
+  const token = localStorage.getItem("token"); 
 
   const sendMessage = async () => {
-    if (!input.trim()) return;
-    addMessage("user", input);
-    setInput("");
-    setTyping(true);
+  if (!input.trim()) return;
+  addMessage("user", input);
+  setInput("");
+  setTyping(true);
 
-    try {
-      const res = await fetch("http://127.0.0.1:8000/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: input, role }),
-      });
-      const data = await res.json();
-      addMessage("bot", data.reply);
-      audioRef.current?.play();
-    } catch {
-      addMessage("bot", "Error talking to server.");
-    } finally {
-      setTyping(false);
-    }
-  };
+  try {
+    const res = await fetch("https://chatbot-an3y.onrender.com/api/chat", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token ? `Bearer ${token}` : "",
+      },
+      body: JSON.stringify({ message: input, role, id, token }),
+    });
+    const data = await res.json();
+    addMessage("bot", data.reply);
+    audioRef.current?.play();
+  } catch {
+    addMessage("bot", "Error talking to server.");
+  } finally {
+    setTyping(false);
+  }
+};
 
   const addMessage = (from, text) => {
     const msg = {
