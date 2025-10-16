@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faTimes,
@@ -6,12 +7,15 @@ import {
   faWallet,
   faQrcode,
   faDownload,
+  faGift,
+  faInfoCircle,
 } from '@fortawesome/free-solid-svg-icons';
 
 export default function QRModal({ shop, qrData, isOpen, onClose }) {
   if (!isOpen || !shop || !qrData) return null;
 
-  // Download function
+  const [showEncouragement, setShowEncouragement] = useState(false);
+
   const handleDownload = () => {
     const link = document.createElement('a');
     link.href = qrData.qrCode;
@@ -22,58 +26,111 @@ export default function QRModal({ shop, qrData, isOpen, onClose }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm px-4">
-      <div className="bg-white w-full max-w-md shadow-xl overflow-hidden">
-        <nav className="bg-blue-700 text-white px-6 py-4 flex justify-between items-center">
-          <h2 className="text-xl font-bold flex items-center gap-2">
-            <FontAwesomeIcon icon={faQrcode} className="text-white" />
-            QR Code for {shop.shopName}
+    <div className="fixed inset-0 z-50 flex justify-center bg-black bg-opacity-60 backdrop-blur-md px-4 py-12 overflow-y-auto">
+      <div className="bg-white w-full max-w-md shadow-2xl overflow-hidden transform transition-all duration-300 scale-100 my-auto max-h-full">
+        <nav className="bg-indigo-600 text-white px-6 py-4 flex justify-between items-center sticky top-0 z-10">
+          <h2 className="text-xl font-extrabold flex items-center gap-3">
+            <FontAwesomeIcon icon={faQrcode} className="text-teal-300 text-2xl" />
+            QR Code for <span className="truncate">{shop.shopName}</span>
           </h2>
           <button
-            className="text-white hover:text-red-300 transition duration-200 flex items-center gap-2"
+            className="p-1 rounded-full hover:bg-indigo-700 text-white transition duration-200"
             onClick={onClose}
             aria-label="Close Modal"
           >
             <FontAwesomeIcon icon={faTimes} className="text-xl" />
           </button>
         </nav>
+        
+        <div className="max-h-[75vh] overflow-y-auto">
+            
+            <div className="p-6 space-y-6">
+                
+                {/* QR Code Section */}
+                {qrData.qrCode && (
+                    <div className="flex flex-col items-center">
+                    <img
+                        src={qrData.qrCode}
+                        alt="QR Code"
+                        className="w-52 h-52 border-8 border-gray-100 rounded-lg shadow-xl"
+                    />
+                    <button
+                        onClick={handleDownload}
+                        className="mt-6 w-full md:w-auto bg-teal-500 hover:bg-teal-600 text-white px-6 py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition duration-300 shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
+                    >
+                        <FontAwesomeIcon icon={faDownload} className="text-lg" />
+                        Download Loyalty QR Code
+                    </button>
+                    </div>
+                )}
 
-        <div className="p-6 space-y-6">
-          {qrData.qrCode && (
-            <div className="flex flex-col items-center">
-              <img
-                src={qrData.qrCode}
-                alt="QR Code"
-                className="w-58 h-58 border-4 border-blue-100 rounded-lg shadow-md"
-              />
-              <button
-                onClick={handleDownload}
-                className="mt-4 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-medium flex items-center gap-2 transition duration-200 shadow-sm"
-              >
-                <FontAwesomeIcon icon={faDownload} />
-                Download QR
-              </button>
+                {/* Information Block */}
+                <div className="bg-gray-50 p-5 rounded-xl text-gray-700 text-base border border-gray-200 space-y-3">
+                    
+                    {/* Header with Info Toggle Button */}
+                    <div className="flex justify-between items-center border-b pb-2 mb-3">
+                        <h3 className="text-lg font-bold text-indigo-600">
+                            Account Details
+                        </h3>
+                        <button
+                            onClick={() => setShowEncouragement(!showEncouragement)}
+                            className="text-indigo-600 hover:text-indigo-800 transition duration-200 font-semibold flex items-center gap-2 text-sm focus:outline-none"
+                            aria-expanded={showEncouragement}
+                            aria-controls="encouragement-message"
+                        >
+                            <FontAwesomeIcon icon={faInfoCircle} className="text-xl" />
+                            {showEncouragement ? 'Hide Tip' : 'Show Tip'}
+                        </button>
+                    </div>
+                    
+                    {/* Account Details Content */}
+                    <div className="flex items-center gap-3">
+                    <FontAwesomeIcon icon={faIdCard} className="text-indigo-500 w-5" />
+                    <span><span className="font-semibold text-gray-800">Shop ID:</span> {shop.shopId}</span>
+                    </div>
+                    
+                    <div className="flex items-center gap-3">
+                    <FontAwesomeIcon icon={faStore} className="text-indigo-500 w-5" />
+                    <span><span className="font-semibold text-gray-800">Shop Name:</span> {shop.shopName}</span>
+                    </div> 
+                    
+                    <div className="flex items-center gap-3">
+                    <FontAwesomeIcon icon={faIdCard} className="text-indigo-500 w-5" />
+                    <span><span className="font-semibold text-gray-800">Customer ID:</span> {qrData.customerId}</span>
+                    </div>
+                    
+                    <div className="flex items-center gap-3 pt-3 border-t border-gray-200">
+                    <FontAwesomeIcon icon={faWallet} className="text-green-600 text-xl w-5" />
+                    <span className="text-lg font-bold text-green-700">
+                        <span className="font-semibold">Available Points:</span> {qrData.availablePoints} Points 💰
+                    </span>
+                    </div>
+                </div>
+                
+                <div 
+                    id="encouragement-message"
+                    className={`
+                        ${showEncouragement ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}
+                        overflow-hidden transition-all duration-500 ease-in-out
+                        bg-yellow-50 border-l-4 border-yellow-500 rounded-lg shadow-md
+                    `}
+                >
+                    <div className="p-4"> 
+                        <div className="flex items-start gap-3">
+                            <FontAwesomeIcon icon={faGift} className="text-yellow-600 text-2xl mt-1" />
+                            <div>
+                                <p className="text-lg font-bold text-gray-800">
+                                Ready to Redeem Your Points?
+                                </p>
+                                <p className="text-sm text-gray-600">
+                                You have **{qrData.availablePoints} points** waiting! Visit **{shop.shopName}** today to scan this QR code and claim your rewards.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
             </div>
-          )}
-
-          <div className="bg-blue-50 p-4 rounded-lg text-gray-800 text-sm shadow-inner space-y-3">
-            <div className="flex items-center gap-2">
-              <FontAwesomeIcon icon={faIdCard} className="text-blue-600" />
-              <span><span className="font-semibold">Shop ID:</span> {shop.shopId}</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <FontAwesomeIcon icon={faStore} className="text-blue-600" />
-              <span><span className="font-semibold">Shop Name:</span> {shop.shopName}</span>
-            </div> 
-            <div className="flex items-center gap-2">
-              <FontAwesomeIcon icon={faIdCard} className="text-blue-600" />
-              <span><span className="font-semibold">Customer ID:</span> {qrData.customerId}</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <FontAwesomeIcon icon={faWallet} className="text-blue-600" />
-              <span><span className="font-semibold">Available Points:</span> {qrData.availablePoints} Points</span>
-            </div>
-          </div>
         </div>
       </div>
     </div>
