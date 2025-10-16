@@ -2015,5 +2015,4 @@ const QrScanner = ({ onClose }) => {
     </div>
   );
 };
-
 export default QrScanner;
