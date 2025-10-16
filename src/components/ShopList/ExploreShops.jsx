@@ -765,7 +765,7 @@ export default function ExploreShops() {
                                     ) : (
                                         <>
                                             <FontAwesomeIcon icon={faQrcode} className={`text-${secondaryColor}`} />
-                                            Generate Loyalty QR
+                                            Get QR Code
                                         </>
                                     )}
                                 </motion.button>

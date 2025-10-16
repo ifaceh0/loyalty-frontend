@@ -120,10 +120,10 @@ export default function QRModal({ shop, qrData, isOpen, onClose }) {
                             <FontAwesomeIcon icon={faGift} className="text-yellow-600 text-2xl mt-1" />
                             <div>
                                 <p className="text-lg font-bold text-gray-800">
-                                Ready to Redeem Your Points?
+                                Ready to get Your Points?
                                 </p>
                                 <p className="text-sm text-gray-600">
-                                You have **{qrData.availablePoints} points** waiting! Visit **{shop.shopName}** today to scan this QR code and claim your rewards.
+                                You have **{qrData.availablePoints} points** waiting! Visit **{shop.shopName}** today to scan this QR code and get your rewards.
                                 </p>
                             </div>
                         </div>
