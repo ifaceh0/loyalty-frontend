@@ -32,7 +32,6 @@ const UserPurchaseChart = () => {
   }, []);
 
   return (
-    // <div className="bg-white p-6 rounded-2xl shadow-xl mb-6">
     <div className="mb-6">
       <h3 className="text-2x font-semibold text-gray-800 mb-4">
         Monthly Registered vs Purchase Users
