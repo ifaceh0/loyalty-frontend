@@ -52,7 +52,7 @@ export default function QRModal({ shop, qrData, isOpen, onClose }) {
                     <img
                         src={qrData.qrCode}
                         alt="QR Code"
-                        className="w-52 h-52 border-8 border-gray-100 rounded-lg shadow-xl"
+                        className="w-56 h-56 border-8 border-gray-100 rounded-lg shadow-xl"
                     />
                     <button
                         onClick={handleDownload}
@@ -115,18 +115,21 @@ export default function QRModal({ shop, qrData, isOpen, onClose }) {
                         bg-yellow-50 border-l-4 border-yellow-500 rounded-lg shadow-md
                     `}
                 >
-                    <div className="p-4"> 
-                        <div className="flex items-start gap-3">
-                            <FontAwesomeIcon icon={faGift} className="text-yellow-600 text-2xl mt-1" />
-                            <div>
-                                <p className="text-lg font-bold text-gray-800">
-                                Ready to get Your Points?
-                                </p>
-                                <p className="text-sm text-gray-600">
-                                You have **{qrData.availablePoints} points** waiting! Visit **{shop.shopName}** today to scan this QR code and get your rewards.
-                                </p>
-                            </div>
+                    <div className="p-4 bg-gradient-to-r from-blue-50 to-cyan-50 rounded-lg shadow-md">
+                      <div className="flex items-start gap-3">
+                        <FontAwesomeIcon icon={faGift} className="text-yellow-600 text-3xl mt-1 animate-bounce" />
+                        <div>
+                          <p className="text-xl font-bold text-gray-800">
+                            Unlock Exciting Rewards at {shop.shopName}!
+                          </p>
+                          <p className="text-sm text-gray-600 mt-1">
+                            You're already at **{qrData.availablePoints} points**! 🎉 Shop at **{shop.shopName}** today, make a purchase, and scan this QR code to earn even more points. Don't miss out on exclusive rewards waiting just for you!
+                          </p>
+                          <p className="text-sm text-blue-700 font-semibold mt-2">
+                            Visit now and turn your purchases into amazing perks!
+                          </p>
                         </div>
+                      </div>
                     </div>
                 </div>
                 

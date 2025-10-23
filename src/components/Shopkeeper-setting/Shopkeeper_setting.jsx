@@ -466,15 +466,12 @@
 
 
 
-
 import React, { useState, useEffect } from "react";
 import { FiTrash2, FiX, FiEdit3, FiSave, FiPlus, FiLoader } from "react-icons/fi"; // Added FiLoader
 
-// Custom styles for consistent design
 const inputStyle =
   "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition duration-200 shadow-sm";
 
-// Custom wrapper for different sections
 const SectionWrapper = ({ title, children, isEditMode }) => (
   <div className={`p-6 rounded-xl border-2 ${isEditMode ? 'border-blue-200 bg-white shadow-lg' : 'border-gray-100 bg-gray-50 shadow-inner'} space-y-4 transition-colors duration-300`}>
     <h3 className="text-xl font-bold text-blue-700 border-b pb-2">{title}</h3>
@@ -485,22 +482,23 @@ const SectionWrapper = ({ title, children, isEditMode }) => (
 const ShopkeeperSetting = () => {
   const [formData, setFormData] = useState({
     signUpBonusPoints: "",
+    rewardMinAmount: "", 
     purchaseRewards: [{ threshold: "", points: "" }],
     milestoneRewards: [{ threshold: "", amount: "" }],
     specialBonuses: [{ name: "", dollartoPointsMapping: "", startDate: "", endDate: "" }],
     dollarToPointsMapping: "",
   });
 
-  const [initialData, setInitialData] = useState(null); // To store original data for cancel
+  const [initialData, setInitialData] = useState(null); 
   const [isEditMode, setIsEditMode] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
-  const [fetchKey, setFetchKey] = useState(0); // Key to force re-fetch
+  const [fetchKey, setFetchKey] = useState(0);
   const shopId = localStorage.getItem("id");
 
-  // Helper to parse fetched data
   const parseFetchedData = (data) => ({
     signUpBonusPoints: data.sign_upBonuspoints ? Math.floor(data.sign_upBonuspoints).toString() : "",
+    rewardMinAmount: data.reward_min_amount ? data.reward_min_amount.toString() : "", 
     purchaseRewards: data.purchaseRewards?.map((r) => ({
       threshold: r.threshold ? Math.floor(r.threshold).toString() : "",
       points: r.points ? Math.floor(r.points).toString() : "",
@@ -518,7 +516,6 @@ const ShopkeeperSetting = () => {
     dollarToPointsMapping: data.dollarToPointsMapping ? Math.floor(data.dollarToPointsMapping).toString() : "",
   });
   
-  // --- FETCH EFFECT ---
   useEffect(() => {
     const fetchSetting = async () => {
       setIsLoading(true);
@@ -530,32 +527,28 @@ const ShopkeeperSetting = () => {
           const data = await response.json();
           const parsedData = parseFetchedData(data);
           setFormData(parsedData);
-          setInitialData(parsedData); // Save initial data
-          setIsEditMode(false); // Ensure view mode on successful fetch
+          setInitialData(parsedData); 
+          setIsEditMode(false); 
         } else if (response.status === 404) {
-          // If no settings exist (404), switch to edit mode to prompt setup
           setIsEditMode(true);
         }
       } catch (err) {
         console.error("Fetch error:", err);
-        // Optionally alert the user on fetch error
       } finally {
         setIsLoading(false);
       }
     };
 
     fetchSetting();
-    // Re-run the effect when shopId changes or fetchKey is incremented
   }, [shopId, fetchKey]); 
 
-  // --- HANDLERS (Unchanged from previous revision for brevity, but included in full final code) ---
   const handleChange = (e) => {
     const { name, value } = e.target;
-    // Simple non-negative integer validation for relevant fields
     const isNumberField = name.toLowerCase().includes("points") || name === "dollarToPointsMapping" || name.toLowerCase().includes("threshold") || name.toLowerCase().includes("amount");
+    const isDecimalField = name === "rewardMinAmount"; 
 
-    if (isNumberField) {
-      if (value === "" || (parseInt(value) >= 0 && Number.isInteger(parseFloat(value)))) {
+    if (isNumberField || isDecimalField) {
+      if (value === "" || (parseFloat(value) >= 0 && !isNaN(parseFloat(value)))) {
         setFormData((prev) => ({ ...prev, [name]: value }));
       }
     } else {
@@ -604,6 +597,11 @@ const ShopkeeperSetting = () => {
       }
     }
 
+    if (formData.rewardMinAmount !== "" && (isNaN(parseFloat(formData.rewardMinAmount)) || parseFloat(formData.rewardMinAmount) < 0)) {
+      alert("❌ Minimum reward amount must be a non-negative number (decimals allowed).");
+      return false;
+    }
+
     for (const b of formData.specialBonuses) {
       if (b.startDate && b.endDate) {
         const start = Date.parse(b.startDate);
@@ -619,12 +617,10 @@ const ShopkeeperSetting = () => {
   };
   
   const filterAndMapRewards = (rewards) => {
-    // Only keep entries where at least one field has a non-empty string value
     const filtered = rewards.filter(r => 
       Object.values(r).some(val => val !== "" && (typeof val === 'string' ? val.trim() !== "" : true))
     );
     
-    // Map to payload structure, ensuring numeric fields are parsed or default to 0
     return filtered.map((r) => ({
       name: r.name || "",
       threshold: parseInt(r.threshold) || 0,
@@ -636,11 +632,9 @@ const ShopkeeperSetting = () => {
     }));
   };
   
-  // --- SUBMIT HANDLER ---
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!isEditMode) {
-      // If the button is used as "Edit"
       setIsEditMode(true);
       return;
     }
@@ -652,14 +646,13 @@ const ShopkeeperSetting = () => {
       shopId: parseInt(shopId),
       sign_upBonuspoints: parseInt(formData.signUpBonusPoints) || 0,
       dollarToPointsMapping: parseInt(formData.dollarToPointsMapping) || 0,
-      
-      // Use the helper to filter out empty rewards before sending
+      reward_min_amount: parseFloat(formData.rewardMinAmount) || 0,
+
       purchaseRewards: filterAndMapRewards(formData.purchaseRewards),
       milestoneRewards: filterAndMapRewards(formData.milestoneRewards),
       specialBonuses: filterAndMapRewards(formData.specialBonuses),
     };
     
-    // Ensure all numeric fields that are optional are included in the filterAndMapRewards function or explicitly handled.
 
     try {
       const response = await fetch(
@@ -673,9 +666,9 @@ const ShopkeeperSetting = () => {
 
       if (response.ok) {
         alert("✅ Settings saved successfully!");
-        // --- CRITICAL FIX: Trigger a full re-fetch after save ---
+       
         setFetchKey(prev => prev + 1); 
-        // setIsEditMode(false) will happen automatically in the fetch effect
+       
       } else {
         alert("❌ Error saving settings. Please check your data and try again.");
       }
@@ -687,7 +680,6 @@ const ShopkeeperSetting = () => {
     }
   };
 
-  // Cancel edit handler: reset form data to initial state
   const handleCancelEdit = () => {
     if (initialData) {
       setFormData(initialData);
@@ -695,7 +687,6 @@ const ShopkeeperSetting = () => {
     setIsEditMode(false);
   };
 
-  // Loading state render
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-64">
@@ -705,14 +696,12 @@ const ShopkeeperSetting = () => {
     );
   }
 
-  // Main Component Render
   return (
     <div className="max-w-6xl mx-auto bg-white rounded-xl shadow-2xl overflow-hidden my-8">
       {/* Header */}
       <nav className="bg-blue-600 text-white px-6 py-4 flex justify-between items-center">
         <h2 className="text-2xl font-extrabold tracking-tight">Loyalty Program Settings</h2>
         
-        {/* Unified Edit / Save / Cancel Buttons */}
         <div className="flex items-center gap-3">
           {isEditMode && (
              <button
@@ -759,7 +748,6 @@ const ShopkeeperSetting = () => {
         <form onSubmit={handleSubmit} className="space-y-8">
           {/* Section 1: Basic Point Mechanics */}
           <SectionWrapper title="Basic Point Mechanics" isEditMode={isEditMode}>
-            {/* ... (Content for Basic Point Mechanics) ... */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Sign-up Bonus */}
               <div>
@@ -797,6 +785,28 @@ const ShopkeeperSetting = () => {
                   <span className="text-xl font-bold text-gray-500">Points</span>
                 </div>
                 <p className="text-xs text-gray-500 mt-1">The base rate for earning points (e.g., 5 points for every $1 spent).</p>
+              </div>
+            </div>
+
+            <div className="mt-6 border-t pt-4">
+              <div className="border p-4 rounded-lg bg-white shadow-inner">
+                <label className="block text-sm font-semibold mb-1 text-gray-700">Minimum Purchase Amount for Rewards ($)</label>
+                <div className="flex items-center gap-2">
+                  <span className="text-xl font-bold text-gray-500">Min. Spend:</span>
+                  <input
+                    type="number"
+                    name="rewardMinAmount"
+                    value={formData.rewardMinAmount}
+                    onChange={handleChange}
+                    disabled={!isEditMode}
+                    className={inputStyle + " flex-grow" + (isEditMode ? '' : ' bg-gray-100/70')}
+                    min="0"
+                    step="0.01"
+                    placeholder="e.g., 10.00"
+                  />
+                  <span className="text-xl font-bold text-gray-500">to Qualify</span>
+                </div>
+                <p className="text-xs text-gray-500 mt-1">The minimum spend required for any rewards (points or discounts) to be applied to a purchase.</p>
               </div>
             </div>
           </SectionWrapper>
