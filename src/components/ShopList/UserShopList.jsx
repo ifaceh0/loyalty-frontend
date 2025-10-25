@@ -14,11 +14,14 @@ import {
   faArrowRight,
   faCheckCircle
 } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 
 const API_BASE_URL = 'https://loyalty-backend-java.onrender.com/api/qrcode';
 const ITEMS_PER_PAGE = 8;
 
 export default function UserShopList() {
+  const navigate = useNavigate();
+
   const [shops, setShops] = useState([]);
   const [filteredShops, setFilteredShops] = useState([]);
   const [selectedShop, setSelectedShop] = useState(null);
@@ -29,22 +32,35 @@ export default function UserShopList() {
   const [loadingShopId, setLoadingShopId] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  // Helper: Redirect if not logged in
+  const checkAuth = () => {
+    const isLoggedIn = localStorage.getItem('isLoggedIn');
+    const userId = localStorage.getItem('id');
+    if (!isLoggedIn || !userId) {
+      navigate('/signin');
+      return null;
+    }
+    return userId;
+  };
+
   useEffect(() => {
+    const userId = checkAuth();
+    if (!userId) return;
+
     const fetchShops = async () => {
       try {
-        const token = localStorage.getItem('token');
-        const userId = localStorage.getItem('id');
-
-        if (!token || !userId) throw new Error("User not authenticated");
-
         const response = await fetch(`${API_BASE_URL}/userSpecificShop?userId=${userId}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
+          credentials: "include", // Sends HttpOnly cookie
         });
 
-        if (!response.ok) throw new Error('Failed to load shops');
+        if (!response.ok) {
+          if (response.status === 401) {
+            localStorage.clear();
+            navigate('/signin');
+            return;
+          }
+          throw new Error('Failed to load shops');
+        }
 
         const data = await response.json();
         setShops(data);
@@ -57,7 +73,7 @@ export default function UserShopList() {
     };
 
     fetchShops();
-  }, []);
+  }, [navigate]);
 
   useEffect(() => {
     const lower = searchTerm.toLowerCase();
@@ -70,23 +86,28 @@ export default function UserShopList() {
   }, [searchTerm, shops]);
 
   const handleGenerateQR = async (shop) => {
+    const userId = checkAuth();
+    if (!userId) return;
+
     try {
       setLoadingShopId(shop.shopId);
       setError(null);
-      const token = localStorage.getItem('token');
-      const userId = localStorage.getItem('id');
 
       const response = await fetch(
         `${API_BASE_URL}/generate?shopId=${shop.shopId}&userId=${userId}`,
         {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
+          credentials: "include", 
         }
       );
 
-      if (!response.ok) throw new Error('Failed to generate QR code');
+      if (!response.ok) {
+        if (response.status === 401) {
+          localStorage.clear();
+          navigate('/signin');
+          return;
+        }
+        throw new Error('Failed to generate QR code');
+      }
 
       const data = await response.json();
       setQrData({
@@ -104,15 +125,11 @@ export default function UserShopList() {
   };
 
   const handlePrevPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    }
+    if (currentPage > 1) setCurrentPage(currentPage - 1);
   };
 
   const handleNextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
-    }
+    if (currentPage < totalPages) setCurrentPage(currentPage + 1);
   };
 
   const totalPages = Math.ceil(filteredShops.length / ITEMS_PER_PAGE);
@@ -145,7 +162,7 @@ export default function UserShopList() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        ⭐ Your Visited Loyalty Hubs 
+        Your Visited Loyalty Hubs
       </motion.h1>
 
       <div className="flex justify-center mb-10 space-x-4 relative">
@@ -163,7 +180,7 @@ export default function UserShopList() {
       {currentShops.length === 0 ? (
         <p className="text-center text-gray-500 font-medium mt-10 p-5">
           <span className="text-2xl font-bold text-violet-500 block mb-2">Oops!</span>
-              No visited shops found matching your search.. Try broadening your search!
+          No visited shops found matching your search. Try broadening your search!
         </p>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8">
@@ -193,16 +210,17 @@ export default function UserShopList() {
                 />
               </div> */}
               <div className="flex justify-center py-4 px-4">
-                  {shop.logoImage ? (
-                    <img src={`data:image/jpeg;base64,${shop.logoImage}`}
-                        alt={shop.shopName}
-                        className="w-full h-40 object-cover rounded-lg shadow-inner border border-gray-100"
-                        />
-                        ) : (
-                        <div className="w-full h-40 bg-gray-200 rounded-lg shadow-inner border border-gray-100 flex items-center justify-center text-5xl font-bold text-gray-600">
-                          {shop.shopName.charAt(0).toUpperCase()}
-                        </div>
-                  )}
+                {shop.logoImage ? (
+                  <img
+                    src={`data:image/jpeg;base64,${shop.logoImage}`}
+                    alt={shop.shopName}
+                    className="w-full h-40 object-cover rounded-lg shadow-inner border border-gray-100"
+                  />
+                ) : (
+                  <div className="w-full h-40 bg-gray-200 rounded-lg shadow-inner border border-gray-100 flex items-center justify-center text-5xl font-bold text-gray-600">
+                    {shop.shopName.charAt(0).toUpperCase()}
+                  </div>
+                )}
               </div>
 
               <div className="p-6 flex flex-col flex-1 justify-between">
@@ -238,19 +256,8 @@ export default function UserShopList() {
                       fill="none"
                       viewBox="0 0 24 24"
                     >
-                      <circle
-                        className="opacity-25"
-                        cx="12"
-                        cy="12"
-                        r="10"
-                        stroke="currentColor"
-                        strokeWidth="4"
-                      ></circle>
-                      <path
-                        className="opacity-75"
-                        fill="currentColor"
-                        d="M4 12a8 8 0 018-8v8H4z"
-                      ></path>
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
                     </svg>
                   ) : (
                     <>

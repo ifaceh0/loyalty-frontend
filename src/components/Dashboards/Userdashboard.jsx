@@ -16,8 +16,10 @@ const Userdashboard = () => {
   const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token) {
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+    const userId = localStorage.getItem("id");
+
+    if (!isLoggedIn || !userId) {
       navigate("/signin");
     }
   }, [navigate]);
@@ -106,16 +108,7 @@ const Userdashboard = () => {
           sidebarOpen && isSidebarExpanded ? "ml-64" : sidebarOpen ? "ml-16" : "ml-0"
         }`}
       >
-        {activeTab === "user-stats" && (
-          <>
-            {/* <div>
-              <h1 className="mb-6 text-xl sm:text-2xl font-bold text-blue-900 flex items-center">
-                User Dashboard
-              </h1>
-            </div> */}
-            <ExploreShops />
-          </>
-        )}
+        {activeTab === "user-stats" && <ExploreShops />}
         {activeTab === "user_profile" && <User_profile />}
         {activeTab === "shop" && <UserShopList />}
         {activeTab === "transactions" && <UserTransactions />}
