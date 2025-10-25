@@ -41,7 +41,7 @@ const ForgotPassword = () => {
 
   return (
     <div 
-      className="min-h-screen flex items-center justify-center px-4 font-['Inter'] bg-gray-50"
+      className="min-h-screen flex items-center justify-center px-4 bg-gray-50"
       style={{
         backgroundImage: 'linear-gradient(0deg, rgba(0,0,0,.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,.03) 1px, transparent 1px)',
         backgroundSize: '20px 20px',

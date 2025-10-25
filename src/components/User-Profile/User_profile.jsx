@@ -443,10 +443,13 @@ const UserProfile = () => {
 
   const validateForm = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneNumber = userData.phone.replace(/^\+\d{1,4}\s*/, '');
     const phoneRegex = /^\d{10}$/;
     if (!userData.firstName.trim()) return 'First name is required';
     if (!userData.lastName.trim()) return 'Last name is required';
-    if (!phoneRegex.test(userData.phone)) return 'Phone number must be 10 digits';
+    if (!phoneRegex.test(phoneNumber)) {
+      return 'Phone number must be exactly 10 digits after country code';
+    }
     if (!emailRegex.test(userData.email)) return 'Invalid email format';
     return null;
   };
@@ -514,10 +517,8 @@ const UserProfile = () => {
     setError(null);
     setSuccessMessage(null); 
   };
-  
-  // ... (Loader JSX remains the same) ...
 
-  if (isLoading && !userData.userId) { 
+  if (isLoading && !userData.userId) {
     return (
       <div className="flex flex-col items-center justify-center h-[60vh]">
         <motion.div
@@ -535,7 +536,6 @@ const UserProfile = () => {
     );
   }
 
-  // --- Main Render (Uses stable ProfileInputField) ---
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-50 p-4 sm:p-8">
       <motion.div
@@ -576,7 +576,7 @@ const UserProfile = () => {
           </div>
 
           <AnimatePresence>
-            {/* Success Alert */}
+            
             {successMessage && (
                 <motion.div
                     key="success"
@@ -592,7 +592,6 @@ const UserProfile = () => {
                 </motion.div>
             )}
             
-            {/* Error Alert */}
             {error && (
               <motion.div
                 key="error"
@@ -609,8 +608,6 @@ const UserProfile = () => {
           </AnimatePresence>
 
           <form onSubmit={handleSubmit} className="grid grid-cols-1 sm:grid-cols-2 gap-x-6">
-            
-            {/* First Name - IMPORTANT: Pass handleChange as a prop */}
             <ProfileInputField
               label="First Name"
               name="firstName"
@@ -620,7 +617,6 @@ const UserProfile = () => {
               icon={FiUser}
             />
             
-            {/* Last Name - IMPORTANT: Pass handleChange as a prop */}
             <ProfileInputField
               label="Last Name"
               name="lastName"
@@ -630,18 +626,57 @@ const UserProfile = () => {
               icon={FiUser}
             />
 
-            {/* Phone Number - IMPORTANT: Pass handleChange as a prop */}
+            {/* <ProfileInputField
+              label="Phone Number"
+              name="phone"
+              value={userData.phone}
+              // onChange={handleChange}
+              onChange={(e) => {
+                const value = e.target.value
+                  .replace(/[^0-9+]/g, '') // allow only digits and "+"
+                  .replace(/(?!^)\+/g, ''); // prevent multiple "+"
+                setUserData((prev) => ({ ...prev, phone: value }));
+              }}
+              disabled={!isEditing}
+              type="tel"
+              icon={FiPhone}
+            /> */}
             <ProfileInputField
               label="Phone Number"
               name="phone"
               value={userData.phone}
-              onChange={handleChange}
+              onChange={(e) => {
+                let value = e.target.value;
+
+                // Allow only digits and '+'
+                value = value.replace(/[^0-9+]/g, '');
+
+                // Ensure '+' only at start
+                if (value.indexOf('+') > 0) {
+                  value = '+' + value.replace(/\+/g, '');
+                }
+
+                // Split country code and number
+                const match = value.match(/^(\+\d{1,4})\s?(\d*)$/);
+                if (match) {
+                  let country = match[1];
+                  let number = match[2].slice(0, 10); // limit to 10 digits
+
+                  // Auto-insert a space after the country code
+                  value = `${country} ${number}`;
+                } else {
+                  // fallback when typing just "+"
+                  if (value === '+') value = '+';
+                }
+
+                setUserData((prev) => ({ ...prev, phone: value }));
+              }}
               disabled={!isEditing}
               type="tel"
               icon={FiPhone}
             />
 
-            {/* Email Address - IMPORTANT: Pass handleChange as a prop */}
+
             <ProfileInputField
               label="Email Address"
               name="email"

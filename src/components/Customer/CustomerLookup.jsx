@@ -510,13 +510,13 @@ const CustomerLookup = () => {
       ) : (
         <div className="p-6 md:p-10">
           <div className="flex justify-center">
-            <div className="bg-blue-600 text-white rounded-xl p-4 md:p-6 mb-10 shadow-2xl">
+            <div className="bg-indigo-600 text-white rounded-xl p-4 md:p-6 mb-10 shadow-2xl">
               <h1 className="text-3xl md:text-5xl text-center font-black mb-2 tracking-tight">
                 Shop Name : <span className="text-yellow-300">{shopName || "Shop Name"}</span>
               </h1>
-              <p className="text-lg text-center font-medium opacity-90">
+              {/* <p className="text-lg text-center font-medium opacity-90">
                 Shop ID : <span className="font-mono bg-white/20 px-2 py-0.5 rounded-md">{shopId || 0}</span>
-              </p>
+              </p> */}
             </div>
           </div>
 

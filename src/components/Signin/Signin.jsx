@@ -823,7 +823,7 @@ const Signin = () => {
 
   return (
     <div 
-      className="min-h-screen flex items-center p-8 justify-center px-4 font-['Inter'] bg-gray-50"
+      className="min-h-screen flex items-center p-8 justify-center px-4 bg-gray-50"
       style={{
         backgroundImage: 'linear-gradient(0deg, rgba(0,0,0,.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,.03) 1px, transparent 1px)',
         backgroundSize: '20px 20px',
@@ -966,7 +966,6 @@ const Signin = () => {
           </form>
         </div>
 
-        {/* ---- RIGHT SIDE DEMO ---- */}
         <div className="hidden lg:flex w-6/12 bg-gradient-to-br from-emerald-500 to-sky-600 p-12 flex-col justify-center space-y-8 relative">
           <div className="absolute inset-0 opacity-10 bg-[linear-gradient(to_right,#fff3_1px,transparent_1px),linear-gradient(to_bottom,#fff3_1px,transparent_1px)] bg-[size:30px_30px] pointer-events-none"></div>
 
