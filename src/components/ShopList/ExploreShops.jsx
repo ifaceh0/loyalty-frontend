@@ -176,20 +176,20 @@ export default function ExploreShops() {
 
     if (isLoading) {
         return (
-            <div className="flex flex-col items-center justify-center h-[60vh]">
+              <div className="flex flex-col items-center justify-center h-[60vh]">
                 <motion.div
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.5 }}
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5 }}
                 >
-                    <div className="flex items-center justify-center mb-4">
-                        <Loader2 className="w-10 h-10 text-violet-600 animate-spin" />
-                        <span className="text-2xl font-bold text-gray-800 ml-3">Discovering Shops...</span>
-                    </div>
-                    <p className="text-gray-500 mt-2">Connecting you to the loyalty network.</p>
+                  <div className="flex items-center justify-center gap-3 mb-4">
+                    <Loader2 className="w-10 h-10 text-indigo-500 animate-spin" />
+                    <span className="text-xl font-bold text-gray-800">Discovering Shops...</span>
+                  </div>
+                  <p className="text-gray-500">Connecting you to the loyalty network.</p>
                 </motion.div>
-            </div>
-        );
+              </div>
+            );
     }
 
     return (

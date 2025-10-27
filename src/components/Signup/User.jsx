@@ -338,13 +338,12 @@
 
 
 
-
 import { useState, useEffect, useRef } from "react";
 import Confetti from "react-confetti";
 import { Eye, EyeOff, Lock, Mail, RefreshCw, User, Smartphone } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
-import PhoneInput from "react-phone-input-2";
-import "react-phone-input-2/lib/style.css";
+
+// --- REMOVED: PhoneInput & its CSS ---
 
 function UnderlineInput({ label, name, value, onChange, type = "text", Icon, ToggleIcon, onToggle }) {
   return (
@@ -377,6 +376,57 @@ function UnderlineInput({ label, name, value, onChange, type = "text", Icon, Tog
   );
 }
 
+// --- NEW: 10-digit Phone Input ---
+function PhoneInputField({ label, value, onChange }) {
+  const [error, setError] = useState("");
+
+  const handleChange = (e) => {
+    let input = e.target.value;
+
+    // Allow only digits
+    input = input.replace(/\D/g, "");
+
+    // Limit to 10 digits
+    if (input.length > 10) input = input.slice(0, 10);
+
+    // Validate
+    if (input && input.length !== 10) {
+      setError("Phone must be exactly 10 digits");
+    } else {
+      setError("");
+    }
+
+    onChange(input);
+  };
+
+  return (
+    <div className="relative flex items-center w-full">
+      <div className={`flex items-center w-full h-12 border-b-2 transition-all duration-300 ${
+        error ? "border-red-500" : "border-gray-300 focus-within:border-blue-600"
+      }`}>
+        <Smartphone className={`flex-shrink-0 ml-1 mr-3 h-5 w-5 transition-colors duration-300 ${
+          error ? "text-red-500" : "text-gray-500 focus-within:text-blue-600"
+        }`} />
+
+        <input
+          type="text"
+          value={value}
+          onChange={handleChange}
+          placeholder={label}
+          maxLength={10}
+          inputMode="numeric"
+          className="w-full h-full text-base text-gray-900 bg-transparent py-2 outline-none placeholder:text-gray-500"
+          required
+        />
+      </div>
+      {error && <p className="absolute -bottom-6 mb-1 left-0 text-xs text-red-500">{error}</p>}
+      {value.length === 10 && !error && (
+        <p className="absolute -bottom-6 mb-1 left-0 text-xs text-green-600">Valid 10-digit number</p>
+      )}
+    </div>
+  );
+}
+
 function UserSignup() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -392,7 +442,6 @@ function UserSignup() {
 
   const [referralShopId, setReferralShopId] = useState(null);
   const [error, setError] = useState("");
-  const [phoneError, setPhoneError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [captchaText, setCaptchaText] = useState("");
   const [success, setSuccess] = useState(false);
@@ -413,12 +462,6 @@ function UserSignup() {
 
   const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
-  const hasLeadingZeroAfterCountryCode = (phone, dialCode) => {
-    const digitsOnly = String(phone).replace(/\D/g, "");
-    const afterCountryCode = digitsOnly.slice(String(dialCode).length);
-    return afterCountryCode.startsWith("0");
-  };
-
   const generateCaptcha = () => {
     const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
     let text = "";
@@ -430,12 +473,12 @@ function UserSignup() {
     if (canvas) {
         const ctx = canvas.getContext("2d");
         ctx.clearRect(0, 0, 100, 40);
-        ctx.font = "bold 24px Arial";
+        ctx.font = "bold 22px Arial";
         ctx.fillStyle = "#2563EB";
         
         ctx.save();
         ctx.translate(5, 30);
-        ctx.rotate(-0.05 * Math.PI + Math.random() * 0.1 - 0.05);
+        ctx.rotate(-0.03 * Math.PI + Math.random() * 0.1 - 0.03);
         ctx.fillText(text, 0, 0);
         ctx.restore();
     }
@@ -446,8 +489,21 @@ function UserSignup() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  // --- UPDATED: Phone change handler ---
+  const handlePhoneChange = (value) => {
+    setFormData((prev) => ({ ...prev, phoneNumber: value }));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Validate 10-digit phone
+    const phoneDigits = formData.phoneNumber.replace(/\D/g, "");
+    if (phoneDigits.length !== 10) {
+      setError("Phone number must be exactly 10 digits");
+      return;
+    }
+
     if (formData.password !== formData.confirmPassword) {
       setError("Passwords do not match!");
       return;
@@ -456,10 +512,7 @@ function UserSignup() {
       setError("Invalid CAPTCHA");
       return;
     }
-    if (phoneError) {
-      setError("Please correct your phone number.");
-      return;
-    }
+
     setLoading(true);
     setError("");
     setSuccess(false);
@@ -471,7 +524,7 @@ function UserSignup() {
         body: JSON.stringify({
           firstName: formData.firstName,
           lastName: formData.lastName,
-          phone: formData.phoneNumber,
+          phone: formData.phoneNumber, 
           email: formData.email,
           password: formData.password,
           referralShopId: referralShopId,
@@ -520,8 +573,10 @@ function UserSignup() {
         setTimeout(() => setError(""), 3000);
         return;
       }
-      if (phoneError) {
-        setError("Please correct your phone number before proceeding.");
+      // --- CHANGED: 10-digit validation ---
+      const phoneDigits = formData.phoneNumber.replace(/\D/g, "");
+      if (phoneDigits.length !== 10) {
+        setError("Phone number must be exactly 10 digits");
         setTimeout(() => setError(""), 3000);
         return;
       }
@@ -578,37 +633,15 @@ function UserSignup() {
             </div>
           )}
 
+          {/* --- CHANGED: Step 2 - Custom 10-digit phone --- */}
           {step === 2 && (
             <div className="space-y-8">
-              <div className="relative flex flex-col w-full">
-                <div className="flex items-center w-full h-12 border-b-2 border-gray-300 transition-all duration-300 focus-within:border-blue-600">
-                    <Smartphone className="flex-shrink-0 ml-1 mr-3 h-5 w-5 text-gray-500" />
-                    <PhoneInput
-                        country={"us"}
-                        enableSearch
-                        value={formData.phoneNumber}
-                        onChange={(phone, data) => {
-                            const newPhone = `+${String(phone || "").replace("+", "")}`;
-                            const currentDialCode = data?.dialCode;
-                            if (!currentDialCode) {
-                                setFormData((prev) => ({ ...prev, phoneNumber: newPhone }));
-                                return;
-                            }
-                            if (hasLeadingZeroAfterCountryCode(newPhone, currentDialCode)) {
-                                setPhoneError(true);
-                                setError("Phone number area code cannot start with 0.");
-                            } else {
-                                setPhoneError(false);
-                                setError("");
-                                setFormData((prev) => ({ ...prev, phoneNumber: newPhone }));
-                            }
-                        }}
-                        inputStyle={{ width: '100%', height: '100%', paddingLeft: '3rem', border: 'none', background: 'transparent' }}
-                        buttonClass="!h-full !bg-transparent !border-none !rounded-none !p-0 !pr-2 !pl-0"
-                        containerClass="!w-full !h-full"
-                        placeholder="Phone Number"
-                    />
-                </div>
+              <div className="relative">
+                <PhoneInputField
+                  label="Phone Number (10 digits)"
+                  value={formData.phoneNumber}
+                  onChange={handlePhoneChange}
+                />
               </div>
 
               <UnderlineInput label="Email" name="email" value={formData.email} onChange={handleChange} Icon={Mail} />

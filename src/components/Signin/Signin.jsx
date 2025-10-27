@@ -625,6 +625,8 @@ import {
   Star,
   CheckCircle,
   AlertCircle,
+  Puzzle,
+  ShieldCheck
 } from "lucide-react";
 
 function FloatingInput({ label, name, value, onChange, type = "text", Icon, ToggleIcon, onToggle }) {
@@ -720,12 +722,12 @@ const Signin = () => {
     if (canvas) {
       const ctx = canvas.getContext("2d");
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.font = "bold 24px Arial";
+      ctx.font = "bold 22px Arial";
       ctx.fillStyle = "#059669";
 
       ctx.save();
       ctx.translate(10, 28);
-      ctx.rotate(-0.05 * Math.PI + Math.random() * 0.1 - 0.05);
+      ctx.rotate(-0.03 * Math.PI + Math.random() * 0.1 - 0.03);
       ctx.fillText(text, 0, 0);
       ctx.restore();
 
@@ -914,6 +916,7 @@ const Signin = () => {
                 name="captchaInput"
                 value={formData.captchaInput}
                 onChange={handleChange}
+                Icon={Puzzle}
               />
             </div>
 

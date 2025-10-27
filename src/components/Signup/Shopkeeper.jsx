@@ -373,12 +373,8 @@
 
 
 
-
-
 import { useState, useEffect, useRef } from "react";
 import Confetti from "react-confetti";
-import PhoneInput from "react-phone-input-2";
-import "react-phone-input-2/lib/style.css";
 import { useNavigate } from "react-router-dom";
 import { FaInfoCircle } from "react-icons/fa";
 import {
@@ -434,10 +430,6 @@ function Shopkeeper() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [step, setStep] = useState(1);
-  const [dialCode, setDialCode] = useState("1");
-  const [companyDialCode, setCompanyDialCode] = useState("1");
-  const [phoneError, setPhoneError] = useState(false);
-  const [companyPhoneError, setCompanyPhoneError] = useState(false);
   const [missingFields, setMissingFields] = useState([]);
   const [captchaText, setCaptchaText] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -459,12 +451,12 @@ function Shopkeeper() {
     if (canvas) {
       const ctx = canvas.getContext("2d");
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.font = "bold 24px Arial";
+      ctx.font = "bold 22px Arial";
       ctx.fillStyle = "#0D9488"; 
  
       ctx.save();
       ctx.translate(10, 28);
-      ctx.rotate(-0.05 * Math.PI + Math.random() * 0.1 - 0.05);
+      ctx.rotate(-0.03 * Math.PI + Math.random() * 0.1 - 0.03);
       ctx.fillText(text, 0, 0);
       ctx.restore();
       
@@ -472,7 +464,7 @@ function Shopkeeper() {
       ctx.lineWidth = 1;
       for (let i = 0; i < 3; i++) {
         ctx.beginPath();
-        ctx.moveTo(Math.random() * 120, Math.random() * 40);
+        ctx.moveTo(Math.random() * 120, Math * 40);
         ctx.lineTo(Math.random() * 120, Math.random() * 40);
         ctx.stroke();
       }
@@ -481,12 +473,6 @@ function Shopkeeper() {
 
   const validateEmail = (email) =>
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-
-  const hasLeadingZeroAfterCountryCode = (phone, dialCode) => {
-    const digitsOnly = phone.replace(/\D/g, "");
-    const afterCountryCode = digitsOnly.slice(dialCode.length);
-    return afterCountryCode.startsWith("0");
-  };
 
   const verifyEmail = async () => {
     if (!validateEmail(formData.companyEmail)) {
@@ -536,14 +522,20 @@ function Shopkeeper() {
       setMissingFields((prev) => prev.filter((f) => f !== name));
   };
 
+  const handlePhoneChange = (field) => (e) => {
+    let val = e.target.value.replace(/\D/g, "");
+    if (val.length > 10) val = val.slice(0, 10);
+    setFormData(prev => ({ ...prev, [field]: val }));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (formData.password !== formData.confirmPassword)
       return setError("Passwords do not match!");
     if (formData.captchaInput.trim().toUpperCase() !== captchaText.toUpperCase())
       return setError("Invalid CAPTCHA");
-    if (hasLeadingZeroAfterCountryCode(formData.phone, dialCode))
-      return setError("Phone number area code should not start with 0.");
+    if (formData.phone.length !== 10)
+      return setError("Personal phone must be exactly 10 digits");
 
     setLoading(true); setError(""); setSuccess(false);
     try {
@@ -591,13 +583,9 @@ function Shopkeeper() {
     if ((step === 1 && !validateEmail(formData.email)) ||
       (step === 2 && !validateEmail(formData.companyEmail)))
       return setError("Please enter a valid email address.");
-    if ((step === 1 && formData.phone.replace(/\D/g, "").length < 10) ||
-      (step === 2 && formData.companyPhone.replace(/\D/g, "").length < 10))
-      return setError("Please enter a valid phone number.");
-    if (step === 1 && hasLeadingZeroAfterCountryCode(formData.phone, dialCode))
-      return setError("Phone number should not start with 0 after the country code.");
-    if (step === 2 && hasLeadingZeroAfterCountryCode(formData.companyPhone, companyDialCode))
-      return setError("Phone number should not start with 0 after the country code.");
+    if ((step === 1 && formData.phone.length !== 10) ||
+        (step === 2 && formData.companyPhone.length !== 10))
+      return setError("Phone number must be exactly 10 digits");
     if (step === 2 && !isEmailVerified)
       return setError("Please verify the company email before proceeding.");
     setStep((prev) => prev + 1);
@@ -646,29 +634,25 @@ function Shopkeeper() {
               
               <div className="flex flex-col space-y-1">
                 <label className="text-sm font-semibold text-gray-700 ml-1">Personal Phone</label>
-                <div className="flex items-center w-full h-12 bg-white border border-gray-300 rounded-lg transition-all duration-200 focus-within:border-teal-500 focus-within:ring-2 focus-within:ring-teal-200">
+                <div className="relative">
+                  <div className={`flex items-center w-full h-12 bg-white border rounded-lg transition-all duration-200 focus-within:border-teal-500 focus-within:ring-2 focus-within:ring-teal-200 ${
+                    formData.phone && formData.phone.length !== 10 ? 'border-red-400' : 'border-gray-300'
+                  }`}>
                     <Smartphone className="flex-shrink-0 ml-4 h-5 w-5 text-gray-400" />
-                    <PhoneInput
-                        country={"us"}
-                        enableSearch
-                        value={formData.phone}
-                        onChange={(phone, data) => {
-                            const newPhone = `+${phone.replace('+', '')}`;
-                            const code = data.dialCode;
-                            if (hasLeadingZeroAfterCountryCode(newPhone, code)) {
-                                setError("Personal phone number area code cannot start with 0.");
-                                setPhoneError(true);
-                            } else {
-                                setError(""); setPhoneError(false);
-                                setFormData(prev => ({ ...prev, phone: newPhone }));
-                            }
-                            setDialCode(code);
-                        }}
-                        inputProps={{ name: "phone", required: true }}
-                        inputStyle={{ width: '100%', height: '100%', paddingLeft: '3rem', border: 'none', background: 'transparent' }}
-                        buttonStyle={{ borderRight: '1px solid #d1d5db', background: 'transparent' }}
-                        containerStyle={{ width: '100%', height: '100%' }}
+                    <input
+                      type="text"
+                      inputMode="numeric"
+                      value={formData.phone}
+                      onChange={handlePhoneChange('phone')}
+                      placeholder="10-digit mobile number"
+                      maxLength={10}
+                      className="w-full h-full text-base text-gray-900 bg-transparent px-3 outline-none"
+                      required
                     />
+                  </div>
+                  {formData.phone && formData.phone.length !== 10 && (
+                    <p className="absolute -bottom-6 mb-1 left-0 text-xs text-red-600">Exactly 10 digits required</p>
+                  )}
                 </div>
               </div>
 
@@ -692,7 +676,7 @@ function Shopkeeper() {
                             id="companyEmail"
                             value={formData.companyEmail}
                             onChange={handleChange}
-                            className="w-full h-full text-base text-gray-900 bg-transparent px-3 outline-none pr-32" // Added pr for button space
+                            className="w-full h-full text-base text-gray-900 bg-transparent px-3 outline-none pr-32"
                             required
                         />
                     </div>
@@ -720,29 +704,25 @@ function Shopkeeper() {
               
               <div className="flex flex-col space-y-1">
                 <label className="text-sm font-semibold text-gray-700 ml-1">Company Phone</label>
-                <div className="flex items-center w-full h-12 bg-white border border-gray-300 rounded-lg transition-all duration-200 focus-within:border-teal-500 focus-within:ring-2 focus-within:ring-teal-200">
+                <div className="relative">
+                  <div className={`flex items-center w-full h-12 bg-white border rounded-lg transition-all duration-200 focus-within:border-teal-500 focus-within:ring-2 focus-within:ring-teal-200 ${
+                    formData.companyPhone && formData.companyPhone.length !== 10 ? 'border-red-400' : 'border-gray-300'
+                  }`}>
                     <Smartphone className="flex-shrink-0 ml-4 h-5 w-5 text-gray-400" />
-                    <PhoneInput
-                        country={"us"}
-                        enableSearch
-                        value={formData.companyPhone}
-                        onChange={(phone, data) => {
-                            const newPhone = `+${phone.replace('+', '')}`;
-                            const code = data.dialCode;
-                            if (hasLeadingZeroAfterCountryCode(newPhone, code)) {
-                                setError("Company phone number area code cannot start with 0.");
-                                setCompanyPhoneError(true);
-                            } else {
-                                setError(""); setCompanyPhoneError(false);
-                                setFormData(prev => ({ ...prev, companyPhone: newPhone }));
-                            }
-                            setCompanyDialCode(code);
-                        }}
-                        inputProps={{ name: "companyPhone", required: true }}
-                        inputStyle={{ width: '100%', height: '100%', paddingLeft: '3rem', border: 'none', background: 'transparent' }}
-                        buttonStyle={{ borderRight: '1px solid #d1d5db', background: 'transparent' }}
-                        containerStyle={{ width: '100%', height: '100%' }}
+                    <input
+                      type="text"
+                      inputMode="numeric"
+                      value={formData.companyPhone}
+                      onChange={handlePhoneChange('companyPhone')}
+                      placeholder="10-digit mobile number"
+                      maxLength={10}
+                      className="w-full h-full text-base text-gray-900 bg-transparent px-3 outline-none"
+                      required
                     />
+                  </div>
+                  {formData.companyPhone && formData.companyPhone.length !== 10 && (
+                    <p className="absolute -bottom-6 mb-1 left-0 text-xs text-red-600">Exactly 10 digits required</p>
+                  )}
                 </div>
               </div>
 

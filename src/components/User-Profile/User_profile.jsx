@@ -329,13 +329,12 @@
 
 
 
-
-
 import React, { useState, useEffect } from 'react';
 import { FiEdit3, FiSave, FiX, FiUser, FiMail, FiPhone, FiCheckCircle } from 'react-icons/fi';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Loader2 } from 'lucide-react';
 
+// --- Original Input Field ---
 const ProfileInputField = ({ label, name, value, onChange, disabled, type = 'text', icon: Icon }) => (
   <div className="mb-5">
     <label htmlFor={name} className="block text-sm font-semibold text-gray-700 mb-2">
@@ -363,6 +362,71 @@ const ProfileInputField = ({ label, name, value, onChange, disabled, type = 'tex
     </div>
   </div>
 );
+
+// --- NEW: Phone Input with 10-digit Validation ---
+const PhoneInputField = ({ label, name, value, onChange, disabled, icon: Icon = FiPhone }) => {
+  const [error, setError] = useState("");
+
+  const validatePhone = (val) => {
+    const digitsOnly = val.replace(/\D/g, ""); // Remove non-digits
+    if (val && !/^\d{0,10}$/.test(val)) {
+      setError("Only digits allowed (0-9)");
+    } else if (digitsOnly.length > 0 && digitsOnly.length !== 10) {
+      setError("Phone must be exactly 10 digits");
+    } else {
+      setError("");
+    }
+    return digitsOnly;
+  };
+
+  const handleChange = (e) => {
+    let inputValue = e.target.value;
+
+    // Allow only digits
+    if (!/^\d*$/.test(inputValue)) return;
+
+    // Limit to 10 digits
+    if (inputValue.length > 10) inputValue = inputValue.slice(0, 10);
+
+    const formatted = validatePhone(inputValue);
+    onChange({ target: { name, value: formatted } });
+  };
+
+  return (
+    <div className="mb-5">
+      <label htmlFor={name} className="block text-sm font-semibold text-gray-700 mb-2">
+        {label}
+      </label>
+      <div className="relative">
+        {Icon && (
+          <Icon className={`absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 ${disabled ? 'text-gray-400' : error ? 'text-red-500' : 'text-emerald-500'}`} />
+        )}
+        <input
+          type="text"
+          id={name}
+          name={name}
+          value={value || ""}
+          onChange={handleChange}
+          disabled={disabled}
+          placeholder="Enter 10-digit mobile number"
+          maxLength={10}
+          inputMode="numeric"
+          className={`w-full border ${
+            disabled 
+              ? 'border-gray-200 bg-gray-50 text-gray-600 cursor-not-allowed' 
+              : error 
+                ? 'border-red-400 bg-white text-gray-900 focus:ring-red-500 focus:border-red-500' 
+                : 'border-gray-300 bg-white text-gray-900 focus:ring-emerald-500 focus:border-emerald-500 shadow-sm'
+          } rounded-lg py-3 px-4 pl-10 text-base transition-all duration-200 ease-in-out placeholder-gray-400 focus:outline-none focus:ring-1`}
+        />
+      </div>
+      {error && <p className="mt-1 text-xs text-red-600">{error}</p>}
+      {value && value.length === 10 && !error && (
+        <p className="mt-1 text-xs text-green-600">Valid 10-digit number</p>
+      )}
+    </div>
+  );
+};
 
 const UserProfile = () => {
   const [userData, setUserData] = useState({
@@ -441,14 +505,15 @@ const UserProfile = () => {
     }));
   };
 
+  // --- UPDATED: validateForm with 10-digit phone check ---
   const validateForm = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const phoneNumber = userData.phone.replace(/^\+\d{1,4}\s*/, '');
-    const phoneRegex = /^\d{10}$/;
+    const phoneDigits = (userData.phone || "").replace(/\D/g, "");
+
     if (!userData.firstName.trim()) return 'First name is required';
     if (!userData.lastName.trim()) return 'Last name is required';
-    if (!phoneRegex.test(phoneNumber)) {
-      return 'Phone number must be exactly 10 digits after country code';
+    if (userData.phone && phoneDigits.length !== 10) {
+      return 'Phone number must be exactly 10 digits';
     }
     if (!emailRegex.test(userData.email)) return 'Invalid email format';
     return null;
@@ -493,7 +558,7 @@ const UserProfile = () => {
       );
 
       if (response.ok) {
-        setSuccessMessage('Profile updated successfully! 🎉');
+        setSuccessMessage('Profile updated successfully!');
         setIsEditing(false);
         setInitialData(userData); 
       } else {
@@ -545,13 +610,19 @@ const UserProfile = () => {
         className="max-w-xl w-full bg-white rounded-xl shadow-2xl border border-gray-100"
       >
         
-        <header className="px-8 py-6 border-b border-gray-100">
-          <h2 className="text-3xl font-bold tracking-tight text-gray-900">
-            Account Profile
+        <header className="bg-gradient-to-br from-teal-600 to-cyan-700 text-white rounded-t-lg px-8 py-10 relative">
+          <h2 className="text-3xl font-extrabold tracking-tight relative z-10">
+            Welcome Back, {userData.firstName || 'User'}!
           </h2>
-          <p className="text-gray-500 text-sm mt-1">
-            Review and manage your primary contact information.
-          </p>
+          <p className="text-teal-200 text-sm mt-1 relative z-10">Manage and update your personal information here.</p>
+          <svg className="absolute inset-0 w-full h-full opacity-10" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <defs>
+              <pattern id="dot-pattern" width="10" height="10" patternUnits="userSpaceOnUse">
+                <circle cx="2" cy="2" r="1" fill="white" />
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#dot-pattern)" />
+          </svg>
         </header>
 
         <div className="p-6 sm:p-8">
@@ -565,7 +636,7 @@ const UserProfile = () => {
               className={`px-4 py-2 rounded-lg font-medium transition duration-200 ease-in-out flex items-center gap-2 text-sm shadow-md 
                 ${isEditing 
                   ? 'bg-white text-red-600 border border-red-600 hover:bg-red-50' 
-                  : 'bg-emerald-500 text-white hover:bg-emerald-600'
+                  : 'bg-gradient-to-br from-teal-600 to-cyan-700 text-white hover:from-teal-700 hover:to-cyan-800'
                 }
               `}
               aria-label={isEditing ? "Cancel Editing" : "Edit Profile"}
@@ -601,7 +672,7 @@ const UserProfile = () => {
                 className="bg-red-50 border border-red-300 text-red-700 p-4 rounded-lg mb-6 text-base overflow-hidden"
                 role="alert"
               >
-                <p className="font-semibold flex items-center gap-2">⚠️ Error:</p>
+                <p className="font-semibold flex items-center gap-2">Warning: Error:</p>
                 <p className="mt-1">{error}</p>
               </motion.div>
             )}
@@ -626,56 +697,14 @@ const UserProfile = () => {
               icon={FiUser}
             />
 
-            {/* <ProfileInputField
+            {/* CHANGED: Replaced with PhoneInputField */}
+            <PhoneInputField
               label="Phone Number"
               name="phone"
               value={userData.phone}
-              // onChange={handleChange}
-              onChange={(e) => {
-                const value = e.target.value
-                  .replace(/[^0-9+]/g, '') // allow only digits and "+"
-                  .replace(/(?!^)\+/g, ''); // prevent multiple "+"
-                setUserData((prev) => ({ ...prev, phone: value }));
-              }}
+              onChange={handleChange}
               disabled={!isEditing}
-              type="tel"
-              icon={FiPhone}
-            /> */}
-            <ProfileInputField
-              label="Phone Number"
-              name="phone"
-              value={userData.phone}
-              onChange={(e) => {
-                let value = e.target.value;
-
-                // Allow only digits and '+'
-                value = value.replace(/[^0-9+]/g, '');
-
-                // Ensure '+' only at start
-                if (value.indexOf('+') > 0) {
-                  value = '+' + value.replace(/\+/g, '');
-                }
-
-                // Split country code and number
-                const match = value.match(/^(\+\d{1,4})\s?(\d*)$/);
-                if (match) {
-                  let country = match[1];
-                  let number = match[2].slice(0, 10); // limit to 10 digits
-
-                  // Auto-insert a space after the country code
-                  value = `${country} ${number}`;
-                } else {
-                  // fallback when typing just "+"
-                  if (value === '+') value = '+';
-                }
-
-                setUserData((prev) => ({ ...prev, phone: value }));
-              }}
-              disabled={!isEditing}
-              type="tel"
-              icon={FiPhone}
             />
-
 
             <ProfileInputField
               label="Email Address"
@@ -698,7 +727,7 @@ const UserProfile = () => {
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className={`w-full bg-emerald-500 text-white py-3 rounded-lg font-bold text-base shadow-lg hover:bg-emerald-600 transition duration-300 ease-in-out flex items-center justify-center gap-3 ${
+                  className={`w-full bg-gradient-to-br from-teal-600 to-cyan-700 text-white py-3 rounded-lg font-bold text-base shadow-lg hover:bg-emerald-600 transition duration-300 ease-in-out flex items-center justify-center gap-3 ${
                     isLoading ? 'opacity-70 cursor-wait' : ''
                   }`}
                   aria-label="Save Changes"

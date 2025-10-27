@@ -350,7 +350,6 @@
 
 
 
-
 import React, { useEffect, useState } from "react";
 import { 
     FiTrash2, 
@@ -360,12 +359,11 @@ import {
     FiUploadCloud, 
     FiRefreshCw, 
     FiAlertCircle,
-    FiUser, // Personal Info Icon
-    FiBriefcase // Business Info Icon
+    FiUser,
+    FiBriefcase
 } from "react-icons/fi";
 
-// --- Custom Components & Styles (Updated to Blue/Green/Yellow Theme) ---
-
+// --- Custom Components & Styles ---
 const inputStyle = (isEditing) => 
   `w-full px-4 py-3 border rounded-xl outline-none transition duration-200 shadow-sm text-gray-800 ${
     isEditing ? "border-blue-400 focus:ring-2 focus:ring-blue-500/50" : "border-gray-200 bg-gray-100 cursor-default"
@@ -399,8 +397,58 @@ const InputField = ({ label, name, value, onChange, type = "text", disabled = fa
   </div>
 );
 
-// --- Main Component ---
+// --- NEW: Phone Input with 10-digit Validation ---
+const PhoneInputField = ({ label, name, value, onChange, disabled = false, required = false }) => {
+  const [error, setError] = useState("");
 
+  const validatePhone = (val) => {
+    const digitsOnly = val.replace(/\D/g, "");
+    if (val && !/^\d{0,10}$/.test(val)) {
+      setError("Only digits allowed (0-9)");
+    } else if (digitsOnly.length > 0 && digitsOnly.length !== 10) {
+      setError("Phone must be exactly 10 digits");
+    } else {
+      setError("");
+    }
+    return digitsOnly;
+  };
+
+  const handleInputChange = (e) => {
+    let inputValue = e.target.value;
+    if (!/^\d*$/.test(inputValue)) return;
+    if (inputValue.length > 10) inputValue = inputValue.slice(0, 10);
+    const formatted = validatePhone(inputValue);
+    onChange({ target: { name, value: formatted } });
+  };
+
+  return (
+    <div>
+      <label className="block text-sm font-semibold mb-1 text-gray-700">
+        {label}{required && <span className="text-red-500"> *</span>}
+      </label>
+      <input
+        type="text"
+        inputMode="numeric"
+        name={name}
+        value={value || ""}
+        onChange={handleInputChange}
+        disabled={disabled}
+        required={required}
+        placeholder="Enter 10-digit mobile number"
+        maxLength={10}
+        className={`${inputStyle(!disabled)} ${
+          error ? "border-red-400 focus:ring-2 focus:ring-red-500/50" : ""
+        }`}
+      />
+      {error && <p className="mt-1 text-xs text-red-600">{error}</p>}
+      {value && value.length === 10 && !error && (
+        <p className="mt-1 text-xs text-green-600">Valid 10-digit number</p>
+      )}
+    </div>
+  );
+};
+
+// --- Main Component ---
 const ShopkeeperProfile = () => {
   const [formData, setFormData] = useState({
     shopId: "",
@@ -428,7 +476,7 @@ const ShopkeeperProfile = () => {
   const fetchProfile = async () => {
     const storedId = localStorage.getItem("id");
     if (!storedId) {
-      alert("⚠️ Shop ID not found. Please log in again.");
+      alert("Warning: Shop ID not found. Please log in again.");
       return;
     }
 
@@ -444,7 +492,7 @@ const ShopkeeperProfile = () => {
       setOriginalData(dataWithDefaults);
     } catch (err) {
       console.error("Error loading profile", err);
-      alert("⚠️ Failed to load profile. Please try refreshing.");
+      alert("Warning: Failed to load profile. Please try refreshing.");
     } finally {
       setLoading(false);
     }
@@ -484,15 +532,15 @@ const ShopkeeperProfile = () => {
       const data = await res.json();
 
       if (res.ok && data.status === "success") {
-        alert("✅ Logo updated successfully!");
+        alert("Logo updated successfully!");
         fetchProfile(); 
         setSelectedFile(null);
       } else {
-        alert("❌ " + (data.message || "Failed to upload logo"));
+        alert("Failed: " + (data.message || "Failed to upload logo"));
       }
     } catch (err) {
       console.error("Upload error", err);
-      alert("⚠️ Network error during image upload");
+      alert("Warning: Network error during image upload or reduce the image size.");
     } finally {
       setIsUploading(false);
     }
@@ -510,24 +558,39 @@ const ShopkeeperProfile = () => {
       const data = await res.json();
 
       if (res.ok && data.status === "success") {
-        alert("✅ Logo removed!");
+        alert("Logo removed!");
         fetchProfile(); 
       } else {
-        alert("❌ " + (data.message || "Failed to remove logo"));
+        alert("Failed: " + (data.message || "Failed to remove logo"));
       }
     } catch (err) {
       console.error("Remove error", err);
-      alert("⚠️ Network error during logo removal");
+      alert("Warning: Network error during logo removal");
     } finally {
       setIsRemoving(false);
     }
   };
 
+  // --- UPDATED: handleSubmit with 10-digit phone validation ---
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Validate Personal Phone (required)
+    const phoneDigits = (formData.phone || "").replace(/\D/g, "");
+    if (formData.phone && phoneDigits.length !== 10) {
+      alert("Error: Personal phone must be exactly 10 digits.");
+      return;
+    }
+
+    // Validate Company Phone (optional, but if entered → must be 10 digits)
+    const companyPhoneDigits = (formData.companyPhone || "").replace(/\D/g, "");
+    if (formData.companyPhone && companyPhoneDigits.length > 0 && companyPhoneDigits.length !== 10) {
+      alert("Error: Company phone must be exactly 10 digits.");
+      return;
+    }
+
     setIsSubmitting(true);
     
-    // Exclude logoImage from the body
     const { logoImage, ...submitData } = formData;
     
     try {
@@ -538,22 +601,21 @@ const ShopkeeperProfile = () => {
       });
 
       if (res.ok) {
-        alert("✅ Profile updated successfully!");
+        alert("Profile updated successfully!");
         setOriginalData(formData);
         setIsEditing(false);
       } else {
-        alert("❌ Failed to update profile. Check server logs.");
+        alert("Failed: Failed to update profile. Check server logs.");
       }
     } catch (err) {
       console.error("Submit error", err);
-      alert("⚠️ Network error: Could not connect to server.");
+      alert("Warning: Network error: Could not connect to server.");
     } finally {
       setIsSubmitting(false);
     }
   };
 
   const handleCancel = () => {
-    // CRITICAL FIX: Revert form data to the last saved state
     setFormData(originalData);
     setIsEditing(false);
     setSelectedFile(null); 
@@ -578,11 +640,10 @@ const ShopkeeperProfile = () => {
           <FiUser className="w-6 h-6"/> Shop Profile & Branding
         </h2>
         <div className="flex items-center gap-3">
-            {/* 1. Cancel Button (Only visible during editing) */}
             {isEditing && (
                 <button
                 type="button"
-                className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-xl transition duration-200 flex items-center gap-2 font-semibold shadow-md"
+                className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition duration-200 flex items-center gap-2 font-semibold shadow-md"
                 onClick={handleCancel}
                 disabled={isSubmitting}
                 >
@@ -591,12 +652,11 @@ const ShopkeeperProfile = () => {
                 </button>
             )}
 
-            {/* 2. Save Profile Button (Only visible during editing) */}
             {isEditing && (
                 <button
                 type="submit"
                 form="profile-form"
-                className={`text-white px-5 py-2 rounded-xl transition duration-200 flex items-center gap-2 font-semibold shadow-md ${
+                className={`text-white px-5 py-2 rounded-lg transition duration-200 flex items-center gap-2 font-semibold shadow-md ${
                     isSubmitting ? 'bg-green-400 cursor-not-allowed' : 'bg-green-500 hover:bg-green-600'
                 }`}
                 disabled={isSubmitting}
@@ -615,11 +675,10 @@ const ShopkeeperProfile = () => {
                 </button>
             )}
             
-            {/* 3. Edit Profile Button (Only visible in view mode) */}
             {!isEditing && (
                 <button
                 type="button"
-                className="bg-blue-700 hover:bg-blue-800 text-white px-5 py-2 rounded-xl transition duration-200 flex items-center gap-2 font-semibold shadow-md"
+                className="bg-blue-700 hover:bg-blue-800 text-white px-5 py-2 rounded-lg transition duration-200 flex items-center gap-2 font-semibold shadow-md"
                 onClick={() => setIsEditing(true)}
                 >
                 <FiEdit3 className="w-5 h-5" />
@@ -637,8 +696,9 @@ const ShopkeeperProfile = () => {
           <SectionWrapper 
             title="Branding & Visual Identity" 
             icon={<FiUploadCloud className="w-6 h-6"/>}
+            // className="grid md:grid-cols-3 gap-6"
           >
-            {/* Logo Management - Takes 1/3 width */}
+            {/* Logo Management */}
             <div className="md:col-span-1 bg-gray-100 p-4 rounded-lg border-2 border-dashed border-gray-300">
                 <label className="block text-sm font-bold mb-3 text-blue-700">Shop Logo / Icon</label>
                 
@@ -694,7 +754,7 @@ const ShopkeeperProfile = () => {
                 )}
             </div>
 
-            {/* Shop Details - Takes 2/3 width */}
+            {/* Shop Details */}
             <div className="md:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <InputField
                   label="Shop Display Name"
@@ -704,15 +764,17 @@ const ShopkeeperProfile = () => {
                   disabled={!isEditing}
                   required
                 />
-                <InputField
+
+                {/* CHANGED: Personal Phone → PhoneInputField */}
+                <PhoneInputField
                   label="Personal Contact Phone"
                   name="phone"
                   value={formData.phone}
                   onChange={handleChange}
                   disabled={!isEditing}
                   required
-                  pattern="[0-9]*" 
                 />
+
                 <InputField
                   label="Personal Login Email"
                   name="email"
@@ -735,14 +797,16 @@ const ShopkeeperProfile = () => {
                   onChange={handleChange}
                   disabled={!isEditing}
                 />
-                <InputField
+
+                {/* CHANGED: Company Phone → PhoneInputField */}
+                <PhoneInputField
                   label="Company Contact Phone"
                   name="companyPhone"
                   value={formData.companyPhone}
                   onChange={handleChange}
                   disabled={!isEditing}
-                  pattern="[0-9]*"
                 />
+
                 <InputField
                   label="Company Email (for receipts/invoices)"
                   name="companyEmail"

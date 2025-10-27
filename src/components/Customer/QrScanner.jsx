@@ -696,6 +696,7 @@ const QrScanner = ({ onClose }) => {
   const [error, setError] = useState(null);
   const [guidance, setGuidance] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isConfirming, setIsConfirming] = useState(false);
   const [successAnimation, setSuccessAnimation] = useState(false);
   const [associated, setAssociated] = useState(true);
   const [showErrorPopup, setShowErrorPopup] = useState(false);
@@ -892,6 +893,8 @@ const QrScanner = ({ onClose }) => {
       return;
     }
 
+    setIsConfirming(true);
+
     try {
       const res = await fetch("https://loyalty-backend-java.onrender.com/api/qrcode/process-purchase", {
         method: "POST",
@@ -935,6 +938,8 @@ const QrScanner = ({ onClose }) => {
       setError(e.message || "Failed to confirm purchase.");
       setShowErrorPopup(true);
       setShowPreviewPopup(false);
+    } finally {
+      setIsConfirming(false);        
     }
   };
 
@@ -1360,9 +1365,10 @@ const QrScanner = ({ onClose }) => {
               )}
               <button
                 onClick={handleConfirmProcess}
-                className={`w-full bg-${SUCCESS_COLOR} hover:bg-green-700 text-white font-bold px-5 py-3 rounded-xl shadow-md transition duration-200 mb-3`}
+                disabled={isConfirming}                     
+                className={`w-full bg-${SUCCESS_COLOR} hover:bg-green-700 text-white font-bold px-5 py-3 rounded-xl shadow-md transition duration-200 mb-3 disabled:opacity-60`}
               >
-                Confirm & Add Points
+                {isConfirming ? "Processing…" : "Process Purchase"}
               </button>
               <button
                 onClick={() => {

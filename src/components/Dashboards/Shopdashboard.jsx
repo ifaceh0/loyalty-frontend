@@ -67,7 +67,7 @@ const Shopdashboard = () => {
       setTopSpendingUsers(data.topSpendingUsers || []);
     } catch (error) {
       console.error("Error:", error);
-      navigate("/signin");
+      // navigate("/signin");
     }
   };
 
