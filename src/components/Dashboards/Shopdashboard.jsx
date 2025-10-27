@@ -226,18 +226,6 @@ const Shopdashboard = () => {
           sidebarOpen && isSidebarExpanded ? "ml-64" : sidebarOpen ? "ml-16" : "ml-0"
         }`}
       >
-      {/* {activeTab === "user_stats" && (
-        <div className="mb-4 p-3 bg-yellow-100 border border-yellow-300 rounded text-center text-sm">
-          Not a subscriber yet?{" "}
-          <a
-            href="https://subscription-frontend-psi.vercel.app/subscription"
-            className="text-purple-800 font-semibold underline hover:text-purple-900"
-          >
-            Click here to subscribe
-          </a>
-        </div>
-      )} */}
-
         {activeTab === "user_stats" && (
           <>
             <div>
@@ -246,8 +234,9 @@ const Shopdashboard = () => {
               </h1>
             </div>
             <UserPurchaseChart />
+
             <section className="mb-6">
-              <h3 className="text-2x font-semibold text-purple-800 mb-4">
+              <h3 className="text-2x font-semibold mb-4">
                 Monthly Sales (Last 12 Months) - {currentYear}
               </h3>
               <ResponsiveContainer width="100%" height={320}>
@@ -256,13 +245,21 @@ const Shopdashboard = () => {
                   <YAxis tickFormatter={(val) => `₹${val}`} tick={{ fill: "#6b7280", fontSize: 12 }} />
                   <Tooltip formatter={(value) => [`₹${value}`, "Sales"]} />
                   <Legend />
-                  <Line type="monotone" dataKey="sales" stroke="#FACC15" strokeWidth={2} dot={{ r: 4, fill: "#7C3AED" }} activeDot={{ r: 6, fill: "#FACC15" }} name="Sales ₹" />
+                  <Line
+                    type="monotone"
+                    dataKey="sales"
+                    stroke="#EC4899"
+                    strokeWidth={2}
+                    dot={{ r: 4, fill: "#881337" }}
+                    activeDot={{ r: 6, fill: "#EC4899" }}
+                    name="Sales ₹"
+                  />
                 </LineChart>
               </ResponsiveContainer>
             </section>
 
-            <section className="mb-6">
-              <h3 className="text-2x font-semibold text-purple-800 mb-4">
+            <section className="mb-8">
+              <h3 className="text-2x font-semibold mb-4">
                 Customer Count Comparison ({currentYear})
               </h3>
               <ResponsiveContainer width="100%" height={300}>
@@ -271,8 +268,19 @@ const Shopdashboard = () => {
                   <YAxis tick={{ fill: "#6b7280" }} />
                   <Tooltip />
                   <Legend />
-                  <Bar dataKey="customers" fill="#7C3AED" barSize={40} radius={[10, 10, 0, 0]}>
-                    <LabelList dataKey="growth" position="top" formatter={(val) => `${val >= 0 ? "+" : ""}${val.toFixed(1)}%`} fill="#FACC15" />
+                  <Bar 
+                    dataKey="customers" 
+                    fill="#3B82F6" 
+                    barSize={40} 
+                    radius={[6, 6, 0, 0]} 
+                    >
+                    <LabelList 
+                      dataKey="growth" 
+                      position="top" 
+                      formatter={(val) => `${val >= 0 ? "+" : ""}${val.toFixed(1)}%`} 
+                      fill="#1E40AF" 
+                      fontWeight="bold"
+                    />
                   </Bar>
                 </BarChart>
               </ResponsiveContainer>
@@ -280,13 +288,41 @@ const Shopdashboard = () => {
 
             <Row gutter={[16, 16]}>
               <Col span={24}>
-                <Card title="👥 Most Visitors" bordered={false} headStyle={{ backgroundColor: "#FACC15", color: "#4F46E5" }}>
-                  <Table columns={mostVisitorsColumns} dataSource={topVisitedUsers} pagination={{ pageSize: 5 }} rowKey="userId" size="small" scroll={{ x: "max-content" }} />
+                <Card 
+                  title="👥 Most Visitors" 
+                  bordered={false} 
+                  headStyle={{ 
+                    background: "linear-gradient(to bottom right, #10B981, #0284C7)", 
+                    color: "#FFFFFF" 
+                  }}
+                >
+                  <Table 
+                    columns={mostVisitorsColumns} 
+                    dataSource={topVisitedUsers} 
+                    pagination={{ pageSize: 5 }} 
+                    rowKey="userId" 
+                    size="small" 
+                    scroll={{ x: "max-content" }} 
+                  />
                 </Card>
               </Col>
               <Col span={24}>
-                <Card title="💰 Top Revenue Generators" bordered={false} headStyle={{ backgroundColor: "#FACC15", color: "#4F46E5" }}>
-                  <Table columns={topRevenueColumns} dataSource={topSpendingUsers} pagination={false} rowKey="userId" size="small" scroll={{ y: 250 }} />
+                <Card 
+                  title="💰 Top Revenue Generators" 
+                  bordered={false} 
+                  headStyle={{ 
+                    background: "linear-gradient(to bottom right, #10B981, #0284C7)", 
+                    color: "#FFFFFF" 
+                  }}
+                >
+                  <Table 
+                    columns={topRevenueColumns} 
+                    dataSource={topSpendingUsers} 
+                    pagination={false} 
+                    rowKey="userId" 
+                    size="small" 
+                    scroll={{ y: 250 }} 
+                  />
                 </Card>
               </Col>
             </Row>

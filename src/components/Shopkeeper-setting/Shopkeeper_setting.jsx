@@ -473,7 +473,7 @@ const inputStyle =
   "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition duration-200 shadow-sm";
 
 const SectionWrapper = ({ title, children, isEditMode }) => (
-  <div className={`p-6 rounded-xl border-2 ${isEditMode ? 'border-blue-200 bg-white shadow-lg' : 'border-gray-100 bg-gray-50 shadow-inner'} space-y-4 transition-colors duration-300`}>
+  <div className={`p-6 rounded-lg border-2 ${isEditMode ? 'border-blue-200 bg-white shadow-lg' : 'border-gray-100 bg-gray-50 shadow-inner'} space-y-4 transition-colors duration-300`}>
     <h3 className="text-xl font-bold text-blue-700 border-b pb-2">{title}</h3>
     {children}
   </div>
@@ -697,7 +697,7 @@ const ShopkeeperSetting = () => {
   }
 
   return (
-    <div className="max-w-6xl mx-auto bg-white rounded-xl shadow-2xl overflow-hidden my-8">
+    <div className="max-w-6xl mx-auto bg-white rounded-lg shadow-2xl overflow-hidden my-8">
       {/* Header */}
       <nav className="bg-blue-600 text-white px-6 py-4 flex justify-between items-center">
         <h2 className="text-2xl font-extrabold tracking-tight">Loyalty Program Settings</h2>
@@ -706,7 +706,7 @@ const ShopkeeperSetting = () => {
           {isEditMode && (
              <button
                 onClick={handleCancelEdit}
-                className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-xl transition duration-200 flex items-center gap-1 font-semibold shadow-md"
+                className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition duration-200 flex items-center gap-1 font-semibold shadow-md"
                 disabled={isSaving}
             >
                 <FiX className="w-5 h-5" />
@@ -717,7 +717,7 @@ const ShopkeeperSetting = () => {
           <button
             onClick={handleSubmit}
             disabled={isSaving}
-            className={`text-white px-5 py-2 rounded-xl transition duration-200 flex items-center gap-2 font-semibold shadow-md ${
+            className={`text-white px-5 py-2 rounded-lg transition duration-200 flex items-center gap-2 font-semibold shadow-md ${
               isEditMode
                 ? (isSaving ? 'bg-green-400 cursor-not-allowed' : 'bg-green-500 hover:bg-green-600')
                 : 'bg-blue-700 hover:bg-blue-800'
@@ -736,7 +736,7 @@ const ShopkeeperSetting = () => {
             ) : (
               <>
                 <FiEdit3 className="w-5 h-5" />
-                <span>Edit Settings</span>
+                <span>Edit</span>
               </>
             )}
           </button>

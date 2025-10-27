@@ -365,12 +365,12 @@ import {
 
 // --- Custom Components & Styles ---
 const inputStyle = (isEditing) => 
-  `w-full px-4 py-3 border rounded-xl outline-none transition duration-200 shadow-sm text-gray-800 ${
+  `w-full px-4 py-3 border rounded-lg outline-none transition duration-200 shadow-sm text-gray-800 ${
     isEditing ? "border-blue-400 focus:ring-2 focus:ring-blue-500/50" : "border-gray-200 bg-gray-100 cursor-default"
   }`;
 
 const SectionWrapper = ({ title, children, icon, className = "" }) => (
-  <div className={`bg-white p-6 rounded-xl border border-gray-200 shadow-lg ${className}`}>
+  <div className={`bg-white p-6 rounded-lg border border-gray-200 shadow-lg ${className}`}>
     <h3 className="text-xl font-bold text-blue-700 border-b pb-3 mb-4 flex items-center gap-2">
       {icon} {title}
     </h3>
@@ -633,7 +633,7 @@ const ShopkeeperProfile = () => {
 
   // --- Render ---
   return (
-    <div className="max-w-5xl mx-auto bg-gray-50 rounded-xl shadow-2xl overflow-hidden mt-10">
+    <div className="max-w-5xl mx-auto bg-gray-50 rounded-lg shadow-2xl overflow-hidden mt-10">
       {/* Header/Navigation */}
       <nav className="bg-blue-600 text-white px-8 py-4 flex justify-between items-center">
         <h2 className="text-2xl font-extrabold flex items-center gap-3">
@@ -682,7 +682,7 @@ const ShopkeeperProfile = () => {
                 onClick={() => setIsEditing(true)}
                 >
                 <FiEdit3 className="w-5 h-5" />
-                <span>Edit Profile</span>
+                <span>Edit</span>
                 </button>
             )}
         </div>

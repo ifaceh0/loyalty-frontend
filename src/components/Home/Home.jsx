@@ -5,7 +5,6 @@ import { Collapse } from "antd";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import "antd/dist/reset.css";
 
-// --- Import images from src/assets ---
 import carousel1 from "../../assets/carousel1.jpg";
 import carousel2 from "../../assets/carousel2.jpg";
 import carousel3 from "../../assets/carousel3.jpg";
@@ -19,6 +18,32 @@ function Home() {
   const heroImages = [carousel1, carousel2, carousel3, carousel4, carousel5];
 
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [stats, setStats] = useState({
+    totalUsers: 0,
+    totalShops: 0,
+    totalTransactionAmount: 0,
+  });
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchSummary = async () => {
+      try {
+        const response = await fetch("https://loyalty-backend-java.onrender.com/api/loyalty_homePage/summary"); // Adjust base URL if needed
+        const data = await response.json();
+        setStats({
+          totalUsers: data.totalUsers || 0,
+          totalShops: data.totalShops || 0,
+          totalTransactionAmount: data.totalTransactionAmount || 0,
+        });
+      } catch (error) {
+        console.error("Failed to fetch dashboard summary:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchSummary();
+  }, []);
 
   const prevSlide = () => {
     setCurrentIndex((prev) =>
@@ -33,7 +58,7 @@ function Home() {
   };
 
   useEffect(() => {
-    const timer = setInterval(nextSlide, 5000); // auto-slide every 5s
+    const timer = setInterval(nextSlide, 5000);
     return () => clearInterval(timer);
   }, [currentIndex]);
 
@@ -52,17 +77,13 @@ function Home() {
                 idx === currentIndex ? "opacity-100" : "opacity-0"
               }`}
             >
-              {/* Background Image */}
               <img
                 src={img}
                 alt={`Hero slide ${idx + 1}`}
                 className="w-full h-full object-cover"
               />
-
-              {/* Dark Overlay */}
               <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/50"></div>
 
-              {/* Caption */}
               {idx === currentIndex && (
                 <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 text-center px-6">
                   <h2 className="text-3xl md:text-4xl font-bold mb-3 drop-shadow-lg">
@@ -71,8 +92,6 @@ function Home() {
                   <p className="text-lg md:text-xl max-w-2xl mx-auto drop-shadow-lg">
                     Simplify your referral processes with automated workflows that save you time and effort.
                   </p>
-
-                  {/* Dots */}
                   <div className="flex justify-center mt-6 space-x-2">
                     {heroImages.map((_, dotIdx) => (
                       <span
@@ -94,7 +113,6 @@ function Home() {
             </div>
           ))}
 
-          {/* Left Button */}
           <button
             onClick={(e) => {
               e.stopPropagation();
@@ -105,7 +123,6 @@ function Home() {
             <ChevronLeft className="w-6 h-6" />
           </button>
 
-          {/* Right Button */}
           <button
             onClick={(e) => {
               e.stopPropagation();
@@ -136,19 +153,30 @@ function Home() {
         </div>
       </section>
 
-      {/* Stats Section */}
+      {/* Stats Section - Dynamic from Backend */}
       <section className="py-20 bg-white text-center">
         <div className="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-10">
           {[
-            { icon: "👥", label: "Members", value: 5000 },
-            { icon: "🏬", label: "Partner Stores", value: 150 },
-            { icon: "💵", label: "Rewards Claimed", value: 100000 },
+            { icon: "👥", label: "Members", value: stats.totalUsers },
+            { icon: "🏬", label: "Partner Stores", value: stats.totalShops },
+            { icon: "💵", label: "Rewards Claimed", value: stats.totalTransactionAmount, isMoney: true },
           ].map((stat, idx) => (
             <div key={idx}>
               <div className="text-5xl mb-2">{stat.icon}</div>
               <h3 className="text-3xl font-bold text-emerald-600">
-                <CountUp end={stat.value} duration={3} separator="," />
-                {stat.label === "Rewards Claimed" ? " $" : "+"}
+                {loading ? (
+                  "Loading..."
+                ) : (
+                  <>
+                    <CountUp
+                      end={stat.value}
+                      duration={3}
+                      separator=","
+                      prefix={stat.isMoney ? "$" : ""}
+                    />
+                    {stat.isMoney ? "" : "+"}
+                  </>
+                )}
               </h3>
               <p className="text-gray-600 mt-2">{stat.label}</p>
             </div>

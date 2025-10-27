@@ -923,7 +923,7 @@ const CustomerLookup = () => {
   return (
     <div className="p-6 md:p-10">
       <div className="flex justify-center">
-        <div className="bg-indigo-600 text-white rounded-xl p-4 md:p-6 mb-10 shadow-2xl">
+        <div className="bg-indigo-600 text-white rounded-lg p-4 md:p-6 mb-10 shadow-2xl">
           <h1 className="text-3xl md:text-5xl text-center font-black mb-2 tracking-tight">
             Shop Name : <span className="text-yellow-300">{shopName || "Shop Name"}</span>
           </h1>
@@ -932,7 +932,7 @@ const CustomerLookup = () => {
 
       <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4 max-w-7xl mx-auto">
         {/* QR Scanner */}
-        <div className="rounded-2xl border border-blue-100 bg-blue-50 p-6 shadow-lg text-center">
+        <div className="rounded-lg border border-blue-100 bg-blue-50 p-6 shadow-lg text-center">
           <QrCode className="text-blue-600 mx-auto mb-3" size={36} />
           <h2 className="text-lg font-semibold mb-2 text-black-500">⚡ Quick Scan</h2>
           <p className="text-sm text-gray-600 mb-4">Use camera to identify instantly.</p>
@@ -945,7 +945,7 @@ const CustomerLookup = () => {
         </div>
      
         {/* Phone */}
-        <div className="rounded-2xl border border-indigo-100 bg-indigo-50 p-6 shadow-lg">
+        <div className="rounded-lg border border-indigo-100 bg-indigo-50 p-6 shadow-lg">
           <h2 className="text-lg font-semibold text-black-500 mb-3">📞 Phone Number</h2>
           <input
             type="text"
@@ -980,7 +980,7 @@ const CustomerLookup = () => {
         </div>
 
         {/* Email */}
-        <div className="rounded-2xl border border-sky-100 bg-sky-50 p-6 shadow-lg">
+        <div className="rounded-lg border border-sky-100 bg-sky-50 p-6 shadow-lg">
           <h2 className="text-lg font-semibold text-black-500 mb-3">📧 Email Address</h2>
           <input
             type="email"
@@ -1002,7 +1002,7 @@ const CustomerLookup = () => {
         </div>
 
         {/* Invite */}
-        <div className="rounded-2xl border border-violet-100 bg-violet-50 p-6 shadow-lg">
+        <div className="rounded-lg border border-violet-100 bg-violet-50 p-6 shadow-lg">
           <h2 className="text-lg font-semibold text-black-500 mb-3">📨 Refer a New Customer</h2>
           <input
             type="email"
@@ -1027,7 +1027,7 @@ const CustomerLookup = () => {
       {/* Not Found Modal */}
       {showNotFound && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-          <div className="bg-white rounded-2xl w-full shadow-2xl max-w-sm border-t-8 border-red-600 p-6 transition-all duration-300">
+          <div className="bg-white rounded-lg w-full shadow-2xl max-w-sm border-t-8 border-red-600 p-6 transition-all duration-300">
             <h2 className="text-2xl font-bold mb-4 text-center text-red-700 flex items-center justify-center gap-3">
               <FontAwesomeIcon icon={faExclamationCircle} className="text-red-600" />
               Customer Not Found!
