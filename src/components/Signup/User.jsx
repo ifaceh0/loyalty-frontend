@@ -340,10 +340,8 @@
 
 import { useState, useEffect, useRef } from "react";
 import Confetti from "react-confetti";
-import { Eye, EyeOff, Lock, Mail, RefreshCw, User, Smartphone } from "lucide-react";
+import { Eye, EyeOff, Lock, Mail, RefreshCw, User, Smartphone, Puzzle } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
-
-// --- REMOVED: PhoneInput & its CSS ---
 
 function UnderlineInput({ label, name, value, onChange, type = "text", Icon, ToggleIcon, onToggle }) {
   return (
@@ -376,20 +374,16 @@ function UnderlineInput({ label, name, value, onChange, type = "text", Icon, Tog
   );
 }
 
-// --- NEW: 10-digit Phone Input ---
 function PhoneInputField({ label, value, onChange }) {
   const [error, setError] = useState("");
 
   const handleChange = (e) => {
     let input = e.target.value;
 
-    // Allow only digits
     input = input.replace(/\D/g, "");
 
-    // Limit to 10 digits
     if (input.length > 10) input = input.slice(0, 10);
 
-    // Validate
     if (input && input.length !== 10) {
       setError("Phone must be exactly 10 digits");
     } else {
@@ -481,6 +475,15 @@ function UserSignup() {
         ctx.rotate(-0.03 * Math.PI + Math.random() * 0.1 - 0.03);
         ctx.fillText(text, 0, 0);
         ctx.restore();
+
+        ctx.strokeStyle = '#2563EB'; 
+        ctx.lineWidth = 1;
+        for (let i = 0; i < 3; i++) {
+          ctx.beginPath();
+          ctx.moveTo(Math.random() * 120, Math.random() * 40);
+          ctx.lineTo(Math.random() * 120, Math.random() * 40);
+          ctx.stroke();
+        }
     }
   };
 
@@ -489,7 +492,6 @@ function UserSignup() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // --- UPDATED: Phone change handler ---
   const handlePhoneChange = (value) => {
     setFormData((prev) => ({ ...prev, phoneNumber: value }));
   };
@@ -497,7 +499,6 @@ function UserSignup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validate 10-digit phone
     const phoneDigits = formData.phoneNumber.replace(/\D/g, "");
     if (phoneDigits.length !== 10) {
       setError("Phone number must be exactly 10 digits");
@@ -541,7 +542,7 @@ function UserSignup() {
         generateCaptcha();
         setSuccess(true);
         if (audioRef.current) audioRef.current.play();
-        setTimeout(() => navigate("/signin"), 2000);
+        setTimeout(() => navigate("/signin"), 3000);
       } else {
         const errorMessage = contentType && contentType.includes("application/json")
           ? (await response.json()).message
@@ -573,7 +574,6 @@ function UserSignup() {
         setTimeout(() => setError(""), 3000);
         return;
       }
-      // --- CHANGED: 10-digit validation ---
       const phoneDigits = formData.phoneNumber.replace(/\D/g, "");
       if (phoneDigits.length !== 10) {
         setError("Phone number must be exactly 10 digits");
@@ -633,7 +633,6 @@ function UserSignup() {
             </div>
           )}
 
-          {/* --- CHANGED: Step 2 - Custom 10-digit phone --- */}
           {step === 2 && (
             <div className="space-y-8">
               <div className="relative">
@@ -673,7 +672,7 @@ function UserSignup() {
               
               <div className="flex items-end space-x-4 pt-2">
                 <div className="flex-grow">
-                    <UnderlineInput label="Enter Captcha" name="captchaInput" value={formData.captchaInput} onChange={handleChange} />
+                    <UnderlineInput label="Enter Captcha" name="captchaInput" value={formData.captchaInput} onChange={handleChange} Icon={Puzzle} />
                 </div>
                 <div className="flex-shrink-0 w-24 h-10 bg-gray-100 border border-gray-300 rounded-md overflow-hidden flex items-center justify-center">
                     <canvas ref={canvasRef} width={100} height={40} className="w-full h-full" />

@@ -379,7 +379,7 @@ import { useNavigate } from "react-router-dom";
 import { FaInfoCircle } from "react-icons/fa";
 import {
   Mail, Lock, Eye, EyeOff, Building2, MapPin, Store,
-  RefreshCw, CheckCircle, Smartphone, Globe, User,
+  RefreshCw, CheckCircle, Smartphone, Globe, User, Puzzle
 } from "lucide-react";
 
 function FlatInput({ label, name, value, onChange, type = "text", Icon, ToggleIcon, onToggle }) {
@@ -464,7 +464,7 @@ function Shopkeeper() {
       ctx.lineWidth = 1;
       for (let i = 0; i < 3; i++) {
         ctx.beginPath();
-        ctx.moveTo(Math.random() * 120, Math * 40);
+        ctx.moveTo(Math.random() * 120, Math.random() * 40);
         ctx.lineTo(Math.random() * 120, Math.random() * 40);
         ctx.stroke();
       }
@@ -498,7 +498,7 @@ function Shopkeeper() {
     };
     try {
       const response = await fetchWithBackoff(
-        "https://subscription-backend-e8gq.onrender.com/api/subscription/verifyShopSubscriptionEmail",
+        "https://loyalty-backend-java.onrender.com/api/shop/verifyShopSubscriptionEmail",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -506,8 +506,14 @@ function Shopkeeper() {
         }
       );
       const data = await response.json();
-      if (data.success) { setIsEmailVerified(true); setError(""); }
-      else { setIsEmailVerified(false); setError(data.message || "Email verification failed."); }
+      if (data.message && data.message.includes("successfully")) {
+        setIsEmailVerified(true); 
+        setError(""); 
+      }
+      else { 
+        setIsEmailVerified(false); 
+        setError(data.message || "Email verification failed."); 
+      }
     } catch (err) {
       setIsEmailVerified(false);
       setError("you don't have a subscription. Please use a different email.");
@@ -737,7 +743,7 @@ function Shopkeeper() {
               
               <div className="flex space-x-4 items-end">
                 <div className="flex-grow">
-                  <FlatInput label="Enter CAPTCHA Code" name="captchaInput" value={formData.captchaInput} onChange={handleChange} />
+                  <FlatInput label="Enter CAPTCHA Code" name="captchaInput" value={formData.captchaInput} onChange={handleChange} Icon={Puzzle} />
                 </div>
                 <div className="flex-shrink-0 w-32 h-12 bg-gray-100 border border-gray-300 rounded-lg overflow-hidden flex items-center justify-center">
                   <canvas ref={captchaCanvasRef} width={120} height={40} className="w-full h-full" />
