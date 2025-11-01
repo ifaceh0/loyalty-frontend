@@ -32,22 +32,56 @@ const UserPurchaseChart = () => {
   }, []);
 
   return (
-    <div className="mb-6">
-      <h3 className="text-2x font-semibold text-gray-800 mb-4">
-        Monthly Registered vs Purchase Users
-      </h3>
-      <ResponsiveContainer width="100%" height={350}>
-        <BarChart data={chartData} margin={{ top: 20, right: 30, left: 0, bottom: 5 }}>
-          {/* <CartesianGrid strokeDasharray="3 3" /> */}
-          <XAxis dataKey="month" />
-          <YAxis allowDecimals={false} />
-          <Tooltip />
-          <Legend />
-          <Bar dataKey="registeredUsers" fill="#2563eb" name="Registered Users" />
-          <Bar dataKey="visitedUsers" fill="#f97316" name="Purchase Users" />
-        </BarChart>
-      </ResponsiveContainer>
-    </div>
+    <section className="mb-8">
+      <div className="bg-white shadow-md rounded-lg p-6 border border-gray-100 hover:shadow-lg transition-shadow duration-300">
+        <div className="flex items-center justify-between mb-1">
+          <h3 className="text-xl font-semibold text-gray-800">
+            Monthly Registered vs Purchase Users
+          </h3>
+          <span className="text-sm text-gray-500">User Engagement</span>
+        </div>
+
+        <div className="h-[280px]">
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart
+              data={chartData}
+              margin={{ top: 20, right: 30, left: 0, bottom: 5 }}
+            >
+              <XAxis
+                dataKey="month"
+                tick={{ fill: "#6b7280", fontSize: 12 }}
+              />
+              <YAxis
+                allowDecimals={false}
+                tick={{ fill: "#6b7280", fontSize: 12 }}
+              />
+              <Tooltip
+                contentStyle={{
+                  backgroundColor: "white",
+                  borderRadius: "10px",
+                  border: "1px solid #e5e7eb",
+                }}
+              />
+              <Legend />
+              <Bar
+                dataKey="registeredUsers"
+                fill="#2563eb"
+                name="Registered Users"
+                radius={[6, 6, 0, 0]}
+                barSize={40}
+              />
+              <Bar
+                dataKey="visitedUsers"
+                fill="#f97316"
+                name="Purchase Users"
+                radius={[6, 6, 0, 0]}
+                barSize={40}
+              />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+      </div>
+    </section>
   );
 };
 

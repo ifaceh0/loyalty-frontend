@@ -23,7 +23,7 @@ import UserPurchaseChart from "../bar chart/UserPurchaseChart";
 import { useSidebar } from "../../context/SidebarContext";
 import { X, Menu } from "lucide-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChartBar, faUser, faCog, faUsers, faCreditCard } from "@fortawesome/free-solid-svg-icons";
+import { faChartBar, faUser, faCog, faUsers, faCreditCard, faUserTie, faFileInvoiceDollar } from "@fortawesome/free-solid-svg-icons";
 
 const Shopdashboard = () => {
   const navigate = useNavigate();
@@ -194,8 +194,8 @@ const Shopdashboard = () => {
             { tab: "shopkeeper_setting", icon: faCog, label: "Shop Settings" },
             { tab: "interactions", icon: faUsers, label: "Interactions" },
             { tab: "subscription", icon: faCreditCard, label: "Subscription" },
-            { tab: "employee_management", icon: faUsers, label: "Employee Management" },
-            { tab: "daily_transaction_report", icon: faChartBar, label: "Daily Transaction Report" },
+            { tab: "employee_management", icon: faUserTie, label: "Employee Management" },
+            { tab: "daily_transaction_report", icon: faFileInvoiceDollar, label: "Daily Transaction Report" },
           ].map(({ tab, icon, label }) => (
             <div key={tab} className="relative group">
             <button
@@ -239,55 +239,98 @@ const Shopdashboard = () => {
             </div>
             <UserPurchaseChart />
 
-            <section className="mb-6">
-              <h3 className="text-2x font-semibold mb-4">
-                Monthly Sales (Last 12 Months) - {currentYear}
-              </h3>
-              <ResponsiveContainer width="100%" height={320}>
-                <LineChart data={monthlySalesData} margin={{ top: 40, right: 30, left: 0, bottom: 0 }}>
-                  <XAxis dataKey="month" tick={{ fill: "#6b7280", fontSize: 12 }} />
-                  <YAxis tickFormatter={(val) => `₹${val}`} tick={{ fill: "#6b7280", fontSize: 12 }} />
-                  <Tooltip formatter={(value) => [`₹${value}`, "Sales"]} />
-                  <Legend />
-                  <Line
-                    type="monotone"
-                    dataKey="sales"
-                    stroke="#EC4899"
-                    strokeWidth={2}
-                    dot={{ r: 4, fill: "#881337" }}
-                    activeDot={{ r: 6, fill: "#EC4899" }}
-                    name="Sales ₹"
-                  />
-                </LineChart>
-              </ResponsiveContainer>
+            <section className="mb-8">
+              <div className="bg-white shadow-md rounded-lg p-6 border border-gray-100 hover:shadow-lg transition-shadow duration-300">
+                <div className="flex items-center justify-between mb-1">
+                  <h3 className="text-xl font-semibold text-gray-800">
+                    Monthly Sales (Last 12 Months) - {currentYear}
+                  </h3>
+                  <span className="text-sm text-gray-500">Sales Overview</span>
+                </div>
+
+                <div className="h-[280px]">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <LineChart
+                      data={monthlySalesData}
+                      margin={{ top: 40, right: 30, left: 0, bottom: 0 }}
+                    >
+                      <XAxis
+                        dataKey="month"
+                        tick={{ fill: "#6b7280", fontSize: 12 }}
+                      />
+                      <YAxis
+                        tickFormatter={(val) => `₹${val}`}
+                        tick={{ fill: "#6b7280", fontSize: 12 }}
+                      />
+                      <Tooltip
+                        formatter={(value) => [`₹${value}`, "Sales"]}
+                        contentStyle={{
+                          backgroundColor: "white",
+                          borderRadius: "10px",
+                          border: "1px solid #e5e7eb",
+                        }}
+                      />
+                      <Legend />
+                      <Line
+                        type="monotone"
+                        dataKey="sales"
+                        stroke="#EC4899"
+                        strokeWidth={2}
+                        dot={{ r: 4, fill: "#881337" }}
+                        activeDot={{ r: 6, fill: "#EC4899" }}
+                        name="Sales ₹"
+                      />
+                    </LineChart>
+                  </ResponsiveContainer>
+                </div>
+              </div>
             </section>
 
             <section className="mb-8">
-              <h3 className="text-2x font-semibold mb-4">
-                Customer Count Comparison ({currentYear})
-              </h3>
-              <ResponsiveContainer width="100%" height={300}>
-                <BarChart data={customerComparisonData} margin={{ top: 40, right: 30, left: 0, bottom: 10 }}>
-                  <XAxis dataKey="name" tick={{ fill: "#6b7280" }} />
-                  <YAxis tick={{ fill: "#6b7280" }} />
-                  <Tooltip />
-                  <Legend />
-                  <Bar 
-                    dataKey="customers" 
-                    fill="#3B82F6" 
-                    barSize={40} 
-                    radius={[6, 6, 0, 0]} 
+              <div className="bg-white shadow-md rounded-lg p-6 border border-gray-100 hover:shadow-lg transition-shadow duration-300">
+                <div className="flex items-center justify-between mb-1">
+                  <h3 className="text-xl font-semibold text-gray-800">
+                    Customer Count Comparison ({currentYear})
+                  </h3>
+                  <span className="text-sm text-gray-500">Yearly Overview</span>
+                </div>
+
+                <div className="h-[280px]">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <BarChart
+                      data={customerComparisonData}
+                      margin={{ top: 40, right: 30, left: 0, bottom: 10 }}
                     >
-                    <LabelList 
-                      dataKey="growth" 
-                      position="top" 
-                      formatter={(val) => `${val >= 0 ? "+" : ""}${val.toFixed(1)}%`} 
-                      fill="#1E40AF" 
-                      fontWeight="bold"
-                    />
-                  </Bar>
-                </BarChart>
-              </ResponsiveContainer>
+                      <XAxis dataKey="name" tick={{ fill: "#6b7280" }} />
+                      <YAxis tick={{ fill: "#6b7280" }} />
+                      <Tooltip
+                        contentStyle={{
+                          backgroundColor: "white",
+                          borderRadius: "10px",
+                          border: "1px solid #e5e7eb",
+                        }}
+                      />
+                      <Legend />
+                      <Bar
+                        dataKey="customers"
+                        fill="#3B82F6"
+                        barSize={40}
+                        radius={[6, 6, 0, 0]}
+                      >
+                        <LabelList
+                          dataKey="growth"
+                          position="top"
+                          formatter={(val) =>
+                            `${val >= 0 ? "+" : ""}${val.toFixed(1)}%`
+                          }
+                          fill="#1E40AF"
+                          fontWeight="bold"
+                        />
+                      </Bar>
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
+              </div>
             </section>
 
             <Row gutter={[16, 16]}>
