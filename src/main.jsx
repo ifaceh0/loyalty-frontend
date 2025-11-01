@@ -30,6 +30,9 @@ import { SidebarProvider } from './context/SidebarContext.jsx';
 import SubscriptionDashboard from './components/Subscription/SubscriptionDashboard.jsx';
 import UserShopList from './components/ShopList/UserShopList.jsx';
 import PlanChange from './components/Subscription/Planchange.jsx';
+import EmployeeSignupPage from './components/Signup/EmployeeSignupPage.jsx';
+import InviteEmployeePage from './components/Employee/InviteEmployeePage.jsx';
+import DailyTransactionReport from './components/Customer/DailyTransactionReport.jsx'
 
 const router = createBrowserRouter([
    {
@@ -112,7 +115,23 @@ const router = createBrowserRouter([
       {
         path:"/shopkeeper/plan-selection",
         element:<PlanChange/>
+      },
+
+      {
+        path:"/employee/signup",
+        element:<EmployeeSignupPage/>
+      },
+
+      {
+        path:"/shopkeeper/invite-employee",
+        element:<InviteEmployeePage/>
+      },
+
+      {
+        path:"/shopkeeper/daily-transaction-report",
+        element:<DailyTransactionReport/>
       }
+
 
     ]
 

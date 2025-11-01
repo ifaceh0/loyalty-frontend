@@ -17,6 +17,8 @@ import ShopkeeperProfile from "../Shopkeeper_profile/Shopkeeper_profile";
 import Shopkeeper_setting from "../Shopkeeper-setting/Shopkeeper_setting";
 import CustomerLookup from "../Customer/CustomerLookup";
 import SubscriptionDashboard from "../Subscription/SubscriptionDashboard";
+import DailyTransactionReport from "../Customer/DailyTransactionReport";
+import InviteEmployeePage from "../Employee/InviteEmployeePage";
 import UserPurchaseChart from "../bar chart/UserPurchaseChart";
 import { useSidebar } from "../../context/SidebarContext";
 import { X, Menu } from "lucide-react";
@@ -192,6 +194,8 @@ const Shopdashboard = () => {
             { tab: "shopkeeper_setting", icon: faCog, label: "Shop Settings" },
             { tab: "interactions", icon: faUsers, label: "Interactions" },
             { tab: "subscription", icon: faCreditCard, label: "Subscription" },
+            { tab: "employee_management", icon: faUsers, label: "Employee Management" },
+            { tab: "daily_transaction_report", icon: faChartBar, label: "Daily Transaction Report" },
           ].map(({ tab, icon, label }) => (
             <div key={tab} className="relative group">
             <button
@@ -332,6 +336,8 @@ const Shopdashboard = () => {
         {activeTab === "shopkeeper_setting" && <Shopkeeper_setting />}
         {activeTab === "interactions" && <CustomerLookup />}
         {activeTab === "subscription" && <SubscriptionDashboard />}
+        {activeTab === "employee_management" && <InviteEmployeePage />}
+        {activeTab === "daily_transaction_report" && <DailyTransactionReport />}
       </main>
     </div>
   );
