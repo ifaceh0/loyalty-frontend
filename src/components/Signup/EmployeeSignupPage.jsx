@@ -1,165 +1,356 @@
-// src/pages/EmployeeSignupPage.jsx
-import { useState } from 'react';
-import { useSearchParams, useNavigate } from 'react-router-dom';
+import { useState, useEffect, useRef } from "react";
+import Confetti from "react-confetti";
+import { Eye, EyeOff, Lock, Mail, RefreshCw, User, Smartphone, Puzzle } from "lucide-react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 const API_BASE = 'https://loyalty-backend-java.onrender.com/api';
+
+function UnderlineInput({ label, name, value, onChange, type = "text", Icon, ToggleIcon, onToggle }) {
+  return (
+    <div className="relative flex items-center w-full">
+      <div className="flex items-center w-full h-12 border-b-2 border-gray-300 transition-all duration-300 focus-within:border-blue-600">
+        {Icon && <Icon className="flex-shrink-0 ml-1 mr-3 h-5 w-5 text-gray-500 transition-colors duration-300 focus-within:text-blue-600" />}
+        <input
+          type={type}
+          name={name}
+          value={value}
+          onChange={onChange}
+          placeholder={label}
+          className="w-full h-full text-base text-gray-900 bg-transparent py-2 outline-none placeholder:text-gray-500"
+          required
+        />
+        {ToggleIcon && (
+          <button type="button" onClick={onToggle} className="flex-shrink-0 mr-1 text-gray-500 hover:text-blue-600 transition-colors duration-300">
+            <ToggleIcon className="h-5 w-5" />
+          </button>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function PhoneInputField({ label, value, onChange }) {
+  const [error, setError] = useState("");
+  const handleChange = (e) => {
+    let input = e.target.value.replace(/\D/g, "");
+    if (input.length > 10) input = input.slice(0, 10);
+    if (input && input.length !== 10) {
+      setError("Phone must be exactly 10 digits");
+    } else {
+      setError("");
+    }
+    onChange(input);
+  };
+
+  return (
+    <div className="relative flex items-center w-full">
+      <div className={`flex items-center w-full h-12 border-b-2 transition-all duration-300 ${error ? "border-red-500" : "border-gray-300 focus-within:border-blue-600"}`}>
+        <Smartphone className={`flex-shrink-0 ml-1 mr-3 h-5 w-5 transition-colors duration-300 ${error ? "text-red-500" : "text-gray-500 focus-within:text-blue-600"}`} />
+        <input
+          type="text"
+          value={value}
+          onChange={handleChange}
+          placeholder={label}
+          maxLength={10}
+          inputMode="numeric"
+          className="w-full h-full text-base text-gray-900 bg-transparent py-2 outline-none placeholder:text-gray-500"
+          required
+        />
+      </div>
+      {error && <p className="absolute -bottom-6 mb-1 left-0 text-xs text-red-500">{error}</p>}
+      {value.length === 10 && !error && (
+        <p className="absolute -bottom-6 mb-1 left-0 text-xs text-green-600">Valid 10-digit number</p>
+      )}
+    </div>
+  );
+}
 
 export default function EmployeeSignupPage() {
   const [searchParams] = useSearchParams();
   const token = searchParams.get('token');
   const navigate = useNavigate();
 
-  const [form, setForm] = useState({
-    firstName: '',
-    lastName: '',
-    password: '',
-    countryCode: '+91', // Default for India, can be made a select if needed
+  const [formData, setFormData] = useState({
+    firstName: "", lastName: "", phone: "", email: "", password: "", confirmPassword: "", captchaInput: ""
   });
+
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(''); // State for displaying API errors
+  const [captchaText, setCaptchaText] = useState("");
+  const [success, setSuccess] = useState(false);
+  const [step, setStep] = useState(1);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const canvasRef = useRef(null);
+  const audioRef = useRef(null);
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
-
-  const handleSignup = async (e) => {
-    e.preventDefault();
-    setError(''); // Clear previous errors
-
+  useEffect(() => {
     if (!token) {
-      setError('Invalid or missing invitation token.');
+      setError("Invalid or missing invitation link.");
       return;
     }
-    if (!form.firstName || !form.lastName || !form.password) {
-        setError('Please fill in all required fields.');
-        return;
+    if (step === 3) generateCaptcha();
+  }, [step, token]);
+
+  const generateCaptcha = () => {
+    const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+    let text = "";
+    for (let i = 0; i < 5; i++) {
+      text += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    setCaptchaText(text);
+    const canvas = canvasRef.current;
+    if (canvas) {
+      const ctx = canvas.getContext("2d");
+      ctx.clearRect(0, 0, 100, 40);
+      ctx.font = "bold 22px Arial";
+      ctx.fillStyle = "#2563EB";
+      ctx.save();
+      ctx.translate(5, 30);
+      ctx.rotate(-0.03 * Math.PI + Math.random() * 0.1 - 0.03);
+      ctx.fillText(text, 0, 0);
+      ctx.restore();
+      ctx.strokeStyle = '#2563EB';
+      ctx.lineWidth = 1;
+      for (let i = 0; i < 3; i++) {
+        ctx.beginPath();
+        ctx.moveTo(Math.random() * 120, Math.random() * 40);
+        ctx.lineTo(Math.random() * 120, Math.random() * 40);
+        ctx.stroke();
+      }
+    }
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handlePhoneChange = (value) => {
+    setFormData(prev => ({ ...prev, phone: value }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const phoneDigits = formData.phone.replace(/\D/g, "");
+    if (phoneDigits.length !== 10) {
+      setError("Phone number must be exactly 10 digits");
+      return;
+    }
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match!");
+      return;
+    }
+    if (formData.captchaInput.trim().toUpperCase() !== captchaText.toUpperCase()) {
+      setError("Invalid CAPTCHA");
+      generateCaptcha();
+      return;
     }
 
     setLoading(true);
+    setError("");
+
     try {
+      const payload = {
+        token,
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        email: formData.email,
+        phone: formData.phone,
+        password: formData.password,
+      };
+
       const res = await fetch(`${API_BASE}/employee/signup`, {
-        method: 'POST',
-        credentials: 'include',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...form, token }),
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
       });
 
-      if (!res.ok) {
-        const errorData = await res.json();
-        throw new Error(errorData.message || 'Signup failed. Please try again.');
-      }
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || "Signup failed");
 
-      alert('🎉 Account created successfully! You can now log in.');
-      navigate('/login');
+      setSuccess(true);
+      if (audioRef.current) audioRef.current.play();
+      setTimeout(() => navigate("/signin"), 3000);
     } catch (err) {
       setError(err.message);
+      generateCaptcha();
     } finally {
       setLoading(false);
     }
   };
 
-  // --- Render for Invalid Token ---
+  const nextStep = () => {
+    if (step === 1 && (!formData.firstName.trim() || !formData.lastName.trim())) {
+      setError("Please fill both names.");
+      setTimeout(() => setError(""), 3000);
+      return;
+    }
+    if (step === 2) {
+      if (!formData.phone.trim() || !formData.email.trim()) {
+        setError("Phone and email required.");
+        setTimeout(() => setError(""), 3000);
+        return;
+      }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+        setError("Invalid email.");
+        setTimeout(() => setError(""), 3000);
+        return;
+      }
+      if (formData.phone.replace(/\D/g, "").length !== 10) {
+        setError("Phone must be 10 digits.");
+        setTimeout(() => setError(""), 3000);
+        return;
+      }
+    }
+    setError("");
+    setStep(prev => prev + 1);
+  };
+
+  const getProgress = () => (step / 3) * 100;
+
   if (!token) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-red-50 to-red-100 p-4">
-        <div className="bg-white p-8 rounded-xl shadow-xl text-center max-w-sm w-full">
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 text-red-500 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-          </svg>
+      <div className="min-h-screen flex items-center justify-center bg-red-50 p-4">
+        <div className="bg-white p-8 rounded-lg shadow-xl text-center max-w-sm w-full">
           <h2 className="text-2xl font-bold text-red-700 mb-3">Invalid Link</h2>
-          <p className="text-gray-600 mb-6">It looks like this invitation link is invalid or has expired. Please contact your shop manager for a new one.</p>
-          <button
-            onClick={() => navigate('/')}
-            className="w-full bg-red-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-red-700 transition duration-200 shadow-md"
-          >
-            Go to Homepage
+          <p className="text-gray-600 mb-6">Contact your manager for a new invitation.</p>
+          <button onClick={() => navigate("/")} className="w-full bg-red-600 text-white py-3 rounded-lg hover:bg-red-700">
+            Go Home
           </button>
         </div>
       </div>
     );
   }
 
-  // --- Main Signup Form Render ---
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
-      <div className="bg-white p-8 rounded-xl shadow-2xl max-w-md w-full animate-fade-in-up">
-        <div className="text-center mb-8">
-            {/* Employee Icon */}
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 text-indigo-500 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-          <h2 className="text-3xl font-extrabold text-gray-900">Complete Your Employee Profile</h2>
-          <p className="text-gray-600 mt-2">Just a few steps to join your team!</p>
+    <div className="min-h-screen flex items-center justify-center px-4 bg-gray-50"
+      style={{
+        backgroundImage: `
+          linear-gradient(to right, rgba(0,0,0,0.06) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(0,0,0,0.06) 1px, transparent 1px)
+        `,
+        backgroundSize: "40px 40px, 40px 40px",
+        backgroundAttachment: "fixed",
+      }}
+    >
+      {success && <Confetti recycle={false} numberOfPieces={300} />}
+
+      <div className="w-full max-w-lg bg-white rounded-lg p-10 shadow-2xl border border-gray-100">
+        <h2 className="text-3xl font-extrabold text-emerald-600 text-center mb-3">
+          Employee Signup
+        </h2>
+        <p className="text-center text-gray-500 mb-6">Step {step} of 3</p>
+
+        <div className="w-full h-2 bg-gray-200 rounded-full mb-8">
+          <div className="h-full bg-gradient-to-r from-green-500 to-blue-600 rounded-full transition-all duration-500 ease-in-out"
+            style={{ width: `${getProgress()}%` }}></div>
         </div>
 
-        <form onSubmit={handleSignup} className="space-y-5">
-          <div>
-            <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-1">First Name</label>
-            <input
-              id="firstName"
-              name="firstName"
-              type="text"
-              placeholder="John"
-              value={form.firstName}
-              onChange={handleChange}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition duration-150"
-              required
-            />
-          </div>
-          <div>
-            <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
-            <input
-              id="lastName"
-              name="lastName"
-              type="text"
-              placeholder="Doe"
-              value={form.lastName}
-              onChange={handleChange}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition duration-150"
-              required
-            />
-          </div>
-          <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">Password</label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              placeholder="Create a strong password"
-              value={form.password}
-              onChange={handleChange}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition duration-150"
-              required
-            />
-          </div>
-          <div>
-            <label htmlFor="countryCode" className="block text-sm font-medium text-gray-700 mb-1">Country Code (e.g., +91)</label>
-            <input
-              id="countryCode"
-              name="countryCode"
-              type="text" // Could be a select dropdown for better UX
-              placeholder="+91"
-              value={form.countryCode}
-              onChange={handleChange}
-              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition duration-150"
-            />
-          </div>
+        {error && (
+          <p className="text-red-500 text-sm text-center mb-4 animate-pulse border border-red-200 bg-red-50 p-2 rounded-lg">
+            {error}
+          </p>
+        )}
 
-          {error && (
-            <div className="bg-red-50 border-l-4 border-red-400 text-red-700 p-3 rounded-md" role="alert">
-              <p className="font-bold">Error!</p>
-              <p className="text-sm">{error}</p>
+        <form onSubmit={handleSubmit} className="space-y-8">
+          {step === 1 && (
+            <div className="space-y-8">
+              <UnderlineInput label="First Name" name="firstName" value={formData.firstName} onChange={handleChange} Icon={User} />
+              <UnderlineInput label="Last Name" name="lastName" value={formData.lastName} onChange={handleChange} Icon={User} />
             </div>
           )}
 
-          <button
-            type="submit"
-            disabled={loading}
-            className={`w-full ${loading ? 'bg-indigo-400' : 'bg-indigo-600 hover:bg-indigo-700'} text-white py-3 px-4 rounded-lg font-semibold transition duration-200 shadow-lg disabled:opacity-60 disabled:cursor-not-allowed`}
-          >
-            {loading ? 'Creating Account...' : 'Complete Signup'}
-          </button>
+          {step === 2 && (
+            <div className="space-y-8">
+              <div className="relative">
+                <PhoneInputField label="Phone Number (10 digits)" value={formData.phone} onChange={handlePhoneChange} />
+              </div>
+              <UnderlineInput label="Email" name="email" value={formData.email} onChange={handleChange} Icon={Mail} />
+            </div>
+          )}
+
+          {step === 3 && (
+            <div className="space-y-8">
+              <UnderlineInput
+                label="Password"
+                name="password"
+                type={showPassword ? "text" : "password"}
+                value={formData.password}
+                onChange={handleChange}
+                Icon={Lock}
+                ToggleIcon={showPassword ? EyeOff : Eye}
+                onToggle={() => setShowPassword(!showPassword)}
+              />
+              <UnderlineInput
+                label="Confirm Password"
+                name="confirmPassword"
+                type={showConfirmPassword ? "text" : "password"}
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                Icon={Lock}
+                ToggleIcon={showConfirmPassword ? EyeOff : Eye}
+                onToggle={() => setShowConfirmPassword(!showConfirmPassword)}
+              />
+
+              <div className="flex items-end space-x-4 pt-2">
+                <div className="flex-grow">
+                  <UnderlineInput label="Enter Captcha" name="captchaInput" value={formData.captchaInput} onChange={handleChange} Icon={Puzzle} />
+                </div>
+                <div className="flex-shrink-0 w-24 h-10 bg-gray-100 border border-gray-300 rounded-md overflow-hidden flex items-center justify-center">
+                  <canvas ref={canvasRef} width={100} height={40} className="w-full h-full" />
+                </div>
+                <button type="button" onClick={generateCaptcha}
+                  className="flex-shrink-0 w-10 h-10 text-gray-500 hover:text-blue-600 transition-colors duration-200 border border-gray-300 rounded-md flex items-center justify-center">
+                  <RefreshCw className="h-5 w-5" />
+                </button>
+              </div>
+
+              <button
+                type="submit"
+                disabled={loading}
+                className={`w-full bg-gradient-to-r from-green-500 to-blue-600 text-white font-bold py-3 rounded-lg shadow-lg transition-all duration-300 text-lg
+                  ${loading ? "opacity-60 cursor-not-allowed" : "hover:from-green-600 hover:to-blue-700 active:scale-[0.99]"}`}
+              >
+                {loading ? (
+                  <span className="flex items-center justify-center gap-2">
+                    <svg className="animate-spin h-5 w-5 text-white" viewBox="0 0 24 24" fill="none">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4l3.5-3.5L12 0v4a8 8 0 00-8 8z"></path>
+                    </svg>
+                    Creating Account...
+                  </span>
+                ) : "Complete Signup"}
+              </button>
+            </div>
+          )}
         </form>
+
+        <div className="mt-8 space-y-3">
+          {step < 3 && (
+            <button type="button" onClick={nextStep}
+              className="w-full py-3 font-bold rounded-lg shadow-lg transition-all duration-300 text-lg bg-gradient-to-r from-emerald-500 to-blue-600 text-white hover:from-emerald-600 hover:to-blue-700 active:scale-[0.99]">
+              Next
+            </button>
+          )}
+          {step > 1 && step < 4 && (
+            <button type="button" onClick={() => setStep(prev => prev - 1)}
+              className="w-full py-3 bg-gray-200 hover:bg-gray-300 active:scale-[0.99] text-gray-700 font-semibold rounded-lg transition-all duration-300">
+              Back
+            </button>
+          )}
+        </div>
+
+        <div className="text-center mt-8 text-sm">
+          <span className="text-gray-500">Already have an account? </span>
+          <button onClick={() => navigate("/signin")} className="text-blue-600 hover:text-blue-700 font-bold hover:underline">
+            Login
+          </button>
+        </div>
+
+        <audio ref={audioRef} src="/sounds/correct.mp3" preload="auto" />
       </div>
     </div>
   );
