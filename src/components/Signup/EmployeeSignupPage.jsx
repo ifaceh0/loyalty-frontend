@@ -168,14 +168,23 @@ export default function EmployeeSignupPage() {
         body: JSON.stringify(payload),
       });
 
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Signup failed");
+      let data = null;
+      const contentType = res.headers.get("content-type");
+      if (contentType && contentType.includes("application/json")) {
+        data = await res.json();
+      }
+
+      if (!res.ok) {
+        const msg = data?.message || "Signup failed";
+        throw new Error(msg);
+      }
 
       setSuccess(true);
       if (audioRef.current) audioRef.current.play();
       setTimeout(() => navigate("/signin"), 3000);
+
     } catch (err) {
-      setError(err.message);
+      setError(err.message || "Something went wrong");
       generateCaptcha();
     } finally {
       setLoading(false);
