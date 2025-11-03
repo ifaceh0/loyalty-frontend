@@ -921,9 +921,9 @@ const CustomerLookup = () => {
   }
 
   return (
-    <div className="p-6 md:p-10">
-      <div className="flex justify-center">
-        <div className="bg-indigo-600 text-white rounded-lg p-4 md:p-6 mb-10 shadow-2xl">
+    <div className="min-h-screen">
+      <div className="flex justify-center mt-10 px-4">
+        <div className="bg-indigo-600 text-white rounded-lg p-4 md:p-6 mb-20 shadow-2xl">
           <h1 className="text-3xl md:text-5xl text-center font-black mb-2 tracking-tight">
             Shop Name : <span className="text-yellow-300">{shopName || "Shop Name"}</span>
           </h1>

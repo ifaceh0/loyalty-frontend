@@ -802,6 +802,7 @@ const Signin = () => {
       localStorage.setItem("id", String(data.id));
       localStorage.setItem("name", data.name ?? "");
       localStorage.setItem("CompanyEmail", data.companyEmail ?? "");
+      localStorage.setItem("role", data.role ?? "");
 
       setSuccess(true);
 
@@ -810,6 +811,8 @@ const Signin = () => {
           navigate("/shopkeeper/dashboard");
         } else if (data.role === "USER") {
           navigate("/user/dashboard");
+        } else if (data.role === "EMPLOYEE") {
+          navigate("/shopkeeper/customer-lookup");
         } else {
           setError("Unrecognized role");
         }

@@ -32,7 +32,7 @@ import UserShopList from './components/ShopList/UserShopList.jsx';
 import PlanChange from './components/Subscription/Planchange.jsx';
 import EmployeeSignupPage from './components/Signup/EmployeeSignupPage.jsx';
 import InviteEmployeePage from './components/Employee/InviteEmployeePage.jsx';
-import DailyTransactionReport from './components/Customer/DailyTransactionReport.jsx'
+import DailyTransactionReport from './components/Customer/DailyTransaction.jsx'
 
 const router = createBrowserRouter([
    {

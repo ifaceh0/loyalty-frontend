@@ -17,7 +17,7 @@ import ShopkeeperProfile from "../Shopkeeper_profile/Shopkeeper_profile";
 import Shopkeeper_setting from "../Shopkeeper-setting/Shopkeeper_setting";
 import CustomerLookup from "../Customer/CustomerLookup";
 import SubscriptionDashboard from "../Subscription/SubscriptionDashboard";
-import DailyTransactionReport from "../Customer/DailyTransactionReport";
+import DailyTransactionReport from "../Customer/DailyTransaction";
 import InviteEmployeePage from "../Employee/InviteEmployeePage";
 import UserPurchaseChart from "../bar chart/UserPurchaseChart";
 import { useSidebar } from "../../context/SidebarContext";
@@ -194,8 +194,8 @@ const Shopdashboard = () => {
             { tab: "shopkeeper_setting", icon: faCog, label: "Shop Settings" },
             { tab: "interactions", icon: faUsers, label: "Interactions" },
             { tab: "subscription", icon: faCreditCard, label: "Subscription" },
-            { tab: "employee_management", icon: faUserTie, label: "Employee Management" },
-            { tab: "daily_transaction_report", icon: faFileInvoiceDollar, label: "Daily Transaction Report" },
+            { tab: "employee_management", icon: faUserTie, label: "Employee Manage" },
+            { tab: "daily_transaction_report", icon: faFileInvoiceDollar, label: "Daily Transaction" },
           ].map(({ tab, icon, label }) => (
             <div key={tab} className="relative group">
             <button
