@@ -30,6 +30,12 @@ const DailyTransaction = () => {
       });
       if (!response.ok) throw new Error('User not found');
       const data = await response.json();
+      // Check if transactions are empty
+      if (!data.transactions || data.transactions.length === 0) {
+        setUserError('No transactions found for this user.');
+        setShowUserPopup(true);
+        return;
+      }
       setUserData(data);
       setShowUserPopup(true);
     } catch (error) {
@@ -67,6 +73,20 @@ const DailyTransaction = () => {
   };
 
   const renderDailyData = () => {
+    // Validate date format (YYYY-MM-DD)
+    const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+    if (!selectedDate || !dateRegex.test(selectedDate)) {
+      setDailyError("Invalid date format. Please use YYYY-MM-DD.");
+      setShowDailyPopup(true);
+      return;
+    }
+
+    const parsedDate = new Date(selectedDate);
+    if (isNaN(parsedDate.getTime())) {
+      setDailyError("Invalid date entered. Please select a valid date.");
+      setShowDailyPopup(true);
+      return;
+    }
     fetchDailyTransactions(selectedDate);
     setShowDailyPopup(true);
   };
@@ -201,7 +221,7 @@ const DailyTransaction = () => {
 
         {showUserPopup && (
           <div className="fixed inset-0 bg-gray-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-            <div className="bg-white rounded-lg shadow-2xl w-full max-w-6xl h-[95vh] flex flex-col">
+            <div className="bg-white rounded-lg shadow-2xl w-full max-w-6xl h-[90vh] flex flex-col">
               <div className="bg-gradient-to-r from-indigo-700 to-blue-600 p-6 md:p-8 rounded-t-lg flex justify-between items-center shrink-0">
                 <h2 className="text-2xl md:text-3xl font-bold text-white">
                   User Profile
@@ -224,44 +244,49 @@ const DailyTransaction = () => {
                   <div className="flex flex-col items-center justify-center py-20 text-center">
                     <AlertCircle className="w-16 h-16 text-red-500 mb-4" />
                     <p className="text-xl font-semibold text-gray-700">{userError}</p>
-                    <p className="text-gray-500 mt-2">Please try a different User ID.</p>
                   </div>
                 ) : userData ? (
                   <>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
-                      <Card icon={Gift} color="text-indigo-600" title="Available Points" value={userData.availablePoints} unit="pts" />
-                      <Card icon={DollarSign} color="text-emerald-600" title="Total Spend" value={`₹${userData.totalSpend?.toFixed(2) || 0}`} />
-                      <Card icon={ShoppingBag} color="text-rose-500" title="Total Visits" value={userData.totalVisits} />
-                      <Card icon={TrendingUp} color="text-amber-500" title="Total Redeemed" value={`₹${userData.totalRedeemedAmount?.toFixed(2) || 0}`} />
-                    </div>
+                    {userData.transactions && userData.transactions.length > 0 ? (
+                      <>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+                          <Card icon={Gift} color="text-indigo-600" title="Available Points" value={userData.availablePoints} unit="pts" />
+                          <Card icon={DollarSign} color="text-emerald-600" title="Total Spend" value={`₹${userData.totalSpend?.toFixed(2) || 0}`} />
+                          <Card icon={ShoppingBag} color="text-rose-500" title="Total Visits" value={userData.totalVisits} />
+                          <Card icon={TrendingUp} color="text-amber-500" title="Total Redeemed" value={`₹${userData.totalRedeemedAmount?.toFixed(2) || 0}`} />
+                        </div>
 
-                    <div>
-                      <h3 className="text-2xl font-bold text-gray-800 mb-6 border-b pb-2 border-gray-200">Transaction History</h3>
-                      <div className="bg-white rounded-lg shadow-lg border border-gray-100 overflow-hidden">
-                        <div className="grid grid-cols-4 gap-4 p-5 bg-indigo-50 font-bold text-indigo-800 text-sm uppercase tracking-wider">
-                          <span>Amount</span>
-                          <span>Points Earned</span>
-                          <span>Redeemed</span>
-                          <span>Date & Time</span>
-                        </div>
-                        <div className="max-h-80 overflow-y-auto">
-                          {userData.transactions?.length > 0 ? (
-                            userData.transactions.map((tx, index) => (
-                              <div key={index} className="grid grid-cols-4 gap-4 p-5 border-b border-gray-100 hover:bg-indigo-50 transition-colors">
-                                <span className="font-extrabold text-gray-900">₹{tx.transactionAmount}</span>
-                                <span className="text-indigo-600 font-semibold">{tx.pointsEarned} pts</span>
-                                <span className="text-emerald-600 font-semibold">₹{(tx.redeemAmount ?? 0).toFixed(2)}</span>
-                                <span className="text-gray-600 text-sm">{formatDateTime(tx.purchaseDate)}</span>
-                              </div>
-                            ))
-                          ) : (
-                            <div className="p-10 text-center text-gray-500">
-                              No transaction history available.
+                        <div>
+                          <h3 className="text-2xl font-bold text-gray-800 mb-6 border-b pb-2 border-gray-200">Transaction History</h3>
+                          <div className="bg-white rounded-lg shadow-lg border border-gray-100 overflow-hidden">
+                            <div className="grid grid-cols-4 gap-4 p-5 bg-indigo-50 font-bold text-indigo-800 text-sm uppercase tracking-wider">
+                              <span>Date & Time</span>
+                              <span>Amount</span>
+                              <span>Points Earned</span>
+                              <span>Redeemed</span>
+                              
                             </div>
-                          )}
+                            <div className="max-h-80 overflow-y-auto">
+                              {userData.transactions.map((tx, index) => (
+                                <div key={index} className="grid grid-cols-4 gap-4 p-5 border-b border-gray-100 hover:bg-indigo-50 transition-colors">
+                                  <span className="text-gray-600 text-sm">{formatDateTime(tx.purchaseDate)}</span>
+                                  <span className="font-extrabold text-gray-900">₹{(tx.transactionAmount ?? 0).toFixed(2)}</span>
+                                  <span className="text-indigo-600 font-semibold">{tx.pointsEarned} pts</span>
+                                  <span className="text-emerald-600 font-semibold">₹{(tx.redeemAmount ?? 0).toFixed(2)}</span>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
                         </div>
+                      </>
+                    ) : (
+                      <div className="flex flex-col items-center justify-center h-full text-center">
+                        <AlertCircle className="w-16 h-16 text-gray-400 mb-4" />
+                        <p className="text-xl font-semibold text-gray-700">
+                          No transaction history available for this user.
+                        </p>
                       </div>
-                    </div>
+                    )}
                   </>
                 ) : null}
               </div>
@@ -271,7 +296,7 @@ const DailyTransaction = () => {
 
         {showDailyPopup && (
           <div className="fixed inset-0 bg-gray-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-            <div className="bg-white rounded-lg shadow-2xl w-full max-w-6xl h-[95vh] flex flex-col">
+            <div className="bg-white rounded-lg shadow-2xl w-full max-w-6xl h-[90vh] flex flex-col">
               <div className="bg-gradient-to-r from-teal-700 to-cyan-600 p-6 md:p-8 rounded-t-lg flex justify-between items-center shrink-0">
                 <h2 className="text-2xl md:text-3xl font-bold text-white">
                   Daily Transactions - {format(new Date(selectedDate), 'MMMM d, yyyy')}
@@ -304,10 +329,6 @@ const DailyTransaction = () => {
                 ) : dailyData && dailyData.transactions?.length > 0 ? (
                   <>
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-                      {/* <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg p-5 text-center border border-gray-200">
-                        <p className="text-sm text-gray-600 uppercase tracking-wider">Shop ID</p>
-                        <p className="text-2xl font-bold text-gray-800">#{dailyData.shopId}</p>
-                      </div> */}
                       <div className="bg-gradient-to-br from-teal-50 to-teal-100 rounded-lg p-5 text-center border border-teal-200">
                         <p className="text-sm text-teal-700 uppercase tracking-wider">Total Sales</p>
                         <p className="text-2xl font-bold text-teal-800">₹{dailyData.totalSales?.toFixed(2)}</p>
