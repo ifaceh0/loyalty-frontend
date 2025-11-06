@@ -633,7 +633,7 @@ const ShopkeeperProfile = () => {
 
   // --- Render ---
   return (
-    <div className="max-w-5xl mx-auto bg-gray-50 rounded-lg shadow-2xl overflow-hidden mt-10">
+    <div className="max-w-8xl mx-auto bg-gray-50 rounded-lg shadow-2xl overflow-hidden mt-2">
       {/* Header/Navigation */}
       <nav className="bg-blue-600 text-white px-8 py-4 flex justify-between items-center">
         <h2 className="text-2xl font-extrabold flex items-center gap-3">

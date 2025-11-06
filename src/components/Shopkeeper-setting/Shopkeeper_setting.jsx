@@ -697,7 +697,7 @@ const ShopkeeperSetting = () => {
   }
 
   return (
-    <div className="max-w-6xl mx-auto bg-white rounded-lg shadow-2xl overflow-hidden my-8">
+    <div className="max-w-8xl mx-auto bg-white rounded-lg shadow-2xl overflow-hidden my-2">
       {/* Header */}
       <nav className="bg-blue-600 text-white px-6 py-4 flex justify-between items-center">
         <h2 className="text-2xl font-extrabold tracking-tight">Loyalty Program Settings</h2>

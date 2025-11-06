@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { FaInfoCircle } from "react-icons/fa";
 import Confetti from "react-confetti";
 import { Eye, EyeOff, Lock, Mail, RefreshCw, User, Smartphone, Puzzle } from "lucide-react";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -277,7 +278,22 @@ export default function EmployeeSignupPage() {
               <div className="relative">
                 <PhoneInputField label="Phone Number (10 digits)" value={formData.phone} onChange={handlePhoneChange} />
               </div>
-              <UnderlineInput label="Email" name="email" value={formData.email} onChange={handleChange} Icon={Mail} />
+              <div className="relative">
+                <UnderlineInput
+                  label="Email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  Icon={Mail}
+                />
+                <div className="absolute top-1/2 right-3 -translate-y-1/2 group cursor-pointer">
+                  <FaInfoCircle className="text-gray-500 cursor-pointer" />
+                    <div className="absolute left-8 top-1/2 -translate-y-1/2 bg-gray-800 text-white text-sm rounded-lg px-3 py-2 opacity-0 group-hover:opacity-100 group-focus:opacity-100 transition-opacity duration-300 whitespace-nowrap shadow-lg z-50">
+                      <p>This email should match the invitation sent by</p>
+                      <p>the shopkeeper for employee registration.</p>
+                    </div>
+                </div>
+              </div>
             </div>
           )}
 

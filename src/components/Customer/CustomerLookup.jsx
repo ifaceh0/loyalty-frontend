@@ -688,7 +688,7 @@ const CustomerLookup = () => {
   if (scannedData) {
     return (
       <div className="fixed inset-0 flex items-center justify-center bg-gray-900/70 z-50">
-        <div className="relative w-full max-w-lg px-4">
+        <div className="relative w-full max-w-2xl px-6">
           {!isPopupOpen && (
             <div className={`bg-white shadow-2xl w-full max-h-[90vh] flex flex-col z-10 border-t-${PRIMARY_COLOR}`}>
               <nav className={`bg-${PRIMARY_COLOR} text-white px-6 py-4 flex justify-between items-center sticky top-0 z-20`}>
@@ -923,19 +923,19 @@ const CustomerLookup = () => {
   return (
     <div className="min-h-screen">
       <div className="flex justify-center mt-10 px-4">
-        <div className="bg-indigo-600 text-white rounded-lg p-4 md:p-6 mb-20 shadow-2xl">
+        <div className="text-black border-2 rounded-lg p-4 md:p-6 mb-20">
           <h1 className="text-3xl md:text-5xl text-center font-black mb-2 tracking-tight">
-            Shop Name : <span className="text-yellow-300">{shopName || "Shop Name"}</span>
+            Shop Name : <span className="text-blue-600">{shopName || "Shop Name"}</span>
           </h1>
         </div>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4 max-w-7xl mx-auto">
+      <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4 max-w-6xl mx-auto">
         {/* QR Scanner */}
         <div className="rounded-lg border border-blue-100 bg-blue-50 p-6 shadow-lg text-center">
           <QrCode className="text-blue-600 mx-auto mb-3" size={36} />
-          <h2 className="text-lg font-semibold mb-2 text-black-500">⚡ Quick Scan</h2>
-          <p className="text-sm text-gray-600 mb-4">Use camera to identify instantly.</p>
+          <h2 className="text-lg font-semibold mb-3 text-black-500">⚡ Quick Scan</h2>
+          <p className="text-sm text-gray-600 mb-6">Use camera to identify instantly.</p>
           <button
             className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium"
             onClick={() => setShowScanner(true)}
@@ -946,7 +946,7 @@ const CustomerLookup = () => {
      
         {/* Phone */}
         <div className="rounded-lg border border-indigo-100 bg-indigo-50 p-6 shadow-lg">
-          <h2 className="text-lg font-semibold text-black-500 mb-3">📞 Phone Number</h2>
+          <h2 className="text-lg font-semibold text-black-500 mb-5">📞 Phone Number</h2>
           <input
             type="text"
             inputMode="numeric"
@@ -958,7 +958,7 @@ const CustomerLookup = () => {
             }}
             placeholder="Enter 10-digit mobile number"
             maxLength={10}
-            className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 mb-3 ${
+            className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 mb-6 ${
               phone && phone.length !== 10 ? "border-red-400 focus:ring-red-400" : "border-indigo-300 focus:ring-indigo-400"
             }`}
           />
@@ -974,20 +974,20 @@ const CustomerLookup = () => {
           >
             {loading.phone ? "Searching..." : "Search"}
           </button>
-          <p className="text-xs text-gray-500 mt-2">
+          <p className="text-xs text-gray-500 mt-3">
             Must be a valid 10 digit number.
           </p>
         </div>
 
         {/* Email */}
         <div className="rounded-lg border border-sky-100 bg-sky-50 p-6 shadow-lg">
-          <h2 className="text-lg font-semibold text-black-500 mb-3">📧 Email Address</h2>
+          <h2 className="text-lg font-semibold text-black-500 mb-5">📧 Email Address</h2>
           <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Enter email address"
-            className="w-full px-4 py-2 border border-sky-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-400 mb-3"
+            className="w-full px-4 py-2 border border-sky-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-400 mb-6"
           />
           <button
             onClick={() => handleSearch("email")}
@@ -998,18 +998,18 @@ const CustomerLookup = () => {
           >
             {loading.email ? "Searching..." : "Search"}
           </button>
-          <p className="text-xs text-gray-500 mt-2">Search by registered email.</p>
+          <p className="text-xs text-gray-500 mt-3">Search by registered email.</p>
         </div>
 
         {/* Invite */}
         <div className="rounded-lg border border-violet-100 bg-violet-50 p-6 shadow-lg">
-          <h2 className="text-lg font-semibold text-black-500 mb-3">📨 Refer a New Customer</h2>
+          <h2 className="text-lg font-semibold text-black-500 mb-5">📨 Refer New Customer</h2>
           <input
             type="email"
             value={inviteEmail}
             onChange={(e) => setInviteEmail(e.target.value)}
             placeholder="Customer's email address"
-            className="w-full px-4 py-2 border border-violet-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-400 mb-4"
+            className="w-full px-4 py-2 border border-violet-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-400 mb-6"
           />
           <button
             onClick={handleSendInvite}
@@ -1020,7 +1020,7 @@ const CustomerLookup = () => {
           >
             {sendingInvite ? "Sending..." : "Send Invite"}
           </button>
-          <p className="text-xs text-gray-500 mt-2">Welcome email with signup link.</p>
+          <p className="text-xs text-gray-500 mt-3">Welcome email with signup link.</p>
         </div>
       </div>
 

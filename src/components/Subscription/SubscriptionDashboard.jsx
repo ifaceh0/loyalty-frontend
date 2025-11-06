@@ -63,9 +63,9 @@ const SubscriptionDashboard = () => {
   const subscriptionUrl = `https://subscription-frontend-psi.vercel.app/subscription-dashboard?email=${encodeURIComponent(companyEmail)}`;
 
   return (
-    <div className="min-h-screen bg-gray-50 font-sans">
+    <div className="min-h-screen bg-gray-50">
       {/* Hero Header Section */}
-      <header className="bg-sky-700 py-20 shadow-lg">
+      <header className="bg-sky-700 py-20 shadow-lg rounded-lg">
         <div className="w-full max-w-6xl mx-auto px-4 text-center">
           <h1 className="text-5xl md:text-6xl font-extrabold text-white mb-4 leading-tight">
             Elevate Your Experience

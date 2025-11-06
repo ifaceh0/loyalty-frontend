@@ -28,13 +28,13 @@ export default function QRModal({ shop, qrData, isOpen, onClose }) {
   return (
     <div className="fixed inset-0 z-50 flex justify-center bg-black bg-opacity-60 backdrop-blur-md px-4 py-12 overflow-y-auto">
       <div className="bg-white w-full max-w-md shadow-2xl overflow-hidden transform transition-all duration-300 scale-100 my-auto max-h-full">
-        <nav className="bg-indigo-600 text-white px-6 py-4 flex justify-between items-center sticky top-0 z-10">
+        <nav className="bg-blue-600 text-white px-6 py-4 flex justify-between items-center sticky top-0 z-10">
           <h2 className="text-xl font-extrabold flex items-center gap-3">
-            <FontAwesomeIcon icon={faQrcode} className="text-teal-300 text-2xl" />
+            <FontAwesomeIcon icon={faQrcode} className="text-white text-2xl" />
             QR Code for <span className="truncate">{shop.shopName}</span>
           </h2>
           <button
-            className="p-1 rounded-full hover:bg-indigo-700 text-white transition duration-200"
+            className="p-1 rounded-full hover:bg-blue-700 text-white transition duration-200"
             onClick={onClose}
             aria-label="Close Modal"
           >
@@ -56,7 +56,7 @@ export default function QRModal({ shop, qrData, isOpen, onClose }) {
                     />
                     <button
                         onClick={handleDownload}
-                        className="mt-6 w-full md:w-auto bg-teal-500 hover:bg-teal-600 text-white px-6 py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition duration-300 shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
+                        className="mt-6 w-full md:w-auto bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-bold flex items-center justify-center gap-2 transition duration-300 shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
                     >
                         <FontAwesomeIcon icon={faDownload} className="text-lg" />
                         Download Loyalty QR Code
@@ -101,7 +101,7 @@ export default function QRModal({ shop, qrData, isOpen, onClose }) {
                     
                     <div className="flex items-center gap-3 pt-3 border-t border-gray-200">
                     <FontAwesomeIcon icon={faWallet} className="text-green-600 text-xl w-5" />
-                    <span className="text-lg font-bold text-green-700">
+                    <span className="text-lg font-bold text-green-600">
                         <span className="font-semibold">Available Points:</span> {qrData.availablePoints} Points 💰
                     </span>
                     </div>
