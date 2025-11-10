@@ -635,7 +635,7 @@ const CustomerLookup = () => {
       setSuccessTitle("PURCHASE PROCESSED");
       setSuccessMessage(
         result.claimed
-          ? `Discount of $${result.claimedAmount.toFixed(2)} applied. Net: $${result.adjustedDollarAmount}. Points: ${result.adjustedPoints}. New balance: ${result.newBalance}.`
+          ? `Discount of $${result.claimedAmount.toFixed(2)} applied. Net purchase: $${result.adjustedDollarAmount}. Points earned: ${result.adjustedPoints}. New balance: ${result.newBalance}.`
           : `$${result.adjustedDollarAmount || previewData.originalDollarAmount} purchased. Points Earned: ${result.adjustedPoints || result.earnedPoints}${
               result.signupBonusAdded > 0 ? ` + Signup: ${result.signupBonusAdded}` : ""
             }. New balance: ${result.newBalance}.`
@@ -875,10 +875,10 @@ const CustomerLookup = () => {
                 <FontAwesomeIcon icon={faDollarSign} className={`text-${INFO_COLOR} text-5xl mb-4`} />
                 <h3 className="text-2xl font-bold text-gray-800 mb-2">Confirm Purchase</h3>
                 <p className="text-md text-gray-700 mb-3">
-                  Amount: <span className={`font-bold text-${PRIMARY_COLOR}`}>${previewData.originalDollarAmount}</span>
+                  Amount Purchased: <span className={`font-bold text-${PRIMARY_COLOR}`}>${previewData.originalDollarAmount}</span>
                 </p>
                 <p className="text-md text-gray-700 mb-3">
-                  Points Earned: <span className={`font-bold text-${ACCENT_COLOR}`}>
+                 Points Earned After purchase: <span className={`font-bold text-${ACCENT_COLOR}`}>
                     {previewData.claimed ? previewData.adjustedPoints : previewData.earnedPoints}
                   </span>
                 </p>
@@ -889,7 +889,7 @@ const CustomerLookup = () => {
                 )}
                 {previewData.signupBonus > 0 && (
                   <p className="text-md text-gray-700 mb-4">
-                    Signup Bonus: <span className={`font-bold text-${SUCCESS_COLOR}`}>{previewData.signupBonus}</span>
+                    Signup Bonus Points: <span className={`font-bold text-${SUCCESS_COLOR}`}>{previewData.signupBonus}</span>
                   </p>
                 )}
                 <button

@@ -52,10 +52,8 @@ const QrScanner = ({ onClose }) => {
     return parsedSaved.filter((entry) => now - entry.timestamp < oneHour);
   });
 
-  // --- CHANGE START: Added new state for eligibility loading and claim confirmation popup ---
   const [isCheckingEligibility, setIsCheckingEligibility] = useState(false);
   const [showConfirmClaimPopup, setShowConfirmClaimPopup] = useState(false);
-  // --- CHANGE END ---
 
   useEffect(() => {
     localStorage.setItem("claimedUsers", JSON.stringify(claimedUsers));
@@ -121,11 +119,9 @@ const QrScanner = ({ onClose }) => {
       setAssociated(verified.associated ?? true);
       setGuidance("Customer Scanned! Enter purchase amount.");
 
-      // --- CHANGE START: Set loading state before checking eligibility ---
       setIsCheckingEligibility(true);
       await checkRewardEligibility(fullData.userId, parsed.shopId);
       setIsCheckingEligibility(false);
-      // --- CHANGE END ---
 
     } catch (e) {
       setError("Scanned QR is not valid or verification failed.");
@@ -174,13 +170,11 @@ const QrScanner = ({ onClose }) => {
       return;
     }
 
-    // --- CHANGE START: Added check for minRewardAmount if intentToClaim is true ---
     if (intentToClaim && original < minRewardAmount) {
       setError(`Purchase amount must be at least $${minRewardAmount.toFixed(2)} to claim the reward.`);
       setShowErrorPopup(true);
       return;
     }
-    // --- CHANGE END ---
 
     setIsSubmitting(true);
 
@@ -256,9 +250,9 @@ const QrScanner = ({ onClose }) => {
       setSuccessMessage(
         result.claimed
           ? `Discount of $${result.claimedAmount.toFixed(2)} applied. Net purchase: $${result.adjustedDollarAmount}. Points earned: ${result.adjustedPoints}. New balance: ${result.newBalance}.`
-          : `$${result.adjustedDollarAmount || previewData.originalDollarAmount} recorded. Points added: ${result.adjustedPoints || result.earnedPoints}${
+          : `$${result.adjustedDollarAmount || previewData.originalDollarAmount} purchased. Points Earned: ${result.adjustedPoints || result.earnedPoints}${
               result.signupBonusAdded > 0 ? ` + Signup: ${result.signupBonusAdded}` : ""
-            }. New balance: ${result.newBalance}.`
+            }. New points balance: ${result.newBalance}.`
       );
       setSuccessIconColor(SUCCESS_COLOR);
       setShowSuccessPopup(true);
@@ -379,9 +373,7 @@ const QrScanner = ({ onClose }) => {
     setPurchaseAmount("");
     setShowPreviewPopup(false);
     setPreviewData(null);
-    // --- CHANGE START: Reset confirm claim popup ---
     setShowConfirmClaimPopup(false);
-    // --- CHANGE END ---
     startCamera();
   };
 
@@ -401,15 +393,11 @@ const QrScanner = ({ onClose }) => {
     setPurchaseAmount("");
     setShowPreviewPopup(false);
     setPreviewData(null);
-    // --- CHANGE START: Reset confirm claim popup ---
     setShowConfirmClaimPopup(false);
-    // --- CHANGE END ---
     onClose();
   };
 
-// --- CHANGE START: Updated isPopupOpen to include new popups and loading ---
   const isPopupOpen = showErrorPopup || showSuccessPopup || showClaimIntentPopup || showPreviewPopup || showConfirmClaimPopup || isCheckingEligibility;
-  // --- CHANGE END ---
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-gray-900/70 z-50">
@@ -510,11 +498,9 @@ const QrScanner = ({ onClose }) => {
                         step="0.01"
                         placeholder="0.00"
                         value={purchaseAmount}
-                        // onChange={(e) => setPurchaseAmount(e.target.value)}
                         onChange={(e) => {
                           const value = e.target.value;
 
-                          // Prevent negative, zero, or invalid input
                           if (value === "" || parseFloat(value) <= 0) {
                             setPurchaseAmount("");
                             return;
@@ -617,10 +603,8 @@ const QrScanner = ({ onClose }) => {
               </p>
               <button
                 onClick={() => {
-                  // --- CHANGE START: Show confirm popup instead of directly setting intent ---
                   setShowClaimIntentPopup(false);
                   setShowConfirmClaimPopup(true);
-                  // --- CHANGE END ---
                 }}
                 className={`w-full bg-${SUCCESS_COLOR} hover:bg-green-700 text-white font-bold px-5 py-3 rounded-xl shadow-md transition duration-200 mb-3`}
               >
@@ -639,7 +623,7 @@ const QrScanner = ({ onClose }) => {
           </div>
         )}
 
-        {/* --- CHANGE START: Added Confirm Claim Popup --- */}
+        {/* Confirm Claim Popup */}
         {showConfirmClaimPopup && (
           <div className="absolute inset-0 flex items-center justify-center z-50">
             <div className={`bg-white p-8 rounded-lg shadow-2xl text-center w-full max-w-sm border-t-8 border-t-${ACCENT_COLOR} animate-fade-in`}>
@@ -669,7 +653,6 @@ const QrScanner = ({ onClose }) => {
             </div>
           </div>
         )}
-        {/* --- CHANGE END --- */}
 
         {/* Preview Confirm Popup */}
         {showPreviewPopup && previewData && (
@@ -681,7 +664,7 @@ const QrScanner = ({ onClose }) => {
                 Amount Purchase: <span className={`font-bold text-${PRIMARY_COLOR}`}>${previewData.originalDollarAmount}</span>
               </p>
               <p className="text-md text-gray-700 mb-3">
-                Points Earned After Claimed: <span className={`font-bold text-${ACCENT_COLOR}`}>
+                Points Earned After purchase: <span className={`font-bold text-${ACCENT_COLOR}`}>
                   {previewData.claimed ? previewData.adjustedPoints : previewData.earnedPoints}
                 </span>
               </p>
@@ -715,14 +698,12 @@ const QrScanner = ({ onClose }) => {
           </div>
         )}
 
-        {/* --- CHANGE START: Added full-page loading animation for eligibility check --- */}
         {isCheckingEligibility && (
           <div className="absolute inset-0 flex flex-col items-center justify-center z-50 bg-white/90">
             <div className="animate-spin rounded-full h-32 w-32 border-t-4 border-b-4 border-blue-500 mb-4"></div>
             <p className="text-lg font-semibold text-gray-700">Checking for eligible reward...</p>
           </div>
         )}
-        {/* --- CHANGE END --- */}
 
       </div>
     </div>
