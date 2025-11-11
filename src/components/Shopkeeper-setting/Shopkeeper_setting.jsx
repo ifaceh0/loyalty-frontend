@@ -470,10 +470,10 @@ import React, { useState, useEffect } from "react";
 import { FiTrash2, FiX, FiEdit3, FiSave, FiPlus, FiLoader } from "react-icons/fi"; // Added FiLoader
 
 const inputStyle =
-  "w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition duration-200 shadow-sm";
+  "w-full px-4 py-2 border border-gray-300 rounded-sm focus:ring-blue-500 focus:border-blue-500 transition duration-200 shadow-sm";
 
 const SectionWrapper = ({ title, children, isEditMode }) => (
-  <div className={`p-6 rounded-lg border-2 ${isEditMode ? 'border-blue-200 bg-white shadow-lg' : 'border-gray-100 bg-gray-50 shadow-inner'} space-y-4 transition-colors duration-300`}>
+  <div className={`p-6 rounded-md border-2 ${isEditMode ? 'border-blue-200 bg-white shadow-lg' : 'border-gray-100 bg-gray-50 shadow-inner'} space-y-4 transition-colors duration-300`}>
     <h3 className="text-xl font-bold text-blue-700 border-b pb-2">{title}</h3>
     {children}
   </div>
@@ -697,16 +697,16 @@ const ShopkeeperSetting = () => {
   }
 
   return (
-    <div className="max-w-8xl mx-auto bg-white rounded-lg shadow-2xl overflow-hidden my-2">
+    <div className="max-w-8xl mx-auto bg-white rounded-md shadow-2xl overflow-hidden my-2">
       {/* Header */}
-      <nav className="bg-blue-600 text-white px-6 py-4 flex justify-between items-center">
+      <nav className="bg-blue-600 text-white px-6 py-3 flex justify-between items-center">
         <h2 className="text-2xl font-extrabold tracking-tight">Loyalty Program Settings</h2>
         
         <div className="flex items-center gap-3">
           {isEditMode && (
              <button
                 onClick={handleCancelEdit}
-                className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition duration-200 flex items-center gap-1 font-semibold shadow-md"
+                className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-sm transition duration-200 flex items-center gap-1 font-semibold shadow-md"
                 disabled={isSaving}
             >
                 <FiX className="w-5 h-5" />
@@ -717,7 +717,7 @@ const ShopkeeperSetting = () => {
           <button
             onClick={handleSubmit}
             disabled={isSaving}
-            className={`text-white px-5 py-2 rounded-lg transition duration-200 flex items-center gap-2 font-semibold shadow-md ${
+            className={`text-white px-5 py-2 rounded-sm transition duration-200 flex items-center gap-2 font-semibold shadow-md ${
               isEditMode
                 ? (isSaving ? 'bg-green-400 cursor-not-allowed' : 'bg-green-500 hover:bg-green-600')
                 : 'bg-blue-700 hover:bg-blue-800'
@@ -767,7 +767,7 @@ const ShopkeeperSetting = () => {
               </div>
 
               {/* Dollar to Point Mapping */}
-              <div className="border p-4 rounded-lg bg-white shadow-inner">
+              <div className="border p-4 rounded-md bg-white shadow-inner">
                 <label className="block text-sm font-semibold mb-1 text-gray-700">Points per Dollar Spent</label>
                 <div className="flex items-center gap-2">
                   <span className="text-xl font-bold text-gray-500">$1 =</span>
@@ -789,7 +789,7 @@ const ShopkeeperSetting = () => {
             </div>
 
             <div className="mt-6 border-t pt-4">
-              <div className="border p-4 rounded-lg bg-white shadow-inner">
+              <div className="border p-4 rounded-md bg-white shadow-inner">
                 <label className="block text-sm font-semibold mb-1 text-gray-700">Minimum Purchase Amount for Rewards ($)</label>
                 <div className="flex items-center gap-2">
                   <span className="text-xl font-bold text-gray-500">Min. Spend:</span>
@@ -820,7 +820,7 @@ const ShopkeeperSetting = () => {
                     <h4 className="font-semibold text-lg mb-3 text-gray-800">1. Purchase-Based Bonus Points</h4>
                     <p className="text-sm text-gray-500 mb-4">Award **extra points** when a customer spends above a certain amount in a **single purchase**.</p>
                     {formData.purchaseRewards.map((r, i) => (
-                    <div key={i} className="flex items-end gap-3 p-3 border-l-4 border-yellow-500 bg-white shadow-md mb-3 rounded-lg">
+                    <div key={i} className="flex items-end gap-3 p-3 border-l-4 border-yellow-500 bg-white shadow-md mb-3 rounded-md">
                         <span className="font-medium text-lg text-yellow-700 w-6 flex-shrink-0">{i + 1}.</span>
                         
                         <div className="flex-1">
@@ -873,7 +873,7 @@ const ShopkeeperSetting = () => {
                     <h4 className="font-semibold text-lg mb-3 text-gray-800">2. Loyalty Milestone Rewards</h4>
                     <p className="text-sm text-gray-500 mb-4">Award a **$ discount** when a customer's **total accumulated points** hits a milestone.</p>
                     {formData.milestoneRewards.map((m, i) => (
-                    <div key={i} className="flex items-end gap-3 p-3 border-l-4 border-green-500 bg-white shadow-md mb-3 rounded-lg">
+                    <div key={i} className="flex items-end gap-3 p-3 border-l-4 border-green-500 bg-white shadow-md mb-3 rounded-md">
                         <span className="font-medium text-lg text-green-700 w-6 flex-shrink-0">{i + 1}.</span>
                         
                         <div className="flex-1">
@@ -929,7 +929,7 @@ const ShopkeeperSetting = () => {
             <p className="text-sm text-gray-500 mb-4">Set up a **limited-time** bonus to offer more points per dollar during a special event or promotion.</p>
             <div className="space-y-6">
                 {formData.specialBonuses.map((b, i) => (
-                <div key={i} className="p-4 border-l-4 border-purple-500 bg-white shadow-lg rounded-lg space-y-3">
+                <div key={i} className="p-4 border-l-4 border-purple-500 bg-white shadow-lg rounded-md space-y-3">
                     <div className="flex justify-between items-start">
                         <h5 className="font-medium text-purple-700">Bonus Campaign #{i + 1}</h5>
                         {isEditMode && (

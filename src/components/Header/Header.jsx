@@ -4,6 +4,8 @@
 // import { Menu } from 'lucide-react';
 // import { useSidebar } from '../../context/SidebarContext';
 
+// const LOGOUT_API = 'https://loyalty-backend-java.onrender.com/api/auth/logout'; 
+
 // export default function Header() {
 //   const [isLoggedIn, setIsLoggedIn] = useState(false);
 //   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
@@ -22,20 +24,33 @@
 //     setUserDropdownOpen(false);
 //   }, [location]);
 
-//   const handleLogout = () => {
-//     localStorage.removeItem('isLoggedIn');
-//     localStorage.removeItem('token');
-//     localStorage.removeItem('userType');
-//     localStorage.removeItem('id');
-//     localStorage.removeItem('role');
-//     navigate('/');
-//     window.location.reload();
+//   const handleLogout = async () => {
+//     try {
+//       const res = await fetch(LOGOUT_API, {
+//         method: 'POST',
+//         credentials: 'include', 
+//       });
+
+//       if (!res.ok) {
+//         console.warn('Logout API failed, clearing client state anyway');
+//       }
+
+//       localStorage.removeItem('isLoggedIn');
+//       localStorage.removeItem('id');
+//       localStorage.removeItem('name');
+//       localStorage.removeItem('CompanyEmail');
+  
+//       navigate('/signin');
+//     } catch (err) {
+//       console.error('Logout error:', err);
+//       localStorage.clear();
+//       navigate('/');
+//     }
 //   };
 
 //   return (
 //     <header className="sticky top-0 z-50 bg-indigo-900 shadow-md text-white">
 //       <nav className="px-4 lg:px-8 py-3 flex items-center justify-between">
-//         {/* Logo or Sidebar Toggle */}
 //         <div className="flex items-center gap-4">
 //           {isLoggedIn ? (
 //             <button onClick={() => setSidebarOpen(true)} className="text-white">
@@ -143,11 +158,11 @@
 //                 <span className="hidden lg:inline">{userName || 'Username'}</span>
 //               </button>
 //               <div className="hidden group-hover:block absolute top-full right-0 w-40 bg-white shadow-lg border rounded-md p-2">
-//                 <button 
+//                 <button
 //                   onClick={handleLogout}
 //                   className="block py-1 px-2 text-sm hover:bg-gray-100 w-full text-left"
 //                 >
-//                   <FaSignOutAlt className="inline mr-2 text-blue-700" /> 
+//                   <FaSignOutAlt className="inline mr-2 text-blue-700" />
 //                   <span className="text-gray-800">Logout</span>
 //                 </button>
 //               </div>
@@ -167,6 +182,195 @@
 
 
 
+// import { useState, useEffect } from 'react';
+// import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
+// import { FaUser, FaSignOutAlt } from 'react-icons/fa';
+// import { Menu } from 'lucide-react';
+// import { useSidebar } from '../../context/SidebarContext';
+
+// const LOGOUT_API = 'https://loyalty-backend-java.onrender.com/api/auth/logout'; 
+
+// export default function Header() {
+//   const [isLoggedIn, setIsLoggedIn] = useState(false);
+//   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
+//   const location = useLocation();
+//   const navigate = useNavigate();
+//   const { setSidebarOpen } = useSidebar();
+//   const [userName, setUserName] = useState('');
+
+//   useEffect(() => {
+//     const loginStatus = localStorage.getItem('isLoggedIn') === 'true';
+//     setIsLoggedIn(loginStatus);
+//     const storedName = localStorage.getItem('name');
+//     if (storedName) {
+//       setUserName(storedName);
+//     }
+//     setUserDropdownOpen(false);
+//   }, [location]);
+
+//   const handleLogout = async () => {
+//     try {
+//       const res = await fetch(LOGOUT_API, {
+//         method: 'POST',
+//         credentials: 'include', 
+//       });
+
+//       if (!res.ok) {
+//         console.warn('Logout API failed, clearing client state anyway');
+//       }
+
+//       localStorage.removeItem('isLoggedIn');
+//       localStorage.removeItem('id');
+//       localStorage.removeItem('name');
+//       localStorage.removeItem('CompanyEmail');
+  
+//       navigate('/signin');
+//     } catch (err) {
+//       console.error('Logout error:', err);
+//       localStorage.clear();
+//       navigate('/');
+//     }
+//   };
+
+//   return (
+//     <header className="sticky top-0 z-50 bg-white shadow-md text-white">
+//       <nav className="px-4 lg:px-8 py-3 flex items-center justify-between">
+//         <div className="flex items-center gap-4">
+//           {isLoggedIn ? (
+//             <button 
+//               onClick={() => setSidebarOpen(true)} 
+//               className="text-blue-600 hover:text-blue-500 transition"
+//             >
+//               <Menu size={24} />
+//             </button>
+//           ) : (
+//             <Link
+//               to="/"
+//               className="text-2xl font-bold bg-gradient-to-r from-blue-400 via-blue-500 to-amber-300 bg-clip-text text-transparent drop-shadow-md"
+//             >
+//               LoyaltyHub
+//             </Link>
+//           )}
+//         </div>
+
+//         {/* Desktop Nav Links */}
+//         <div className="hidden lg:flex items-center gap-6">
+//           {!isLoggedIn ? (
+//             <>
+//               <NavLink
+//                 to="/"
+//                 className={({ isActive }) =>
+//                   isActive
+//                     ? 'font-semibold text-amber-300'
+//                     : 'hover:text-amber-300 transition'
+//                 }
+//               >
+//                 Home
+//               </NavLink>
+//               <NavLink
+//                 to="/features"
+//                 className={({ isActive }) =>
+//                   isActive
+//                     ? 'font-semibold text-amber-300'
+//                     : 'hover:text-amber-300 transition'
+//                 }
+//               >
+//                 Features
+//               </NavLink>
+//               <a
+//                 href="https://subscription-frontend-psi.vercel.app/subscription"
+//                 className="hover:text-amber-300 transition"
+//               >
+//                 Subscription
+//               </a>
+//               <NavLink
+//                 to="/resources"
+//                 className={({ isActive }) =>
+//                   isActive
+//                     ? 'font-semibold text-amber-300'
+//                     : 'hover:text-amber-300 transition'
+//                 }
+//               >
+//                 Resources
+//               </NavLink>
+//               <NavLink
+//                 to="/contact"
+//                 className={({ isActive }) =>
+//                   isActive
+//                     ? 'font-semibold text-amber-300'
+//                     : 'hover:text-amber-300 transition'
+//                 }
+//               >
+//                 Contact
+//               </NavLink>
+//             </>
+//           ) : null}
+//         </div>
+
+//         {/* Right Buttons */}
+//         <div className="flex items-center gap-4">
+//           {!isLoggedIn ? (
+//             <>
+//               {/* Sign Up Dropdown */}
+//               <div className="relative group inline-block">
+//                 <div className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-medium rounded-lg text-sm px-4 py-2 cursor-pointer transition shadow-md">
+//                   Sign up
+//                 </div>
+//                 <div className="absolute right-0 mt-2 bg-white rounded-lg shadow-xl z-10 min-w-[150px] opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-200 border border-blue-200">
+//                   <NavLink
+//                     to="/signup-shopkeeper"
+//                     className="block px-4 py-2 text-sm text-blue-700 hover:bg-blue-50 transition"
+//                   >
+//                     Shopkeeper
+//                   </NavLink>
+//                   <NavLink
+//                     to="/signup-user"
+//                     className="block px-4 py-2 text-sm text-blue-700 hover:bg-blue-50 transition"
+//                   >
+//                     User
+//                   </NavLink>
+//                 </div>
+//               </div>
+//               <NavLink
+//                 to="/signin"
+//                 className="bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg text-sm px-4 py-2 transition shadow-md"
+//               >
+//                 Sign in
+//               </NavLink>
+//             </>
+//           ) : (
+//             <div className="relative group">
+//               <button className="flex items-center space-x-2 focus:outline-none">
+//                 <FaUser className="text-blue-600" />
+//                 <span className="hidden lg:inline text-blue-600">{userName || 'Username'}</span>
+//               </button>
+//               <div className="hidden group-hover:block absolute top-full right-0 w-40 bg-white shadow-lg border border-blue-200 rounded-md p-2 mt-1">
+//                 <button
+//                   onClick={handleLogout}
+//                   className="flex items-center w-full py-1 px-2 text-sm text-blue-700 hover:bg-blue-50 transition rounded"
+//                 >
+//                   <FaSignOutAlt className="mr-2" />
+//                   <span>Logout</span>
+//                 </button>
+//               </div>
+//             </div>
+//           )}
+//         </div>
+//       </nav>
+//     </header>
+//   );
+// }
+
+
+
+
+
+
+
+
+
+
+
 
 import { useState, useEffect } from 'react';
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
@@ -174,7 +378,7 @@ import { FaUser, FaSignOutAlt } from 'react-icons/fa';
 import { Menu } from 'lucide-react';
 import { useSidebar } from '../../context/SidebarContext';
 
-const LOGOUT_API = 'https://loyalty-backend-java.onrender.com/api/auth/logout'; 
+const LOGOUT_API = 'https://loyalty-backend-java.onrender.com/api/auth/logout';
 
 export default function Header() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -198,18 +402,15 @@ export default function Header() {
     try {
       const res = await fetch(LOGOUT_API, {
         method: 'POST',
-        credentials: 'include', 
+        credentials: 'include',
       });
-
       if (!res.ok) {
         console.warn('Logout API failed, clearing client state anyway');
       }
-
       localStorage.removeItem('isLoggedIn');
       localStorage.removeItem('id');
       localStorage.removeItem('name');
       localStorage.removeItem('CompanyEmail');
-  
       navigate('/signin');
     } catch (err) {
       console.error('Logout error:', err);
@@ -219,17 +420,20 @@ export default function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-indigo-900 shadow-md text-white">
+    <header className="sticky top-0 z-50 bg-white shadow-lg border-b border-gray-200">
       <nav className="px-4 lg:px-8 py-3 flex items-center justify-between">
         <div className="flex items-center gap-4">
           {isLoggedIn ? (
-            <button onClick={() => setSidebarOpen(true)} className="text-white">
+            <button
+              onClick={() => setSidebarOpen(true)}
+              className="text-blue-600 hover:text-blue-700 transition"
+            >
               <Menu size={24} />
             </button>
           ) : (
             <Link
               to="/"
-              className="text-2xl font-bold bg-gradient-to-r from-green-400 via-cyan-300 to-sky-400 bg-clip-text text-transparent drop-shadow-md"
+              className="text-2xl font-bold bg-gradient-to-r from-emerald-500 to-teal-600 bg-clip-text text-transparent drop-shadow-sm"
             >
               LoyaltyHub
             </Link>
@@ -243,9 +447,11 @@ export default function Header() {
               <NavLink
                 to="/"
                 className={({ isActive }) =>
-                  isActive
-                    ? 'font-semibold text-green-400'
-                    : 'hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-green-400 hover:to-blue-500 transition'
+                  `relative px-3 py-2.5 rounded-sm transition-all duration-200 font-medium
+                  ${isActive 
+                    ? 'text-white bg-emerald-500' 
+                    : 'text-black hover:text-emerald-600'
+                  }`
                 }
               >
                 Home
@@ -253,25 +459,29 @@ export default function Header() {
               <NavLink
                 to="/features"
                 className={({ isActive }) =>
-                  isActive
-                    ? 'font-semibold text-green-400'
-                    : 'hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-green-400 hover:to-blue-500 transition'
+                  `relative px-3 py-2.5 rounded-sm transition-all duration-200 font-medium
+                  ${isActive 
+                    ? 'text-white bg-emerald-500' 
+                    : 'text-black hover:text-emerald-600'
+                  }`
                 }
               >
                 Features
               </NavLink>
               <a
                 href="https://subscription-frontend-psi.vercel.app/subscription"
-                className="hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-green-400 hover:to-blue-500 transition"
+                className="relative px-3 py-2.5 rounded-sm transition-all duration-200 font-medium text-black hover:text-white hover:bg-emerald-500"
               >
                 Subscription
               </a>
               <NavLink
                 to="/resources"
                 className={({ isActive }) =>
-                  isActive
-                    ? 'font-semibold text-green-400'
-                    : 'hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-green-400 hover:to-blue-500 transition'
+                  `relative px-3 py-2.5 rounded-sm transition-all duration-200 font-medium
+                  ${isActive 
+                    ? 'text-white bg-emerald-500' 
+                    : 'text-black hover:text-emerald-600'
+                  }`
                 }
               >
                 Resources
@@ -279,9 +489,11 @@ export default function Header() {
               <NavLink
                 to="/contact"
                 className={({ isActive }) =>
-                  isActive
-                    ? 'font-semibold text-green-400'
-                    : 'hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-green-400 hover:to-blue-500 transition'
+                  `relative px-3 py-2.5 rounded-sm transition-all duration-200 font-medium
+                  ${isActive 
+                    ? 'text-white bg-emerald-500' 
+                    : 'text-black hover:text-emerald-600'
+                  }`
                 }
               >
                 Contact
@@ -296,19 +508,19 @@ export default function Header() {
             <>
               {/* Sign Up Dropdown */}
               <div className="relative group inline-block">
-                <div className="text-white bg-gradient-to-r from-green-400 to-blue-500 hover:from-green-500 hover:to-blue-600 font-medium rounded-lg text-sm px-4 py-2 cursor-pointer transition">
+                <div className="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-medium rounded-sm text-sm px-5 py-2.5 cursor-pointer transition shadow-md">
                   Sign up
                 </div>
-                <div className="absolute right-0 mt-2 bg-white rounded-lg shadow-lg z-10 min-w-[150px] opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-200 text-gray-800">
+                <div className="absolute right-0 mt-2 bg-white rounded-md shadow-xl z-10 min-w-[160px] opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-200 border border-gray-200">
                   <NavLink
                     to="/signup-shopkeeper"
-                    className="block px-4 py-2 text-sm hover:bg-gradient-to-r hover:from-green-100 hover:to-blue-100"
+                    className="block px-4 py-2.5 text-sm text-emerald-700 hover:bg-emerald-100 transition rounded-t-md"
                   >
                     Shopkeeper
                   </NavLink>
                   <NavLink
                     to="/signup-user"
-                    className="block px-4 py-2 text-sm hover:bg-gradient-to-r hover:from-green-100 hover:to-blue-100"
+                    className="block px-4 py-2.5 text-sm text-emerald-700 hover:bg-emerald-100 transition rounded-b-md"
                   >
                     User
                   </NavLink>
@@ -316,7 +528,8 @@ export default function Header() {
               </div>
               <NavLink
                 to="/signin"
-                className="text-white border border-white hover:bg-gradient-to-r hover:from-green-400 hover:to-blue-500 hover:text-white font-medium rounded-lg text-sm px-4 py-2 transition"
+                // className="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-medium rounded-sm text-sm px-5 py-2.5 transition shadow-md"
+                className="bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-sm text-sm px-5 py-2.5 transition shadow-md"
               >
                 Sign in
               </NavLink>
@@ -324,15 +537,15 @@ export default function Header() {
           ) : (
             <div className="relative group">
               <button className="flex items-center space-x-2 focus:outline-none">
-                <FaUser className="text-green-400" />
-                <span className="hidden lg:inline">{userName || 'Username'}</span>
+                <FaUser className="text-blue-600" />
+                <span className="hidden lg:inline text-blue-600">{userName || 'Username'}</span>
               </button>
               <div className="hidden group-hover:block absolute top-full right-0 w-40 bg-white shadow-lg border rounded-md p-2">
                 <button
                   onClick={handleLogout}
                   className="block py-1 px-2 text-sm hover:bg-gray-100 w-full text-left"
                 >
-                  <FaSignOutAlt className="inline mr-2 text-blue-700" />
+                  <FaSignOutAlt className="inline mr-2 text-blue-600" />
                   <span className="text-gray-800">Logout</span>
                 </button>
               </div>

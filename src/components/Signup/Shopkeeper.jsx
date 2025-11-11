@@ -390,7 +390,7 @@ function FlatInput({ label, name, value, onChange, type = "text", Icon, ToggleIc
         {label}
       </label>
       
-      <div className="flex items-center w-full h-12 bg-white border border-gray-300 rounded-lg transition-all duration-200 focus-within:border-teal-500 focus-within:ring-2 focus-within:ring-teal-200">
+      <div className="flex items-center w-full h-12 bg-white border border-gray-300 rounded-sm transition-all duration-200 focus-within:border-teal-500 focus-within:ring-2 focus-within:ring-teal-200">
         
         {Icon && <Icon className="flex-shrink-0 ml-4 h-5 w-5 text-gray-400 transition-colors duration-200 focus-within:text-teal-600" />}
 
@@ -600,19 +600,19 @@ function Shopkeeper() {
 
   return (
     <div
-      className="min-h-screen flex items-center justify-center p-6 bg-gray-50"
-      style={{
-        backgroundImage: `
-          linear-gradient(to right, rgba(0,0,0,0.06) 1px, transparent 1px),
-          linear-gradient(to bottom, rgba(0,0,0,0.06) 1px, transparent 1px)
-        `,
-        backgroundSize: "40px 40px, 40px 40px",
-        backgroundAttachment: "fixed",
-      }}
+      className="min-h-screen flex items-center justify-center p-6 bg-gray-200"
+      // style={{
+      //   backgroundImage: `
+      //     linear-gradient(to right, rgba(0,0,0,0.06) 1px, transparent 1px),
+      //     linear-gradient(to bottom, rgba(0,0,0,0.06) 1px, transparent 1px)
+      //   `,
+      //   backgroundSize: "40px 40px, 40px 40px",
+      //   backgroundAttachment: "fixed",
+      // }}
     >
       {success && <Confetti recycle={false} numberOfPieces={300} />}
       
-      <div className="w-full max-w-lg bg-white border border-gray-100 rounded-xl p-8 shadow-2xl">
+      <div className="w-full max-w-xl bg-white border border-gray-200 rounded-md p-6 shadow-2xl">
         <h2 className="text-3xl font-extrabold text-teal-700 text-center mb-1">
           Shopkeeper Registration
         </h2>
@@ -641,7 +641,7 @@ function Shopkeeper() {
               <div className="flex flex-col space-y-1">
                 <label className="text-sm font-semibold text-gray-700 ml-1">Personal Phone</label>
                 <div className="relative">
-                  <div className={`flex items-center w-full h-12 bg-white border rounded-lg transition-all duration-200 focus-within:border-teal-500 focus-within:ring-2 focus-within:ring-teal-200 ${
+                  <div className={`flex items-center w-full h-12 bg-white border rounded-sm transition-all duration-200 focus-within:border-teal-500 focus-within:ring-2 focus-within:ring-teal-200 ${
                     formData.phone && formData.phone.length !== 10 ? 'border-red-400' : 'border-gray-300'
                   }`}>
                     <Smartphone className="flex-shrink-0 ml-4 h-5 w-5 text-gray-400" />
@@ -674,7 +674,7 @@ function Shopkeeper() {
               <div className="flex flex-col space-y-1">
                 <label htmlFor="companyEmail" className="text-sm font-semibold text-gray-700 ml-1">Company Email</label>
                 <div className="relative">
-                    <div className="flex items-center w-full h-12 bg-white border border-gray-300 rounded-lg transition-all duration-200 focus-within:border-teal-500 focus-within:ring-2 focus-within:ring-teal-200">
+                    <div className="flex items-center w-full h-12 bg-white border border-gray-300 rounded-sm transition-all duration-200 focus-within:border-teal-500 focus-within:ring-2 focus-within:ring-teal-200">
                         <Mail className="flex-shrink-0 ml-4 h-5 w-5 text-gray-400" />
                         <input
                             type="email"
@@ -688,7 +688,7 @@ function Shopkeeper() {
                     </div>
                     <div className="absolute left-full top-1/2 ml-2 -translate-y-1/2 group">
                       <FaInfoCircle className="text-gray-500 cursor-pointer" />
-                      <div className="absolute left-full top-1/2 -translate-y-1/2 ml-2 w-60 text-sm text-white bg-black/80 px-3 py-2 rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10">
+                      <div className="absolute left-full top-1/2 -translate-y-1/2 ml-2 w-60 text-sm text-white bg-black/80 px-3 py-2 rounded-sm opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10">
                         This email is required to verify your active subscription. It must be linked to a valid subscription.
                       </div>
                     </div>
@@ -697,7 +697,7 @@ function Shopkeeper() {
                       type="button"
                       onClick={verifyEmail}
                       disabled={isVerifying || !formData.companyEmail || !validateEmail(formData.companyEmail) || isEmailVerified}
-                      className={`absolute right-1 top-1/2 -translate-y-1/2 mr-1 px-3 py-1.5 rounded-md text-xs font-bold transition z-10
+                      className={`absolute right-1 top-1/2 -translate-y-1/2 mr-1 px-3 py-1.5 rounded-sm text-xs font-bold transition z-10
                         ${isEmailVerified 
                             ? "bg-green-600 text-white" 
                             : "bg-teal-500 text-white hover:bg-teal-600"}
@@ -745,13 +745,13 @@ function Shopkeeper() {
                 <div className="flex-grow">
                   <FlatInput label="Enter CAPTCHA Code" name="captchaInput" value={formData.captchaInput} onChange={handleChange} Icon={Puzzle} />
                 </div>
-                <div className="flex-shrink-0 w-32 h-12 bg-gray-100 border border-gray-300 rounded-lg overflow-hidden flex items-center justify-center">
+                <div className="flex-shrink-0 w-32 h-12 bg-gray-100 border border-gray-300 rounded-sm overflow-hidden flex items-center justify-center">
                   <canvas ref={captchaCanvasRef} width={120} height={40} className="w-full h-full" />
                 </div>
                 <button 
                   type="button" 
                   onClick={generateCaptcha} 
-                  className="flex-shrink-0 w-12 h-12 bg-gray-200 rounded-lg text-gray-600 hover:bg-gray-300 transition-colors flex items-center justify-center shadow-sm"
+                  className="flex-shrink-0 w-12 h-12 bg-gray-200 rounded-full text-gray-600 hover:bg-gray-300 transition-colors flex items-center justify-center shadow-sm"
                   aria-label="Refresh CAPTCHA"
                 >
                   <RefreshCw className="h-5 w-5" />
@@ -761,7 +761,7 @@ function Shopkeeper() {
               <button
                 type="submit"
                 disabled={loading}
-                className={`w-full bg-teal-500 text-white font-bold py-3 rounded-lg shadow-lg transition-all duration-300 text-lg
+                className={`w-full bg-teal-500 text-white font-bold py-3 rounded-sm shadow-lg transition-all duration-300 text-lg
                 ${loading ? "opacity-60 cursor-not-allowed" : "hover:bg-teal-600 active:scale-[0.99]"}`}
               >
                 {loading ? (
@@ -785,7 +785,7 @@ function Shopkeeper() {
               type="button"
               onClick={nextStep}
               disabled={step === 2 && !isEmailVerified}
-              className={`w-full py-3 bg-teal-500 text-white font-semibold rounded-lg shadow-lg transition-all duration-300 text-lg
+              className={`w-full py-3 bg-teal-500 text-white font-semibold rounded-sm shadow-lg transition-all duration-300 text-lg
               ${(step === 2 && !isEmailVerified) ? "opacity-60 cursor-not-allowed" : "hover:bg-teal-600 active:scale-[0.99]"}
               `}
             >
@@ -797,7 +797,7 @@ function Shopkeeper() {
             <button
               type="button"
               onClick={() => { setStep((p) => p - 1); if (step === 2) setIsEmailVerified(false); }}
-              className="w-full py-3 bg-gray-200 hover:bg-gray-300 active:scale-[0.99] text-gray-700 font-semibold rounded-lg transition-all duration-300"
+              className="w-full py-3 bg-gray-200 hover:bg-gray-300 active:scale-[0.99] text-gray-700 font-semibold rounded-sm transition-all duration-300"
             >
               Back
             </button>

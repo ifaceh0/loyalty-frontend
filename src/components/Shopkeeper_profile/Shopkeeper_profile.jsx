@@ -365,12 +365,12 @@ import {
 
 // --- Custom Components & Styles ---
 const inputStyle = (isEditing) => 
-  `w-full px-4 py-3 border rounded-lg outline-none transition duration-200 shadow-sm text-gray-800 ${
+  `w-full px-4 py-3 border rounded-md outline-none transition duration-200 shadow-sm text-gray-800 ${
     isEditing ? "border-blue-400 focus:ring-2 focus:ring-blue-500/50" : "border-gray-200 bg-gray-100 cursor-default"
   }`;
 
 const SectionWrapper = ({ title, children, icon, className = "" }) => (
-  <div className={`bg-white p-6 rounded-lg border border-gray-200 shadow-lg ${className}`}>
+  <div className={`bg-white p-6 rounded-md border border-gray-200 shadow-lg ${className}`}>
     <h3 className="text-xl font-bold text-blue-700 border-b pb-3 mb-4 flex items-center gap-2">
       {icon} {title}
     </h3>
@@ -633,9 +633,9 @@ const ShopkeeperProfile = () => {
 
   // --- Render ---
   return (
-    <div className="max-w-8xl mx-auto bg-gray-50 rounded-lg shadow-2xl overflow-hidden mt-2">
+    <div className="max-w-8xl mx-auto bg-gray-50 rounded-md shadow-2xl overflow-hidden mt-2">
       {/* Header/Navigation */}
-      <nav className="bg-blue-600 text-white px-8 py-4 flex justify-between items-center">
+      <nav className="bg-blue-600 text-white px-8 py-3 flex justify-between items-center">
         <h2 className="text-2xl font-extrabold flex items-center gap-3">
           <FiUser className="w-6 h-6"/> Shop Profile & Branding
         </h2>
@@ -643,7 +643,7 @@ const ShopkeeperProfile = () => {
             {isEditing && (
                 <button
                 type="button"
-                className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition duration-200 flex items-center gap-2 font-semibold shadow-md"
+                className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-sm transition duration-200 flex items-center gap-2 font-semibold shadow-md"
                 onClick={handleCancel}
                 disabled={isSubmitting}
                 >
@@ -656,7 +656,7 @@ const ShopkeeperProfile = () => {
                 <button
                 type="submit"
                 form="profile-form"
-                className={`text-white px-5 py-2 rounded-lg transition duration-200 flex items-center gap-2 font-semibold shadow-md ${
+                className={`text-white px-5 py-2 rounded-sm transition duration-200 flex items-center gap-2 font-semibold shadow-md ${
                     isSubmitting ? 'bg-green-400 cursor-not-allowed' : 'bg-green-500 hover:bg-green-600'
                 }`}
                 disabled={isSubmitting}
@@ -678,7 +678,7 @@ const ShopkeeperProfile = () => {
             {!isEditing && (
                 <button
                 type="button"
-                className="bg-blue-700 hover:bg-blue-800 text-white px-5 py-2 rounded-lg transition duration-200 flex items-center gap-2 font-semibold shadow-md"
+                className="bg-blue-700 hover:bg-blue-800 text-white px-5 py-2 rounded-sm transition duration-200 flex items-center gap-2 font-semibold shadow-md"
                 onClick={() => setIsEditing(true)}
                 >
                 <FiEdit3 className="w-5 h-5" />
@@ -699,7 +699,7 @@ const ShopkeeperProfile = () => {
             // className="grid md:grid-cols-3 gap-6"
           >
             {/* Logo Management */}
-            <div className="md:col-span-1 bg-gray-100 p-4 rounded-lg border-2 border-dashed border-gray-300">
+            <div className="md:col-span-1 bg-gray-100 p-4 rounded-md border-2 border-dashed border-gray-300">
                 <label className="block text-sm font-bold mb-3 text-blue-700">Shop Logo / Icon</label>
                 
                 <div className="flex items-center gap-4 mb-3">
@@ -707,10 +707,10 @@ const ShopkeeperProfile = () => {
                     <img
                         src={`data:image/jpeg;base64,${formData.logoImage}`}
                         alt="Shop Logo"
-                        className="w-24 h-24 object-contain p-1 bg-white rounded-lg border-2 border-gray-300 shadow-md"
+                        className="w-24 h-24 object-contain p-1 bg-white rounded-md border-2 border-gray-300 shadow-md"
                     />
                     ) : (
-                    <div className="w-24 h-24 bg-gray-200 rounded-lg flex flex-col items-center justify-center text-gray-500 text-xs border border-gray-400">
+                    <div className="w-24 h-24 bg-gray-200 rounded-md flex flex-col items-center justify-center text-gray-500 text-xs border border-gray-400">
                         <FiAlertCircle className="w-6 h-6 mb-1"/>
                         <span>No Logo Set</span>
                     </div>
@@ -723,7 +723,7 @@ const ShopkeeperProfile = () => {
                             type="file"
                             accept="image/jpeg,image/png"
                             onChange={handleFileChange}
-                            className="w-full text-sm file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                            className="w-full text-sm file:mr-4 file:py-2 file:px-4 file:rounded-sm file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
                         />
                         
                         <div className="flex gap-2">
@@ -732,7 +732,7 @@ const ShopkeeperProfile = () => {
                                     type="button"
                                     onClick={uploadImage}
                                     disabled={isUploading}
-                                    className={`flex-1 bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-lg flex items-center justify-center gap-1 text-sm transition ${isUploading ? "opacity-50 cursor-not-allowed" : ""}`}
+                                    className={`flex-1 bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-sm flex items-center justify-center gap-1 text-sm transition ${isUploading ? "opacity-50 cursor-not-allowed" : ""}`}
                                 >
                                     {isUploading ? "Uploading..." : "Upload New Logo"}
                                 </button>
@@ -742,7 +742,7 @@ const ShopkeeperProfile = () => {
                                     type="button"
                                     onClick={removeImage}
                                     disabled={isRemoving}
-                                    className={`bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-lg flex items-center justify-center gap-1 text-sm transition ${isRemoving ? "opacity-50 cursor-not-allowed" : ""}`}
+                                    className={`bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-sm flex items-center justify-center gap-1 text-sm transition ${isRemoving ? "opacity-50 cursor-not-allowed" : ""}`}
                                 >
                                     <FiTrash2 className="w-4 h-4" />
                                     {isRemoving ? "Removing..." : "Remove"}

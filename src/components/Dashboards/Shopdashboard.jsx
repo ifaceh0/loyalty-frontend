@@ -150,19 +150,19 @@ const Shopdashboard = () => {
     <div className="flex h-[calc(100vh-64px)] bg-gray-100">
       {/* Sidebar */}
       <aside
-        className={`fixed h-screen top-0 bg-gradient-to-b from-[#4F46E5] to-[#7C3AED] text-white p-4 sm:p-4 shadow-lg z-50 transform transition-all duration-300 ease-in-out ${
+        className={`fixed h-screen top-0 bg-gradient-to-b from-[#dbeafe] to-[#bfdbfe] text-slate-800 p-4 sm:p-4 shadow-lg z-50 transform transition-all duration-300 ease-in-out ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
-        } ${isSidebarExpanded ? "w-64" : "w-16"} rounded-r-xl`}
+        } ${isSidebarExpanded ? "w-64" : "w-16"} rounded-r-lg`}
       >
         <div className="flex justify-between items-center mb-6">
           {isSidebarExpanded && (
-            <h2 className="text-xl sm:text-2xl font-bold text-yellow-300">Shopkeeper Panel</h2>
+            <h2 className="text-xl sm:text-2xl font-bold text-blue-700">Shopkeeper Panel</h2>
           )}
           <div className="flex items-center">
             {!sidebarOpen && (
               <button
                 onClick={() => setSidebarOpen(true)}
-                className="p-2 rounded-full bg-yellow-400 hover:bg-yellow-500 text-purple-900 transition flex items-center justify-center absolute left-4 top-4"
+                className="p-2 rounded-full bg-blue-600 hover:bg-blue-700 text-white transition flex items-center justify-center absolute left-4 top-4"
                 aria-label="Open sidebar"
               >
                 <Menu className="w-6 h-6" />
@@ -175,13 +175,13 @@ const Shopdashboard = () => {
                     setSidebarOpen(false);
                     setIsSidebarExpanded(false);
                   }}
-                  className="p-1 rounded-full bg-yellow-400 hover:bg-yellow-500 text-purple-900 transition flex items-center justify-center"
+                  className="p-1 rounded-full bg-blue-600 hover:bg-blue-700 text-white transition flex items-center justify-center"
                   aria-label="Close sidebar"
                 >
                   <X className="w-6 h-6" />
                 </button>
-                <span className="absolute left-full ml-2 top-1/2 transform -translate-y-1/2 bg-purple-800 text-white text-xs rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
-                    Close
+                <span className="absolute left-full ml-2 top-1/2 transform -translate-y-1/2 bg-blue-900 text-white text-xs rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
+                  Close
                 </span>
               </div>
             )}
@@ -198,28 +198,28 @@ const Shopdashboard = () => {
             { tab: "daily_transaction_report", icon: faFileInvoiceDollar, label: "Daily Transaction" },
           ].map(({ tab, icon, label }) => (
             <div key={tab} className="relative group">
-            <button
-              key={tab}
-              onClick={() => {
-                setActiveTab(tab);
-                setSidebarOpen(true);
-                toggleSidebarExpansion();
-              }}
-              className={`flex items-center w-full text-left px-4 py-2 rounded-lg transition text-sm sm:text-base ${
-                activeTab === tab
-                  ? "bg-yellow-300 text-purple-900 font-semibold"
-                  : "hover:bg-yellow-200 hover:text-purple-900"
-              } ${isSidebarExpanded ? "" : "justify-center"}`}
-            >
-              <FontAwesomeIcon icon={icon} className={`${isSidebarExpanded ? "mr-2" : ""}`} />
-              {isSidebarExpanded && <span>{label}</span>}
-            </button>
-            {!isSidebarExpanded && (
-                <span className="absolute left-full ml-2 top-1/2 transform -translate-y-1/2 bg-purple-800 text-white text-xs rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
+              <button
+                key={tab}
+                onClick={() => {
+                  setActiveTab(tab);
+                  setSidebarOpen(true);
+                  toggleSidebarExpansion();
+                }}
+                className={`flex items-center w-full text-left px-4 py-2 rounded-sm transition text-sm sm:text-base ${
+                  activeTab === tab
+                    ? "bg-blue-600 text-white font-semibold"
+                    : "hover:bg-blue-100 hover:text-blue-800"
+                } ${isSidebarExpanded ? "" : "justify-center"}`}
+              >
+                <FontAwesomeIcon icon={icon} className={`${isSidebarExpanded ? "mr-2" : ""} ${activeTab === tab ? "text-white" : "text-blue-600"}`} />
+                {isSidebarExpanded && <span>{label}</span>}
+              </button>
+              {!isSidebarExpanded && (
+                <span className="absolute left-full ml-2 top-1/2 transform -translate-y-1/2 bg-blue-900 text-white text-xs rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
                   {label}
                 </span>
-            )}
-          </div>
+              )}
+            </div>
           ))}
         </nav>
       </aside>
@@ -233,14 +233,14 @@ const Shopdashboard = () => {
         {activeTab === "user_stats" && (
           <>
             <div>
-              <h1 className="mb-6 text-xl sm:text-2xl font-bold text-purple-800 flex items-center">
-                Shopkeeper Dashboard
+              <h1 className="mb-6 text-xl sm:text-2xl font-bold flex items-center">
+                Dashboard Data
               </h1>
             </div>
             <UserPurchaseChart />
 
-            <section className="mb-8">
-              <div className="bg-white shadow-md rounded-lg p-6 border border-gray-100 hover:shadow-lg transition-shadow duration-300">
+            <section className="mb-6">
+              <div className="bg-white shadow-md rounded-sm p-3 border border-gray-100 hover:shadow-lg transition-shadow duration-300">
                 <div className="flex items-center justify-between mb-1">
                   <h3 className="text-xl font-semibold text-gray-800">
                     Monthly Sales (Last 12 Months) - {currentYear}
@@ -286,8 +286,8 @@ const Shopdashboard = () => {
               </div>
             </section>
 
-            <section className="mb-8">
-              <div className="bg-white shadow-md rounded-lg p-6 border border-gray-100 hover:shadow-lg transition-shadow duration-300">
+            <section className="mb-6">
+              <div className="bg-white shadow-md rounded-sm p-3 border border-gray-100 hover:shadow-lg transition-shadow duration-300">
                 <div className="flex items-center justify-between mb-1">
                   <h3 className="text-xl font-semibold text-gray-800">
                     Customer Count Comparison ({currentYear})
@@ -336,10 +336,10 @@ const Shopdashboard = () => {
             <Row gutter={[16, 16]}>
               <Col span={24}>
                 <Card 
-                  title="👥 Most Visitors" 
+                  title="Most Visitors" 
                   bordered={false} 
                   headStyle={{ 
-                    background: "linear-gradient(to bottom right, #10B981, #0284C7)", 
+                    background: "linear-gradient(to bottom right, #1e40af, #7c3aed)", 
                     color: "#FFFFFF" 
                   }}
                 >
@@ -355,10 +355,10 @@ const Shopdashboard = () => {
               </Col>
               <Col span={24}>
                 <Card 
-                  title="💰 Top Revenue Generators" 
+                  title="Top Revenue Generators" 
                   bordered={false} 
                   headStyle={{ 
-                    background: "linear-gradient(to bottom right, #10B981, #0284C7)", 
+                    background: "linear-gradient(to bottom right, #7c3aed, #1e40af)", 
                     color: "#FFFFFF" 
                   }}
                 >

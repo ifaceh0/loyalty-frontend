@@ -419,7 +419,7 @@ const QrScanner = ({ onClose }) => {
               {!scannedData ? (
                 <>
                   <div
-                    className={`relative w-full aspect-square max-w-[380px] border-4 border-solid border-${PRIMARY_COLOR} rounded-lg overflow-hidden mb-6 shadow-xl bg-gray-800`}
+                    className={`relative w-full aspect-square max-w-[380px] border-4 border-solid border-${PRIMARY_COLOR} rounded-md overflow-hidden mb-6 shadow-xl bg-gray-800`}
                   >
                     <video
                       ref={videoRef}
@@ -429,7 +429,7 @@ const QrScanner = ({ onClose }) => {
                       style={{ minWidth: "380px", minHeight: "380px" }}
                     />
                     <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                      <div className={`w-3/4 h-3/4 border-4 border-${ACCENT_COLOR} opacity-90 rounded-lg animate-pulse-slow`}></div>
+                      <div className={`w-3/4 h-3/4 border-4 border-${ACCENT_COLOR} opacity-90 rounded-md animate-pulse-slow`}></div>
                     </div>
                   </div>
 
@@ -551,7 +551,7 @@ const QrScanner = ({ onClose }) => {
         {/* Success Popup */}
         {showSuccessPopup && (
           <div className="absolute inset-0 flex items-center justify-center z-50">
-            <div className={`bg-white p-8 rounded-lg shadow-2xl text-center w-full max-w-sm border-t-8 border-t-${SUCCESS_COLOR} animate-fade-in`}>
+            <div className={`bg-white p-8 rounded-md shadow-2xl text-center w-full max-w-sm border-t-8 border-t-${SUCCESS_COLOR} animate-fade-in`}>
               <FontAwesomeIcon icon={faCheckCircle} className={`text-${successIconColor} text-5xl mb-4`} />
               <h3 className={`text-2xl font-bold text-gray-800 mb-2`}>{successTitle}</h3>
               {successMessage && <p className="text-md text-gray-600 mt-1 mb-4">{successMessage}</p>}
@@ -560,7 +560,7 @@ const QrScanner = ({ onClose }) => {
                   setShowSuccessPopup(false);
                   handleScanAgain();
                 }}
-                className={`mt-4 w-full bg-${PRIMARY_COLOR} hover:bg-blue-800 text-white font-semibold px-5 py-3 rounded-xl transition duration-200`}
+                className={`mt-4 w-full bg-${PRIMARY_COLOR} hover:bg-blue-800 text-white font-semibold px-5 py-3 rounded-sm transition duration-200`}
               >
                 Done
               </button>
@@ -571,7 +571,7 @@ const QrScanner = ({ onClose }) => {
         {/* Error Popup */}
         {showErrorPopup && (
           <div className="absolute inset-0 flex items-center justify-center z-50">
-            <div className={`bg-white p-8 rounded-lg shadow-2xl text-center w-full max-w-sm border-t-8 border-t-${ERROR_COLOR} animate-fade-in`}>
+            <div className={`bg-white p-8 rounded-md shadow-2xl text-center w-full max-w-sm border-t-8 border-t-${ERROR_COLOR} animate-fade-in`}>
               <FontAwesomeIcon icon={faExclamationTriangle} className={`text-${ERROR_COLOR} text-5xl mb-4`} />
               <h3 className="text-2xl font-bold text-red-700 mb-2">Operation Failed</h3>
               <p className="text-md text-gray-600 mt-1 mb-4">{error || "An error occurred. Please check the QR code and try again."}</p>
@@ -581,7 +581,7 @@ const QrScanner = ({ onClose }) => {
                   setError(null);
                   handleScanAgain();
                 }}
-                className={`mt-4 w-full bg-${ERROR_COLOR} hover:bg-red-700 text-white font-semibold px-5 py-3 rounded-xl transition duration-200`}
+                className={`mt-4 w-full bg-${ERROR_COLOR} hover:bg-red-700 text-white font-semibold px-5 py-3 rounded-sm transition duration-200`}
               >
                 Close & Restart Scan
               </button>
@@ -592,7 +592,7 @@ const QrScanner = ({ onClose }) => {
         {/* Intent Popup */}
         {showClaimIntentPopup && (
           <div className="absolute inset-0 flex items-center justify-center z-50">
-            <div className={`bg-white p-8 rounded-lg shadow-2xl text-center w-full max-w-sm border-t-8 border-t-${ACCENT_COLOR} animate-fade-in`}>
+            <div className={`bg-white p-8 rounded-md shadow-2xl text-center w-full max-w-sm border-t-8 border-t-${ACCENT_COLOR} animate-fade-in`}>
               <FontAwesomeIcon icon={faDollarSign} className={`text-${ACCENT_COLOR} text-5xl mb-4`} />
               <h3 className="text-2xl font-bold text-gray-800 mb-2">Milestone Reward Eligible!</h3>
               <p className="text-md text-gray-700 mb-3">
@@ -606,7 +606,7 @@ const QrScanner = ({ onClose }) => {
                   setShowClaimIntentPopup(false);
                   setShowConfirmClaimPopup(true);
                 }}
-                className={`w-full bg-${SUCCESS_COLOR} hover:bg-green-700 text-white font-bold px-5 py-3 rounded-xl shadow-md transition duration-200 mb-3`}
+                className={`w-full bg-${SUCCESS_COLOR} hover:bg-green-700 text-white font-bold px-5 py-3 rounded-sm shadow-md transition duration-200 mb-3`}
               >
                 Yes, Proceed to Claim
               </button>
@@ -615,7 +615,7 @@ const QrScanner = ({ onClose }) => {
                   setIntentToClaim(false);
                   setShowClaimIntentPopup(false);
                 }}
-                className={`w-full bg-gray-500 hover:bg-gray-600 text-white font-semibold px-5 py-3 rounded-xl transition duration-200`}
+                className={`w-full bg-gray-500 hover:bg-gray-600 text-white font-semibold px-5 py-3 rounded-sm transition duration-200`}
               >
                 No, Just Earn Points
               </button>
@@ -626,7 +626,7 @@ const QrScanner = ({ onClose }) => {
         {/* Confirm Claim Popup */}
         {showConfirmClaimPopup && (
           <div className="absolute inset-0 flex items-center justify-center z-50">
-            <div className={`bg-white p-8 rounded-lg shadow-2xl text-center w-full max-w-sm border-t-8 border-t-${ACCENT_COLOR} animate-fade-in`}>
+            <div className={`bg-white p-8 rounded-md shadow-2xl text-center w-full max-w-sm border-t-8 border-t-${ACCENT_COLOR} animate-fade-in`}>
               <FontAwesomeIcon icon={faDollarSign} className={`text-${ACCENT_COLOR} text-5xl mb-4`} />
               <h3 className="text-2xl font-bold text-gray-800 mb-2">Are you sure?</h3>
               <p className="text-md text-gray-700 mb-4">
@@ -637,7 +637,7 @@ const QrScanner = ({ onClose }) => {
                   setIntentToClaim(true);
                   setShowConfirmClaimPopup(false);
                 }}
-                className={`w-full bg-${SUCCESS_COLOR} hover:bg-green-700 text-white font-bold px-5 py-3 rounded-xl shadow-md transition duration-200 mb-3`}
+                className={`w-full bg-${SUCCESS_COLOR} hover:bg-green-700 text-white font-bold px-5 py-3 rounded-sm shadow-md transition duration-200 mb-3`}
               >
                 Yes, Claim
               </button>
@@ -646,7 +646,7 @@ const QrScanner = ({ onClose }) => {
                   setIntentToClaim(false);
                   setShowConfirmClaimPopup(false);
                 }}
-                className={`w-full bg-gray-500 hover:bg-gray-600 text-white font-semibold px-5 py-3 rounded-xl transition duration-200`}
+                className={`w-full bg-gray-500 hover:bg-gray-600 text-white font-semibold px-5 py-3 rounded-sm transition duration-200`}
               >
                 No, Cancel
               </button>
@@ -657,7 +657,7 @@ const QrScanner = ({ onClose }) => {
         {/* Preview Confirm Popup */}
         {showPreviewPopup && previewData && (
           <div className="absolute inset-0 flex items-center justify-center z-50">
-            <div className={`bg-white p-8 rounded-lg shadow-2xl text-center w-full max-w-sm border-t-8 border-t-${INFO_COLOR} animate-fade-in`}>
+            <div className={`bg-white p-8 rounded-md shadow-2xl text-center w-full max-w-sm border-t-8 border-t-${INFO_COLOR} animate-fade-in`}>
               <FontAwesomeIcon icon={faDollarSign} className={`text-${INFO_COLOR} text-5xl mb-4`} />
               <h3 className="text-2xl font-bold text-gray-800 mb-2">Confirm Purchase</h3>
               <p className="text-md text-gray-700 mb-3">
@@ -681,7 +681,7 @@ const QrScanner = ({ onClose }) => {
               <button
                 onClick={handleConfirmProcess}
                 disabled={isConfirming}                     
-                className={`w-full bg-${SUCCESS_COLOR} hover:bg-green-700 text-white font-bold px-5 py-3 rounded-xl shadow-md transition duration-200 mb-3 disabled:opacity-60`}
+                className={`w-full bg-${SUCCESS_COLOR} hover:bg-green-700 text-white font-bold px-5 py-3 rounded-md shadow-md transition duration-200 mb-3 disabled:opacity-60`}
               >
                 {isConfirming ? "Processing…" : "Process Purchase"}
               </button>
@@ -690,7 +690,7 @@ const QrScanner = ({ onClose }) => {
                   setShowPreviewPopup(false);
                   setPreviewData(null);
                 }}
-                className={`w-full bg-gray-500 hover:bg-gray-600 text-white font-semibold px-5 py-3 rounded-xl transition duration-200`}
+                className={`w-full bg-gray-500 hover:bg-gray-600 text-white font-semibold px-5 py-3 rounded-md transition duration-200`}
               >
                 Cancel
               </button>

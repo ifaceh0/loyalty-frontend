@@ -11,8 +11,8 @@ const Modal = ({ isOpen, onClose, children, title }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-lg shadow-xl w-full max-w-md">
-        <div className="flex justify-between items-center p-6 border-b border-gray-100">
+      <div className="bg-white rounded-md shadow-xl w-full max-w-md">
+        <div className="flex justify-between items-center p-4 border-b border-gray-200">
           <h3 className="text-xl font-semibold text-gray-900">{title}</h3>
           <button onClick={onClose} className="text-gray-400 hover:text-gray-600">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -139,7 +139,7 @@ export default function InviteEmployeePage() {
   return (
     <>
       <div className="min-h-screen">
-        <div className="max-w-8xl mx-auto p-2 space-y-8">
+        <div className="max-w-8xl mx-auto p-2 space-y-4">
 
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <div>
@@ -151,7 +151,7 @@ export default function InviteEmployeePage() {
             </div>
             <button
               onClick={() => setIsModalOpen(true)}
-              className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-5 py-3 rounded-lg shadow-lg hover:shadow-xl transition-all"
+              className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-5 py-3 rounded-md shadow-lg hover:shadow-xl transition-all"
             >
               <Plus className="w-5 h-5" />
               Invite Employee
@@ -166,7 +166,7 @@ export default function InviteEmployeePage() {
 
           {!fetching && (
             <div className="grid gap-8">           
-              <div className="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden">
+              <div className="bg-white rounded-md shadow-sm border border-slate-200 overflow-hidden">
                 <div className="bg-gradient-to-r from-indigo-500 to-indigo-600 p-6 text-white">
                   <h2 className="text-xl font-semibold flex items-center gap-2">
                     <UserCheck className="w-6 h-6" />
@@ -235,7 +235,7 @@ export default function InviteEmployeePage() {
 
                           <button
                             onClick={() => toggleStatus(emp.userId, emp.isActive)}
-                            className={`px-4 py-2 rounded-lg font-medium text-sm transition mt-4 sm:mt-0 ${
+                            className={`px-4 py-2 rounded-md font-medium text-sm transition mt-4 sm:mt-0 ${
                               emp.isActive
                                 ? 'bg-red-50 text-red-600 hover:bg-red-100'
                                 : 'bg-emerald-50 text-emerald-600 hover:bg-emerald-100'
@@ -250,7 +250,7 @@ export default function InviteEmployeePage() {
                 </div>
               </div>
 
-              <div className="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden">
+              <div className="bg-white rounded-md shadow-sm border border-slate-200 overflow-hidden">
                 <div className="bg-gradient-to-r from-teal-500 to-cyan-600 p-6 text-white">
                   <h2 className="text-xl font-semibold flex items-center gap-2">
                     <Mail className="w-6 h-6" />
@@ -324,14 +324,14 @@ export default function InviteEmployeePage() {
                           <div className="flex items-center gap-2 mt-4 sm:mt-0">
                             <button
                               onClick={() => resendInvite(inv.id)}
-                              className="text-indigo-600 hover:text-indigo-700 p-2 hover:bg-indigo-50 rounded-lg transition"
+                              className="text-indigo-600 hover:text-indigo-700 p-2 hover:bg-indigo-50 rounded-md transition"
                               title="Resend"
                             >
                               <RefreshCw className="w-4 h-4" />
                             </button>
                             <button
                               onClick={() => deleteInvite(inv.id)}
-                              className="text-red-600 hover:text-red-700 p-2 hover:bg-red-50 rounded-lg transition"
+                              className="text-red-600 hover:text-red-700 p-2 hover:bg-red-50 rounded-md transition"
                               title="Delete"
                             >
                               <Trash2 className="w-4 h-4" />
@@ -359,7 +359,7 @@ export default function InviteEmployeePage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="john@example.com"
-              className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+              className="w-full px-4 py-3 border border-slate-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
               required
             />
           </div>
@@ -380,7 +380,7 @@ export default function InviteEmployeePage() {
           <button
             type="submit"
             disabled={loading || !email.trim()}
-            className="w-full bg-indigo-600 hover:bg-indigo-700 disabled:bg-slate-400 text-white font-medium py-3 rounded-lg transition flex items-center justify-center gap-2"
+            className="w-full bg-indigo-600 hover:bg-indigo-700 disabled:bg-slate-400 text-white font-medium py-3 rounded-md transition flex items-center justify-center gap-2"
           >
             {loading ? (
               <>

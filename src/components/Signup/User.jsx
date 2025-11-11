@@ -594,19 +594,19 @@ function UserSignup() {
 
   return (
     <div
-      className="min-h-screen flex items-center justify-center px-4 bg-gray-50"
-      style={{
-        backgroundImage: `
-          linear-gradient(to right, rgba(0,0,0,0.06) 1px, transparent 1px),
-          linear-gradient(to bottom, rgba(0,0,0,0.06) 1px, transparent 1px)
-        `,
-        backgroundSize: "40px 40px, 40px 40px",
-        backgroundAttachment: "fixed",
-      }}
+      className="min-h-screen flex items-center justify-center px-4 bg-gray-200"
+      // style={{
+      //   backgroundImage: `
+      //     linear-gradient(to right, rgba(0,0,0,0.06) 1px, transparent 1px),
+      //     linear-gradient(to bottom, rgba(0,0,0,0.06) 1px, transparent 1px)
+      //   `,
+      //   backgroundSize: "40px 40px, 40px 40px",
+      //   backgroundAttachment: "fixed",
+      // }}
     >
       {success && <Confetti recycle={false} numberOfPieces={300} />}
       
-      <div className="w-full max-w-lg bg-white rounded-xl p-10 shadow-2xl border border-gray-100">
+      <div className="w-full max-w-xl bg-white rounded-md p-10 shadow-2xl border border-gray-200">
         <h2 className="text-3xl font-extrabold text-emerald-600 text-center mb-3">
             Create Your Account
         </h2>
@@ -674,13 +674,13 @@ function UserSignup() {
                 <div className="flex-grow">
                     <UnderlineInput label="Enter Captcha" name="captchaInput" value={formData.captchaInput} onChange={handleChange} Icon={Puzzle} />
                 </div>
-                <div className="flex-shrink-0 w-24 h-10 bg-gray-100 border border-gray-300 rounded-md overflow-hidden flex items-center justify-center">
+                <div className="flex-shrink-0 w-24 h-10 bg-gray-100 border border-gray-300 rounded-sm overflow-hidden flex items-center justify-center">
                     <canvas ref={canvasRef} width={100} height={40} className="w-full h-full" />
                 </div>
                 <button 
                   type="button" 
                   onClick={generateCaptcha} 
-                  className="flex-shrink-0 w-10 h-10 text-gray-500 hover:text-blue-600 transition-colors duration-200 border border-gray-300 rounded-md flex items-center justify-center"
+                  className="flex-shrink-0 w-10 h-10 text-gray-500 hover:text-blue-600 transition-colors duration-200 border border-gray-300 rounded-full flex items-center justify-center"
                   aria-label="Refresh CAPTCHA"
                 >
                   <RefreshCw className="h-5 w-5" />
@@ -690,7 +690,7 @@ function UserSignup() {
               <button
                 type="submit"
                 disabled={loading}
-                className={`w-full bg-gradient-to-r from-green-500 to-blue-600 text-white font-bold py-3 rounded-lg shadow-lg transition-all duration-300 text-lg
+                className={`w-full bg-gradient-to-r from-green-500 to-blue-600 text-white font-bold py-3 rounded-sm shadow-lg transition-all duration-300 text-lg
                 ${loading ? "opacity-60 cursor-not-allowed" : "hover:from-green-600 hover:to-blue-700 active:scale-[0.99]"}`}
               >
                 {loading ? (
@@ -716,7 +716,7 @@ function UserSignup() {
             <button
               type="button"
               onClick={() => setStep((prev) => prev - 1)}
-              className="w-full py-3 bg-gray-200 hover:bg-gray-300 active:scale-[0.99] text-gray-700 font-semibold rounded-lg transition-all duration-300"
+              className="w-full py-3 bg-gray-200 hover:bg-gray-300 active:scale-[0.99] text-gray-700 font-semibold rounded-sm transition-all duration-300"
             >
               Back
             </button>
@@ -741,7 +741,7 @@ function NextButton({ onClick }) {
     <button
       type="button"
       onClick={onClick}
-      className="w-full py-3 font-bold rounded-lg shadow-lg transition-all duration-300 text-lg
+      className="w-full py-3 font-bold rounded-sm shadow-lg transition-all duration-300 text-lg
         bg-gradient-to-r from-emerald-500 to-blue-600 text-white hover:from-emerald-600 hover:to-blue-700 active:scale-[0.99]"
     >
       Next

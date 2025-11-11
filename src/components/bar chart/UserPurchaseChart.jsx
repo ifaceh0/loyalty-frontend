@@ -32,8 +32,8 @@ const UserPurchaseChart = () => {
   }, []);
 
   return (
-    <section className="mb-8">
-      <div className="bg-white shadow-md rounded-lg p-6 border border-gray-100 hover:shadow-lg transition-shadow duration-300">
+    <section className="mb-6">
+      <div className="bg-white shadow-md rounded-sm p-3 border border-gray-100 hover:shadow-lg transition-shadow duration-300">
         <div className="flex items-center justify-between mb-1">
           <h3 className="text-xl font-semibold text-gray-800">
             Monthly Registered vs Purchase Users

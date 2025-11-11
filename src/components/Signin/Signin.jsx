@@ -483,7 +483,7 @@ function FloatingInput({
 }
 
 const DemoFeature = ({ icon: Icon, title, description }) => (
-  <div className="flex items-start space-x-4 p-4 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20">
+  <div className="flex items-start space-x-4 p-4 rounded-md bg-white/10 backdrop-blur-sm border border-white/20">
     <div className="flex-shrink-0 p-3 bg-emerald-400 rounded-full text-white shadow-lg">
       <Icon className="w-6 h-6" />
     </div>
@@ -506,7 +506,7 @@ const RoleCard = ({ role, displayName, onClick, disabled }) => {
     <button
       onClick={onClick}
       disabled={disabled}
-      className={`w-full p-5 rounded-lg border-2 transition-all duration-200 text-left
+      className={`w-full p-5 rounded-md border-2 transition-all duration-200 text-left
         ${disabled
           ? "bg-gray-100 border-gray-300 cursor-not-allowed opacity-60"
           : "bg-emerald-50 border-emerald-300 hover:bg-emerald-100 hover:border-emerald-500 hover:shadow-lg"
@@ -735,16 +735,16 @@ const Signin = () => {
 
   return (
     <div 
-      className="min-h-screen flex items-center p-8 justify-center px-4 bg-gray-50"
-      style={{
-        backgroundImage:
-          "linear-gradient(0deg, rgba(0,0,0,.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,.03) 1px, transparent 1px)",
-        backgroundSize: "20px 20px",
-      }}
+      className="min-h-screen flex items-center p-8 justify-center px-4 bg-gray-200"
+      // style={{
+      //   backgroundImage:
+      //     "linear-gradient(0deg, rgba(0,0,0,.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,.03) 1px, transparent 1px)",
+      //   backgroundSize: "20px 20px",
+      // }}
     >
-      <div className="w-full max-w-5xl flex bg-white shadow-xl rounded-lg overflow-hidden animate-fade-in-up">
+      <div className="w-full max-w-5xl flex bg-white shadow-xl border border-gray-200 rounded-md overflow-hidden animate-fade-in-up">
         {/* left side */}
-        <div className="hidden lg:flex w-6/12 bg-gradient-to-br from-emerald-500 to-sky-600 p-10 flex-col justify-center relative">
+        <div className="hidden lg:flex w-6/12 bg-gradient-to-br from-emerald-500 to-sky-600 p-8 flex-col justify-center relative">
           <div className="absolute inset-0 opacity-10 bg-[linear-gradient(to_right,#fff3_1px,transparent_1px),linear-gradient(to_bottom,#fff3_1px,transparent_1px)] bg-[size:30px_30px]"></div>
 
           <h1 className="text-4xl font-extrabold text-white leading-tight">
@@ -755,7 +755,7 @@ const Signin = () => {
             their customer reward programs.
           </p>
 
-          <div className="space-y-4">
+          <div className="space-y-3">
             <DemoFeature
               icon={BarChart}
               title="Track Your Success"
@@ -832,8 +832,8 @@ const Signin = () => {
                 onToggle={() => setShowPassword(!showPassword)}
               />
 
-              <div className="space-y-4 pt-6">
-                <div className="flex items-center justify-between p-2 bg-gray-100 rounded-md">
+              <div className="space-y-4 pt-3">
+                <div className="flex items-center justify-between p-1 bg-gray-200 rounded-md">
                   <canvas
                     ref={canvasRef}
                     width={120}
@@ -843,7 +843,7 @@ const Signin = () => {
                   <button
                     type="button"
                     onClick={generateCaptcha}
-                    className="flex items-center gap-2 text-sm bg-blue-500 text-white px-3 py-2 rounded-md hover:bg-blue-600 transition duration-150 shadow-md"
+                    className="flex items-center gap-2 text-sm bg-blue-500 text-white px-2 py-2 rounded-full hover:bg-blue-600 transition duration-150 shadow-md"
                     aria-label="Refresh CAPTCHA"
                   >
                     <RefreshCw className="w-4 h-4" />
@@ -871,14 +871,14 @@ const Signin = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className={`w-full bg-gradient-to-r from-emerald-500 to-sky-600 text-white py-3 text-lg font-semibold rounded-lg shadow-lg transition ${
+                className={`w-full bg-gradient-to-r from-emerald-500 to-sky-600 text-white py-2 text-lg font-semibold rounded-md shadow-lg transition ${
                   loading ? "opacity-70" : "hover:from-emerald-600 hover:to-sky-700"
                 }`}
               >
                 {loading ? (
                 <span className="flex items-center justify-center gap-2">
                   <svg
-                    className="animate-spin h-5 w-5 text-white"
+                    className="animate-spin h-4 w-4 text-white"
                     viewBox="0 0 24 24"
                     fill="none"
                   >
