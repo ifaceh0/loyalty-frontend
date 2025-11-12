@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import { CheckCircle, Send, Sparkles } from 'lucide-react';
 
-const ContactUs = () => {
+export default function ContactUs() {
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -21,110 +22,175 @@ const ContactUs = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     if (!formData.isHuman) {
-      alert("⚠️ Please verify you're not a robot.");
+      alert('Please verify you are not a robot.');
       return;
     }
 
-    console.log('Form Submitted:', formData);
+    console.log('Contact Form Submitted:', formData);
     setSubmitted(true);
 
-    setFormData({
-      fullName: '',
-      email: '',
-      subject: '',
-      message: '',
-      isHuman: false,
-    });
+    // Reset form
+    setTimeout(() => {
+      setFormData({
+        fullName: '',
+        email: '',
+        subject: '',
+        message: '',
+        isHuman: false,
+      });
+      setSubmitted(false);
+    }, 3000);
   };
 
   return (
-    <div className="max-w-2xl mx-auto bg-white p-8 rounded-2xl shadow-xl border border-blue-100 mt-12 mb-8">
-      <h2 className="text-3xl font-bold text-blue-700 mb-6 text-center">
-        📬 Contact Loyalty Support
-      </h2>
+    <section className="py-10 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-slate-50 to-white">
+      <div className="max-w-4xl mx-auto">
+        {/* Card */}
+        <div className="relative bg-white/70 backdrop-blur-lg rounded-md p-8 shadow-xl border border-emerald-200 overflow-hidden">
+          {/* Gradient accent */}
+          <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-full blur-3xl opacity-20 -z-10" />
 
-      {submitted && (
-        <div className="mb-6 p-4 bg-green-100 border border-green-300 text-green-800 rounded-lg text-center font-semibold">
-          ✅ Thank you! Your message has been sent successfully.
-        </div>
-      )}
+          <h2 className="text-3xl sm:text-4xl font-extrabold bg-gradient-to-r from-emerald-600 to-teal-700 bg-clip-text text-transparent text-center mb-8 flex items-center justify-center gap-2">
+            <Send className="w-8 h-8" />
+            Contact Loyalty Support
+          </h2>
 
-      <form onSubmit={handleSubmit} className="space-y-5">
-        <div>
-          <label className="block text-sm text-gray-600 mb-1">Full Name</label>
-          <input
-            type="text"
-            name="fullName"
-            placeholder="Enter your full name"
-            value={formData.fullName}
-            onChange={handleChange}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 outline-none"
-            required
-          />
+          {/* Success Message */}
+          {submitted && (
+            <div className="mb-6 p-5 bg-emerald-50 border border-emerald-200 rounded-md text-emerald-800 text-center font-semibold flex items-center justify-center gap-2 animate-in fade-in slide-in-from-top duration-500">
+              <CheckCircle className="w-6 h-6 text-emerald-600" />
+              Thank you! Your message has been sent.
+              <Sparkles className="w-5 h-5 text-emerald-500" />
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Full Name */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                Full Name
+              </label>
+              <input
+                type="text"
+                name="fullName"
+                placeholder="John Doe"
+                value={formData.fullName}
+                onChange={handleChange}
+                required
+                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all duration-200 placeholder:text-gray-400"
+              />
+            </div>
+
+            {/* Email */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                Email Address
+              </label>
+              <input
+                type="email"
+                name="email"
+                placeholder="john@example.com"
+                value={formData.email}
+                onChange={handleChange}
+                required
+                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all duration-200 placeholder:text-gray-400"
+              />
+            </div>
+
+            {/* Subject */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                Subject
+              </label>
+              <input
+                type="text"
+                name="subject"
+                placeholder="How can we help?"
+                value={formData.subject}
+                onChange={handleChange}
+                required
+                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all duration-200 placeholder:text-gray-400"
+              />
+            </div>
+
+            {/* Message */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                Your Message
+              </label>
+              <textarea
+                name="message"
+                rows={5}
+                placeholder="Tell us more..."
+                value={formData.message}
+                onChange={handleChange}
+                required
+                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all duration-200 placeholder:text-gray-400 resize-none"
+              />
+            </div>
+
+            {/* Human Verification */}
+            <div className="flex items-center gap-3">
+              <div className="relative">
+                <input
+                  type="checkbox"
+                  name="isHuman"
+                  id="isHuman"
+                  checked={formData.isHuman}
+                  onChange={handleChange}
+                  className="sr-only"
+                />
+                <label
+                  htmlFor="isHuman"
+                  className={`flex items-center justify-center w-6 h-6 rounded-sm border-2 transition-all cursor-pointer ${
+                    formData.isHuman
+                      ? 'bg-emerald-600 border-emerald-600'
+                      : 'bg-white border-gray-300 hover:border-emerald-400'
+                  }`}
+                >
+                  {formData.isHuman && (
+                    <svg
+                      className="w-4 h-4 text-white"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={3}
+                        d="M5 13l4 4L19 7"
+                      />
+                    </svg>
+                  )}
+                </label>
+              </div>
+              <label htmlFor="isHuman" className="text-sm text-gray-700 cursor-pointer">
+                I am not a robot
+              </label>
+            </div>
+
+            {/* Submit Button */}
+            <div className="pt-4 text-center">
+              <button
+                type="submit"
+                className="group inline-flex items-center gap-2 px-8 py-3.5 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-semibold rounded-sm shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled={!formData.isHuman}
+              >
+                <Send className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                Send Message
+              </button>
+            </div>
+          </form>
         </div>
 
-        <div>
-          <label className="block text-sm text-gray-600 mb-1">Email</label>
-          <input
-            type="email"
-            name="email"
-            placeholder="your@email.com"
-            value={formData.email}
-            onChange={handleChange}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 outline-none"
-            required
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm text-gray-600 mb-1">Subject</label>
-          <input
-            type="text"
-            name="subject"
-            placeholder="What's your query about?"
-            value={formData.subject}
-            onChange={handleChange}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 outline-none"
-            required
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm text-gray-600 mb-1">Message</label>
-          <textarea
-            name="message"
-            rows="5"
-            placeholder="Write your message here..."
-            value={formData.message}
-            onChange={handleChange}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 outline-none"
-            required
-          />
-        </div>
-
-        <div className="flex items-center gap-2">
-          <input
-            type="checkbox"
-            name="isHuman"
-            checked={formData.isHuman}
-            onChange={handleChange}
-            className="w-4 h-4"
-          />
-          <label htmlFor="isHuman" className="text-sm text-gray-700">I am not a robot</label>
-        </div>
-
-        <div className="text-center pt-2">
-          <button
-            type="submit"
-            className="bg-blue-700 hover:bg-blue-800 text-gold font-semibold px-8 py-2 rounded-xl transition duration-300 shadow-md"
-          >
-            📨 Send Message
-          </button>
-        </div>
-      </form>
-    </div>
+        {/* Optional footer note */}
+        <p className="text-center text-sm text-gray-500 mt-8">
+          We typically respond within <span className="font-medium text-emerald-600">24 hours</span>.
+        </p>
+      </div>
+    </section>
   );
-};
-
-export default ContactUs;
+}

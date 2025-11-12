@@ -187,7 +187,7 @@ export default function ExploreShops() {
     }
 
     return (
-        <div className="min-h-screen bg-blue-50 p-4 md:p-8">
+        <div className="min-h-screen bg-blue-50 p-4 md:p-1">
             <motion.h1
                 className="text-4xl font-extrabold text-center text-blue-800 mb-10"
                 initial={{ opacity: 0, y: -20 }}
@@ -204,12 +204,12 @@ export default function ExploreShops() {
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     placeholder="Search shops by name..."
-                    className="w-full md:w-1/2 px-5 py-3 rounded-lg border-2 border-gray-200 focus:outline-none focus:ring-4 focus:ring-offset-2 focus:ring-blue-400 shadow-md transition"
+                    className="w-full md:w-1/2 px-5 py-2 rounded-sm border-2 border-gray-200 focus:outline-none focus:ring-4 focus:ring-offset-2 focus:ring-blue-400 shadow-md transition"
                 />
                 <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className="px-6 py-3 rounded-lg text-white font-semibold bg-blue-600 hover:bg-blue-700 transition flex items-center justify-center gap-2 shadow-lg"
+                    className="px-6 py-2 rounded-sm text-white font-semibold bg-blue-600 hover:bg-blue-700 transition flex items-center justify-center gap-2 shadow-lg"
                     onClick={() => setIsFilterOpen(!isFilterOpen)}
                 >
                     <FontAwesomeIcon icon={faFilter} />
@@ -218,7 +218,7 @@ export default function ExploreShops() {
 
                 {isFilterOpen && (
                     <motion.div
-                        className="absolute top-full right-0 mt-3 bg-white p-6 rounded-lg shadow-2xl w-full md:w-96 z-50 border-t-4 border-blue-600"
+                        className="absolute top-full right-0 mt-3 bg-white p-6 rounded-md shadow-2xl w-full md:w-96 z-50 border-t-4 border-blue-600"
                         initial={{ opacity: 0, y: -10, scale: 0.9 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         transition={{ duration: 0.3 }}
@@ -235,7 +235,7 @@ export default function ExploreShops() {
                                     setSelectedCountry(e.target.value);
                                     setSelectedCity('');
                                 }}
-                                className="w-full px-4 py-2 rounded-lg border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 appearance-none bg-white"
+                                className="w-full px-4 py-2 rounded-sm border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 appearance-none bg-white"
                             >
                                 <option value="">All Countries</option>
                                 {countries.map((country) => (
@@ -252,7 +252,7 @@ export default function ExploreShops() {
                                 value={selectedCity}
                                 onChange={(e) => setSelectedCity(e.target.value)}
                                 disabled={!selectedCountry}
-                                className={`w-full px-4 py-2 rounded-lg border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 appearance-none ${!selectedCountry ? 'bg-gray-100 text-gray-500' : 'bg-white'}`}
+                                className={`w-full px-4 py-2 rounded-sm border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 appearance-none ${!selectedCountry ? 'bg-gray-100 text-gray-500' : 'bg-white'}`}
                             >
                                 <option value="">All Cities</option>
                                 {cities
@@ -267,13 +267,13 @@ export default function ExploreShops() {
                         </div>
                         <div className="flex justify-end space-x-3">
                             <button
-                                className="px-4 py-2 rounded-lg text-gray-700 font-medium bg-gray-200 hover:bg-gray-300 transition"
+                                className="px-4 py-2 rounded-sm text-gray-700 font-medium bg-gray-200 hover:bg-gray-300 transition"
                                 onClick={handleFilterReset}
                             >
                                 Reset Filters
                             </button>
                             <button
-                                className="px-4 py-2 rounded-lg text-white font-medium bg-blue-600 hover:bg-blue-700 transition"
+                                className="px-4 py-2 rounded-sm text-white font-medium bg-blue-600 hover:bg-blue-700 transition"
                                 onClick={() => setIsFilterOpen(false)}
                             >
                                 Done
@@ -295,7 +295,7 @@ export default function ExploreShops() {
                     {currentShops.map((shop) => (
                         <div
                             key={shop.shopId}
-                            className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition transform hover:-translate-y-1 border border-blue-100"
+                            className="bg-white rounded-md shadow-lg overflow-hidden hover:shadow-xl transition transform hover:-translate-y-1 border border-blue-100"
                         >
                             {/* Gradient Header */}
                             <div className="bg-blue-700 p-3 text-white flex items-center">
@@ -310,7 +310,7 @@ export default function ExploreShops() {
                                     <img
                                         src={`data:image/jpeg;base64,${shop.logoImage}`}
                                         alt={shop.shopName}
-                                        className="w-full h-40 object-cover border-b-4 border-blue-800"
+                                        className="w-full h-40 object-cover border-blue-800"
                                     />
                                 ) : (
                                     <div className="w-full h-40 bg-gradient-to-br from-blue-100 to-blue-200 border-blue-800 flex items-center justify-center">
@@ -332,18 +332,18 @@ export default function ExploreShops() {
 
                                 {/* Country & City */}
                                 <div className="grid grid-cols-2 gap-2 text-sm mb-3">
-                                    <div className="flex items-center bg-white p-2 rounded border border-blue-200">
+                                    <div className="flex items-center bg-white p-1 rounded border border-blue-200">
                                         <FontAwesomeIcon icon={faGlobe} className="mr-2 text-blue-700 text-xs" />
                                         <span className="font-medium text-blue-800 truncate">{shop.country ? shop.country.toUpperCase() : 'N/A'}</span>
                                     </div>
-                                    <div className="flex items-center bg-white p-2 rounded border border-blue-200">
+                                    <div className="flex items-center bg-white p-1 rounded border border-blue-200">
                                         <FontAwesomeIcon icon={faCity} className="mr-2 text-blue-700 text-xs" />
-                                        <span className="font-medium text-blue-800 truncate">{shop.city ? shop.city : 'N/A'}</span>
+                                        <span className="font-medium text-blue-800 truncate">{shop.city ? shop.city.toUpperCase() : 'N/A'}</span>
                                     </div>
                                 </div>
 
                                 {/* Phone */}
-                                <div className="flex items-center mt-2 bg-white p-2 rounded border border-blue-200">
+                                <div className="flex items-center mt-2 bg-white p-1.5 rounded border border-blue-200">
                                     <FontAwesomeIcon icon={faPhoneAlt} className="mr-2 text-blue-700" />
                                     <span className="text-sm font-medium text-blue-800">{shop.shopPhone || 'N/A'}</span>
                                 </div>
@@ -354,7 +354,7 @@ export default function ExploreShops() {
                                     whileTap={{ scale: 0.98 }}
                                     onClick={() => handleGenerateQR(shop)}
                                     disabled={loadingShopId === shop.shopId}
-                                    className={`w-full mt-3 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md text-sm font-medium transition flex items-center justify-center gap-2
+                                    className={`w-full mt-3 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-sm text-sm font-medium transition flex items-center justify-center gap-2
                                         ${loadingShopId === shop.shopId ? 'opacity-70 cursor-not-allowed' : ''}`}
                                 >
                                     {loadingShopId === shop.shopId ? (
@@ -424,7 +424,7 @@ const PaginationButton = ({ onClick, disabled, label, icon }) => (
         whileTap={{ scale: 0.95 }}
         onClick={onClick}
         disabled={disabled}
-        className={`px-5 py-2 rounded-xl font-medium flex items-center gap-2 shadow-md transition-all duration-200 ${
+        className={`px-5 py-2 rounded-full font-medium flex items-center gap-2 shadow-md transition-all duration-200 ${
             disabled
                 ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
                 : 'bg-blue-600 text-white hover:bg-blue-700'

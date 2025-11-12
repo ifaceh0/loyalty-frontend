@@ -734,17 +734,18 @@ const Signin = () => {
   };
 
   return (
-    <div 
-      className="min-h-screen flex items-center p-8 justify-center px-4 bg-gray-200"
+    // <div 
+    //   className="min-h-screen flex items-center p-8 justify-center px-4 bg-gray-200"
       // style={{
       //   backgroundImage:
       //     "linear-gradient(0deg, rgba(0,0,0,.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,.03) 1px, transparent 1px)",
       //   backgroundSize: "20px 20px",
       // }}
-    >
+    // >
+    <div className="min-h-screen bg-gray-200 flex items-center justify-center p-4">
       <div className="w-full max-w-5xl flex bg-white shadow-xl border border-gray-200 rounded-md overflow-hidden animate-fade-in-up">
         {/* left side */}
-        <div className="hidden lg:flex w-6/12 bg-gradient-to-br from-emerald-500 to-sky-600 p-8 flex-col justify-center relative">
+        <div className="hidden lg:flex w-6/12 bg-gradient-to-br from-emerald-500 to-sky-600 p-8 flex-col justify-center relative space-y-6">
           <div className="absolute inset-0 opacity-10 bg-[linear-gradient(to_right,#fff3_1px,transparent_1px),linear-gradient(to_bottom,#fff3_1px,transparent_1px)] bg-[size:30px_30px]"></div>
 
           <h1 className="text-4xl font-extrabold text-white leading-tight">
@@ -755,7 +756,7 @@ const Signin = () => {
             their customer reward programs.
           </p>
 
-          <div className="space-y-3">
+          <div className="space-y-6">
             <DemoFeature
               icon={BarChart}
               title="Track Your Success"

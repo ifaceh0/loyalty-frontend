@@ -677,14 +677,14 @@ const DailyTransaction = () => {
                   type="date"
                   value={selectedDate}
                   onChange={(e) => setSelectedDate(e.target.value)}
-                  className="w-full pl-12 pr-4 py-3 bg-slate-50 border-2 border-blue-300 rounded-sm text-slate-800 focus:border-orange-500 focus:ring-4 focus:ring-orange-100 focus:outline-none transition-all text-lg font-medium"
+                  className="w-full pl-12 pr-4 py-2 bg-slate-50 border-2 border-blue-300 rounded-sm text-slate-800 focus:border-orange-500 focus:ring-4 focus:ring-orange-100 focus:outline-none transition-all text-lg font-medium"
                 />
               </div>
 
               <button
                 onClick={renderDailyData}
                 disabled={isLoadingDaily}
-                className={`w-full max-w-xs px-12 py-3 rounded-sm font-bold text-lg text-white shadow-lg transform hover:scale-105 transition-all flex items-center justify-center
+                className={`w-full max-w-xs px-12 py-2 rounded-sm font-bold text-lg text-white shadow-lg transform hover:scale-105 transition-all flex items-center justify-center
                   ${isLoadingDaily 
                     ? 'bg-slate-400 cursor-wait' 
                     : 'bg-gradient-to-r from-blue-600 to-orange-600 hover:shadow-orange-500/50'
@@ -742,13 +742,13 @@ const DailyTransaction = () => {
                       placeholder="Search user by ID..."
                       value={userId}
                       onChange={(e) => setUserId(e.target.value)}
-                      className="w-full pl-12 pr-4 py-3 bg-white border-2 border-blue-300 rounded-sm text-slate-800 focus:border-orange-500 focus:ring-4 focus:ring-orange-100 focus:outline-none transition-all font-medium"
+                      className="w-full pl-12 pr-4 py-2 bg-white border-2 border-blue-300 rounded-sm text-slate-800 focus:border-orange-500 focus:ring-4 focus:ring-orange-100 focus:outline-none transition-all font-medium"
                     />
                   </div>
                   <button
                     onClick={searchUser}
                     disabled={isLoadingUser}
-                    className={`px-6 py-3 rounded-sm font-bold text-white shadow-md transition-all flex items-center
+                    className={`px-6 py-2 rounded-sm font-bold text-white shadow-md transition-all flex items-center
                       ${isLoadingUser
                         ? 'bg-slate-400 cursor-wait'
                         : 'bg-gradient-to-r from-blue-600 to-orange-600 hover:shadow-orange-500/50'
@@ -773,14 +773,14 @@ const DailyTransaction = () => {
               <div className="flex justify-end gap-3 p-2 bg-blue-50 border-b-2 border-blue-200">
                 <button
                   onClick={exportToCSV}
-                  className="flex items-center gap-2 px-5 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-sm hover:from-blue-700 hover:to-blue-800 transition-all shadow-lg font-semibold"
+                  className="flex items-center gap-2 px-5 py-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-sm hover:from-blue-700 hover:to-blue-800 transition-all shadow-lg font-semibold"
                 >
                   <Download className="w-5 h-5" />
                   Export CSV
                 </button>
                 <button
                   onClick={handlePrint}
-                  className="flex items-center gap-2 px-5 py-3 bg-gradient-to-r from-orange-600 to-orange-700 text-white rounded-sm hover:from-orange-700 hover:to-orange-800 transition-all shadow-lg font-semibold"
+                  className="flex items-center gap-2 px-5 py-2 bg-gradient-to-r from-orange-600 to-orange-700 text-white rounded-sm hover:from-orange-700 hover:to-orange-800 transition-all shadow-lg font-semibold"
                 >
                   <Printer className="w-5 h-5" />
                   Print

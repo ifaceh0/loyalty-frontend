@@ -151,7 +151,7 @@ export default function InviteEmployeePage() {
             </div>
             <button
               onClick={() => setIsModalOpen(true)}
-              className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-5 py-3 rounded-md shadow-lg hover:shadow-xl transition-all"
+              className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-5 py-2 rounded-md shadow-lg hover:shadow-xl transition-all"
             >
               <Plus className="w-5 h-5" />
               Invite Employee
@@ -165,9 +165,9 @@ export default function InviteEmployeePage() {
           )}
 
           {!fetching && (
-            <div className="grid gap-8">           
+            <div className="grid gap-4">           
               <div className="bg-white rounded-md shadow-sm border border-slate-200 overflow-hidden">
-                <div className="bg-gradient-to-r from-indigo-500 to-indigo-600 p-6 text-white">
+                <div className="bg-gradient-to-r from-indigo-500 to-indigo-600 p-4 text-white">
                   <h2 className="text-xl font-semibold flex items-center gap-2">
                     <UserCheck className="w-6 h-6" />
                     All Employees
@@ -177,7 +177,7 @@ export default function InviteEmployeePage() {
                   </h2>
                 </div>
 
-                <div className="p-6">
+                <div className="p-4">
                   {employees.length === 0 ? (
                     <div className="text-center py-12 text-slate-500">
                       <Users className="w-12 h-12 mx-auto mb-3 text-slate-300" />
@@ -251,7 +251,7 @@ export default function InviteEmployeePage() {
               </div>
 
               <div className="bg-white rounded-md shadow-sm border border-slate-200 overflow-hidden">
-                <div className="bg-gradient-to-r from-teal-500 to-cyan-600 p-6 text-white">
+                <div className="bg-gradient-to-r from-teal-500 to-cyan-600 p-4 text-white">
                   <h2 className="text-xl font-semibold flex items-center gap-2">
                     <Mail className="w-6 h-6" />
                     Pending Invitations
@@ -261,7 +261,7 @@ export default function InviteEmployeePage() {
                   </h2>
                 </div>
 
-                <div className="p-6">
+                <div className="p-4">
                   {pendingInvitations.length === 0 ? (
                     <div className="text-center py-12 text-slate-500">
                       <Mail className="w-12 h-12 mx-auto mb-3 text-slate-300" />

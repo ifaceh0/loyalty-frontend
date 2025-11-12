@@ -27,7 +27,7 @@ export default function QRModal({ shop, qrData, isOpen, onClose }) {
 
   return (
     <div className="fixed inset-0 z-50 flex justify-center bg-black bg-opacity-60 backdrop-blur-md px-4 py-12 overflow-y-auto">
-      <div className="bg-white w-full max-w-md shadow-2xl overflow-hidden transform transition-all duration-300 scale-100 my-auto max-h-full">
+      <div className="bg-white w-full max-w-md rounded-md shadow-2xl overflow-hidden transform transition-all duration-300 scale-100 my-auto max-h-full">
         <nav className="bg-blue-600 text-white px-6 py-4 flex justify-between items-center sticky top-0 z-10">
           <h2 className="text-xl font-extrabold flex items-center gap-3">
             <FontAwesomeIcon icon={faQrcode} className="text-white text-2xl" />
@@ -52,11 +52,11 @@ export default function QRModal({ shop, qrData, isOpen, onClose }) {
                     <img
                         src={qrData.qrCode}
                         alt="QR Code"
-                        className="w-56 h-56 border-8 border-gray-100 rounded-lg shadow-xl"
+                        className="w-58 h-56 border-8 border-gray-100 rounded-md shadow-xl"
                     />
                     <button
                         onClick={handleDownload}
-                        className="mt-6 w-full md:w-auto bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-bold flex items-center justify-center gap-2 transition duration-300 shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
+                        className="mt-6 w-full md:w-auto bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-sm font-bold flex items-center justify-center gap-2 transition duration-300 shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
                     >
                         <FontAwesomeIcon icon={faDownload} className="text-lg" />
                         Download Loyalty QR Code
@@ -65,7 +65,7 @@ export default function QRModal({ shop, qrData, isOpen, onClose }) {
                 )}
 
                 {/* Information Block */}
-                <div className="bg-gray-50 p-5 rounded-xl text-gray-700 text-base border border-gray-200 space-y-3">
+                <div className="bg-gray-50 p-5 rounded-md text-gray-700 text-base border border-gray-200 space-y-3">
                     
                     {/* Header with Info Toggle Button */}
                     <div className="flex justify-between items-center border-b pb-2 mb-3">
@@ -100,9 +100,9 @@ export default function QRModal({ shop, qrData, isOpen, onClose }) {
                     </div>
                     
                     <div className="flex items-center gap-3 pt-3 border-t border-gray-200">
-                    <FontAwesomeIcon icon={faWallet} className="text-green-600 text-xl w-5" />
-                    <span className="text-lg font-bold text-green-600">
-                        <span className="font-semibold">Available Points:</span> {qrData.availablePoints} Points 💰
+                    <FontAwesomeIcon icon={faWallet} className="text-indigo-500 text-xl w-5" />
+                    <span className="text-lg font-bold text-indigo-600">
+                        <span className="font-semibold">Available Points:</span> {qrData.availablePoints} Points
                     </span>
                     </div>
                 </div>
@@ -115,7 +115,7 @@ export default function QRModal({ shop, qrData, isOpen, onClose }) {
                         bg-yellow-50 border-l-4 border-yellow-500 rounded-lg shadow-md
                     `}
                 >
-                    <div className="p-4 bg-gradient-to-r from-blue-50 to-cyan-50 rounded-lg shadow-md">
+                    <div className="p-4 bg-gradient-to-r from-blue-50 to-cyan-50 rounded-md shadow-md">
                       <div className="flex items-start gap-3">
                         <FontAwesomeIcon icon={faGift} className="text-yellow-600 text-3xl mt-1 animate-bounce" />
                         <div>
