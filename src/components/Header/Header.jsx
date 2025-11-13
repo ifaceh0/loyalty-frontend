@@ -6,7 +6,7 @@ import {
   useNavigate,
 } from 'react-router-dom';
 import { FaUser, FaSignOutAlt } from 'react-icons/fa';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, LayoutDashboard, List,PanelRightOpen } from 'lucide-react';
 import { useSidebar } from '../../context/SidebarContext';
 
 const LOGOUT_API =
@@ -145,7 +145,7 @@ export default function Header() {
               onClick={() => setSidebarOpen(true)}
               className="text-blue-600 hover:text-blue-700 transition"
             >
-              <Menu size={24} />
+              <List size={24} />
             </button>
           ) : (
             <Link
@@ -233,7 +233,7 @@ export default function Header() {
             onClick={() => setMobileMenuOpen((v) => !v)}
             className="lg:hidden text-emerald-600 hover:text-emerald-700"
           >
-            {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
+            {mobileMenuOpen ? <X size={22} /> : <PanelRightOpen size={24} />}
           </button>
         </div>
       </nav>
@@ -242,12 +242,6 @@ export default function Header() {
       {mobileMenuOpen && (
         <div className="fixed inset-0 z-40 flex flex-col bg-white lg:hidden">
           <div className="flex items-center justify-between p-4 border-b border-gray-200">
-            {/* <Link
-              to="/"
-              className="text-2xl font-bold bg-gradient-to-r from-emerald-500 to-teal-600 bg-clip-text text-transparent"
-            >
-              LoyaltyHub
-            </Link> */}
             <p className="text-xl font-bold bg-gradient-to-r from-emerald-500 to-teal-600 bg-clip-text text-transparent">LoyaltyHub</p>
             <button
               onClick={() => setMobileMenuOpen(false)}

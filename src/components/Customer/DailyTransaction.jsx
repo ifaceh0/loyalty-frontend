@@ -500,7 +500,7 @@
 
 
 import React, { useState, useEffect, useRef } from 'react';
-import { Search, Calendar, X, Gift, DollarSign, ShoppingBag, TrendingUp, Loader2, Clock, AlertCircle, Download, Printer } from 'lucide-react';
+import { Search, Calendar, X, Gift, DollarSign, ArrowUpCircle, ArrowDownCircle, ShoppingBag, TrendingUp, Loader2, Clock, AlertCircle, Download, Printer } from 'lucide-react';
 import { format } from 'date-fns';
 
 const DailyTransaction = () => {
@@ -614,12 +614,13 @@ const DailyTransaction = () => {
   const exportToCSV = () => {
     if (!dailyData || !dailyData.transactions) return;
 
-    const headers = ['User ID', 'Name', 'Amount', 'Points Earned', 'Redeemed', 'Time'];
+    const headers = ['User ID', 'Name', 'Amount', 'Points Earned', 'Redeem Points', 'Redeemed Amount', 'Time'];
     const rows = dailyData.transactions.map(tx => [
       tx.userId,
       tx.name,
       tx.transactionAmount.toFixed(2),
       tx.pointsEarned,
+      tx.redeemPoints || 0,
       (tx.redeemAmount ?? 0).toFixed(2),
       tx.time
     ]);
@@ -822,7 +823,7 @@ const DailyTransaction = () => {
                     </div>
 
                     {/* TABLE */}
-                    <div>
+                    {/* <div>
                       <h3 className="text-xl font-black text-slate-800 mb-5">All Transactions</h3>
                       <div className="bg-white rounded-md shadow-xl border-2 border-blue-200 overflow-hidden">
                         <div className="bg-gradient-to-r from-blue-600 to-orange-600 p-5">
@@ -842,8 +843,21 @@ const DailyTransaction = () => {
                               <span className="font-mono text-slate-600">{idx + 1}</span>
                               <span className="font-mono text-blue-700">{tx.userId}</span>
                               <span className="font-semibold text-slate-800">{tx.name}</span>
-                              <span className="font-bold text-orange-700">${tx.transactionAmount.toFixed(2)}</span>
-                              <span className="text-blue-600 font-bold">{tx.pointsEarned} pts</span>
+                              <span className="font-bold text-orange-700">${tx.transactionAmount.toFixed(2)}</span> */}
+                              {/* <span className="text-blue-600 font-bold">{tx.pointsEarned} pts / -{tx.redeemPoints} pts</span> */}
+                              
+{/* 
+<span className="flex items-center gap-2 font-semibold">
+  <span className="flex items-center gap-1 text-emerald-600">
+    <ArrowUpCircle size={16} /> +{tx.pointsEarned} pts
+  </span>
+  {tx.redeemPoints > 0 && (
+    <span className="flex items-center gap-1 text-rose-600">
+      <ArrowDownCircle size={16} /> -{tx.redeemPoints} pts
+    </span>
+  )}
+</span>
+
                               <span className={`font-semibold px-3 py-1 rounded-full text-xs ${
                                 (tx.redeemAmount ?? 0) === 0 
                                   ? 'bg-blue-100 text-blue-700' 
@@ -859,18 +873,162 @@ const DailyTransaction = () => {
                           ))}
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
                     {/* TOTAL FOOTER */}
-                    <div className="mt-10 bg-gradient-to-r from-blue-600 to-orange-600 rounded-md p-3 text-center shadow-xl">
+                    {/* <div className="mt-10 bg-gradient-to-r from-blue-600 to-orange-600 rounded-md p-3 text-center shadow-xl">
                       <h3 className="text-3xl font-black text-white">
                         Total Sales Today: 
                         <span className="text-3xl ml-4 font-extrabold">${dailyData.totalSales?.toFixed(2)}</span>
-                      </h3>
+                      </h3> */}
                       {/* <p className="text-white mt-1 text-md">
                         {dailyData.transactions.length} transactions recorded
                       </p> */}
-                    </div>
+                    {/* </div> */}
+
+                        <div className="p-4 md:p-6">
+                        {/* Title */}
+                        <h3 className="text-2xl font-black text-slate-800 mb-5 text-center md:text-left">
+                          All Transactions
+                        </h3>
+
+                        {/* ---------- Desktop / Laptop View ---------- */}
+                        <div className="hidden md:block bg-white rounded-md shadow-xl border border-blue-200 overflow-hidden">
+                          {/* Table Header */}
+                          <div className="bg-gradient-to-r from-blue-600 to-orange-600 p-4">
+                            <div className="grid grid-cols-[60px_1fr_1fr_1fr_1.5fr_1fr_1fr] gap-4 text-white font-semibold text-sm uppercase tracking-wide">
+                              <span>S.No</span>
+                              <span>User ID</span>
+                              <span>Name</span>
+                              <span>Amount</span>
+                              <span>Points</span>
+                              <span>Redeemed</span>
+                              <span>Time</span>
+                            </div>
+                          </div>
+
+                          {/* Table Body */}
+                          <div className="max-h-[28rem] overflow-y-auto">
+                            {dailyData.transactions.map((tx, idx) => (
+                              <div
+                                key={idx}
+                                className="grid grid-cols-[60px_1fr_1fr_1fr_1.5fr_1fr_1fr] gap-4 p-4 border-b border-blue-100 hover:bg-orange-50 transition-colors text-sm items-center"
+                              >
+                                <span className="font-mono text-slate-600">{idx + 1}</span>
+                                <span className="font-mono text-blue-700">{tx.userId}</span>
+                                <span className="font-semibold text-slate-800 truncate">{tx.name}</span>
+                                <span className="font-bold text-orange-700">₹{tx.transactionAmount.toFixed(2)}</span>
+
+                                {/* Points Column */}
+                                <span className="flex items-center gap-2 font-semibold">
+                                  <span className="flex items-center gap-1 text-emerald-600">
+                                    <ArrowUpCircle size={16} /> +{tx.pointsEarned} pts
+                                  </span>
+                                  {tx.redeemPoints > 0 && (
+                                    <span className="flex items-center gap-1 text-rose-600">
+                                      <ArrowDownCircle size={16} /> -{tx.redeemPoints} pts
+                                    </span>
+                                  )}
+                                </span>
+
+                                {/* Redeemed Amount */}
+                                <span
+                                  className={`font-semibold px-3 py-1 rounded-full text-xs text-center ${
+                                    (tx.redeemAmount ?? 0) === 0
+                                      ? "bg-blue-100 text-blue-700"
+                                      : "bg-orange-100 text-orange-700"
+                                  }`}
+                                >
+                                  ₹{(tx.redeemAmount ?? 0).toFixed(2)}
+                                </span>
+
+                                {/* Time */}
+                                <span className="text-slate-600 flex items-center whitespace-nowrap">
+                                  <Clock className="w-4 h-4 mr-1 text-blue-400" />
+                                  {format(new Date(`2000-01-01 ${tx.time}`), "h:mm a")}
+                                </span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* ---------- Mobile View ---------- */}
+                        <div className="block md:hidden space-y-4 max-h-[30rem] overflow-y-auto">
+                          {dailyData.transactions.map((tx, idx) => (
+                            <div
+                              key={idx}
+                              className="p-4 bg-white rounded-md shadow-md border border-blue-100 hover:bg-orange-50 transition-all"
+                            >
+                              {/* Top Row */}
+                              <div className="flex justify-between items-center mb-2">
+                                <span className="text-xs font-semibold text-slate-500">#{idx + 1}</span>
+                                <span className="text-blue-700 text-sm font-semibold">CUST - {tx.userId}</span>
+                              </div>
+
+                              {/* Name */}
+                              <div className="mb-1">
+                                <span className="font-bold text-slate-800">Name : {tx.name}</span>
+                              </div>
+
+                              {/* Amount */}
+                              <div className="flex justify-between items-center mb-2">
+                                <span className="text-slate-600 font-semibold">Amount:</span>
+                                <span className="font-bold text-orange-700">
+                                  ₹{tx.transactionAmount.toFixed(2)}
+                                </span>
+                              </div>
+
+                              {/* Points */}
+                              <div className="flex justify-between items-center mb-2">
+                                <span className="text-slate-600 font-semibold">Points:</span>
+                                <span className="flex items-center gap-2 font-semibold">
+                                  <span className="flex items-center gap-1 text-emerald-600">
+                                    <ArrowUpCircle size={16} /> +{tx.pointsEarned} pts
+                                  </span>
+                                  {tx.redeemPoints > 0 && (
+                                    <span className="flex items-center gap-1 text-rose-600">
+                                      <ArrowDownCircle size={16} /> -{tx.redeemPoints} pts
+                                    </span>
+                                  )}
+                                </span>
+                              </div>
+
+                              {/* Redeemed */}
+                              <div className="flex justify-between items-center mb-2">
+                                <span className="text-slate-600 font-semibold">Redeemed:</span>
+                                <span
+                                  className={`px-3 py-1 rounded-full text-xs font-bold ${
+                                    (tx.redeemAmount ?? 0) === 0
+                                      ? "bg-blue-100 text-blue-700"
+                                      : "bg-orange-100 text-orange-700"
+                                  }`}
+                                >
+                                  ₹{(tx.redeemAmount ?? 0).toFixed(2)}
+                                </span>
+                              </div>
+
+                              {/* Time */}
+                              <div className="flex justify-between items-center">
+                                <span className="text-slate-600 font-semibold">Time:</span>
+                                <span className="flex items-center text-slate-700 text-sm">
+                                  <Clock className="w-4 h-4 mr-1 text-blue-400" />
+                                  {format(new Date(`2000-01-01 ${tx.time}`), "h:mm a")}
+                                </span>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+
+                        {/* ---------- Footer ---------- */}
+                        <div className="mt-10 bg-gradient-to-r from-blue-600 to-orange-600 rounded-md p-4 text-center shadow-xl">
+                          <h3 className="text-2xl md:text-3xl font-black text-white">
+                            Total Sales Today:
+                            <span className="ml-3 font-extrabold">
+                              ₹{dailyData.totalSales?.toFixed(2)}
+                            </span>
+                          </h3>
+                        </div>
+                      </div>
                   </>
                 ) : (
                   <div className="flex flex-col items-center justify-center py-24 text-center">
@@ -958,7 +1116,7 @@ const DailyTransaction = () => {
                           />
                         </div>
 
-                        <div>
+                        {/* <div>
                           <h3 className="text-2xl font-black text-slate-800 mb-5">Transaction History</h3>
                           <div className="bg-white rounded-md shadow-xl border-2 border-blue-200 overflow-hidden">
                             <div className="bg-gradient-to-r from-blue-600 to-orange-600 p-5">
@@ -976,7 +1134,17 @@ const DailyTransaction = () => {
                                   <span className="text-slate-600 font-medium">{index + 1}</span>
                                   <span className="text-blue-700">{formatDateTime(tx.purchaseDate)}</span>
                                   <span className="font-bold text-orange-700">${(tx.transactionAmount ?? 0).toFixed(2)}</span>
-                                  <span className="text-blue-600 font-bold">{tx.pointsEarned} pts</span>
+                                  {/* <span className="text-blue-600 font-bold">+{tx.pointsEarned} pts / -{tx.redeemPoints} pts</span> */}
+                                  {/* <span className="flex items-center gap-2 font-semibold">
+                                    <span className="flex items-center gap-1 text-emerald-600">
+                                      <ArrowUpCircle size={16} /> +{tx.pointsEarned} pts
+                                    </span>
+                                    {tx.redeemPoints > 0 && (
+                                      <span className="flex items-center gap-1 text-rose-600">
+                                        <ArrowDownCircle size={16} /> -{tx.redeemPoints} pts
+                                      </span>
+                                    )}
+                                  </span>
                                   <span className={`px-3 py-1 rounded-full text-xs font-bold ${
                                     (tx.redeemAmount ?? 0) === 0 
                                       ? 'bg-blue-100 text-blue-700' 
@@ -988,8 +1156,110 @@ const DailyTransaction = () => {
                               ))}
                             </div>
                           </div>
+                        </div> */}
+
+                        <div className="p-4 md:p-6">
+                          <h3 className="text-2xl font-black text-slate-800 mb-5 text-center md:text-left">
+                            Transaction History
+                          </h3>
+
+                          <div className="bg-white rounded-md shadow-xl border border-blue-200 overflow-hidden">
+                            {/* ---------- Desktop / Laptop View ---------- */}
+                            <div className="hidden md:grid grid-cols-[60px_1.5fr_1fr_1.5fr_1fr] bg-gradient-to-r from-blue-600 to-orange-600 p-4 text-white font-semibold text-sm uppercase tracking-wide">
+                              <span>S.No</span>
+                              <span>Date & Time</span>
+                              <span>Amount</span>
+                              <span>Points</span>
+                              <span>Redeemed</span>
+                            </div>
+
+                            <div className="hidden md:block max-h-[28rem] overflow-y-auto">
+                              {userData.transactions.map((tx, index) => (
+                                <div
+                                  key={index}
+                                  className="grid grid-cols-[60px_1.5fr_1fr_1.5fr_1fr] items-center gap-4 p-4 border-b border-blue-100 hover:bg-orange-50 transition-colors text-sm"
+                                >
+                                  <span className="text-slate-700 font-medium">{index + 1}</span>
+                                  <span className="text-blue-700">{formatDateTime(tx.purchaseDate)}</span>
+                                  <span className="font-bold text-orange-700">
+                                    ${(tx.transactionAmount ?? 0).toFixed(2)}
+                                  </span>
+                                  <span className="flex items-center gap-2 font-semibold">
+                                    <span className="flex items-center gap-1 text-emerald-600">
+                                      <ArrowUpCircle size={16} /> +{tx.pointsEarned} pts
+                                    </span>
+                                    {tx.redeemPoints > 0 && (
+                                      <span className="flex items-center gap-1 text-rose-600">
+                                        <ArrowDownCircle size={16} /> -{tx.redeemPoints} pts
+                                      </span>
+                                    )}
+                                  </span>
+                                  <span
+                                    className={`px-3 py-1 rounded-full text-xs font-bold w-fit ${
+                                      (tx.redeemAmount ?? 0) === 0
+                                        ? "bg-blue-100 text-blue-700"
+                                        : "bg-orange-100 text-orange-700"
+                                    }`}
+                                  >
+                                    ${(tx.redeemAmount ?? 0).toFixed(2)}
+                                  </span>
+                                </div>
+                              ))}
+                            </div>
+
+                            {/* ---------- Mobile View ---------- */}
+                            <div className="block md:hidden max-h-[30rem] overflow-y-auto divide-y divide-blue-100">
+                              {userData.transactions.map((tx, index) => (
+                                <div
+                                  key={index}
+                                  className="p-4 bg-white hover:bg-orange-50 transition-colors rounded-md"
+                                >
+                                  <div className="flex justify-between items-center mb-2">
+                                    <span className="text-xs font-semibold text-slate-500">#{index + 1}</span>
+                                    <span className="text-sm text-blue-700 font-medium">
+                                      {formatDateTime(tx.purchaseDate)}
+                                    </span>
+                                  </div>
+
+                                  <div className="flex justify-between items-center mb-2">
+                                    <span className="text-slate-600 font-semibold">Amount:</span>
+                                    <span className="text-orange-700 font-bold">
+                                      ${(tx.transactionAmount ?? 0).toFixed(2)}
+                                    </span>
+                                  </div>
+
+                                  <div className="flex justify-between items-center mb-2">
+                                    <span className="text-slate-600 font-semibold">Points:</span>
+                                    <span className="flex items-center gap-2 font-semibold">
+                                      <span className="flex items-center gap-1 text-emerald-600">
+                                        <ArrowUpCircle size={16} /> +{tx.pointsEarned} pts
+                                      </span>
+                                      {tx.redeemPoints > 0 && (
+                                        <span className="flex items-center gap-1 text-rose-600">
+                                          <ArrowDownCircle size={16} /> -{tx.redeemPoints} pts
+                                        </span>
+                                      )}
+                                    </span>
+                                  </div>
+
+                                  <div className="flex justify-between items-center">
+                                    <span className="text-slate-600 font-semibold">Redeemed:</span>
+                                    <span
+                                      className={`px-3 py-1 rounded-full text-xs font-bold ${
+                                        (tx.redeemAmount ?? 0) === 0
+                                          ? "bg-blue-100 text-blue-700"
+                                          : "bg-orange-100 text-orange-700"
+                                      }`}
+                                    >
+                                      ${(tx.redeemAmount ?? 0).toFixed(2)}
+                                    </span>
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
                         </div>
-                      </>
+                      </> 
                     ) : (
                       <div className="flex flex-col items-center justify-center h-full text-center py-24">
                         <AlertCircle className="w-20 h-20 text-blue-300 mb-6" />
