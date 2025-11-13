@@ -33,6 +33,7 @@ import PlanChange from './components/Subscription/Planchange.jsx';
 import EmployeeSignupPage from './components/Signup/EmployeeSignupPage.jsx';
 import InviteEmployeePage from './components/Employee/InviteEmployeePage.jsx';
 import DailyTransactionReport from './components/Customer/DailyTransaction.jsx'
+import ShopkeeperGuide from './components/Home/ShopkeeperGuide.jsx'
 
 const router = createBrowserRouter([
    {
@@ -130,6 +131,10 @@ const router = createBrowserRouter([
       {
         path:"/shopkeeper/daily-transaction-report",
         element:<DailyTransactionReport/>
+      },
+      {
+        path:"onboarding-guide",
+        element:<ShopkeeperGuide/>
       }
 
 

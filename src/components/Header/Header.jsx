@@ -60,15 +60,18 @@ export default function Header() {
       <NavLink to="/features" className={navLinkClasses} onClick={() => setMobileMenuOpen(false)}>
         Features
       </NavLink>
-      <a
+      {/* <a
         href="https://subscription-frontend-psi.vercel.app/subscription"
         className="px-3 py-2 rounded-md text-black hover:text-white hover:bg-emerald-500 transition font-medium"
         onClick={() => setMobileMenuOpen(false)}
       >
         Subscription
-      </a>
+      </a> */}
       <NavLink to="/resources" className={navLinkClasses} onClick={() => setMobileMenuOpen(false)}>
         Resources
+      </NavLink>
+      <NavLink to="/onboarding-guide" className={navLinkClasses} onClick={() => setMobileMenuOpen(false)}>
+        How It Works
       </NavLink>
       <NavLink to="/contact" className={navLinkClasses} onClick={() => setMobileMenuOpen(false)}>
         Contact
@@ -137,7 +140,7 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 bg-white shadow-lg border-b border-gray-200">
-      <nav className="px-4 lg:px-8 py-3 flex items-center justify-between">
+      <nav className="px-4 lg:px-8 py-2 flex items-center justify-between">
         {/* Left: Logo or Hamburger */}
         <div className="flex items-center">
           {isLoggedIn ? (
@@ -163,13 +166,14 @@ export default function Header() {
             <>
               <NavLink to="/" className={navLinkClasses}>Home</NavLink>
               <NavLink to="/features" className={navLinkClasses}>Features</NavLink>
-              <a
+              {/* <a
                 href="https://subscription-frontend-psi.vercel.app/subscription"
                 className="px-3 py-2.5 rounded-md text-black hover:text-white hover:bg-emerald-500 transition font-medium"
               >
                 Subscription
-              </a>
+              </a> */}
               <NavLink to="/resources" className={navLinkClasses}>Resources</NavLink>
+              <NavLink to="/onboarding-guide" className={navLinkClasses}>How It Works</NavLink>
               <NavLink to="/contact" className={navLinkClasses}>Contact</NavLink>
             </>
           )}
