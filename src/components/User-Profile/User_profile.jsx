@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { FiEdit3, FiSave, FiX, FiUser, FiMail, FiPhone, FiCheckCircle } from 'react-icons/fi';
+import { FiEdit3, FiSave, FiX, FiUser, FiMail, FiPhone, FiCheckCircle, FiLoader } from 'react-icons/fi';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Loader2 } from 'lucide-react';
 
 const ProfileInputField = ({ label, name, value, onChange, disabled, type = 'text', icon: Icon }) => (
   <div className="mb-5">
@@ -31,12 +30,12 @@ const ProfileInputField = ({ label, name, value, onChange, disabled, type = 'tex
   </div>
 );
 
-// --- NEW: Phone Input with 10-digit Validation ---
+// --- Phone Input with 10-digit Validation (unchanged) ---
 const PhoneInputField = ({ label, name, value, onChange, disabled, icon: Icon = FiPhone }) => {
   const [error, setError] = useState("");
 
   const validatePhone = (val) => {
-    const digitsOnly = val.replace(/\D/g, ""); // Remove non-digits
+    const digitsOnly = val.replace(/\D/g, "");
     if (val && !/^\d{0,10}$/.test(val)) {
       setError("Only digits allowed (0-9)");
     } else if (digitsOnly.length > 0 && digitsOnly.length !== 10) {
@@ -49,13 +48,8 @@ const PhoneInputField = ({ label, name, value, onChange, disabled, icon: Icon = 
 
   const handleChange = (e) => {
     let inputValue = e.target.value;
-
-    // Allow only digits
     if (!/^\d*$/.test(inputValue)) return;
-
-    // Limit to 10 digits
     if (inputValue.length > 10) inputValue = inputValue.slice(0, 10);
-
     const formatted = validatePhone(inputValue);
     onChange({ target: { name, value: formatted } });
   };
@@ -112,11 +106,8 @@ const UserProfile = () => {
 
   useEffect(() => {
     if (successMessage) {
-      const timer = setTimeout(() => {
-        setSuccessMessage(null);
-      }, 3000); 
-
-      return () => clearTimeout(timer); 
+      const timer = setTimeout(() => setSuccessMessage(null), 3000);
+      return () => clearTimeout(timer);
     }
   }, [successMessage]);
 
@@ -134,12 +125,7 @@ const UserProfile = () => {
     try {
       const response = await fetch(
         `https://loyalty-backend-java.onrender.com/api/user/get-profile?userId=${userId}`,
-        {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
+        { method: 'GET', headers: { 'Content-Type': 'application/json' } }
       );
 
       if (response.ok) {
@@ -152,7 +138,7 @@ const UserProfile = () => {
           email: user.email || '',
         };
         setUserData(data);
-        setInitialData(data); 
+        setInitialData(data);
       } else {
         const errorData = await response.json();
         setError(errorData.message || 'Failed to fetch user details');
@@ -167,22 +153,16 @@ const UserProfile = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setUserData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setUserData(prev => ({ ...prev, [name]: value }));
   };
 
-  // --- UPDATED: validateForm with 10-digit phone check ---
   const validateForm = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const phoneDigits = (userData.phone || "").replace(/\D/g, "");
 
     if (!userData.firstName.trim()) return 'First name is required';
     if (!userData.lastName.trim()) return 'Last name is required';
-    if (userData.phone && phoneDigits.length !== 10) {
-      return 'Phone number must be exactly 10 digits';
-    }
+    if (userData.phone && phoneDigits.length !== 10) return 'Phone number must be exactly 10 digits';
     if (!emailRegex.test(userData.email)) return 'Invalid email format';
     return null;
   };
@@ -202,9 +182,7 @@ const UserProfile = () => {
 
     try {
       const userId = parseInt(localStorage.getItem('id'), 10);
-      if (isNaN(userId)) {
-        throw new Error('Invalid user ID');
-      }
+      if (isNaN(userId)) throw new Error('Invalid user ID');
 
       const payload = {
         userId,
@@ -218,9 +196,7 @@ const UserProfile = () => {
         'https://loyalty-backend-java.onrender.com/api/user/update-profile',
         {
           method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload),
         }
       );
@@ -228,136 +204,132 @@ const UserProfile = () => {
       if (response.ok) {
         setSuccessMessage('Profile updated successfully!');
         setIsEditing(false);
-        setInitialData(userData); 
+        setInitialData(userData);
       } else {
         const errorData = await response.json();
-        console.error('Update error response:', errorData);
         setError(errorData.message || 'Error updating profile');
       }
     } catch (error) {
       setError('Submission error: ' + error.message);
-      console.error('Submission error:', error);
     } finally {
       setIsLoading(false);
     }
   };
 
   const handleEditToggle = () => {
-    if (isEditing) {
-        setUserData(initialData);
-    }
+    if (isEditing) setUserData(initialData);
     setIsEditing(!isEditing);
     setError(null);
-    setSuccessMessage(null); 
+    setSuccessMessage(null);
   };
 
   if (isLoading && !userData.userId) {
     return (
-      <div className="flex flex-col items-center justify-center h-[60vh]">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5 }}
-        >
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <Loader2 className="w-10 h-10 text-blue-500 animate-spin" />
-            <span className="text-xl font-bold text-gray-800">Loading Profile</span>
-          </div>
-          <p className="text-gray-500">Retrieving your personal details securely.</p>
-        </motion.div>
-      </div>
+      <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.4 }}
+                    className="flex flex-col items-center justify-center h-64"
+                  >
+                    <div className="flex flex-col sm:flex-row justify-center items-center gap-3">
+                      <FiLoader className="w-10 h-10 sm:w-12 sm:h-12 text-blue-600 animate-spin" />
+                      <span className="text-xl font-bold text-blue-600">Loading Profile</span>
+                      <p className="text-sm sm:text-base text-blue-600 font-medium text-center">
+                        Retrieving your personal details securely....
+                      </p>
+                    </div>
+                  </motion.div>
     );
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-50 p-4 sm:p-8">
+    <div className="flex items-center justify-center min-h-screen bg-gray-50 p-1">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, type: "spring", stiffness: 100 }}
-        className="max-w-xl w-full bg-white rounded-md shadow-2xl border border-gray-100"
+        className="w-full max-w-xl bg-white rounded-md shadow-xl border border-gray-100"
       >
-        
-        <header className="bg-gradient-to-br from-blue-600 to-blue-700 text-white rounded-t-md px-8 py-4 relative">
-          <h2 className="text-3xl font-extrabold tracking-tight relative z-10">
+        {/* Header */}
+        <header className="bg-gradient-to-br from-blue-600 to-blue-700 text-white rounded-t-md px-6 py-5 sm:px-8 sm:py-6">
+          <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
             Welcome Back, {userData.firstName || 'User'}!
           </h2>
-          <p className="text-teal-200 text-sm mt-1 relative z-10">Manage and update your personal information here.</p>
+          <p className="text-sm sm:text-base text-blue-100 mt-1">
+            Manage and update your personal information here.
+          </p>
         </header>
 
-        <div className="p-6 sm:p-8">
-          
-          <div className="flex justify-between items-center mb-6">
-            <h3 className="text-xl font-semibold text-gray-800">
-                Personal Details
+        <div className="p-5 sm:p-8">
+          {/* Section Title + Edit Button */}
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-6 gap-3">
+            <h3 className="text-lg sm:text-xl font-semibold text-gray-800">
+              Personal Details
             </h3>
             <button
               onClick={handleEditToggle}
-              className={`px-4 py-2 rounded-sm font-medium transition duration-200 ease-in-out flex items-center gap-2 text-sm shadow-md 
+              className={`px-4 py-2 rounded-sm font-medium transition duration-200 ease-in-out flex items-center justify-center gap-2 text-sm shadow-md w-full sm:w-auto
                 ${isEditing 
                   ? 'bg-white text-red-600 border border-red-600 hover:bg-red-50' 
                   : 'bg-blue-600 text-white hover:bg-blue-700'
                 }
               `}
-              aria-label={isEditing ? "Cancel Editing" : "Edit Profile"}
             >
               {isEditing ? <FiX size={18} /> : <FiEdit3 size={16} />}
               <span>{isEditing ? 'Cancel' : 'Edit'}</span>
             </button>
           </div>
 
+          {/* Messages */}
           <AnimatePresence>
-            
             {successMessage && (
-                <motion.div
-                    key="success"
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    className="bg-green-50 border border-green-300 text-green-700 p-4 rounded-sm mb-6 text-base"
-                    role="alert"
-                >
-                    <p className="font-semibold flex items-center gap-2">
-                        <FiCheckCircle className="w-5 h-5" /> {successMessage}
-                    </p>
-                </motion.div>
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                className="bg-green-50 border border-green-300 text-green-700 p-4 rounded-sm mb-5 text-sm sm:text-base"
+              >
+                <p className="font-semibold flex items-center gap-2">
+                  <FiCheckCircle className="w-5 h-5" /> {successMessage}
+                </p>
+              </motion.div>
             )}
-            
             {error && (
               <motion.div
-                key="error"
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: 'auto' }}
                 exit={{ opacity: 0, height: 0 }}
-                className="bg-red-50 border border-red-300 text-red-700 p-4 rounded-sm mb-6 text-base overflow-hidden"
-                role="alert"
+                className="bg-red-50 border border-red-300 text-red-700 p-4 rounded-sm mb-5 text-sm sm:text-base"
               >
-                <p className="font-semibold flex items-center gap-2">Warning: Error:</p>
+                <p className="font-semibold">Warning: Error:</p>
                 <p className="mt-1">{error}</p>
               </motion.div>
             )}
           </AnimatePresence>
 
-          <form onSubmit={handleSubmit} className="grid grid-cols-1 sm:grid-cols-2 gap-x-6">
-            <ProfileInputField
-              label="First Name"
-              name="firstName"
-              value={userData.firstName}
-              onChange={handleChange}
-              disabled={!isEditing}
-              icon={FiUser}
-            />
-            
-            <ProfileInputField
-              label="Last Name"
-              name="lastName"
-              value={userData.lastName}
-              onChange={handleChange}
-              disabled={!isEditing}
-              icon={FiUser}
-            />
+          {/* Form */}
+          <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-5">
+            {/* Full width on mobile, 2 columns on larger screens */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              <ProfileInputField
+                label="First Name"
+                name="firstName"
+                value={userData.firstName}
+                onChange={handleChange}
+                disabled={!isEditing}
+                icon={FiUser}
+              />
+              <ProfileInputField
+                label="Last Name"
+                name="lastName"
+                value={userData.lastName}
+                onChange={handleChange}
+                disabled={!isEditing}
+                icon={FiUser}
+              />
+            </div>
 
-            {/* CHANGED: Replaced with PhoneInputField */}
             <PhoneInputField
               label="Phone Number"
               name="phone"
@@ -375,26 +347,24 @@ const UserProfile = () => {
               type="email"
               icon={FiMail}
             />
-            
+
             {isEditing && (
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.3 }}
-                className="sm:col-span-2 pt-4"
+                className="mt-4"
               >
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className={`w-full bg-gradient-to-br from-blue-600 to-blue-700 text-white py-3 rounded-sm font-bold text-base shadow-lg hover:bg-blue-600 transition duration-300 ease-in-out flex items-center justify-center gap-3 ${
+                  className={`w-full bg-gradient-to-br from-blue-600 to-blue-700 text-white py-3 rounded-sm font-bold text-base shadow-lg hover:from-blue-700 hover:to-blue-800 transition duration-300 flex items-center justify-center gap-3 ${
                     isLoading ? 'opacity-70 cursor-wait' : ''
                   }`}
-                  aria-label="Save Changes"
                 >
                   {isLoading ? (
                     <>
-                      <Loader2 className="animate-spin" size={20} />
+                      <FiLoader className="animate-spin" size={20} />
                       <span>Saving...</span>
                     </>
                   ) : (
