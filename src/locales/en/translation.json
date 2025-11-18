@@ -1,0 +1,441 @@
+{
+  "header": {
+    "home": "Home",
+    "features": "Features",
+    "resources": "Resources",
+    "faq": "FAQ",
+    "contact": "Contact",
+    "signUp": "Sign Up",
+    "signIn": "Sign In",
+    "signUpShopkeeper": "Shopkeeper",
+    "signUpUser": "User",
+    "openDashboard": "Open Dashboard",
+    "logout": "Logout"
+  },
+  "home": {
+    "hero": {
+      "title": "Earn Rewards on Every Purchase",
+      "subtitle": "Join thousands of shoppers earning points at local stores. Redeem for gifts, discounts, and more."
+    },
+    "howItWorks": {
+      "title": "How It Works",
+      "step1": "Sign Up",
+      "step1Desc": "Create your free account in under 60 seconds.",
+      "step2": "Shop & Earn",
+      "step2Desc": "Scan your QR code at any partner store to earn points.",
+      "step3": "Redeem Rewards",
+      "step3Desc": "Turn points into vouchers, gifts, or cashback instantly."
+    },
+    "stats": {
+      "title": "Trusted by Thousands",
+      "members": "Active Members",
+      "stores": "Partner Stores",
+      "rewards": "Rewards Redeemed"
+    },
+    "benefits": {
+      "title": "Why Members Love Us",
+      "noFees": "No Fees Ever",
+      "nationwide": "Nationwide Stores",
+      "instant": "Instant Rewards",
+      "referral": "Easy Referral Bonus"
+    },
+    "leaderboard": {
+      "title": "Top Referrers This Month",
+      "points": "Referral Points"
+    },
+    "faq": {
+      "title": "Common Questions",
+      "q1": "How do I earn points?",
+      "a1": "Shop at any partner store and scan your QR code at checkout. Points are added instantly.",
+      "q2": "Where can I redeem rewards?",
+      "a2": "Redeem in your dashboard, at checkout in stores, or via the mobile app.",
+      "q3": "Is it free to join?",
+      "a3": "Yes! 100% free for all users – no membership fees or hidden charges.",
+      "q4": "Do my points expire?",
+      "a4": "No, points do not expire after 12 months of inactivity. Keep shopping to stay active!",
+      "q5": "How do I check my points balance?",
+      "a5": "Log in to your dashboard or open the mobile app – your balance is shown on the home screen.",
+      "q6": "What if I lose my QR code?",
+      "a6": "No problem! Regenerate your QR code anytime from your profile settings.",
+      "q7": "Can I use points at any store?",
+      "a7": "Points work at all participating partner stores. Look for the Loyalty Rewards sign!"
+    },
+    "cta": {
+      "title": "Start Earning Rewards Today",
+      "subtitle": "Join 10,000+ members already saving with every purchase.",
+      "button": "Join Free Now"
+    }
+  },
+  "features": {
+    "title": "Powerful Features That Drive Loyalty",
+    "subtitle": "Everything you need to build stronger customer relationships and grow your business.",
+    "targetedRewards": {
+      "title": "Targeted Rewards",
+      "desc": "Reward customers based on their purchase behavior to increase loyalty and repeat visits.",
+      "details": "Our AI‑driven engine analyses every transaction and automatically suggests the best reward for each shopper. You can set rules like “spend $50 → 10 pts” or “buy 3 coffees → free drink”."
+    },
+    "mobileFirst": {
+      "title": "Mobile‑First Experience",
+      "desc": "Seamless access on any device for users and shopkeepers to track points and redeem rewards.",
+      "details": "Both the customer app and the shopkeeper dashboard are PWA‑ready. Customers scan a QR code to instantly see their points, redeem offers, and receive push notifications."
+    },
+    "referralBoost": {
+      "title": "Referral Boost",
+      "desc": "Grow your customer base with rewards for referrals. Top referrers shine on the leaderboard!",
+      "details": "Every successful referral earns the referrer 50 pts + a bonus for the new user. The live leaderboard updates in real‑time, motivating friendly competition."
+    },
+    "smartAnalytics": {
+      "title": "Smart Analytics",
+      "desc": "Real‑time insights into sales, engagement, and loyalty performance to drive growth.",
+      "details": "Interactive charts show redemption rates, average basket size per tier, and ROI of each campaign. Export CSV with one click."
+    },
+    "tieredRewards": {
+      "title": "Tiered Rewards",
+      "desc": "Create VIP milestones and exclusive bonuses for your most loyal customers.",
+      "details": "Define Bronze → Silver → Gold tiers. Unlock exclusive coupons, early‑access sales, and birthday gifts automatically when a user hits the threshold."
+    },
+    "smartAlerts": {
+      "title": "Smart Alerts",
+      "desc": "Keep users engaged with instant updates on points, rewards, and promotions.",
+      "details": "Push, SMS, or in‑app notifications are triggered by events: “You earned 20 pts!”, “Your free coffee is ready”, “Flash sale – 2× points today”."
+    },
+    "learnMore": "Learn more",
+    "gotIt": "Got it"
+  },
+  "resources": {
+    "title": "Loyalty Program Resources",
+    "subtitle": "Everything you need to understand, manage, and maximize your loyalty experience.",
+    "howPointsWork": {
+      "title": "How Loyalty Points Work",
+      "desc": "Learn how you earn, track, and redeem points in our system.",
+      "steps": [
+        "Earn 1 point for every $1 spent.",
+        "Points appear instantly in your dashboard.",
+        "Redeem 100 points = $5 discount."
+      ],
+      "tip": "Points never expire if you shop every 12 months."
+    },
+    "businessBenefits": {
+      "title": "Benefits for Businesses",
+      "desc": "Discover how loyalty programs boost customer retention and revenue.",
+      "stats": [
+        "Loyal customers spend 67% more",
+        "30% average increase in repeat visits"
+      ],
+      "tips": [
+        "Use analytics to run targeted campaigns",
+        "Reward top spenders with VIP tiers"
+      ]
+    },
+    "referralGuide": {
+      "title": "Referral Program Guide",
+      "desc": "Maximize your earnings by referring others and topping the leaderboard.",
+      "steps": [
+        "Share your unique referral link",
+        "Friend joins & makes first purchase",
+        "Both get 50 bonus points"
+      ],
+      "tip": "Top 10 referrers win exclusive rewards monthly"
+    },
+    "redemptionRules": {
+      "title": "Reward Redemption Rules",
+      "desc": "Understand the terms and conditions for redeeming your earned rewards.",
+      "rules": [
+        "Minimum 50 points to redeem",
+        "Rewards valid for 90 days",
+        "Cannot combine with other offers",
+        "Non-transferable & non-refundable"
+      ]
+    },
+    "dashboardFeatures": {
+      "title": "Loyalty Dashboard Features",
+      "desc": "Track your purchase history, referral stats, and bonus rewards all in one place.",
+      "features": [
+        "Real-time points balance",
+        "Full transaction history",
+        "Live referral leaderboard"
+      ],
+      "tip": "Export reports as PDF or CSV"
+    },
+    "promotions": {
+      "title": "Promotions & Bonuses",
+      "desc": "Stay updated on seasonal offers and limited-time bonus point opportunities.",
+      "promos": [
+        "Double points every Friday",
+        "Birthday month: 100 bonus points",
+        "Flash sales: 3× points on select items"
+      ],
+      "tip": "Enable notifications to never miss a deal"
+    },
+    "readMore": "Read More",
+    "gotIt": "Got it"
+  },
+
+  "flow": {
+    "hero": {
+      "title": "Shop Registration Process",
+      "subtitle": "Follow the road from <span class=\"font-bold text-orange-600\">subscription</span> to <span class=\"font-bold text-teal-600\">success</span>",
+      "requiredBadge": "Step 1 Required",
+      "timeBadge": "7–10 mins total"
+    },
+    "steps": {
+      "1": {
+        "title": "Subscribe to a Plan",
+        "desc": "Choose your plan to unlock shopkeeper access. Required first.",
+        "highlight": "No subscription = No access",
+        "details": ["Instant activation", "Monthly/Yearly", "Cancel anytime", "No card to start"],
+        "cta": "Subscribe Now"
+      },
+      "2": {
+        "title": "Create Your Account",
+        "desc": "Enter shop name, email, phone, city & country.",
+        "details": ["Shop Name & Logo", "Personal Email", "10-digit Phone", "Location"]
+      },
+      "3": {
+        "title": "Verify Company Email & Enter Company Details",
+        "desc": "Use your subscribed email. Instant verification.",
+        "details": ["Must match subscription", "One-click verify", "Secure & fast"]
+      },
+      "4": {
+        "title": "Create Password & Verify CAPTCHA",
+        "desc": "Secure your account by setting a strong password and proving you're human.",
+        "details": [
+          "At least 8 characters long",
+          "Include a number and special symbol",
+          "Complete the visual CAPTCHA",
+          "Prevents automated signups"
+        ]
+      },
+      "5": {
+        "title": "Sign In with Email, Password & CAPTCHA",
+        "desc": "Log in securely using your new credentials.",
+        "details": ["Email + Password", "CAPTCHA on first login", "2FA optional"]
+      },
+      "6": {
+        "title": "Access Dashboard",
+        "desc": "You’re in! Start managing customers, rewards & analytics.",
+        "details": ["Real-time dashboard", "Add customers", "Launch campaigns", "View reports"]
+      }
+    },
+    "form": {
+      "password": "New password",
+      "confirmPassword": "Confirm password",
+      "setPassword": "Set Password",
+      "signIn": "Sign In"
+    },
+    "finalCTA": {
+      "text": "Ready to launch your loyalty program?",
+      "button": "Start with Subscription"
+    },
+    "faqTitle": "Frequently Asked Questions (FAQ)",
+    "faqs": [
+      { "q": "Which email should I use to log in?", "a": "Use the <strong>personal email you signed up with</strong> (e.g., john.doe@gmail.com). This is the email you entered during registration – <strong>not</strong> your company email." },
+      { "q": "How do I log in to the shopkeeper dashboard?", "a": "1. Go to the login page → 2. Enter your <strong>personal email</strong> → 3. Enter your <strong>password</strong> → 4. Solve the <strong>CAPTCHA</strong> (first login or new device) → 5. Click <strong>Sign In</strong>." },
+      { "q": "I forgot my password – what should I do?", "a": "Click <strong>Forgot Password?</strong> on the login screen. A reset link will be sent to your <strong>personal email</strong>. Check spam/junk if you don’t see it." },
+      { "q": "Why can’t I log in with my company email?", "a": "Login uses your <strong>personal email only</strong> (the one you registered with). Company email is used for subscription & verification, but <strong>not</strong> for logging in." },
+      { "q": "Do I need CAPTCHA every time I log in?", "a": "No — only on <strong>first login</strong>, <strong>new device</strong>, or <strong>unusual activity</strong>. After that, you can enable 2FA for faster, secure access." },
+      { "q": "Can I log in from multiple devices?", "a": "Yes! Use your <strong>personal email + password</strong> on any device. Enable 2FA in settings for extra security on shared computers." },
+      { "q": "Why do I need a subscription before creating an account?", "a": "Subscription verifies your business and unlocks premium tools. It prevents spam and ensures you get full support from day one." },
+      { "q": "Is the dashboard mobile-friendly?", "a": "Yes! Fully responsive — manage customers, launch campaigns, and view reports on phone, tablet, or desktop." },
+      { "q": "How secure is my data?", "a": "We use bank-level AES-256 encryption, GDPR-compliant storage, and regular security audits. Your data is never shared." },
+      { "q": "Can I cancel my subscription?", "a": "Yes — cancel anytime in <strong>Account → Billing</strong>. Access continues until the end of your current billing cycle." }
+    ],
+    "support": {
+      "text": "Still have questions?",
+      "button": "Contact Support"
+    }
+  },
+  
+  "contact": {
+    "title": "Contact Loyalty Support",
+    "success": "Thank you! Your message has been sent.",
+    "fullName": "Full Name",
+    "fullNamePlaceholder": "John Doe",
+    "email": "Email Address",
+    "emailPlaceholder": "john@example.com",
+    "subject": "Subject",
+    "subjectPlaceholder": "How can we help?",
+    "message": "Your Message",
+    "messagePlaceholder": "Tell us more...",
+    "humanCheck": "I am not a robot",
+    "sendButton": "Send Message",
+    "responseTime": "We typically respond within <1>24 hours</1>."
+  },
+  "footer": {
+    "brandTitle": "LoyaltyHub",
+    "brandDesc": "Earn points on every purchase. Redeem rewards, refer friends, and grow with the smartest loyalty program in the U.S.",
+    "brandTag": "Built for shoppers, by shoppers",
+    "quickLinksTitle": "Quick Links",
+    "quickLinks": [
+      { "label": "Home", "to": "/" },
+      { "label": "Join Now", "to": "/signup-user" },
+      { "label": "How It Works", "to": "#" },
+      { "label": "FAQ", "to": "#" },
+      { "label": "Contact", "to": "/contact" }
+    ],
+    "stayConnectedTitle": "Stay Connected",
+    "stayConnectedDesc": "Follow us for exclusive deals and updates",
+    "newsletterTitle": "Newsletter",
+    "newsletterDesc": "Get exclusive rewards, early access, and bonus points in your inbox.",
+    "newsletterPlaceholder": "you@example.com",
+    "subscribeButton": "Subscribe",
+    "subscribedText": "Sent!",
+    "subscribedSuccess": "You're in! Check your email.",
+    "copyright": "© {year} LoyaltyHub. All rights reserved.",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service"
+  },
+
+  "signin": {
+    "title": "Sign In",
+    "subtitle": "Enter your credentials to access the platform.",
+    "hero": {
+      "title": "Fuel Loyalty. Drive Growth.",
+      "subtitle": "The simplest way for small businesses to launch, manage, and scale their customer reward programs."
+    },
+    "features": {
+      "track": "Track Your Success",
+      "trackDesc": "Get clear metrics on customer engagement.",
+      "engage": "Engage Every Customer",
+      "engageDesc": "Seamless experience for all users.",
+      "reward": "Reward Loyalty Easily",
+      "rewardDesc": "Simple point system designed to bring customers back, time and again."
+    },
+    "emailLabel": "Email Address",
+    "passwordLabel": "Password",
+    "captchaLabel": "Enter CAPTCHA",
+    "refreshCaptcha": "Refresh CAPTCHA",
+    "forgotPassword": "Forgot Password?",
+    "signInButton": "Sign In",
+    "loggingIn": "Logging in...",
+    "chooseRole": "Choose how you want to sign in:",
+    "select": "Select",
+    "backToPassword": "Back to password",
+    "success": "Signed in Successfully!",
+    "redirecting": "Redirecting to subscription page in",
+    "subscriptionMessage": "Your subscription does not include the Loyalty app. Redirecting...",
+    "roles": {
+      "customer": "Customer",
+      "shopOwner": "Shop Owner",
+      "employee": "Shop Employee"
+    },
+    "error": {
+      "invalidEmail": "Please enter a valid email address.",
+      "invalidCaptcha": "Invalid CAPTCHA",
+      "invalidCredentials": "Invalid credentials",
+      "noRoles": "No valid roles found",
+      "loginFailed": "Login failed",
+      "noRoleProvided": "No valid role provided",
+      "unknownRole": "Unknown role: {{role}}"
+    }
+  },
+
+  "shopkeeper": {
+    "title": "Shopkeeper Registration",
+    "step": "Step",
+    "of": "of",
+    "shopName": "Shop Name",
+    "personalEmail": "Your Personal Email",
+    "personalPhone": "Personal Phone",
+    "phonePlaceholder": "10-digit mobile number",
+    "city": "City",
+    "country": "Country",
+    "companyName": "Company Name",
+    "companyEmail": "Company Email",
+    "companyEmailTooltip": "This email is required to verify your active subscription. It must be linked to a valid subscription.",
+    "companyPhone": "Company Phone",
+    "companyAddress": "Company Address",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "enterCaptcha": "Enter CAPTCHA Code",
+    "completeRegistration": "Complete Registration",
+    "signingUp": "Signing up...",
+    "nextStep": "Next Step",
+    "back": "Back",
+    "alreadyHaveAccount": "Already have an account?",
+    "signIn": "Sign In",
+    "verifying": "Verifying...",
+    "verified": "Verified",
+    "verify": "Verify",
+    "error": {
+      "invalidEmail": "Please enter a valid email address.",
+      "verificationFailed": "Email verification failed.",
+      "noSubscription": "You don't have a subscription. Please use a different email.",
+      "passwordMismatch": "Passwords do not match!",
+      "invalidCaptcha": "Invalid CAPTCHA",
+      "phone10Digits": "Phone number must be exactly 10 digits",
+      "fillAllFields": "Please fill all required fields.",
+      "verifyEmailFirst": "Please verify the company email before proceeding.",
+      "signupFailed": "Signup failed!",
+      "networkError": "Something went wrong. Please try again.",
+      "exactly10Digits": "Exactly 10 digits required"
+    }
+  },
+
+  "userSignup": {
+    "title": "Create Your Account",
+    "step": "Step",
+    "of": "of",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "phoneNumber": "Phone Number (10 digits)",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "enterCaptcha": "Enter Captcha",
+    "completeSignup": "Complete Sign Up",
+    "signingUp": "Signing up...",
+    "next": "Next",
+    "back": "Back",
+    "alreadyHaveAccount": "Already have an account?",
+    "signIn": "Sign In",
+    "validPhone": "Valid 10-digit number",
+    "error": {
+      "fillAllFields": "Please fill all fields.",
+      "invalidEmail": "Please enter a valid email address.",
+      "phone10Digits": "Phone number must be exactly 10 digits",
+      "passwordMismatch": "Passwords do not match!",
+      "invalidCaptcha": "Invalid CAPTCHA",
+      "signupFailed": "Signup failed!",
+      "networkError": "Something went wrong. Please try again."
+    }
+  },
+
+  "employeeSignup": {
+    "title": "Employee Signup",
+    "step": "Step",
+    "of": "of",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "phoneNumber": "Phone Number (10 digits)",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "enterCaptcha": "Enter Captcha",
+    "completeSignup": "Complete Signup",
+    "creatingAccount": "Creating Account...",
+    "next": "Next",
+    "back": "Back",
+    "alreadyHaveAccount": "Already have an account?",
+    "login": "Login",
+    "validPhone": "Valid 10-digit number",
+    "invalidLinkTitle": "Invalid Link",
+    "invalidLinkMessage": "Contact your manager for a new invitation.",
+    "goHome": "Go Home",
+    "emailTooltip": {
+      "line1": "This email should match the invitation sent by",
+      "line2": "the shopkeeper for employee registration."
+    },
+    "error": {
+      "invalidLink": "Invalid or missing invitation link.",
+      "fillNames": "Please fill both names.",
+      "phoneEmailRequired": "Phone and email required.",
+      "invalidEmail": "Invalid email.",
+      "phone10Digits": "Phone must be exactly 10 digits.",
+      "passwordMismatch": "Passwords do not match!",
+      "invalidCaptcha": "Invalid CAPTCHA",
+      "signupFailed": "Signup failed",
+      "networkError": "Something went wrong"
+    }
+  }
+}

@@ -197,7 +197,7 @@ const Userdashboard = () => {
                   className="p-1.5 sm:p-2 rounded-full bg-blue-600 hover:bg-blue-700 text-white transition flex items-center justify-center"
                   aria-label="Close sidebar"
                 >
-                  <X className="w-5 h-5 sm:w-6 sm:h-6" />
+                  <X className="w-5 h-5 sm:w-5 sm:h-5" />
                 </button>
                 <span className="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 bg-blue-900 text-white text-xs rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-50">
                   Close
@@ -207,7 +207,8 @@ const Userdashboard = () => {
           </div>
         </div>
 
-        <nav className="space-y-1 sm:space-y-2 flex-1 overflow-y-auto">
+        {/* <nav className="space-y-1 sm:space-y-2 flex-1 overflow-y-auto"> */}
+        <nav className="space-y-1.5 sm:space-y-2">
           {[
             { tab: "user-stats", icon: faHome, label: "Dashboard" },
             { tab: "user_profile", icon: faUser, label: "Profile" },
@@ -221,10 +222,10 @@ const Userdashboard = () => {
                   setSidebarOpen(true);
                   toggleSidebarExpansion();
                 }}
-                className={`flex items-center w-full text-left px-2 sm:px-3 py-2.5 rounded-md transition text-xs sm:text-sm md:text-base ${
+                className={`flex items-center w-full text-left px-2 sm:px-3 py-2 rounded-full transition text-xs sm:text-sm md:text-base ${
                   activeTab === tab
                     ? "bg-blue-600 text-white font-semibold shadow-md"
-                    : "hover:bg-blue-100 hover:text-blue-800"
+                    : "hover:bg-blue-200 hover:text-blue-800"
                 } ${isSidebarExpanded ? "justify-start" : "justify-center"}`}
               >
                 <FontAwesomeIcon
@@ -246,6 +247,16 @@ const Userdashboard = () => {
             </div>
           ))}
         </nav>
+        <div className="absolute bottom-4 left-0 w-full px-3 sm:px-4">
+          <a
+            href="#"
+            className={`w-full text-center py-1 text-xs sm:text-sm hover:underline transition block ${
+              isSidebarExpanded ? "" : "flex items-center justify-center"
+            }`}
+          >
+            <span className={`${!isSidebarExpanded && "hidden"}`}>Need Help?</span>
+          </a>
+        </div>
       </aside>
 
       {/* Main Content */}

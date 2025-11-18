@@ -35,6 +35,8 @@ import InviteEmployeePage from './components/Employee/InviteEmployeePage.jsx';
 import DailyTransactionReport from './components/Customer/DailyTransaction.jsx'
 import ShopkeeperGuide from './components/Home/ShopkeeperGuide.jsx'
 
+import './i18n';
+
 const router = createBrowserRouter([
    {
     path:'/',

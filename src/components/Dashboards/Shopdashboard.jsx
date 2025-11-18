@@ -421,7 +421,7 @@ import UserPurchaseChart from "../bar chart/UserPurchaseChart";
 import { useSidebar } from "../../context/SidebarContext";
 import { X, Menu } from "lucide-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChartBar, faUser, faCog, faUsers, faCreditCard, faUserTie, faFileInvoiceDollar } from "@fortawesome/free-solid-svg-icons";
+import { faChartBar, faUser, faCog, faUsers, faCreditCard, faUserTie, faFileInvoiceDollar, faQuestionCircle } from "@fortawesome/free-solid-svg-icons";
 
 const Shopdashboard = () => {
   const navigate = useNavigate();
@@ -553,13 +553,13 @@ const Shopdashboard = () => {
       >
         <div className="flex justify-between items-center mb-4 sm:mb-6">
           {isSidebarExpanded && (
-            <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-blue-700">Shopkeeper Panel</h2>
+            <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-blue-700 truncate pr-2">Shop Panel</h2>
           )}
           <div className="flex items-center">
             {!sidebarOpen && (
               <button
                 onClick={() => setSidebarOpen(true)}
-                className="p-2 rounded-full bg-blue-600 hover:bg-blue-700 text-white transition flex items-center justify-center absolute left-3 sm:left-4 top-3 sm:top-4"
+                className="p-1.5 p-2 rounded-full bg-blue-600 hover:bg-blue-700 text-white transition flex items-center justify-center absolute left-3 sm:left-4 top-3 sm:top-4"
                 aria-label="Open sidebar"
               >
                 <Menu className="w-5 h-5 sm:w-6 sm:h-6" />
@@ -572,12 +572,12 @@ const Shopdashboard = () => {
                     setSidebarOpen(false);
                     setIsSidebarExpanded(false);
                   }}
-                  className="p-1 rounded-full bg-blue-600 hover:bg-blue-700 text-white transition flex items-center justify-center"
+                  className="p-1.5 sm:p-1.5 rounded-full bg-blue-600 hover:bg-blue-700 text-white transition flex items-center justify-center"
                   aria-label="Close sidebar"
                 >
-                  <X className="w-5 h-5 sm:w-6 sm:h-6" />
+                  <X className="w-5 h-5 sm:w-5 sm:h-5" />
                 </button>
-                <span className="absolute left-full ml-2 top-1/2 transform -translate-y-1/2 bg-blue-900 text-white text-xs rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
+                <span className="absolute left-full ml-2 top-1/2 transform -translate-y-1/2 bg-blue-900 text-white text-xs rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-50">
                   Close
                 </span>
               </div>
@@ -602,23 +602,33 @@ const Shopdashboard = () => {
                   setSidebarOpen(true);
                   toggleSidebarExpansion();
                 }}
-                className={`flex items-center w-full text-left px-3 sm:px-4 py-2 rounded-sm transition text-xs sm:text-sm md:text-base ${
+                className={`flex items-center w-full text-left px-3 sm:px-4 py-2 rounded-full transition text-xs sm:text-sm md:text-base ${
                   activeTab === tab
                     ? "bg-blue-600 text-white font-semibold"
-                    : "hover:bg-blue-100 hover:text-blue-800"
-                } ${isSidebarExpanded ? "" : "justify-center"}`}
+                    : "hover:bg-blue-200 hover:text-blue-800"
+                } ${isSidebarExpanded ? "justify-start" : "justify-center"}`}
               >
-                <FontAwesomeIcon icon={icon} className={`${isSidebarExpanded ? "mr-2" : ""} ${activeTab === tab ? "text-white" : "text-blue-600"} text-sm sm:text-base`} />
-                {isSidebarExpanded && <span>{label}</span>}
+                <FontAwesomeIcon icon={icon} className={`${isSidebarExpanded ? "mr-2 sm:mr-3" : ""} ${activeTab === tab ? "text-white" : "text-blue-600"} text-sm sm:text-base`} />
+                {isSidebarExpanded && <span className="truncate">{label}</span>}
               </button>
               {!isSidebarExpanded && (
-                <span className="absolute left-full ml-2 top-1/2 transform -translate-y-1/2 bg-blue-900 text-white text-xs rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
+                <span className="absolute left-full ml-2 top-1/2 transform -translate-y-1/2 bg-blue-900 text-white text-xs rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-50">
                   {label}
                 </span>
               )}
             </div>
           ))}
         </nav>
+        <div className="absolute bottom-4 left-0 w-full px-3 sm:px-4">
+          <a
+            href="#"
+            className={`w-full text-center py-1 text-xs sm:text-sm hover:underline transition block ${
+              isSidebarExpanded ? "" : "flex items-center justify-center"
+            }`}
+          >
+            <span className={`${!isSidebarExpanded && "hidden"}`}>Need Help?</span>
+          </a>
+        </div>
       </aside>
 
       {/* Main Content */}
@@ -629,11 +639,11 @@ const Shopdashboard = () => {
       >
         {activeTab === "user_stats" && (
           <>
-            <div>
+            {/* <div>
               <h1 className="mb-4 sm:mb-6 text-lg sm:text-xl md:text-2xl font-bold flex items-center">
                 Dashboard Data
               </h1>
-            </div>
+            </div> */}
             <UserPurchaseChart />
 
             <section className="mb-4 sm:mb-6">

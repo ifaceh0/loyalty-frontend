@@ -1,0 +1,492 @@
+{
+  "header": {
+    "home": "Inicio",
+    "features": "Características",
+    "resources": "Recursos",
+    "faq": "Preguntas frecuentes",
+    "contact": "Contacto",
+    "signUp": "Registrarse",
+    "signIn": "Iniciar Sesión",
+    "signUpShopkeeper": "Comerciante",
+    "signUpUser": "Usuario",
+    "openDashboard": "Abrir Panel",
+    "logout": "Cerrar Sesión"
+  },
+  "home": {
+    "hero": {
+      "title": "Gana Recompensas en Cada Compra",
+      "subtitle": "Únete a miles de compradores ganando puntos en tiendas locales. Canjea por regalos, descuentos y más."
+    },
+    "howItWorks": {
+      "title": "Cómo Funciona",
+      "step1": "Regístrate",
+      "step1Desc": "Crea tu cuenta gratis en menos de 60 segundos.",
+      "step2": "Compra y Gana",
+      "step2Desc": "Escanea tu código QR en cualquier tienda asociada para ganar puntos.",
+      "step3": "Canjea Recompensas",
+      "step3Desc": "Convierte puntos en vales, regalos o reembolso al instante."
+    },
+    "stats": {
+      "title": "Confiado por Miles",
+      "members": "Miembros Activos",
+      "stores": "Tiendas Asociadas",
+      "rewards": "Recompensas Canjeadas"
+    },
+    "benefits": {
+      "title": "Por Qué Nos Aman los Miembros",
+      "noFees": "Sin Comisiones",
+      "nationwide": "Tiendas Nacionales",
+      "instant": "Recompensas Instantáneas",
+      "referral": "Bono de Referidos Fácil"
+    },
+    "leaderboard": {
+      "title": "Mejores Referidores del Mes",
+      "points": "Puntos por Referidos"
+    },
+    "faq": {
+      "title": "Preguntas Comunes",
+      "q1": "¿Cómo gano puntos?",
+      "a1": "Compra en cualquier tienda asociada y escanea tu código QR al pagar. Los puntos se agregan al instante.",
+      "q2": "¿Dónde puedo canjear recompensas?",
+      "a2": "Canjea en tu panel, en caja en tiendas, o vía la app móvil.",
+      "q3": "¿Es gratis unirse?",
+      "a3": "¡Sí! 100% gratis para todos – sin cuotas ni cargos ocultos.",
+      "q4": "¿Caducan mis puntos?",
+      "a4": "No, los puntos no caducan tras 12 meses de inactividad. ¡Sigue comprando para mantenerlos activos!",
+      "q5": "¿Cómo veo mi saldo de puntos?",
+      "a5": "Inicia sesión en tu panel o abre la app – tu saldo aparece en la pantalla principal.",
+      "q6": "¿Qué pasa si pierdo mi código QR?",
+      "a6": "¡Sin problema! Regenera tu código QR cuando quieras desde tu perfil.",
+      "q7": "¿Puedo usar puntos en cualquier tienda?",
+      "a7": "Los puntos funcionan en todas las tiendas participantes. ¡Busca el letrero de Loyalty Rewards!"
+    },
+    "cta": {
+      "title": "Empieza a Ganar Recompensas Hoy",
+      "subtitle": "Únete a más de 10,000 miembros que ya ahorran en cada compra.",
+      "button": "Únete Gratis Ahora"
+    }
+  },
+  "features": {
+    "title": "Funciones Potentes que Impulsan la Fidelidad",
+    "subtitle": "Todo lo que necesitas para construir relaciones más fuertes con los clientes y hacer crecer tu negocio.",
+    "targetedRewards": {
+      "title": "Recompensas Dirigidas",
+      "desc": "Premia a los clientes según su comportamiento de compra para aumentar la lealtad y las visitas repetidas.",
+      "details": "Nuestro motor con IA analiza cada transacción y sugiere automáticamente la mejor recompensa para cada comprador. Puedes establecer reglas como “gasta $50 → 10 pts” o “compra 3 cafés → bebida gratis”."
+    },
+    "mobileFirst": {
+      "title": "Experiencia Móvil Primero",
+      "desc": "Acceso fluido en cualquier dispositivo para usuarios y comerciantes para rastrear puntos y canjear recompensas.",
+      "details": "Tanto la app del cliente como el panel del comerciante son PWA. Los clientes escanean un código QR para ver sus puntos al instante, canjear ofertas y recibir notificaciones push."
+    },
+    "referralBoost": {
+      "title": "Impulso por Referidos",
+      "desc": "Haz crecer tu base de clientes con recompensas por referidos. ¡Los mejores referidores brillan en el ranking!",
+      "details": "Cada referido exitoso gana al referidor 50 pts + bono para el nuevo usuario. El ranking en vivo se actualiza en tiempo real, motivando competencia amistosa."
+    },
+    "smartAnalytics": {
+      "title": "Análisis Inteligente",
+      "desc": "Información en tiempo real sobre ventas, engagement y rendimiento de lealtad para impulsar el crecimiento.",
+      "details": "Gráficos interactivos muestran tasas de canje, tamaño promedio de cesta por nivel y ROI de cada campaña. Exporta CSV con un clic."
+    },
+    "tieredRewards": {
+      "title": "Recompensas por Niveles",
+      "desc": "Crea hitos VIP y bonos exclusivos para tus clientes más leales.",
+      "details": "Define niveles Bronce → Plata → Oro. Desbloquea cupones exclusivos, ventas anticipadas y regalos de cumpleaños automáticamente al alcanzar el umbral."
+    },
+    "smartAlerts": {
+      "title": "Alertas Inteligentes",
+      "desc": "Mantén a los usuarios comprometidos con actualizaciones instantáneas sobre puntos, recompensas y promociones.",
+      "details": "Notificaciones push, SMS o en la app se activan por eventos: “¡Ganaste 20 pts!”, “Tu café gratis está listo”, “Venta flash – 2× puntos hoy”."
+    },
+    "learnMore": "Saber más",
+    "gotIt": "Entendido"
+  },
+  "resources": {
+    "title": "Recursos del Programa de Fidelidad",
+    "subtitle": "Todo lo que necesitas para entender, gestionar y maximizar tu experiencia de lealtad.",
+    "howPointsWork": {
+      "title": "Cómo Funcionan los Puntos de Fidelidad",
+      "desc": "Aprende cómo ganas, rastreas y canjeas puntos en nuestro sistema.",
+      "steps": [
+        "Gana 1 punto por cada $1 gastado.",
+        "Los puntos aparecen al instante en tu panel.",
+        "Canjea 100 puntos = $5 de descuento."
+      ],
+      "tip": "Los puntos nunca caducan si compras cada 12 meses."
+    },
+    "businessBenefits": {
+      "title": "Beneficios para Negocios",
+      "desc": "Descubre cómo los programas de fidelidad aumentan la retención y los ingresos.",
+      "stats": [
+        "Clientes leales gastan 67% más",
+        "30% de aumento promedio en visitas repetidas"
+      ],
+      "tips": [
+        "Usa analíticas para campañas dirigidas",
+        "Premia a los mayores gastadores con niveles VIP"
+      ]
+    },
+    "referralGuide": {
+      "title": "Guía del Programa de Referidos",
+      "desc": "Maximiza tus ganancias refiriendo a otros y liderando el ranking.",
+      "steps": [
+        "Comparte tu enlace de referido único",
+        "El amigo se une y hace su primera compra",
+        "Ambos reciben 50 puntos de bono"
+      ],
+      "tip": "Los 10 mejores referidores ganan recompensas exclusivas mensualmente"
+    },
+    "redemptionRules": {
+      "title": "Reglas de Canje de Recompensas",
+      "desc": "Entiende los términos y condiciones para canjear tus recompensas ganadas.",
+      "rules": [
+        "Mínimo 50 puntos para canjear",
+        "Recompensas válidas por 90 días",
+        "No se pueden combinar con otras ofertas",
+        "No transferibles ni reembolsables"
+      ]
+    },
+    "dashboardFeatures": {
+      "title": "Funciones del Panel de Fidelidad",
+      "desc": "Rastrea tu historial de compras, estadísticas de referidos y bonos en un solo lugar.",
+      "features": [
+        "Saldo de puntos en tiempo real",
+        "Historial completo de transacciones",
+        "Ranking de referidos en vivo"
+      ],
+      "tip": "Exporta reportes como PDF o CSV"
+    },
+    "promotions": {
+      "title": "Promociones y Bonos",
+      "desc": "Mantente al día con ofertas de temporada y oportunidades de puntos extra.",
+      "promos": [
+        "Puntos dobles todos los viernes",
+        "Mes de cumpleaños: 100 puntos de bono",
+        "Ventas flash: 3× puntos en artículos seleccionados"
+      ],
+      "tip": "Activa notificaciones para no perderte ninguna oferta"
+    },
+    "readMore": "Leer Más",
+    "gotIt": "Entendido"
+  },
+  "flow": {
+    "hero": {
+      "title": "Proceso de Registro para Comercios",
+      "subtitle": "Sigue el camino desde la <span class=\"font-bold text-orange-600\">suscripción</span> hasta el <span class=\"font-bold text-teal-600\">éxito</span>",
+      "requiredBadge": "Paso 1 Obligatorio",
+      "timeBadge": "7–10 minutos en total"
+    },
+    "steps": {
+      "1": {
+        "title": "Suscribirse a un Plan",
+        "desc": "Elige tu plan para desbloquear el acceso de comerciante. Es el primer paso obligatorio.",
+        "highlight": "Sin suscripción = Sin acceso",
+        "details": [
+          "Activación instantánea",
+          "Mensual o Anual",
+          "Cancelar cuando quieras",
+          "No necesitas tarjeta para empezar"
+        ],
+        "cta": "Suscribirse Ahora"
+      },
+      "2": {
+        "title": "Crear Tu Cuenta",
+        "desc": "Ingresa el nombre del comercio, email, teléfono, ciudad y país.",
+        "details": [
+          "Nombre y Logo del Comercio",
+          "Email Personal",
+          "Teléfono de 10 dígitos",
+          "Ubicación"
+        ]
+      },
+      "3": {
+        "title": "Verificar Email de Empresa e Ingresar Detalles",
+        "desc": "Usa el email con el que te suscribiste. Verificación instantánea.",
+        "details": [
+          "Debe coincidir con la suscripción",
+          "Verificación con un clic",
+          "Seguro y rápido"
+        ]
+      },
+      "4": {
+        "title": "Crear Contraseña y Verificar CAPTCHA",
+        "desc": "Protege tu cuenta creando una contraseña segura y demostrando que eres humano.",
+        "details": [
+          "Mínimo 8 caracteres",
+          "Incluir número y símbolo especial",
+          "Completar el CAPTCHA visual",
+          "Evita registros automáticos"
+        ]
+      },
+      "5": {
+        "title": "Iniciar Sesión con Email, Contraseña y CAPTCHA",
+        "desc": "Accede de forma segura con tus nuevas credenciales.",
+        "details": [
+          "Email + Contraseña",
+          "CAPTCHA en el primer inicio",
+          "2FA opcional"
+        ]
+      },
+      "6": {
+        "title": "Acceder al Panel de Control",
+        "desc": "¡Listo! Comienza a gestionar clientes, recompensas y analíticas.",
+        "details": [
+          "Panel en tiempo real",
+          "Agregar clientes",
+          "Lanzar campañas",
+          "Ver reportes"
+        ]
+      }
+    },
+    "form": {
+      "password": "Nueva contraseña",
+      "confirmPassword": "Confirmar contraseña",
+      "setPassword": "Establecer Contraseña",
+      "signIn": "Iniciar Sesión"
+    },
+    "finalCTA": {
+      "text": "¿Listo para lanzar tu programa de fidelidad?",
+      "button": "Comenzar con la Suscripción"
+    },
+    "faqTitle": "Preguntas Frecuentes (FAQ)",
+    "faqs": [
+      {
+        "q": "¿Qué email debo usar para iniciar sesión?",
+        "a": "Usa el <strong>email personal con el que te registraste</strong> (ej. juan.perez@gmail.com). Es el email que ingresaste al registrarte – <strong>NO</strong> el email de empresa."
+      },
+      {
+        "q": "¿Cómo inicio sesión en el panel de comerciante?",
+        "a": "1. Ve a la página de login → 2. Ingresa tu <strong>email personal</strong> → 3. Ingresa tu <strong>contraseña</strong> → 4. Resuelve el <strong>CAPTCHA</strong> (solo primer inicio o nuevo dispositivo) → 5. Haz clic en <strong>Iniciar Sesión</strong>."
+      },
+      {
+        "q": "Olvidé mi contraseña, ¿qué hago?",
+        "a": "Haz clic en <strong>¿Olvidaste tu contraseña?</strong> en la pantalla de login. Se enviará un enlace de recuperación a tu <strong>email personal</strong>. Revisa spam/correo no deseado si no lo ves."
+      },
+      {
+        "q": "¿Por qué no puedo iniciar sesión con mi email de empresa?",
+        "a": "El inicio de sesión solo funciona con tu <strong>email personal</strong> (el que usaste al registrarte). El email de empresa se usa para la suscripción y verificación, pero <strong>NO</strong> para loguearte."
+      },
+      {
+        "q": "¿Necesito resolver el CAPTCHA cada vez que inicio sesión?",
+        "a": "No — solo en el <strong>primer inicio</strong>, en un <strong>nuevo dispositivo</strong> o si hay <strong>actividad inusual</strong>. Luego puedes activar 2FA para accesos más rápidos y seguros."
+      },
+      {
+        "q": "¿Puedo iniciar sesión desde varios dispositivos?",
+        "a": "¡Sí! Usa tu <strong>email personal + contraseña</strong> en cualquier dispositivo. Activa 2FA en ajustes para mayor seguridad en equipos compartidos."
+      },
+      {
+        "q": "¿Por qué necesito suscribirme antes de crear una cuenta?",
+        "a": "La suscripción verifica tu negocio y desbloquea todas las herramientas premium. Evita spam y garantiza que recibas soporte completo desde el primer día."
+      },
+      {
+        "q": "¿El panel funciona bien en celular?",
+        "a": "¡Sí! Totalmente responsive — gestiona clientes, lanza campañas y revisa reportes desde celular, tablet o computadora."
+      },
+      {
+        "q": "¿Qué tan seguros están mis datos?",
+        "a": "Usamos encriptación AES-256 nivel bancario, almacenamiento conforme a GDPR y auditorías de seguridad regulares. Tus datos nunca se comparten."
+      },
+      {
+        "q": "¿Puedo cancelar mi suscripción?",
+        "a": "Sí — cancela cuando quieras desde <strong>Cuenta → Facturación</strong>. Mantendrás acceso hasta el final del ciclo actual."
+      }
+    ],
+    "support": {
+      "text": "¿Aún tienes dudas?",
+      "button": "Contactar Soporte"
+    }
+  },
+  "contact": {
+    "title": "Contacto con Soporte de Fidelidad",
+    "success": "¡Gracias! Tu mensaje ha sido enviado.",
+    "fullName": "Nombre Completo",
+    "fullNamePlaceholder": "Juan Pérez",
+    "email": "Correo Electrónico",
+    "emailPlaceholder": "juan@ejemplo.com",
+    "subject": "Asunto",
+    "subjectPlaceholder": "¿En qué podemos ayudarte?",
+    "message": "Tu Mensaje",
+    "messagePlaceholder": "Cuéntanos más...",
+    "humanCheck": "No soy un robot",
+    "sendButton": "Enviar Mensaje",
+    "responseTime": "Normalmente respondemos en <1>24 horas</1>."
+  },
+  "footer": {
+    "brandTitle": "LoyaltyHub",
+    "brandDesc": "Gana puntos en cada compra. Canjea recompensas, refiere amigos y crece con el programa de fidelidad más inteligente de EE.UU.",
+    "brandTag": "Creado por compradores, para compradores",
+    "quickLinksTitle": "Enlaces Rápidos",
+    "quickLinks": [
+      { "label": "Inicio", "to": "/" },
+      { "label": "Únete Ahora", "to": "/signup-user" },
+      { "label": "Cómo Funciona", "to": "#" },
+      { "label": "Preguntas Frecuentes", "to": "#" },
+      { "label": "Contacto", "to": "/contact" }
+    ],
+    "stayConnectedTitle": "Mantente Conectado",
+    "stayConnectedDesc": "Síguenos para ofertas exclusivas y novedades",
+    "newsletterTitle": "Boletín",
+    "newsletterDesc": "Recibe recompensas exclusivas, acceso anticipado y puntos extra en tu correo.",
+    "newsletterPlaceholder": "tu@ejemplo.com",
+    "subscribeButton": "Suscribirse",
+    "subscribedText": "¡Enviado!",
+    "subscribedSuccess": "¡Estás dentro! Revisa tu correo.",
+    "copyright": "© {year} LoyaltyHub. Todos los derechos reservados.",
+    "privacy": "Política de Privacidad",
+    "terms": "Términos de Servicio"
+  },
+
+  "signin": {
+    "title": "Iniciar Sesión",
+    "subtitle": "Ingresa tus credenciales para acceder a la plataforma.",
+    "hero": {
+      "title": "Impulsa la Fidelidad. Genera Crecimiento.",
+      "subtitle": "La forma más simple para que los pequeños negocios lancen, gestionen y escalen sus programas de recompensas para clientes."
+    },
+    "features": {
+      "track": "Mide tu Éxito",
+      "trackDesc": "Obtén métricas claras sobre la interacción de tus clientes.",
+      "engage": "Conecta con Cada Cliente",
+      "engageDesc": "Experiencia fluida para todos los usuarios.",
+      "reward": "Premia la Fidelidad Fácilmente",
+      "rewardDesc": "Sistema de puntos sencillo diseñado para que tus clientes regresen una y otra vez."
+    },
+    "emailLabel": "Dirección de Email",
+    "passwordLabel": "Contraseña",
+    "captchaLabel": "Ingresa el CAPTCHA",
+    "refreshCaptcha": "Actualizar CAPTCHA",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "signInButton": "Iniciar Sesión",
+    "loggingIn": "Iniciando sesión...",
+    "chooseRole": "Elige cómo deseas iniciar sesión:",
+    "select": "Seleccionar",
+    "backToPassword": "Volver a la contraseña",
+    "success": "¡Sesión iniciada con éxito!",
+    "redirecting": "Redirigiendo a la página de suscripción en",
+    "subscriptionMessage": "Tu suscripción no incluye la app de Loyalty. Redirigiendo...",
+    "roles": {
+      "customer": "Cliente",
+      "shopOwner": "Dueño de Comercio",
+      "employee": "Empleado del Comercio"
+    },
+    "error": {
+      "invalidEmail": "Por favor ingresa una dirección de email válida.",
+      "invalidCaptcha": "CAPTCHA inválido",
+      "invalidCredentials": "Credenciales incorrectas",
+      "noRoles": "No se encontraron roles válidos",
+      "loginFailed": "Error al iniciar sesión",
+      "noRoleProvided": "No se proporcionó un rol válido",
+      "unknownRole": "Rol desconocido: {{role}}"
+    }
+  },
+
+  "shopkeeper": {
+    "title": "Registro de Comerciante",
+    "step": "Paso",
+    "of": "de",
+    "shopName": "Nombre de la Tienda",
+    "personalEmail": "Tu Correo Personal",
+    "personalPhone": "Teléfono Personal",
+    "phonePlaceholder": "Número móvil de 10 dígitos",
+    "city": "Ciudad",
+    "country": "País",
+    "companyName": "Nombre de la Empresa",
+    "companyEmail": "Correo de la Empresa",
+    "companyEmailTooltip": "Este correo es necesario para verificar tu suscripción activa. Debe estar vinculado a una suscripción válida.",
+    "companyPhone": "Teléfono de la Empresa",
+    "companyAddress": "Dirección de la Empresa",
+    "password": "Contraseña",
+    "confirmPassword": "Confirmar Contraseña",
+    "enterCaptcha": "Ingresa el Código CAPTCHA",
+    "completeRegistration": "Completar Registro",
+    "signingUp": "Registrando...",
+    "nextStep": "Siguiente Paso",
+    "back": "Atrás",
+    "alreadyHaveAccount": "¿Ya tienes una cuenta?",
+    "signIn": "Iniciar Sesión",
+    "verifying": "Verificando...",
+    "verified": "Verificado",
+    "verify": "Verificar",
+    "error": {
+      "invalidEmail": "Por favor ingresa un correo válido.",
+      "verificationFailed": "Verificación de correo fallida.",
+      "noSubscription": "No tienes una suscripción. Usa otro correo.",
+      "passwordMismatch": "¡Las contraseñas no coinciden!",
+      "invalidCaptcha": "CAPTCHA inválido",
+      "phone10Digits": "El número debe tener exactamente 10 dígitos",
+      "fillAllFields": "Por favor completa todos los campos.",
+      "verifyEmailFirst": "Verifica el correo de la empresa antes de continuar.",
+      "signupFailed": "¡Registro fallido!",
+      "networkError": "Algo salió mal. Intenta de nuevo.",
+      "exactly10Digits": "Se requieren exactamente 10 dígitos"
+    }
+  },
+
+  "userSignup": {
+    "title": "Crea tu Cuenta",
+    "step": "Paso",
+    "of": "de",
+    "firstName": "Nombre",
+    "lastName": "Apellido",
+    "phoneNumber": "Número de Teléfono (10 dígitos)",
+    "email": "Correo Electrónico",
+    "password": "Contraseña",
+    "confirmPassword": "Confirmar Contraseña",
+    "enterCaptcha": "Ingresa el CAPTCHA",
+    "completeSignup": "Completar Registro",
+    "signingUp": "Registrando...",
+    "next": "Siguiente",
+    "back": "Atrás",
+    "alreadyHaveAccount": "¿Ya tienes una cuenta?",
+    "signIn": "Iniciar Sesión",
+    "validPhone": "Número válido de 10 dígitos",
+    "error": {
+      "fillAllFields": "Por favor completa todos los campos.",
+      "invalidEmail": "Ingresa un correo válido.",
+      "phone10Digits": "El número debe tener exactamente 10 dígitos",
+      "passwordMismatch": "¡Las contraseñas no coinciden!",
+      "invalidCaptcha": "CAPTCHA inválido",
+      "signupFailed": "¡Registro fallido!",
+      "networkError": "Algo salió mal. Intenta nuevamente."
+    }
+  },
+
+  "employeeSignup": {
+    "title": "Registro de Empleado",
+    "step": "Paso",
+    "of": "de",
+    "firstName": "Nombre",
+    "lastName": "Apellido",
+    "phoneNumber": "Número de Teléfono (10 dígitos)",
+    "email": "Correo Electrónico",
+    "password": "Contraseña",
+    "confirmPassword": "Confirmar Contraseña",
+    "enterCaptcha": "Ingresa el CAPTCHA",
+    "completeSignup": "Completar Registro",
+    "creatingAccount": "Creando cuenta...",
+    "next": "Siguiente",
+    "back": "Atrás",
+    "alreadyHaveAccount": "¿Ya tienes una cuenta?",
+    "login": "Iniciar Sesión",
+    "validPhone": "Número válido de 10 dígitos",
+    "invalidLinkTitle": "Enlace Inválido",
+    "invalidLinkMessage": "Contacta a tu gerente para una nueva invitación.",
+    "goHome": "Ir al Inicio",
+    "emailTooltip": {
+      "line1": "Este correo debe coincidir con la invitación enviada por",
+      "line2": "el comerciante para el registro de empleados."
+    },
+    "error": {
+      "invalidLink": "Enlace de invitación inválido o faltante.",
+      "fillNames": "Por favor completa ambos nombres.",
+      "phoneEmailRequired": "Teléfono y correo son obligatorios.",
+      "invalidEmail": "Correo inválido.",
+      "phone10Digits": "El número debe tener exactamente 10 dígitos.",
+      "passwordMismatch": "¡Las contraseñas no coinciden!",
+      "invalidCaptcha": "CAPTCHA inválido",
+      "signupFailed": "Registro falló",
+      "networkError": "Algo salió mal"
+    }
+  }
+}
