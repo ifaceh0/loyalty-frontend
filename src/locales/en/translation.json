@@ -270,7 +270,7 @@
       { "label": "Home", "to": "/" },
       { "label": "Join Now", "to": "/signup-user" },
       { "label": "How It Works", "to": "#" },
-      { "label": "FAQ", "to": "#" },
+      { "label": "FAQ", "to": "/onboarding-guide" },
       { "label": "Contact", "to": "/contact" }
     ],
     "stayConnectedTitle": "Stay Connected",

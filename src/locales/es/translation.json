@@ -321,7 +321,7 @@
       { "label": "Inicio", "to": "/" },
       { "label": "Únete Ahora", "to": "/signup-user" },
       { "label": "Cómo Funciona", "to": "#" },
-      { "label": "Preguntas Frecuentes", "to": "#" },
+      { "label": "Preguntas Frecuentes", "to": "/onboarding-guide" },
       { "label": "Contacto", "to": "/contact" }
     ],
     "stayConnectedTitle": "Mantente Conectado",
