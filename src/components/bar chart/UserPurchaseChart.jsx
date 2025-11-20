@@ -32,50 +32,51 @@
 //   }, []);
 
 //   return (
-//     <section className="mb-6">
-//       <div className="bg-white shadow-md rounded-sm p-3 border border-gray-100 hover:shadow-lg transition-shadow duration-300">
-//         <div className="flex items-center justify-between mb-1">
-//           <h3 className="text-xl font-semibold text-gray-800">
+//     <section className="mb-4 sm:mb-6">
+//       <div className="bg-white shadow-md rounded-sm p-3 sm:p-3 border border-gray-100 hover:shadow-lg transition-shadow duration-300">
+//         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-1 gap-2">
+//           <h3 className="text-base sm:text-lg md:text-xl font-semibold text-gray-800">
 //             Monthly Registered vs Purchase Users
 //           </h3>
-//           <span className="text-sm text-gray-500">User Engagement</span>
+//           <span className="text-xs sm:text-sm text-gray-500">User Engagement</span>
 //         </div>
 
-//         <div className="h-[280px]">
+//         <div className="h-[220px] sm:h-[280px]">
 //           <ResponsiveContainer width="100%" height="100%">
 //             <BarChart
 //               data={chartData}
-//               margin={{ top: 20, right: 30, left: 0, bottom: 5 }}
+//               margin={{ top: 20, right: 20, left: 0, bottom: 5 }}
 //             >
 //               <XAxis
 //                 dataKey="month"
-//                 tick={{ fill: "#6b7280", fontSize: 12 }}
+//                 tick={{ fill: "#6b7280", fontSize: 11 }}
 //               />
 //               <YAxis
 //                 allowDecimals={false}
-//                 tick={{ fill: "#6b7280", fontSize: 12 }}
+//                 tick={{ fill: "#6b7280", fontSize: 11 }}
 //               />
 //               <Tooltip
 //                 contentStyle={{
 //                   backgroundColor: "white",
 //                   borderRadius: "10px",
 //                   border: "1px solid #e5e7eb",
+//                   fontSize: "12px"
 //                 }}
 //               />
-//               <Legend />
+//               <Legend wrapperStyle={{ fontSize: "11px" }} />
 //               <Bar
 //                 dataKey="registeredUsers"
 //                 fill="#2563eb"
 //                 name="Registered Users"
 //                 radius={[6, 6, 0, 0]}
-//                 barSize={40}
+//                 barSize={30}
 //               />
 //               <Bar
 //                 dataKey="visitedUsers"
 //                 fill="#f97316"
 //                 name="Purchase Users"
 //                 radius={[6, 6, 0, 0]}
-//                 barSize={40}
+//                 barSize={30}
 //               />
 //             </BarChart>
 //           </ResponsiveContainer>
@@ -96,14 +97,13 @@
 
 
 
-
-
-
-
+//translated version
 import React, { useState, useEffect } from "react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import { useTranslation } from "react-i18next"; // ← AÑADIDO
 
 const UserPurchaseChart = () => {
+  const { t } = useTranslation(); // ← AÑADIDO
   const [chartData, setChartData] = useState([]);
 
   useEffect(() => {
@@ -138,9 +138,11 @@ const UserPurchaseChart = () => {
       <div className="bg-white shadow-md rounded-sm p-3 sm:p-3 border border-gray-100 hover:shadow-lg transition-shadow duration-300">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-1 gap-2">
           <h3 className="text-base sm:text-lg md:text-xl font-semibold text-gray-800">
-            Monthly Registered vs Purchase Users
+            {t("userPurchaseChart.title")}
           </h3>
-          <span className="text-xs sm:text-sm text-gray-500">User Engagement</span>
+          <span className="text-xs sm:text-sm text-gray-500">
+            {t("userPurchaseChart.subtitle")}
+          </span>
         </div>
 
         <div className="h-[220px] sm:h-[280px]">
@@ -169,14 +171,14 @@ const UserPurchaseChart = () => {
               <Bar
                 dataKey="registeredUsers"
                 fill="#2563eb"
-                name="Registered Users"
+                name={t("userPurchaseChart.registeredUsers")}
                 radius={[6, 6, 0, 0]}
                 barSize={30}
               />
               <Bar
                 dataKey="visitedUsers"
                 fill="#f97316"
-                name="Purchase Users"
+                name={t("userPurchaseChart.purchaseUsers")}
                 radius={[6, 6, 0, 0]}
                 barSize={30}
               />

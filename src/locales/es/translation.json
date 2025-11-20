@@ -12,60 +12,112 @@
     "openDashboard": "Abrir Panel",
     "logout": "Cerrar Sesión"
   },
+
   "home": {
     "hero": {
       "title": "Gana Recompensas en Cada Compra",
-      "subtitle": "Únete a miles de compradores ganando puntos en tiendas locales. Canjea por regalos, descuentos y más."
+      "subtitle": "Únete a miles de clientes ganando puntos en tiendas locales. Canjea por regalos, descuentos y mucho más.",
+      "cta": "Empieza a Ganar Gratis",
+      "slides": ["Diapositiva 1", "Diapositiva 2", "Diapositiva 3", "Diapositiva 4", "Diapositiva 5"]
     },
     "howItWorks": {
       "title": "Cómo Funciona",
-      "step1": "Regístrate",
-      "step1Desc": "Crea tu cuenta gratis en menos de 60 segundos.",
-      "step2": "Compra y Gana",
-      "step2Desc": "Escanea tu código QR en cualquier tienda asociada para ganar puntos.",
-      "step3": "Canjea Recompensas",
-      "step3Desc": "Convierte puntos en vales, regalos o reembolso al instante."
+      "steps": [
+        { "title": "Regístrate", "desc": "Crea tu cuenta gratis en menos de 60 segundos." },
+        { "title": "Compra y Gana", "desc": "Escanea tu código QR en cualquier tienda asociada para ganar puntos." },
+        { "title": "Canjea Recompensas", "desc": "Convierte tus puntos en vales, regalos o cashback al instante." }
+      ]
+    },
+    "categories": {
+      "title": "Compra en Tus Lugares Favoritos",
+      "subtitle": "Gana puntos en miles de tiendas asociadas de múltiples categorías",
+      "stores": "tiendas",
+      "items": [
+        { "name": "Cafeterías", "count": "120+" },
+        { "name": "Restaurantes", "count": "250+" },
+        { "name": "Comercio Minorista", "count": "180+" },
+        { "name": "Gasolineras", "count": "90+" },
+        { "name": "Belleza", "count": "75+" },
+        { "name": "Entretenimiento", "count": "60+" }
+      ]
     },
     "stats": {
-      "title": "Confiado por Miles",
-      "members": "Miembros Activos",
-      "stores": "Tiendas Asociadas",
-      "rewards": "Recompensas Canjeadas"
+      "title": "Con la confianza de miles",
+      "items": [
+        { "label": "Miembros Activos", "prefix": "", "suffix": "" },
+        { "label": "Tiendas Asociadas", "prefix": "", "suffix": "" },
+        { "label": "Recompensas Canjeadas", "prefix": "$", "suffix": "" }
+      ]
+    },
+    "mobile": {
+      "title": "Funciones de la App Móvil",
+      "subtitle": "Lleva tus recompensas contigo a todas partes. Nuestra app hace que ganar y canjear puntos sea más fácil que nunca.",
+      "features": [
+        { "title": "Código QR Digital", "desc": "Nunca más olvides tu tarjeta con el escaneo QR integrado" },
+        { "title": "Notificaciones Inteligentes", "desc": "Recibe alertas de ofertas cercanas y oportunidades de puntos extra" },
+        { "title": "Localizador de Tiendas", "desc": "Encuentra tiendas asociadas cerca de ti con integración GPS" },
+        { "title": "Seguimiento de Progreso", "desc": "Monitorea tus puntos, nivel y historial de gastos" }
+      ]
+    },
+    "promotions": {
+      "title": "Ofertas por Tiempo Limitado",
+      "earnPoints": "Gana {{rate}} puntos por cada $1 gastado",
+      "normalRate": "Tasa normal: 5 puntos por $1",
+      "moreComing": "¡Más ofertas en camino — mantente fiel!",
+      "items": [
+        { "name": "Black Friday Puntos Triplicados", "dollartoPointsMapping": "15", "startDate": "2025-11-28", "endDate": "2025-12-01" },
+        { "name": "Fin de Semana Doble Puntos", "dollartoPointsMapping": "10", "startDate": "2025-11-21", "endDate": "2025-11-23" },
+        { "name": "Semana 5X Puntos Año Nuevo", "dollartoPointsMapping": "25", "startDate": "2025-12-30", "endDate": "2026-01-05" },
+        { "name": "Locura de Compras Navideñas", "dollartoPointsMapping": "20", "startDate": "2025-12-20", "endDate": "2025-12-25" }
+      ]
     },
     "benefits": {
-      "title": "Por Qué Nos Aman los Miembros",
-      "noFees": "Sin Comisiones",
-      "nationwide": "Tiendas Nacionales",
-      "instant": "Recompensas Instantáneas",
-      "referral": "Bono de Referidos Fácil"
+      "title": "Por Qué Nuestros Miembros Nos Aman",
+      "items": [
+        "Sin Comisiones Nunca",
+        "Tiendas en Todo el País",
+        "Recompensas Instantáneas",
+        "Bono de Referidos Fácil"
+      ]
+    },
+    "testimonials": {
+      "title": "Qué Dicen Nuestros Miembros",
+      "items": [
+        { "name": "Sarah Johnson", "location": "Nueva York", "review": "¡He ganado más de $200 en recompensas solo con mis compras habituales. La app es súper fácil de usar!", "rating": 5, "points": "15,420 puntos ganados" },
+        { "name": "Mike Chen", "location": "California", "review": "Me encanta descubrir nuevos negocios locales con la app. ¡Las recompensas son solo un extra!", "rating": 5, "points": "8,750 puntos ganados" },
+        { "name": "Emily Davis", "location": "Texas", "review": "¡El programa de referidos es increíble! He invitado a 10 amigos y todos ganamos.", "rating": 5, "points": "22,100 puntos ganados" }
+      ]
     },
     "leaderboard": {
-      "title": "Mejores Referidores del Mes",
-      "points": "Puntos por Referidos"
+      "title": "Top Referidores del Mes",
+      "points": "Puntos por Referidos",
+      "items": [
+        { "rank": 1, "name": "Emma", "points": 890 },
+        { "rank": 2, "name": "Jacob", "points": 765 },
+        { "rank": 3, "name": "Sophia", "points": 702 }
+      ]
     },
     "faq": {
-      "title": "Preguntas Comunes",
-      "q1": "¿Cómo gano puntos?",
-      "a1": "Compra en cualquier tienda asociada y escanea tu código QR al pagar. Los puntos se agregan al instante.",
-      "q2": "¿Dónde puedo canjear recompensas?",
-      "a2": "Canjea en tu panel, en caja en tiendas, o vía la app móvil.",
-      "q3": "¿Es gratis unirse?",
-      "a3": "¡Sí! 100% gratis para todos – sin cuotas ni cargos ocultos.",
-      "q4": "¿Caducan mis puntos?",
-      "a4": "No, los puntos no caducan tras 12 meses de inactividad. ¡Sigue comprando para mantenerlos activos!",
-      "q5": "¿Cómo veo mi saldo de puntos?",
-      "a5": "Inicia sesión en tu panel o abre la app – tu saldo aparece en la pantalla principal.",
-      "q6": "¿Qué pasa si pierdo mi código QR?",
-      "a6": "¡Sin problema! Regenera tu código QR cuando quieras desde tu perfil.",
-      "q7": "¿Puedo usar puntos en cualquier tienda?",
-      "a7": "Los puntos funcionan en todas las tiendas participantes. ¡Busca el letrero de Loyalty Rewards!"
+      "title": "Preguntas Frecuentes",
+      "items": [
+        { "q": "¿Cómo gano puntos?", "a": "Compra en cualquier tienda asociada y escanea tu código QR al pagar. Los puntos se añaden al instante." },
+        { "q": "¿Dónde puedo canjear mis recompensas?", "a": "Canjea en tu panel, directamente en las tiendas o desde la app móvil." },
+        { "q": "¿Es gratis unirme?", "a": "¡Sí! 100% gratis para todos los usuarios – sin cuotas ni cargos ocultos." },
+        { "q": "¿Caducan mis puntos?", "a": "Los puntos permanecen activos siempre que hagas al menos una compra cada 12 meses." },
+        { "q": "¿Cómo veo mi saldo de puntos?", "a": "Inicia sesión en tu panel o abre la app móvil – tu saldo aparece en la pantalla principal." },
+        { "q": "¿Qué pasa si pierdo mi código QR?", "a": "¡Sin problema! Puedes regenerar tu código QR cuando quieras desde tu perfil." },
+        { "q": "¿Puedo usar mis puntos en cualquier tienda?", "a": "Funciona en todas las tiendas asociadas. ¡Busca el cartel de Loyalty Rewards!" },
+        { "q": "¿Cómo funciona el programa de referidos?", "a": "Comparte tu código único con amigos. Ellos reciben 500 puntos al unirse y hacer su primera compra, ¡y tú recibes 1000 puntos!" }
+      ]
     },
-    "cta": {
+    "finalCTA": {
       "title": "Empieza a Ganar Recompensas Hoy",
-      "subtitle": "Únete a más de 10,000 miembros que ya ahorran en cada compra.",
-      "button": "Únete Gratis Ahora"
+      "subtitle": "Únete a más de 10,000 miembros que ya ahorran con cada compra.",
+      "userCTA": "Únete Gratis Ahora",
+      "businessCTA": "Asocia Tu Negocio"
     }
   },
+
   "features": {
     "title": "Funciones Potentes que Impulsan la Fidelidad",
     "subtitle": "Todo lo que necesitas para construir relaciones más fuertes con los clientes y hacer crecer tu negocio.",
@@ -488,5 +540,529 @@
       "signupFailed": "Registro falló",
       "networkError": "Algo salió mal"
     }
+  },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  "shopdashboard": {
+    "sidebar": {
+      "title": "Panel de Tienda",
+      "close": "Cerrar",
+      "dashboard": "Panel Principal",
+      "profile": "Perfil del Comercio",
+      "settings": "Configuración",
+      "interactions": "Interacciones",
+      "subscription": "Suscripción",
+      "employees": "Gestión de Empleados",
+      "transactions": "Transacciones Diarias",
+      "help": "¿Necesitas ayuda?"
+    },
+    "monthlySales": {
+      "title": "Ventas Mensuales (Últimos 12 Meses)",
+      "subtitle": "Resumen de Ventas",
+      "sales": "Ventas ₹"
+    },
+    "customerComparison": {
+      "title": "Comparación de Clientes",
+      "subtitle": "Resumen Anual",
+      "customers": "Clientes"
+    },
+    "cards": {
+      "mostVisitors": "Clientes Más Frecuentes",
+      "topRevenue": "Mayores Generadores de Ingresos"
+    },
+    "table": {
+      "id": "ID",
+      "firstName": "Nombre",
+      "lastName": "Apellido",
+      "email": "Correo",
+      "phone": "Teléfono",
+      "visits": "Visitas",
+      "revenue": "Ingresos"
+    }
+  },
+
+  "userPurchaseChart": {
+    "title": "Usuarios Registrados vs Compradores Mensuales",
+    "subtitle": "Interacción de Usuarios",
+    "registeredUsers": "Usuarios Registrados",
+    "purchaseUsers": "Usuarios que Compraron"
+  },
+
+  "shopProfile": {
+    "header": { "title": "Perfil y Marca de la Tienda" },
+    "loading": "Cargando perfil del comercio...",
+    "buttons": {
+      "edit": "Editar",
+      "cancel": "Cancelar",
+      "save": "Guardar Perfil",
+      "saving": "Guardando..."
+    },
+    "sections": {
+      "branding": "Marca e Identidad Visual",
+      "business": "Datos Legales y Dirección"
+    },
+    "logo": {
+      "label": "Logo / Ícono de la Tienda",
+      "noLogo": "Sin Logo",
+      "upload": "Subir Nuevo Logo",
+      "uploading": "Subiendo...",
+      "remove": "Eliminar",
+      "removing": "Eliminando...",
+      "fileReady": "Archivo listo"
+    },
+    "fields": {
+      "shopName": "Nombre Visible de la Tienda",
+      "personalPhone": "Teléfono Personal",
+      "email": "Correo de Acceso",
+      "companyName": "Razón Social",
+      "companyPhone": "Teléfono de la Empresa",
+      "companyEmail": "Email de la Empresa (facturas/recibos)",
+      "city": "Ciudad",
+      "country": "País",
+      "address": "Dirección Completa",
+      "addressPlaceholder": "Calle, número, apartamento, etc."
+    },
+    "phone": {
+      "placeholder": "Ingresa número móvil de 10 dígitos",
+      "onlyDigits": "Solo se permiten números (0-9)",
+      "mustBe10": "El teléfono debe tener exactamente 10 dígitos",
+      "valid": "Número válido de 10 dígitos"
+    },
+    "alerts": {
+      "noId": "Advertencia: ID de tienda no encontrado. Inicia sesión nuevamente.",
+      "loadFailed": "Advertencia: No se pudo cargar el perfil. Intenta recargar.",
+      "logoSuccess": "¡Logo actualizado con éxito!",
+      "logoFailed": "Error: ",
+      "uploadError": "Advertencia: Error de red al subir la imagen o reduce el tamaño.",
+      "logoRemoved": "¡Logo eliminado!",
+      "removeFailed": "Error: ",
+      "removeError": "Advertencia: Error de red al eliminar el logo",
+      "profileSuccess": "¡Perfil actualizado con éxito!",
+      "profileFailed": "Error: No se pudo actualizar el perfil.",
+      "networkError": "Advertencia: Error de red: No se pudo conectar al servidor."
+    },
+    "confirm": {
+      "removeLogo": "¿Estás seguro de eliminar el logo de la tienda?"
+    },
+    "validation": {
+      "personalPhone": "Error: El teléfono personal debe tener exactamente 10 dígitos.",
+      "companyPhone": "Error: El teléfono de la empresa debe tener exactamente 10 dígitos."
+    }
+  },
+
+  "shopSettings": {
+    "header": { "title": "Configuración del Programa de Lealtad" },
+    "loading": "Cargando configuración de lealtad...",
+    "buttons": {
+      "edit": "Editar",
+      "cancel": "Cancelar",
+      "save": "Guardar Cambios",
+      "saving": "Guardando..."
+    },
+    "sections": {
+      "basic": "Mecánica Básica de Puntos",
+      "advanced": "Ganancias y Recompensas Avanzadas",
+      "campaigns": "Campañas de Bonos Temporales"
+    },
+    "basic": {
+      "signupBonus": {
+        "label": "Bono de Registro para Nuevos Clientes (Puntos)",
+        "placeholder": "ej. 50 puntos por registrarse",
+        "desc": "Puntos que recibe un cliente al registrarse en el programa de lealtad."
+      },
+      "pointsPerDollar": {
+        "label": "Puntos por Dólar Gastado",
+        "placeholder": "ej. 5 puntos",
+        "points": "Puntos",
+        "desc": "Tasa base para ganar puntos (ej. 5 puntos por cada $1 gastado)."
+      },
+      "minAmount": {
+        "label": "Monto Mínimo de Compra para Recompensas ($)",
+        "prefix": "Gasto Mínimo:",
+        "suffix": "para Calificar",
+        "placeholder": "ej. 10.00",
+        "desc": "Monto mínimo requerido para aplicar cualquier recompensa (puntos o descuentos)."
+      }
+    },
+    "advanced": {
+      "purchase": {
+        "title": "1. Puntos Extra por Compra",
+        "desc": "Otorga **puntos extra** cuando un cliente gasta por encima de un monto en una **compra única**.",
+        "threshold": "Umbral de Compra ($)",
+        "thresholdPlaceholder": "Monto mínimo de compra",
+        "points": "Puntos de Bono",
+        "pointsPlaceholder": "Puntos de bono",
+        "add": "Agregar Nivel de Compra con Bono"
+      },
+      "milestone": {
+        "title": "2. Recompensas por Hitos de Lealtad",
+        "desc": "Otorga un **descuento en dólares** cuando los puntos acumulados del cliente alcanzan un hito.",
+        "threshold": "Umbral de Puntos",
+        "thresholdPlaceholder": "Puntos totales mínimos",
+        "amount": "Descuento de Recompensa ($)",
+        "amountPlaceholder": "Descuento en dólares",
+        "add": "Agregar Nivel de Recompensa por Hito"
+      }
+    },
+    "campaigns": {
+      "desc": "Configura un bono **temporal** para ofrecer más puntos por dólar durante eventos o promociones especiales.",
+      "campaign": "Campaña de Bono #{number}",
+      "name": "Nombre de la Campaña",
+      "namePlaceholder": "ej. Doble Puntos Verano",
+      "points": "Puntos por Dólar",
+      "pointsPlaceholder": "ej. 10 puntos por $1",
+      "startDate": "Fecha de Inicio",
+      "endDate": "Fecha de Fin",
+      "add": "Agregar Nueva Campaña de Bono"
+    },
+    "validation": {
+      "integer": "Todos los valores de puntos, dólares y umbrales deben ser números enteros no negativos.",
+      "minAmount": "El monto mínimo de recompensa debe ser un número no negativo (se permiten decimales).",
+      "dateOrder": "La campaña \"${name}\" tiene una fecha de fin anterior a la de inicio. Corrige las fechas.",
+      "untitled": "Bono sin título"
+    },
+    "alerts": {
+      "success": "¡Configuración guardada exitosamente!",
+      "error": "Error al guardar. Verifica tus datos e intenta de nuevo.",
+      "network": "Error de red o servidor. Verifica tu conexión."
+    }
+  },
+
+  "customerLookup": {
+    "shopName": "Nombre de la Tienda",
+    "defaultShopName": "Nombre de la Tienda",
+    "cards": {
+      "quickScan": { "title": "Escaneo Rápido", "desc": "Usa la cámara para identificar al instante.", "button": "Abrir Escáner" },
+      "phone": { "title": "Número de Teléfono", "placeholder": "Ingresa número móvil de 10 dígitos", "error": "Debe tener exactamente 10 dígitos", "note": "Debe ser un número válido de 10 dígitos.", "button": "Buscar" },
+      "email": { "title": "Correo Electrónico", "placeholder": "Ingresa dirección de correo", "note": "Buscar por correo registrado.", "button": "Buscar" },
+      "invite": { "title": "Invitar Nuevo Cliente", "placeholder": "Correo del cliente", "button": "Enviar Invitación", "note": "Correo de bienvenida con enlace de registro." }
+    },
+    "transaction": { "title": "Compra con Lealtad", "details": "Detalles de la Transacción" },
+    "customer": { "info": "Información del Cliente", "name": "Nombre", "id": "ID", "shop": "Tienda", "email": "Correo", "phone": "Teléfono" },
+    "points": { "title": "Puntos de Lealtad", "available": "Puntos Disponibles", "updateNote": "Los puntos se actualizan al confirmar la compra." },
+    "purchase": { "enterAmount": "Ingresa el Monto Total de la Compra ($)" },
+    "newCustomerNote": "¡Nuevo cliente! El perfil se creará automáticamente.",
+    "guidance": { "enterAmount": "¡Cliente encontrado! Ingresa el monto de la compra." },
+    "buttons": {
+      "close": "Cerrar", "search": "Buscar", "searching": "Buscando...", "sending": "Enviando...", "processing": "PROCESANDO...",
+      "submitPreview": "Registrar Compra y Previsualizar Puntos", "searchAnother": "Buscar Otro Cliente", "done": "Listo", "closeRestart": "Cerrar y Reiniciar", "cancel": "Cancelar"
+    },
+    "success": {
+      "processedTitle": "¡COMPRA PROCESADA!",
+      "claimedMessage": "Descuento de ${{claimed}} aplicado. Compra neta: ${{net}}. Puntos ganados: {{points}}. Nuevo saldo: {{balance}}.",
+      "normalMessage": "Compra de ${{amount}}. Puntos Ganados: {{points}}{{signupBonusText}}. Nuevo saldo: {{balance}}.",
+      "signupBonusText": "{{#if signupBonus}} + Bono de registro: {{signupBonus}}{{/if}}"
+    },
+    "error": { "title": "Operación Fallida", "generic": "Ocurrió un error." },
+    "claim": {
+      "eligibleTitle": "¡Recompensa de Hito Disponible!",
+      "eligibleText": "Reclama una recompensa de <span class=\"text-3xl font-extrabold text-green-600\">${{amount}}</span>.",
+      "minSpend": "Compra al menos <span class=\"font-bold text-blue-700\">${{amount}}</span> para calificar.",
+      "yesProceed": "Sí, Proceder a Reclamar", "noPointsOnly": "No, Solo Ganar Puntos",
+      "confirmTitle": "¿Estás seguro?", "confirmText": "¿Reclamar la recompensa de ${{amount}}?", "yesClaim": "Sí, Reclamar", "noCancel": "No, Cancelar"
+    },
+    "preview": {
+      "title": "Confirmar Compra",
+      "amount": "Monto Comprado: <span class=\"font-bold text-blue-700\">${{amount}}</span>",
+      "points": "Puntos Ganados: <span class=\"font-bold text-cyan-600\">{{points}}</span>",
+      "claimed": "Recompensa Reclamada: <span class=\"font-bold text-green-600\">${{amount}}</span>",
+      "signupBonus": "Bono de Registro: <span class=\"font-bold text-green-600\">{{bonus}}</span>",
+      "process": "Procesar Compra"
+    },
+    "checkingEligibility": "Verificando recompensa elegible...",
+    "na": "N/A",
+    "alerts": {
+      "phone10Digits": "Por favor ingresa exactamente 10 dígitos (sin código de país o +)",
+      "validEmail": "Por favor ingresa un correo válido",
+      "shopIdMissing": "ID de tienda no encontrado. Inicia sesión nuevamente.",
+      "shopDetailsMissing": "Detalles de tienda no encontrados. Inicia sesión nuevamente.",
+      "notFound": "Cliente no encontrado",
+      "verificationFailed": "Verificación fallida.",
+      "inviteSuccess": "¡Invitación enviada con éxito!",
+      "inviteFailed": "Error al enviar invitación."
+    },
+    "validation": {
+      "amountPositive": "Ingresa un monto válido mayor a $0",
+      "minAmountRequired": "El monto debe ser ≥ ${{amount}} para reclamar"
+    },
+    "notFound": {
+      "title": "¡Cliente No Encontrado!",
+      "message1": "El cliente no fue encontrado.",
+      "message2": "Verifica los datos o usa **Invitar** para registrarlo.",
+      "closeButton": "Cerrar e Intentar de Nuevo"
+    }
+  },
+
+  "subscriptionDashboard": {
+    "hero": {
+      "title": "Bienvenido a tu Panel de Tienda",
+      "subtitle": "Gestiona tu suscripción, ve lo que incluye y haz crecer tu negocio – todo en un solo lugar.",
+      "ctaMain": "Abrir Mi Panel"
+    },
+    "features": {
+      "sectionTitle": "Qué Incluye Tu Plan",
+      "premiumTools": {
+        "title": "Herramientas Premium",
+        "desc": "Obtén herramientas poderosas para aumentar tus ventas y gestionar tu tienda fácilmente."
+      },
+      "manageApps": {
+        "title": "Gestiona Todas las Apps",
+        "desc": "Controla todas tus aplicaciones (TPV, inventario, etc.) desde un solo lugar."
+      },
+      "alwaysOn": {
+        "title": "Siempre Activo y Actualizado",
+        "desc": "Tu sistema funciona 24/7. Lo actualizamos automáticamente – sin complicaciones."
+      },
+      "superFast": {
+        "title": "Súper Rápido",
+        "desc": "Facturación rápida, sincronización instantánea – sin esperas, incluso en horas pico."
+      },
+      "smartReports": {
+        "title": "Reportes Inteligentes",
+        "desc": "Ve ventas diarias, productos más vendidos y ganancias – en gráficos simples."
+      },
+      "secure": {
+        "title": "100% Seguro",
+        "desc": "Tus datos están protegidos con seguridad de nivel bancario."
+      }
+    },
+    "bottom": {
+      "title": "¿Listo para Gestionar Tu Plan?",
+      "subtitle": "Haz clic abajo para ver tu suscripción, cambiar de plan o agregar usuarios.",
+      "ctaSecondary": "Ir a Mi Panel",
+      "emailLabel": "Accediendo como:",
+      "notLoggedIn": "No has iniciado sesión"
+    }
+  },
+
+  "employee": {
+    "page": {
+      "title": "Gestión de Empleados",
+      "subtitle": "Invita, gestiona y rastrea a tu equipo"
+    },
+    "buttons": {
+      "invite": "Invitar Empleado",
+      "activate": "Activar",
+      "deactivate": "Desactivar",
+      "resend": "Reenviar",
+      "delete": "Eliminar",
+      "sendInvite": "Enviar Invitación",
+      "sending": "Enviando..."
+    },
+    "sections": {
+      "employees": {
+        "title": "Todos los Empleados",
+        "empty": "Aún no hay empleados",
+        "emptyHint": "¡Invita a tu primer miembro del equipo!"
+      },
+      "invitations": {
+        "title": "Invitaciones Pendientes",
+        "empty": "No hay invitaciones pendientes"
+      }
+    },
+    "status": {
+      "active": "Activo",
+      "inactive": "Inactivo",
+      "activate": "Activar",
+      "deactivate": "Desactivar"
+    },
+    "labels": {
+      "joined": "Se unió",
+      "sent": "Enviado",
+      "expires": "Expira"
+    },
+    "modal": {
+      "title": "Invitar Nuevo Empleado",
+      "emailLabel": "Dirección de Correo"
+    },
+    "confirm": {
+      "resend": "¿Reenviar esta invitación?",
+      "delete": "¿Eliminar esta invitación?",
+      "toggle": "¿{{action}} este empleado?"
+    },
+    "alerts": {
+      "loadFailed": "Error al cargar datos. Inténtalo de nuevo.",
+      "inviteFailed": "Error al enviar la invitación",
+      "resendFailed": "Error al reenviar",
+      "deleteFailed": "Error al eliminar",
+      "toggleFailed": "Error al actualizar"
+    }
+  },
+
+  "daily": {
+    "page": {
+      "title": "TRANSACCIONES DIARIAS",
+      "subtitle": "Resumen de Ventas Diarias",
+      "description": "Rastrea ventas diarias, redenciones y actividad de clientes.",
+      "hint": "Usa este informe para analizar tendencias y optimizar tus estrategias."
+    },
+    "buttons": {
+      "viewReport": "Ver Informe del Día",
+      "loading": "Cargando Datos...",
+      "exportCSV": "Exportar CSV",
+      "print": "Imprimir"
+    },
+    "search": {
+      "placeholder": "Buscar usuario por ID...",
+      "button": "Buscar",
+      "searching": "Buscando..."
+    },
+    "popup": {
+      "dailyTitle": "Transacciones Diarias - {{date}}",
+      "dailySubtitle": "Resumen de Ventas y Redenciones",
+      "userProfile": "Perfil de Usuario",
+      "error": "Error",
+      "profileId": "ID de Perfil"
+    },
+    "summary": {
+      "totalSales": "Ventas Totales Hoy",
+      "totalRedeemed": "Total Redimido",
+      "totalTransactions": "Total Transacciones",
+      "totalSalesToday": "Ventas Totales Hoy"
+    },
+    "table": {
+      "title": "Todas las Transacciones",
+      "sno": "Nº",
+      "userId": "ID Usuario",
+      "name": "Nombre",
+      "amount": "Monto",
+      "points": "Puntos",
+      "redeemed": "Redimido",
+      "time": "Hora",
+      "dateTime": "Fecha y Hora"
+    },
+    "user": {
+      "availablePoints": "Puntos Disponibles",
+      "totalSpend": "Gasto Total",
+      "totalVisits": "Visitas Totales",
+      "totalRedeemed": "Total Redimido",
+      "transactionHistory": "Historial de Transacciones"
+    },
+    "loading": {
+      "transactions": "Cargando transacciones..."
+    },
+    "errors": {
+      "unknown": "Algo salió mal",
+      "network": "Error de red – inténtalo más tarde.",
+      "noTransactionsUser": "No se encontraron transacciones para este usuario.",
+      "noTransactionsDate": "No se encontraron transacciones para esta fecha",
+      "fetchFailed": "Error al obtener datos",
+      "loadFailed": "Error al cargar transacciones",
+      "invalidDateFormat": "Formato de fecha inválido. Usa AAAA-MM-DD.",
+      "invalidDate": "Fecha inválida. Selecciona una fecha válida.",
+      "noTransactions": "No se encontraron transacciones",
+      "noSalesToday": "No hubo ventas en esta fecha.",
+      "noHistory": "No hay historial de transacciones para este usuario.",
+      "tryAnotherDate": "Prueba seleccionando otra fecha."
+    },
+    "csv": {
+      "userId": "ID Usuario",
+      "name": "Nombre",
+      "amount": "Monto",
+      "pointsEarned": "Puntos Ganados",
+      "redeemPoints": "Puntos Redimidos",
+      "redeemedAmount": "Monto Redimido",
+      "time": "Hora"
+    }
+  },
+
+  "qrScanner": {
+    "title": "Procesador QR de Lealtad",
+    "buttons": {
+      "close": "Cerrar Escáner",
+      "processing": "PROCESANDO...",
+      "submitPreview": "Registrar Compra y Previsualizar Puntos",
+      "scanNext": "Escanear Siguiente Cliente",
+      "done": "Listo",
+      "closeRestart": "Cerrar y Reiniciar Escaneo",
+      "cancel": "Cancelar"
+    },
+    "guidance": {
+      "scanning": "Enfoca el código QR dentro del marco para escanear.",
+      "enterAmount": "¡Cliente escaneado! Ingresa el monto de la compra."
+    },
+    "scanningInstruction": "Sostén el código QR del cliente firmemente frente a la cámara",
+    "transaction": {
+      "details": "Detalles de la Transacción"
+    },
+    "customer": {
+      "info": "Información del Cliente",
+      "name": "Nombre",
+      "id": "ID",
+      "shop": "Tienda",
+      "email": "Correo",
+      "phone": "Teléfono"
+    },
+    "points": {
+      "title": "Puntos de Lealtad",
+      "available": "Puntos Ganados",
+      "updateNote": "Los puntos se actualizan al confirmar la compra."
+    },
+    "purchase": {
+      "enterAmount": "Ingresa el Monto Total de la Compra ($)"
+    },
+    "newCustomerNote": "¡Nuevo cliente detectado! Esta compra creará automáticamente su perfil de lealtad y lo conectará a {{shopName}}.",
+    "na": "N/A",
+    "success": {
+      "title": "¡COMPRA PROCESADA!",
+      "claimed": "Descuento de ${{claimed}} aplicado. Compra neta: ${{net}}. Puntos ganados: {{points}}. Nuevo saldo: {{balance}}.",
+      "normal": "Compra de ${{amount}}. Puntos Ganados: {{points}}{{signupBonusText}}. Nuevo saldo: {{balance}}.",
+      "signupBonusText": " + Bono de registro: {{bonus}}"
+    },
+    "error": {
+      "title": "Operación Fallida",
+      "generic": "Ocurrió un error. Por favor verifica el código QR e intenta nuevamente."
+    },
+    "errors": {
+      "wrongShop": "Error de Código QR: Este código no pertenece a tu tienda.",
+      "verificationFailed": "Verificación fallida",
+      "invalidQr": "El código QR escaneado no es válido o falló la verificación.",
+      "noCamera": "Cámara no encontrada.",
+      "permission": "Asegúrate de que tu dispositivo tenga permisos de cámara habilitados.",
+      "invalidFormat": "Código QR inválido: Formato no reconocido.",
+      "scanError": "Error al escanear. Intenta nuevamente.",
+      "cameraDenied": "Permiso de cámara denegado o no disponible.",
+      "calculationFailed": "No se pudieron calcular los puntos.",
+      "processFailed": "No se pudo procesar la compra.",
+      "invalidPreview": "Datos de previsualización inválidos. Por favor reintenta.",
+      "confirmFailed": "No se pudo confirmar la compra."
+    },
+    "validation": {
+      "amountPositive": "Por favor ingresa un monto válido (mayor a $0).",
+      "minAmount": "El monto de compra debe ser al menos ${{amount}} para reclamar la recompensa."
+    },
+    "claim": {
+      "eligibleTitle": "¡Recompensa de Hito Disponible!",
+      "eligibleText": "Puedes reclamar una recompensa de <span class=\"text-3xl font-extrabold text-green-600\">${{amount}}</span>.",
+      "minSpend": "Compra al menos <span class=\"font-bold text-blue-700\">${{amount}}</span> para calificar.",
+      "yesProceed": "Sí, Proceder a Reclamar",
+      "noPointsOnly": "No, Solo Ganar Puntos",
+      "confirmTitle": "¿Estás seguro?",
+      "confirmText": "¿Deseas reclamar la recompensa de <strong>${{amount}}</strong>?",
+      "yesClaim": "Sí, Reclamar",
+      "noCancel": "No, Cancelar"
+    },
+    "preview": {
+      "title": "Confirmar Compra",
+      "amount": "Monto Comprado: <span class=\"font-bold text-blue-700\">${{amount}}</span>",
+      "points": "Puntos Ganados Después de la compra: <span class=\"font-bold text-cyan-600\">{{points}}</span>",
+      "claimed": "Recompensa Reclamada: <span class=\"font-bold text-green-600\">${{amount}}</span>",
+      "signupBonus": "Bono de Registro: <span class=\"font-bold text-green-600\">{{bonus}}</span>",
+      "process": "Procesar Compra"
+    },
+    "checkingEligibility": "Verificando recompensa elegible..."
   }
 }

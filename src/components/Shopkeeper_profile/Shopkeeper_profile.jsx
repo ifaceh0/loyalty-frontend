@@ -13,13 +13,13 @@
 
 // // --- Custom Components & Styles ---
 // const inputStyle = (isEditing) => 
-//   `w-full px-4 py-3 border rounded-md outline-none transition duration-200 shadow-sm text-gray-800 ${
+//   `w-full px-3 sm:px-4 py-2.5 sm:py-3 border rounded-md outline-none transition duration-200 shadow-sm text-gray-800 text-sm sm:text-base ${
 //     isEditing ? "border-blue-400 focus:ring-2 focus:ring-blue-500/50" : "border-gray-200 bg-gray-100 cursor-default"
 //   }`;
 
 // const SectionWrapper = ({ title, children, icon, className = "" }) => (
-//   <div className={`bg-white p-6 rounded-md border border-gray-200 shadow-lg ${className}`}>
-//     <h3 className="text-xl font-bold text-blue-700 border-b pb-3 mb-4 flex items-center gap-2">
+//   <div className={`bg-white p-4 sm:p-6 rounded-md border border-gray-200 shadow-lg ${className}`}>
+//     <h3 className="text-lg sm:text-xl font-bold text-blue-700 border-b pb-2 sm:pb-3 mb-3 sm:mb-4 flex items-center gap-2">
 //       {icon} {title}
 //     </h3>
 //     <div className="space-y-4">
@@ -30,7 +30,7 @@
 
 // const InputField = ({ label, name, value, onChange, type = "text", disabled = false, required = false, pattern }) => (
 //   <div>
-//     <label className="block text-sm font-semibold mb-1 text-gray-700">{label}{required && <span className="text-red-500"> *</span>}</label>
+//     <label className="block text-xs sm:text-sm font-semibold mb-1 text-gray-700">{label}{required && <span className="text-red-500"> *</span>}</label>
 //     <input
 //       type={type}
 //       name={name}
@@ -71,7 +71,7 @@
 
 //   return (
 //     <div>
-//       <label className="block text-sm font-semibold mb-1 text-gray-700">
+//       <label className="block text-xs sm:text-sm font-semibold mb-1 text-gray-700">
 //         {label}{required && <span className="text-red-500"> *</span>}
 //       </label>
 //       <input
@@ -272,30 +272,30 @@
 //   // --- Loading State ---
 //   if (loading) {
 //     return (
-//       <div className="flex justify-center items-center h-64">
-//         <FiLoader className="w-12 h-12 text-blue-600 animate-spin" />
-//         <p className="ml-4 text-blue-600 font-medium">Loading Shopkeeper Profile...</p>
+//       <div className="flex flex-col items-center justify-center h-64 p-4">
+//         <FiLoader className="w-10 h-10 sm:w-12 sm:h-12 text-blue-600 animate-spin" />
+//         <p className="mt-3 sm:mt-4 text-sm sm:text-base text-blue-600 font-medium">Loading Shopkeeper Profile...</p>
 //       </div>
 //     );
 //   }
 
 //   // --- Render ---
 //   return (
-//     <div className="max-w-8xl mx-auto bg-gray-50 rounded-md shadow-2xl overflow-hidden mt-2">
+//     <div className="max-w-full mx-auto bg-gray-50 rounded-md shadow-2xl overflow-hidden mt-2 p-3 sm:p-0">
 //       {/* Header/Navigation */}
-//       <nav className="bg-blue-600 text-white px-8 py-3 flex justify-between items-center">
-//         <h2 className="text-2xl font-extrabold flex items-center gap-3">
-//           <FiUser className="w-6 h-6"/> Shop Profile & Branding
+//       <nav className="bg-blue-600 text-white px-4 sm:px-8 py-3 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+//         <h2 className="text-xl sm:text-2xl font-extrabold flex items-center gap-2">
+//           <FiUser className="w-5 h-5 sm:w-6 sm:h-6"/> Shop Profile & Branding
 //         </h2>
-//         <div className="flex items-center gap-3">
+//         <div className="flex flex-wrap items-center gap-2">
 //             {isEditing && (
 //                 <button
 //                 type="button"
-//                 className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-sm transition duration-200 flex items-center gap-2 font-semibold shadow-md"
+//                 className="bg-red-500 hover:bg-red-600 text-white px-3 sm:px-4 py-2 rounded-sm transition duration-200 flex items-center gap-1.5 sm:gap-2 font-semibold shadow-md text-sm"
 //                 onClick={handleCancel}
 //                 disabled={isSubmitting}
 //                 >
-//                 <FiX className="w-5 h-5" />
+//                 <FiX className="w-4 h-4 sm:w-5 sm:h-5" />
 //                 <span>Cancel</span>
 //                 </button>
 //             )}
@@ -304,19 +304,19 @@
 //                 <button
 //                 type="submit"
 //                 form="profile-form"
-//                 className={`text-white px-5 py-2 rounded-sm transition duration-200 flex items-center gap-2 font-semibold shadow-md ${
+//                 className={`text-white px-4 sm:px-5 py-2 rounded-sm transition duration-200 flex items-center gap-1.5 sm:gap-2 font-semibold shadow-md text-sm ${
 //                     isSubmitting ? 'bg-green-400 cursor-not-allowed' : 'bg-green-500 hover:bg-green-600'
 //                 }`}
 //                 disabled={isSubmitting}
 //                 >
 //                 {isSubmitting ? (
 //                     <>
-//                     <FiRefreshCw className="w-5 h-5 animate-spin" />
+//                     <FiLoader className="w-4 h-4 sm:w-5 sm:h-5 animate-spin" />
 //                     <span>Saving...</span>
 //                     </>
 //                 ) : (
 //                     <>
-//                     <FiSave className="w-5 h-5" />
+//                     <FiSave className="w-4 h-4 sm:w-5 sm:h-5" />
 //                     <span>Save Profile</span>
 //                     </>
 //                 )}
@@ -326,10 +326,10 @@
 //             {!isEditing && (
 //                 <button
 //                 type="button"
-//                 className="bg-blue-700 hover:bg-blue-800 text-white px-5 py-2 rounded-sm transition duration-200 flex items-center gap-2 font-semibold shadow-md"
+//                 className="bg-blue-700 hover:bg-blue-800 text-white px-4 sm:px-5 py-2 rounded-sm transition duration-200 flex items-center gap-1.5 sm:gap-2 font-semibold shadow-md text-sm"
 //                 onClick={() => setIsEditing(true)}
 //                 >
-//                 <FiEdit3 className="w-5 h-5" />
+//                 <FiEdit3 className="w-4 h-4 sm:w-5 sm:h-5" />
 //                 <span>Edit</span>
 //                 </button>
 //             )}
@@ -337,50 +337,49 @@
 //       </nav>
 
 //       {/* Main Content Area */}
-//       <div className="p-8 space-y-8">
-//         <form onSubmit={handleSubmit} id="profile-form" className="space-y-8">
+//       <div className="p-4 sm:p-8 space-y-6 sm:space-y-8">
+//         <form onSubmit={handleSubmit} id="profile-form" className="space-y-6 sm:space-y-8">
           
 //           {/* Section 1: Logo and Shop Name */}
 //           <SectionWrapper 
 //             title="Branding & Visual Identity" 
-//             icon={<FiUploadCloud className="w-6 h-6"/>}
-//             // className="grid md:grid-cols-3 gap-6"
+//             icon={<FiUploadCloud className="w-5 h-5 sm:w-6 sm:h-6"/>}
 //           >
 //             {/* Logo Management */}
-//             <div className="md:col-span-1 bg-gray-100 p-4 rounded-md border-2 border-dashed border-gray-300">
-//                 <label className="block text-sm font-bold mb-3 text-blue-700">Shop Logo / Icon</label>
+//             <div className="mb-4 sm:mb-0 bg-gray-100 p-3 sm:p-4 rounded-md border-2 border-dashed border-gray-300">
+//                 <label className="block text-xs sm:text-sm font-bold mb-2 sm:mb-3 text-blue-700">Shop Logo / Icon</label>
                 
-//                 <div className="flex items-center gap-4 mb-3">
+//                 <div className="flex items-center gap-3 mb-3">
 //                     {formData.logoImage ? (
 //                     <img
 //                         src={`data:image/jpeg;base64,${formData.logoImage}`}
 //                         alt="Shop Logo"
-//                         className="w-24 h-24 object-contain p-1 bg-white rounded-md border-2 border-gray-300 shadow-md"
+//                         className="w-20 h-20 sm:w-24 sm:h-24 object-contain p-1 bg-white rounded-md border-2 border-gray-300 shadow-md"
 //                     />
 //                     ) : (
-//                     <div className="w-24 h-24 bg-gray-200 rounded-md flex flex-col items-center justify-center text-gray-500 text-xs border border-gray-400">
-//                         <FiAlertCircle className="w-6 h-6 mb-1"/>
+//                     <div className="w-20 h-20 sm:w-24 sm:h-24 bg-gray-200 rounded-md flex flex-col items-center justify-center text-gray-500 text-xs border border-gray-400 p-2">
+//                         <FiAlertCircle className="w-5 h-5 sm:w-6 sm:h-6 mb-1"/>
 //                         <span>No Logo Set</span>
 //                     </div>
 //                     )}
 //                 </div>
 
 //                 {isEditing && (
-//                     <div className="space-y-3">
+//                     <div className="space-y-2 sm:space-y-3">
 //                         <input
 //                             type="file"
 //                             accept="image/jpeg,image/png"
 //                             onChange={handleFileChange}
-//                             className="w-full text-sm file:mr-4 file:py-2 file:px-4 file:rounded-sm file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+//                             className="w-full text-xs sm:text-sm file:mr-3 sm:file:mr-4 file:py-1.5 sm:file:py-2 file:px-3 sm:file:px-4 file:rounded-sm file:border-0 file:text-xs sm:file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
 //                         />
                         
-//                         <div className="flex gap-2">
+//                         <div className="flex flex-col sm:flex-row gap-2">
 //                             {selectedFile && (
 //                                 <button
 //                                     type="button"
 //                                     onClick={uploadImage}
 //                                     disabled={isUploading}
-//                                     className={`flex-1 bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-sm flex items-center justify-center gap-1 text-sm transition ${isUploading ? "opacity-50 cursor-not-allowed" : ""}`}
+//                                     className={`flex-1 bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-sm flex items-center justify-center gap-1 text-xs sm:text-sm transition ${isUploading ? "opacity-50 cursor-not-allowed" : ""}`}
 //                                 >
 //                                     {isUploading ? "Uploading..." : "Upload New Logo"}
 //                                 </button>
@@ -390,20 +389,20 @@
 //                                     type="button"
 //                                     onClick={removeImage}
 //                                     disabled={isRemoving}
-//                                     className={`bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-sm flex items-center justify-center gap-1 text-sm transition ${isRemoving ? "opacity-50 cursor-not-allowed" : ""}`}
+//                                     className={`bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-sm flex items-center justify-center gap-1 text-xs sm:text-sm transition ${isRemoving ? "opacity-50 cursor-not-allowed" : ""}`}
 //                                 >
-//                                     <FiTrash2 className="w-4 h-4" />
+//                                     <FiTrash2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
 //                                     {isRemoving ? "Removing..." : "Remove"}
 //                                 </button>
 //                             )}
 //                         </div>
-//                         {selectedFile && <p className="text-xs text-gray-600">File ready: **{selectedFile.name}**</p>}
+//                         {selectedFile && <p className="text-xs text-gray-600">File ready: <strong>{selectedFile.name}</strong></p>}
 //                     </div>
 //                 )}
 //             </div>
 
 //             {/* Shop Details */}
-//             <div className="md:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
+//             <div className="grid grid-cols-1 gap-3 sm:gap-4">
 //                 <InputField
 //                   label="Shop Display Name"
 //                   name="shopName"
@@ -436,8 +435,8 @@
 //           </SectionWrapper>
 
 //           {/* Section 2: Company/Legal Information */}
-//           <SectionWrapper title="Business & Address Details" icon={<FiBriefcase className="w-6 h-6"/>}>
-//             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+//           <SectionWrapper title="Business & Address Details" icon={<FiBriefcase className="w-5 h-5 sm:w-6 sm:h-6"/>}>
+//             <div className="grid grid-cols-1 gap-3 sm:gap-4">
 //                 <InputField
 //                   label="Legal Company Name"
 //                   name="companyName"
@@ -477,8 +476,8 @@
 //                   onChange={handleChange}
 //                   disabled={!isEditing}
 //                 />
-//                 <div className="sm:col-span-2">
-//                     <label className="block text-sm font-semibold mb-1 text-gray-700">Full Business Address</label>
+//                 <div>
+//                     <label className="block text-xs sm:text-sm font-semibold mb-1 text-gray-700">Full Business Address</label>
 //                     <textarea
 //                     name="companyAddress"
 //                     value={formData.companyAddress}
@@ -514,6 +513,7 @@
 
 
 
+//translated code
 import React, { useEffect, useState } from "react";
 import { 
     FiTrash2, 
@@ -526,6 +526,7 @@ import {
     FiUser,
     FiBriefcase
 } from "react-icons/fi";
+import { useTranslation } from "react-i18next"; // ← AÑADIDO
 
 // --- Custom Components & Styles ---
 const inputStyle = (isEditing) => 
@@ -546,7 +547,9 @@ const SectionWrapper = ({ title, children, icon, className = "" }) => (
 
 const InputField = ({ label, name, value, onChange, type = "text", disabled = false, required = false, pattern }) => (
   <div>
-    <label className="block text-xs sm:text-sm font-semibold mb-1 text-gray-700">{label}{required && <span className="text-red-500"> *</span>}</label>
+    <label className="block text-xs sm:text-sm font-semibold mb-1 text-gray-700">
+      {label}{required && <span className="text-red-500"> *</span>}
+    </label>
     <input
       type={type}
       name={name}
@@ -563,14 +566,15 @@ const InputField = ({ label, name, value, onChange, type = "text", disabled = fa
 
 // --- NEW: Phone Input with 10-digit Validation ---
 const PhoneInputField = ({ label, name, value, onChange, disabled = false, required = false }) => {
+  const { t } = useTranslation(); // ← AÑADIDO
   const [error, setError] = useState("");
 
   const validatePhone = (val) => {
     const digitsOnly = val.replace(/\D/g, "");
     if (val && !/^\d{0,10}$/.test(val)) {
-      setError("Only digits allowed (0-9)");
+      setError(t("shopProfile.phone.onlyDigits"));
     } else if (digitsOnly.length > 0 && digitsOnly.length !== 10) {
-      setError("Phone must be exactly 10 digits");
+      setError(t("shopProfile.phone.mustBe10"));
     } else {
       setError("");
     }
@@ -598,7 +602,7 @@ const PhoneInputField = ({ label, name, value, onChange, disabled = false, requi
         onChange={handleInputChange}
         disabled={disabled}
         required={required}
-        placeholder="Enter 10-digit mobile number"
+        placeholder={t("shopProfile.phone.placeholder")}
         maxLength={10}
         className={`${inputStyle(!disabled)} ${
           error ? "border-red-400 focus:ring-2 focus:ring-red-500/50" : ""
@@ -606,7 +610,7 @@ const PhoneInputField = ({ label, name, value, onChange, disabled = false, requi
       />
       {error && <p className="mt-1 text-xs text-red-600">{error}</p>}
       {value && value.length === 10 && !error && (
-        <p className="mt-1 text-xs text-green-600">Valid 10-digit number</p>
+        <p className="mt-1 text-xs text-green-600">{t("shopProfile.phone.valid")}</p>
       )}
     </div>
   );
@@ -614,6 +618,8 @@ const PhoneInputField = ({ label, name, value, onChange, disabled = false, requi
 
 // --- Main Component ---
 const ShopkeeperProfile = () => {
+  const { t } = useTranslation(); // ← AÑADIDO
+
   const [formData, setFormData] = useState({
     shopId: "",
     shopName: "",
@@ -640,7 +646,7 @@ const ShopkeeperProfile = () => {
   const fetchProfile = async () => {
     const storedId = localStorage.getItem("id");
     if (!storedId) {
-      alert("Warning: Shop ID not found. Please log in again.");
+      alert(t("shopProfile.alerts.noId"));
       return;
     }
 
@@ -656,7 +662,7 @@ const ShopkeeperProfile = () => {
       setOriginalData(dataWithDefaults);
     } catch (err) {
       console.error("Error loading profile", err);
-      alert("Warning: Failed to load profile. Please try refreshing.");
+      alert(t("shopProfile.alerts.loadFailed"));
     } finally {
       setLoading(false);
     }
@@ -696,15 +702,15 @@ const ShopkeeperProfile = () => {
       const data = await res.json();
 
       if (res.ok && data.status === "success") {
-        alert("Logo updated successfully!");
+        alert(t("shopProfile.alerts.logoSuccess"));
         fetchProfile(); 
         setSelectedFile(null);
       } else {
-        alert("Failed: " + (data.message || "Failed to upload logo"));
+        alert(t("shopProfile.alerts.logoFailed") + (data.message || ""));
       }
     } catch (err) {
       console.error("Upload error", err);
-      alert("Warning: Network error during image upload or reduce the image size.");
+      alert(t("shopProfile.alerts.uploadError"));
     } finally {
       setIsUploading(false);
     }
@@ -712,7 +718,7 @@ const ShopkeeperProfile = () => {
 
   const removeImage = async () => {
     const storedId = localStorage.getItem("id");
-    if (!storedId || !window.confirm("Are you sure you want to remove the shop logo?")) return;
+    if (!storedId || !window.confirm(t("shopProfile.confirm.removeLogo"))) return;
 
     setIsRemoving(true);
     try {
@@ -722,14 +728,14 @@ const ShopkeeperProfile = () => {
       const data = await res.json();
 
       if (res.ok && data.status === "success") {
-        alert("Logo removed!");
+        alert(t("shopProfile.alerts.logoRemoved"));
         fetchProfile(); 
       } else {
-        alert("Failed: " + (data.message || "Failed to remove logo"));
+        alert(t("shopProfile.alerts.removeFailed") + (data.message || ""));
       }
     } catch (err) {
       console.error("Remove error", err);
-      alert("Warning: Network error during logo removal");
+      alert(t("shopProfile.alerts.removeError"));
     } finally {
       setIsRemoving(false);
     }
@@ -739,17 +745,15 @@ const ShopkeeperProfile = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validate Personal Phone (required)
     const phoneDigits = (formData.phone || "").replace(/\D/g, "");
     if (formData.phone && phoneDigits.length !== 10) {
-      alert("Error: Personal phone must be exactly 10 digits.");
+      alert(t("shopProfile.validation.personalPhone"));
       return;
     }
 
-    // Validate Company Phone (optional, but if entered → must be 10 digits)
     const companyPhoneDigits = (formData.companyPhone || "").replace(/\D/g, "");
     if (formData.companyPhone && companyPhoneDigits.length > 0 && companyPhoneDigits.length !== 10) {
-      alert("Error: Company phone must be exactly 10 digits.");
+      alert(t("shopProfile.validation.companyPhone"));
       return;
     }
 
@@ -765,15 +769,15 @@ const ShopkeeperProfile = () => {
       });
 
       if (res.ok) {
-        alert("Profile updated successfully!");
+        alert(t("shopProfile.alerts.profileSuccess"));
         setOriginalData(formData);
         setIsEditing(false);
       } else {
-        alert("Failed: Failed to update profile. Check server logs.");
+        alert(t("shopProfile.alerts.profileFailed"));
       }
     } catch (err) {
       console.error("Submit error", err);
-      alert("Warning: Network error: Could not connect to server.");
+      alert(t("shopProfile.alerts.networkError"));
     } finally {
       setIsSubmitting(false);
     }
@@ -790,7 +794,9 @@ const ShopkeeperProfile = () => {
     return (
       <div className="flex flex-col items-center justify-center h-64 p-4">
         <FiLoader className="w-10 h-10 sm:w-12 sm:h-12 text-blue-600 animate-spin" />
-        <p className="mt-3 sm:mt-4 text-sm sm:text-base text-blue-600 font-medium">Loading Shopkeeper Profile...</p>
+        <p className="mt-3 sm:mt-4 text-sm sm:text-base text-blue-600 font-medium">
+          {t("shopProfile.loading")}
+        </p>
       </div>
     );
   }
@@ -801,7 +807,7 @@ const ShopkeeperProfile = () => {
       {/* Header/Navigation */}
       <nav className="bg-blue-600 text-white px-4 sm:px-8 py-3 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
         <h2 className="text-xl sm:text-2xl font-extrabold flex items-center gap-2">
-          <FiUser className="w-5 h-5 sm:w-6 sm:h-6"/> Shop Profile & Branding
+          <FiUser className="w-5 h-5 sm:w-6 sm:h-6"/> {t("shopProfile.header.title")}
         </h2>
         <div className="flex flex-wrap items-center gap-2">
             {isEditing && (
@@ -812,7 +818,7 @@ const ShopkeeperProfile = () => {
                 disabled={isSubmitting}
                 >
                 <FiX className="w-4 h-4 sm:w-5 sm:h-5" />
-                <span>Cancel</span>
+                <span>{t("shopProfile.buttons.cancel")}</span>
                 </button>
             )}
 
@@ -828,12 +834,12 @@ const ShopkeeperProfile = () => {
                 {isSubmitting ? (
                     <>
                     <FiLoader className="w-4 h-4 sm:w-5 sm:h-5 animate-spin" />
-                    <span>Saving...</span>
+                    <span>{t("shopProfile.buttons.saving")}</span>
                     </>
                 ) : (
                     <>
                     <FiSave className="w-4 h-4 sm:w-5 sm:h-5" />
-                    <span>Save Profile</span>
+                    <span>{t("shopProfile.buttons.save")}</span>
                     </>
                 )}
                 </button>
@@ -846,7 +852,7 @@ const ShopkeeperProfile = () => {
                 onClick={() => setIsEditing(true)}
                 >
                 <FiEdit3 className="w-4 h-4 sm:w-5 sm:h-5" />
-                <span>Edit</span>
+                <span>{t("shopProfile.buttons.edit")}</span>
                 </button>
             )}
         </div>
@@ -858,12 +864,14 @@ const ShopkeeperProfile = () => {
           
           {/* Section 1: Logo and Shop Name */}
           <SectionWrapper 
-            title="Branding & Visual Identity" 
+            title={t("shopProfile.sections.branding")} 
             icon={<FiUploadCloud className="w-5 h-5 sm:w-6 sm:h-6"/>}
           >
             {/* Logo Management */}
             <div className="mb-4 sm:mb-0 bg-gray-100 p-3 sm:p-4 rounded-md border-2 border-dashed border-gray-300">
-                <label className="block text-xs sm:text-sm font-bold mb-2 sm:mb-3 text-blue-700">Shop Logo / Icon</label>
+                <label className="block text-xs sm:text-sm font-bold mb-2 sm:mb-3 text-blue-700">
+                  {t("shopProfile.logo.label")}
+                </label>
                 
                 <div className="flex items-center gap-3 mb-3">
                     {formData.logoImage ? (
@@ -875,7 +883,7 @@ const ShopkeeperProfile = () => {
                     ) : (
                     <div className="w-20 h-20 sm:w-24 sm:h-24 bg-gray-200 rounded-md flex flex-col items-center justify-center text-gray-500 text-xs border border-gray-400 p-2">
                         <FiAlertCircle className="w-5 h-5 sm:w-6 sm:h-6 mb-1"/>
-                        <span>No Logo Set</span>
+                        <span>{t("shopProfile.logo.noLogo")}</span>
                     </div>
                     )}
                 </div>
@@ -897,7 +905,7 @@ const ShopkeeperProfile = () => {
                                     disabled={isUploading}
                                     className={`flex-1 bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-sm flex items-center justify-center gap-1 text-xs sm:text-sm transition ${isUploading ? "opacity-50 cursor-not-allowed" : ""}`}
                                 >
-                                    {isUploading ? "Uploading..." : "Upload New Logo"}
+                                    {isUploading ? t("shopProfile.logo.uploading") : t("shopProfile.logo.upload")}
                                 </button>
                             )}
                             {formData.logoImage && (
@@ -908,11 +916,11 @@ const ShopkeeperProfile = () => {
                                     className={`bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-sm flex items-center justify-center gap-1 text-xs sm:text-sm transition ${isRemoving ? "opacity-50 cursor-not-allowed" : ""}`}
                                 >
                                     <FiTrash2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                                    {isRemoving ? "Removing..." : "Remove"}
+                                    {isRemoving ? t("shopProfile.logo.removing") : t("shopProfile.logo.remove")}
                                 </button>
                             )}
                         </div>
-                        {selectedFile && <p className="text-xs text-gray-600">File ready: <strong>{selectedFile.name}</strong></p>}
+                        {selectedFile && <p className="text-xs text-gray-600">{t("shopProfile.logo.fileReady")}: <strong>{selectedFile.name}</strong></p>}
                     </div>
                 )}
             </div>
@@ -920,7 +928,7 @@ const ShopkeeperProfile = () => {
             {/* Shop Details */}
             <div className="grid grid-cols-1 gap-3 sm:gap-4">
                 <InputField
-                  label="Shop Display Name"
+                  label={t("shopProfile.fields.shopName")}
                   name="shopName"
                   value={formData.shopName}
                   onChange={handleChange}
@@ -928,9 +936,8 @@ const ShopkeeperProfile = () => {
                   required
                 />
 
-                {/* CHANGED: Personal Phone → PhoneInputField */}
                 <PhoneInputField
-                  label="Personal Contact Phone"
+                  label={t("shopProfile.fields.personalPhone")}
                   name="phone"
                   value={formData.phone}
                   onChange={handleChange}
@@ -939,7 +946,7 @@ const ShopkeeperProfile = () => {
                 />
 
                 <InputField
-                  label="Personal Login Email"
+                  label={t("shopProfile.fields.email")}
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
@@ -951,19 +958,21 @@ const ShopkeeperProfile = () => {
           </SectionWrapper>
 
           {/* Section 2: Company/Legal Information */}
-          <SectionWrapper title="Business & Address Details" icon={<FiBriefcase className="w-5 h-5 sm:w-6 sm:h-6"/>}>
+          <SectionWrapper 
+            title={t("shopProfile.sections.business")} 
+            icon={<FiBriefcase className="w-5 h-5 sm:w-6 sm:h-6"/>}
+          >
             <div className="grid grid-cols-1 gap-3 sm:gap-4">
                 <InputField
-                  label="Legal Company Name"
+                  label={t("shopProfile.fields.companyName")}
                   name="companyName"
                   value={formData.companyName}
                   onChange={handleChange}
                   disabled={!isEditing}
                 />
 
-                {/* CHANGED: Company Phone → PhoneInputField */}
                 <PhoneInputField
-                  label="Company Contact Phone"
+                  label={t("shopProfile.fields.companyPhone")}
                   name="companyPhone"
                   value={formData.companyPhone}
                   onChange={handleChange}
@@ -971,7 +980,7 @@ const ShopkeeperProfile = () => {
                 />
 
                 <InputField
-                  label="Company Email (for receipts/invoices)"
+                  label={t("shopProfile.fields.companyEmail")}
                   name="companyEmail"
                   value={formData.companyEmail}
                   onChange={handleChange}
@@ -979,27 +988,29 @@ const ShopkeeperProfile = () => {
                   type="email"
                 />
                 <InputField
-                  label="City"
+                  label={t("shopProfile.fields.city")}
                   name="city"
                   value={formData.city}
                   onChange={handleChange}
                   disabled={!isEditing}
                 />
                 <InputField
-                  label="Country"
+                  label={t("shopProfile.fields.country")}
                   name="country"
                   value={formData.country}
                   onChange={handleChange}
                   disabled={!isEditing}
                 />
                 <div>
-                    <label className="block text-xs sm:text-sm font-semibold mb-1 text-gray-700">Full Business Address</label>
+                    <label className="block text-xs sm:text-sm font-semibold mb-1 text-gray-700">
+                      {t("shopProfile.fields.address")}
+                    </label>
                     <textarea
                     name="companyAddress"
                     value={formData.companyAddress}
                     onChange={handleChange}
                     disabled={!isEditing}
-                    placeholder="Street Address, P.O. Box, etc."
+                    placeholder={t("shopProfile.fields.addressPlaceholder")}
                     rows={3}
                     className={inputStyle(isEditing) + " resize-none"}
                     />

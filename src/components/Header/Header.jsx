@@ -331,28 +331,12 @@ export default function Header() {
      }`;
 
   // ---- Language Selector ----
-  // const LanguageSelector = () => {
-  //   const changeLang = (e) => {
-  //     i18n.changeLanguage(e.target.value);
-  //   };
-
-  //   return (
-  //     <select
-  //       value={i18n.language}
-  //       onChange={changeLang}
-  //       className="px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
-  //     >
-  //       <option value="en">English</option>
-  //       <option value="es">Español</option>
-  //     </select>
-  //   );
-  // };
   const LanguageSelector = () => {
     const [open, setOpen] = useState(false);
 
     const changeLang = (lang) => {
       i18n.changeLanguage(lang);
-      setOpen(false); // close dropdown after select
+      setOpen(false);
     };
 
     return (
@@ -368,6 +352,7 @@ export default function Header() {
         {/* Dropdown */}
         {open && (
           <div className="absolute right-0 mt-2 w-32 bg-white border border-gray-200 shadow-lg rounded-md py-1 z-50">
+            {/* <p className='w-full text-left px-4 py-2 text-sm flex items-center gap-2'>Language</p> */}
             <button
               onClick={() => changeLang("en")}
               className={`w-full text-left px-4 py-2 text-sm flex items-center gap-2 hover:bg-gray-100 ${
@@ -519,13 +504,13 @@ export default function Header() {
                   <div className="absolute right-0 mt-2 bg-white rounded-md shadow-xl z-10 min-w-[160px] opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-200 border border-gray-200">
                     <NavLink
                       to="/signup-shopkeeper"
-                      className="block px-4 py-2 text-sm text-emerald-700 hover:bg-emerald-100 transition rounded-t-md"
+                      className="block px-3 py-2 text-sm text-emerald-700 hover:bg-emerald-100 transition rounded-t-md"
                     >
                       {t('header.signUpShopkeeper')}
                     </NavLink>
                     <NavLink
                       to="/signup-user"
-                      className="block px-4 py-2 text-sm text-emerald-700 hover:bg-emerald-100 transition rounded-b-md"
+                      className="block px-3 py-2 text-sm text-emerald-700 hover:bg-emerald-100 transition rounded-b-md"
                     >
                       {t('header.signUpUser')}
                     </NavLink>
