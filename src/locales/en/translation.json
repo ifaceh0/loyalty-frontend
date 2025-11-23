@@ -990,5 +990,176 @@
       "process": "Process Purchase"
     },
     "checkingEligibility": "Checking for eligible reward..."
+  },
+
+
+
+
+
+
+
+
+
+
+  "userDashboard": {
+    "sidebar": {
+      "title": "User Panel",
+      "close": "Close",
+      "dashboard": "Dashboard",
+      "profile": "Profile",
+      "transactions": "Transactions",
+      "visitedShops": "Visited Shops",
+      "help": "Need Help?"
+    }
+  },
+
+  "explore": {
+    "title": "Explore New Loyalty Partners",
+    "searchPlaceholder": "Search shops by name...",
+    "loading": {
+      "title": "Discovering Shops...",
+      "subtitle": "Connecting you to the loyalty network."
+    },
+    "filter": {
+      "title": "Filter Shops",
+      "open": "Filter",
+      "close": "Close",
+      "country": "Country",
+      "city": "City",
+      "allCountries": "All Countries",
+      "allCities": "All Cities",
+      "reset": "Reset Filters",
+      "done": "Done"
+    },
+    "noResults": {
+      "oops": "Oops!",
+      "message": "No shops found matching your current search or location filters. Try broadening your search!"
+    },
+    "qr": {
+      "button": "QR Code",
+      "generating": "Generating..."
+    },
+    "pagination": {
+      "previous": "Previous",
+      "next": "Next"
+    }
+  },
+
+  "userShopList": {
+    "title": "Your Visited Loyalty Hubs",
+    "searchPlaceholder": "Search your visited shops...",
+    "loading": {
+      "title": "Loading Shops...",
+      "subtitle": "Please wait while we fetch your visited shop details."
+    },
+    "noResults": {
+      "oops": "Oops!",
+      "message": "No visited shops found matching your search. Try broadening your search!"
+    },
+    "visitedBadge": "Visited Shop",
+    "qr": {
+      "button": "QR Code",
+      "generating": "Generating..."
+    },
+    "pagination": {
+      "previous": "Previous",
+      "next": "Next"
+    }
+  },
+
+  "qrModal": {
+    "title": "QR Code for",
+    "downloadButton": "Download Loyalty QR Code",
+    "accountDetails": "Account Details",
+    "showTip": "Show Tip",
+    "hideTip": "Hide Tip",
+    "shopId": "Shop ID",
+    "shopName": "Shop Name",
+    "customerId": "Customer ID",
+    "availablePoints": "Available Points",
+    "points": "Points",
+    "encouragement": {
+      "title": "Unlock Exciting Rewards at {shopName}!",
+      "message": "You're already at <strong>{points} points</strong>! Shop at <strong>{shopName}</strong> today, make a purchase, and scan this QR code to earn even more points. Don't miss out on exclusive rewards waiting just for you!",
+      "callToAction": "Visit now and turn your purchases into amazing perks!"
+    }
+  },
+
+  "profile": {
+    "header": {
+      "welcome": "Welcome Back, ",
+      "welcomeFallback": "Welcome Back!",
+      "user": "User",
+      "subtitle": "Manage and update your personal information here."
+    },
+    "section": { "title": "Personal Details" },
+    "buttons": {
+      "edit": "Edit",
+      "cancel": "Cancel",
+      "save": "Save Changes",
+      "saving": "Saving..."
+    },
+    "fields": {
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "phone": "Phone Number",
+      "email": "Email Address"
+    },
+    "phone": {
+      "placeholder": "Enter 10-digit mobile number",
+      "onlyDigits": "Only digits allowed (0-9)",
+      "mustBe10": "Phone must be exactly 10 digits",
+      "valid": "Valid 10-digit number"
+    },
+    "loading": {
+      "title": "Loading Profile",
+      "message": "Retrieving your personal details securely..."
+    },
+    "success": { "updated": "Profile updated successfully!" },
+    "errors": {
+      "title": "Warning: Error:",
+      "noUserId": "No user ID found. Please log in.",
+      "fetchFailed": "Failed to fetch user details",
+      "networkError": "Error fetching user details",
+      "updateFailed": "Error updating profile",
+      "submitError": "Submission error: "
+    },
+    "validation": {
+      "firstName": "First name is required",
+      "lastName": "Last name is required",
+      "phone10": "Phone number must be exactly 10 digits",
+      "email": "Invalid email format"
+    }
+  },
+
+  "transactions": {
+    "title": "Loyalty Transaction History",
+    "subtitle": "Review your spending and points earned at each merchant.",
+    "loading": "Fetching your transaction data...",
+    "selectMerchant": "Select Merchant",
+    "exportButton": "Export to Excel",
+    "stats": {
+      "availablePoints": "Points",
+      "amountSpent": "Amount Spent",
+      "redeemAmount": "Redeem Amount"
+    },
+    "table": {
+      "title": "Transactions for",
+      "date": "Date",
+      "amount": "Amount ($)",
+      "points": "Points",
+      "pointsEarned": "Points Earned",
+      "redeemPoints": "Redeem Points",
+      "redeemAmount": "Redeem Amount ($)"
+    },
+    "noTransactions": {
+      "title": "No transactions found for this merchant.",
+      "subtitle": "Make a purchase to start earning points!"
+    },
+    "errors": {
+      "title": "Error Loading Data",
+      "fetchFailed": "Failed to fetch transactions",
+      "loadFailed": "Failed to load transaction data."
+    }
   }
 }

@@ -1064,5 +1064,176 @@
       "process": "Procesar Compra"
     },
     "checkingEligibility": "Verificando recompensa elegible..."
+  },
+
+
+
+
+
+
+
+
+
+
+  "userDashboard": {
+    "sidebar": {
+      "title": "Panel de Usuario",
+      "close": "Cerrar",
+      "dashboard": "Inicio",
+      "profile": "Mi Perfil",
+      "transactions": "Transacciones",
+      "visitedShops": "Tiendas Visitadas",
+      "help": "¿Necesitas ayuda?"
+    }
+  },
+
+  "explore": {
+    "title": "Explora Nuevos Socios de Fidelidad",
+    "searchPlaceholder": "Buscar tiendas por nombre...",
+    "loading": {
+      "title": "Descubriendo Tiendas...",
+      "subtitle": "Conectándote a la red de fidelidad."
+    },
+    "filter": {
+      "title": "Filtrar Tiendas",
+      "open": "Filtrar",
+      "close": "Cerrar",
+      "country": "País",
+      "city": "Ciudad",
+      "allCountries": "Todos los Países",
+      "allCities": "Todas las Ciudades",
+      "reset": "Restablecer Filtros",
+      "done": "Listo"
+    },
+    "noResults": {
+      "oops": "¡Ups!",
+      "message": "No se encontraron tiendas que coincidan con tu búsqueda o filtros. ¡Intenta ampliar la búsqueda!"
+    },
+    "qr": {
+      "button": "Código QR",
+      "generating": "Generando..."
+    },
+    "pagination": {
+      "previous": "Anterior",
+      "next": "Siguiente"
+    }
+  },
+
+  "userShopList": {
+    "title": "Tus Tiendas Visitadas",
+    "searchPlaceholder": "Buscar en tus tiendas visitadas...",
+    "loading": {
+      "title": "Cargando Tiendas...",
+      "subtitle": "Por favor espera mientras cargamos los detalles de tus tiendas visitadas."
+    },
+    "noResults": {
+      "oops": "¡Ups!",
+      "message": "No se encontraron tiendas visitadas que coincidan con tu búsqueda. ¡Intenta ampliar la búsqueda!"
+    },
+    "visitedBadge": "Tienda Visitada",
+    "qr": {
+      "button": "Código QR",
+      "generating": "Generando..."
+    },
+    "pagination": {
+      "previous": "Anterior",
+      "next": "Siguiente"
+    }
+  },
+
+  "qrModal": {
+    "title": "Código QR para",
+    "downloadButton": "Descargar Código QR de Fidelidad",
+    "accountDetails": "Detalles de la Cuenta",
+    "showTip": "Mostrar Consejo",
+    "hideTip": "Ocultar Consejo",
+    "shopId": "ID de Tienda",
+    "shopName": "Nombre de Tienda",
+    "customerId": "ID de Cliente",
+    "availablePoints": "Puntos Disponibles",
+    "points": "Puntos",
+    "encouragement": {
+      "title": "¡Desbloquea Recompensas Increíbles en {shopName}!",
+      "message": "¡Ya tienes <strong>{points} puntos</strong>! Visita <strong>{shopName}</strong> hoy, haz una compra y escanea este código QR para ganar aún más puntos. ¡No te pierdas las recompensas exclusivas que te esperan!",
+      "callToAction": "¡Visita ahora y convierte tus compras en beneficios increíbles!"
+    }
+  },
+
+  "profile": {
+    "header": {
+      "welcome": "¡Bienvenido de nuevo, ",
+      "welcomeFallback": "¡Bienvenido de nuevo!",
+      "user": "Usuario",
+      "subtitle": "Administra y actualiza tu información personal aquí."
+    },
+    "section": { "title": "Detalles Personales" },
+    "buttons": {
+      "edit": "Editar",
+      "cancel": "Cancelar",
+      "save": "Guardar Cambios",
+      "saving": "Guardando..."
+    },
+    "fields": {
+      "firstName": "Nombre",
+      "lastName": "Apellido",
+      "phone": "Número de Teléfono",
+      "email": "Correo Electrónico"
+    },
+    "phone": {
+      "placeholder": "Ingresa número móvil de 10 dígitos",
+      "onlyDigits": "Solo se permiten dígitos (0-9)",
+      "mustBe10": "El teléfono debe tener exactamente 10 dígitos",
+      "valid": "Número válido de 10 dígitos"
+    },
+    "loading": {
+      "title": "Cargando Perfil",
+      "message": "Recuperando tus datos personales de forma segura..."
+    },
+    "success": { "updated": "¡Perfil actualizado exitosamente!" },
+    "errors": {
+      "title": "Advertencia: Error:",
+      "noUserId": "No se encontró ID de usuario. Por favor inicia sesión.",
+      "fetchFailed": "Error al cargar los detalles del usuario",
+      "networkError": "Error al obtener los datos del perfil",
+      "updateFailed": "Error al actualizar el perfil",
+      "submitError": "Error al enviar: "
+    },
+    "validation": {
+      "firstName": "El nombre es obligatorio",
+      "lastName": "El apellido es obligatorio",
+      "phone10": "El número debe tener exactamente 10 dígitos",
+      "email": "Formato de correo inválido"
+    }
+  },
+
+  "transactions": {
+    "title": "Historial de Transacciones de Fidelidad",
+    "subtitle": "Revisa tus gastos y puntos ganados en cada comercio.",
+    "loading": "Obteniendo tus datos de transacciones...",
+    "selectMerchant": "Seleccionar Comercio",
+    "exportButton": "Exportar a Excel",
+    "stats": {
+      "availablePoints": "Puntos",
+      "amountSpent": "Monto Gastado",
+      "redeemAmount": "Monto Canjeado"
+    },
+    "table": {
+      "title": "Transacciones para",
+      "date": "Fecha",
+      "amount": "Monto ($)",
+      "points": "Puntos",
+      "pointsEarned": "Puntos Ganados",
+      "redeemPoints": "Puntos Canjeados",
+      "redeemAmount": "Monto Canjeado ($)"
+    },
+    "noTransactions": {
+      "title": "No se encontraron transacciones para este comercio.",
+      "subtitle": "¡Haz una compra para empezar a ganar puntos!"
+    },
+    "errors": {
+      "title": "Error al Cargar Datos",
+      "fetchFailed": "No se pudieron obtener las transacciones",
+      "loadFailed": "Error al cargar los datos de transacciones."
+    }
   }
 }

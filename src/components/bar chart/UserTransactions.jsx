@@ -1,6 +1,6 @@
 // import React, { useEffect, useState } from "react";
 // import { motion, AnimatePresence } from 'framer-motion';
-// import { Loader2, Download, ShoppingBag, DollarSign, Target } from 'lucide-react';
+// import { Loader2, Download, ShoppingBag, DollarSign, Target, ArrowUpCircle, ArrowDownCircle } from 'lucide-react';
 // import { FiLoader } from "react-icons/fi";
 // import * as XLSX from "xlsx";
 
@@ -50,6 +50,14 @@
 
 //   const currentShopData = transactionsByShop[selectedShop] || { transactions: [], availablePoints: 0 };
 
+//   const totalAmountSpent = currentShopData.transactions.reduce(
+//     (sum, txn) => sum + (txn.transactionAmount || 0), 0
+//   ).toFixed(2);
+
+//   const totalRedeemedAmount = currentShopData.transactions.reduce(
+//     (sum, txn) => sum + (txn.redeemAmount || 0), 0
+//   ).toFixed(2);
+
 //   const downloadExcel = () => {
 //     if (!selectedShop || !currentShopData.transactions?.length) return;
 
@@ -57,7 +65,9 @@
 //       "S.No": index + 1,
 //       Date: new Date(txn.date).toLocaleDateString(),
 //       "Transaction Amount ($)": txn.transactionAmount,
-//       "Points Received": txn.pointsReceived,
+//       "Points Earned": txn.pointsReceived,
+//       "Redeem Points": txn.redeemPoint || 0,
+//       "Redeem Amount ($)": txn.redeemAmount || 0,
 //     }));
 
 //     const worksheet = XLSX.utils.json_to_sheet(data);
@@ -68,10 +78,6 @@
 //   };
 
 //   const shopNames = Object.keys(transactionsByShop).sort();
-
-//   const totalAmountSpent = currentShopData.transactions.reduce(
-//     (sum, txn) => sum + (txn.transactionAmount || 0), 0
-//   ).toFixed(2);
 
 //   return (
 //     <div className="min-h-screen bg-gray-50/50">
@@ -127,7 +133,7 @@
 
 //               {/* Controls and Stats Panel */}
 //               <div className="bg-white rounded-md shadow-xl p-4 sm:p-6 mb-6 border border-gray-100">
-//                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 items-start">
+//                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 sm:gap-6 items-start">
                   
 //                   {/* Shop Selection */}
 //                   <div className="sm:col-span-1">
@@ -152,7 +158,7 @@
 
 //                   {/* Total Points Card */}
 //                   <StatCard 
-//                     title="Total Points Earned"
+//                     title="Available Points"
 //                     value={`${currentShopData.availablePoints || 0} pts`}
 //                     icon={<Target className="w-5 h-5 sm:w-6 sm:h-6 text-indigo-500" />}
 //                     color="indigo"
@@ -160,10 +166,17 @@
                   
 //                   {/* Total Amount Spent */}
 //                   <StatCard 
-//                     title="Total Amount Spent"
+//                     title="Amount Spent"
 //                     value={`$${totalAmountSpent}`}
-//                     icon={<DollarSign className="w-5 h-5 sm:w-6 sm:h-6 text-green-500" />}
+//                     icon={<DollarSign className="w-6 h-6 text-green-500" />}
 //                     color="green"
+//                   />
+
+//                   <StatCard 
+//                     title="Redeem Amount"
+//                     value={`$${totalRedeemedAmount}`}
+//                     icon={<ArrowDownCircle className="w-6 h-6 text-red-500" />}
+//                     color="red"
 //                   />
 
 //                   {/* Download Button */}
@@ -191,13 +204,14 @@
 //                 {/* Scrollable Table */}
 //                 <div className="overflow-x-auto">
 //                   <div className="max-h-[400px] sm:max-h-[500px] overflow-y-auto scrollbar-thin scrollbar-thumb-indigo-300 scrollbar-track-gray-100">
-//                     <table className="w-full min-w-[600px] table-auto text-gray-800">
-//                       <thead className="bg-indigo-50/50 sticky top-0 z-10">
+//                     <table className="w-full min-w-[700px] table-auto text-gray-800">
+//                       <thead className="bg-indigo-200/100 sticky top-0 z-10">
 //                         <tr className="text-gray-600 uppercase text-xs sm:text-sm leading-normal">
 //                           <th className="py-2 sm:py-3 px-3 sm:px-6 text-left font-bold">#</th>
 //                           <th className="py-2 sm:py-3 px-3 sm:px-6 text-left font-bold">Date</th>
 //                           <th className="py-2 sm:py-3 px-3 sm:px-6 text-left font-bold">Amount ($)</th>
-//                           <th className="py-2 sm:py-3 px-3 sm:px-6 text-left font-bold">Points Earned</th>
+//                           <th className="py-2 sm:py-3 px-3 sm:px-6 text-left font-bold">Points</th>
+//                           <th className="py-2 sm:py-3 px-3 sm:px-6 text-left font-bold">Redeem Amount ($)</th>
 //                         </tr>
 //                       </thead>
 //                       <tbody className="text-xs sm:text-sm font-light">
@@ -214,14 +228,38 @@
 //                               >
 //                                 <td className="py-2 sm:py-3 px-3 sm:px-6 whitespace-nowrap text-gray-600 font-medium">{index + 1}</td>
 //                                 <td className="py-2 sm:py-3 px-3 sm:px-6 text-gray-700">{new Date(txn.date).toLocaleDateString()}</td>
-//                                 <td className="py-2 sm:py-3 px-3 sm:px-6 text-gray-700 font-semibold">${txn.transactionAmount}</td>
-//                                 <td className="py-2 sm:py-3 px-3 sm:px-6 text-green-600 font-bold">{txn.pointsReceived} pts</td>
+//                                 <td className="py-2 sm:py-3 chụp-3 px-3 sm:px-6 text-gray-700 font-semibold">${txn.transactionAmount}</td>
+                                
+//                                 {/* Points: +X / -Y style */}
+//                                 <td className="py-2 sm:py-3 px-3 sm:px-6">
+//                                   <span className="flex items-center gap-2 font-semibold">
+//                                     <span className="flex items-center gap-1 text-emerald-600">
+//                                       <ArrowUpCircle className="w-4 h-4" /> +{txn.pointsReceived} pts
+//                                     </span>
+//                                     {txn.redeemPoint > 0 && (
+//                                       <span className="flex items-center gap-1 text-rose-600">
+//                                         <ArrowDownCircle className="w-4 h-4" /> -{txn.redeemPoint} pts
+//                                       </span>
+//                                     )}
+//                                   </span>
+//                                 </td>
+
+//                                 {/* Redeem Amount */}
+//                                 <td className="py-2 sm:py-3 px-3 sm:px-6">
+//                                   <span className={`inline-block px-3 py-1 rounded-full text-xs font-bold ${
+//                                     (txn.redeemAmount ?? 0) === 0 
+//                                       ? 'bg-blue-100 text-blue-700' 
+//                                       : 'bg-orange-100 text-orange-700'
+//                                   }`}>
+//                                     ${Number(txn.redeemAmount || 0).toFixed(2)}
+//                                   </span>
+//                                 </td>
 //                               </motion.tr>
 //                             ))}
 //                           </AnimatePresence>
 //                         ) : (
 //                           <tr>
-//                             <td colSpan="4" className="text-center py-8 sm:py-10 text-gray-500 bg-gray-50">
+//                             <td colSpan="5" className="text-center py-8 sm:py-10 text-gray-500 bg-gray-50">
 //                               <p className="text-base sm:text-lg font-medium">No transactions found for this merchant.</p>
 //                               <p className="text-xs sm:text-sm mt-1">Make a purchase to start earning points!</p>
 //                             </td>
@@ -267,19 +305,18 @@
 
 
 
-
-
-
-
+//translated code
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from 'framer-motion';
 import { Loader2, Download, ShoppingBag, DollarSign, Target, ArrowUpCircle, ArrowDownCircle } from 'lucide-react';
 import { FiLoader } from "react-icons/fi";
 import * as XLSX from "xlsx";
+import { useTranslation } from 'react-i18next'; // ← ADDED
 
 const API_BASE_URL = "https://loyalty-backend-java.onrender.com/api";
 
 const UserTransactions = () => {
+  const { t } = useTranslation(); // ← ADDED – Hook at the top
   const userId = localStorage.getItem("id");
 
   const [transactionsByShop, setTransactionsByShop] = useState({});
@@ -294,7 +331,7 @@ const UserTransactions = () => {
         const data = await response.json();
 
         if (!response.ok) {
-          throw new Error(data.message || "Failed to fetch transactions");
+          throw new Error(data.message || t('transactions.errors.fetchFailed'));
         }
 
         const shopNames = Object.keys(data);
@@ -309,13 +346,13 @@ const UserTransactions = () => {
         setLoading(false);
       } catch (err) {
         console.error(err);
-        setError("Failed to load transaction data.");
+        setError(t('transactions.errors.loadFailed'));
         setLoading(false);
       }
     };
 
     fetchTransactions();
-  }, [userId]);
+  }, [userId, t]);
 
   const handleShopChange = (e) => {
     setSelectedShop(e.target.value);
@@ -336,11 +373,11 @@ const UserTransactions = () => {
 
     const data = currentShopData.transactions.map((txn, index) => ({
       "S.No": index + 1,
-      Date: new Date(txn.date).toLocaleDateString(),
-      "Transaction Amount ($)": txn.transactionAmount,
-      "Points Earned": txn.pointsReceived,
-      "Redeem Points": txn.redeemPoint || 0,
-      "Redeem Amount ($)": txn.redeemAmount || 0,
+      [t('transactions.table.date')]: new Date(txn.date).toLocaleDateString(),
+      [t('transactions.table.amount')]: txn.transactionAmount,
+      [t('transactions.table.pointsEarned')]: txn.pointsReceived,
+      [t('transactions.table.redeemPoints')]: txn.redeemPoint || 0,
+      [t('transactions.table.redeemAmount')]: txn.redeemAmount || 0,
     }));
 
     const worksheet = XLSX.utils.json_to_sheet(data);
@@ -368,7 +405,7 @@ const UserTransactions = () => {
               <div className="flex flex-col sm:flex-row justify-center items-center gap-3">
                 <FiLoader className="w-10 h-10 sm:w-12 sm:h-12 text-blue-600 animate-spin" />
                 <p className="text-sm sm:text-base text-blue-600 font-medium text-center">
-                  Fetching your transaction data...
+                  {t('transactions.loading')}
                 </p>
               </div>
             </motion.div>
@@ -381,7 +418,7 @@ const UserTransactions = () => {
               transition={{ duration: 0.4 }}
               className="bg-red-100 border border-red-400 text-red-700 p-4 sm:p-6 rounded-md text-center shadow-lg"
             >
-              <p className="font-semibold text-base sm:text-lg">Error Loading Data</p>
+              <p className="font-semibold text-base sm:text-lg">{t('transactions.errors.title')}</p>
               <p className="mt-1 text-sm sm:text-base">{error}</p>
             </motion.div>
           ) : (
@@ -396,10 +433,10 @@ const UserTransactions = () => {
                 <div className="px-4 sm:px-6 py-4 sm:py-5">
                   <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight flex items-center gap-2 sm:gap-3">
                     <Target className="w-6 h-6 sm:w-8 sm:h-8 text-indigo-600" />
-                    Loyalty Transaction History
+                    {t('transactions.title')}
                   </h1>
                   <p className="text-sm sm:text-base text-gray-500 mt-1">
-                    Review your spending and points earned at each merchant.
+                    {t('transactions.subtitle')}
                   </p>
                 </div>
               </header>
@@ -411,7 +448,7 @@ const UserTransactions = () => {
                   {/* Shop Selection */}
                   <div className="sm:col-span-1">
                     <label className="block text-xs font-bold text-gray-500 uppercase mb-2">
-                      Select Merchant
+                      {t('transactions.selectMerchant')}
                     </label>
                     <div className="relative">
                       <ShoppingBag className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-indigo-400 pointer-events-none" />
@@ -431,7 +468,7 @@ const UserTransactions = () => {
 
                   {/* Total Points Card */}
                   <StatCard 
-                    title="Available Points"
+                    title={t('transactions.stats.availablePoints')}
                     value={`${currentShopData.availablePoints || 0} pts`}
                     icon={<Target className="w-5 h-5 sm:w-6 sm:h-6 text-indigo-500" />}
                     color="indigo"
@@ -439,14 +476,14 @@ const UserTransactions = () => {
                   
                   {/* Total Amount Spent */}
                   <StatCard 
-                    title="Amount Spent"
+                    title={t('transactions.stats.amountSpent')}
                     value={`$${totalAmountSpent}`}
                     icon={<DollarSign className="w-6 h-6 text-green-500" />}
                     color="green"
                   />
 
                   <StatCard 
-                    title="Redeem Amount"
+                    title={t('transactions.stats.redeemAmount')}
                     value={`$${totalRedeemedAmount}`}
                     icon={<ArrowDownCircle className="w-6 h-6 text-red-500" />}
                     color="red"
@@ -460,7 +497,7 @@ const UserTransactions = () => {
                       className="flex items-center justify-center w-full sm:w-auto gap-2 px-4 sm:px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-sm font-medium sm:font-semibold text-sm shadow-md transition duration-300 transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       <Download className="w-4 h-4 sm:w-5 sm:h-5" />
-                      Export to Excel
+                      {t('transactions.exportButton')}
                     </button>
                   </div>
                 </div>
@@ -470,7 +507,7 @@ const UserTransactions = () => {
               <div className="bg-white rounded-md shadow-2xl overflow-hidden border border-gray-100">
                 <div className="p-3 sm:p-4 bg-gray-50 border-b border-gray-100">
                   <h3 className="text-lg sm:text-xl font-semibold text-gray-700">
-                    Transactions for <span className="text-indigo-600">{selectedShop}</span>
+                    {t('transactions.table.title')} <span className="text-indigo-600">{selectedShop}</span>
                   </h3>
                 </div>
 
@@ -481,10 +518,10 @@ const UserTransactions = () => {
                       <thead className="bg-indigo-200/100 sticky top-0 z-10">
                         <tr className="text-gray-600 uppercase text-xs sm:text-sm leading-normal">
                           <th className="py-2 sm:py-3 px-3 sm:px-6 text-left font-bold">#</th>
-                          <th className="py-2 sm:py-3 px-3 sm:px-6 text-left font-bold">Date</th>
-                          <th className="py-2 sm:py-3 px-3 sm:px-6 text-left font-bold">Amount ($)</th>
-                          <th className="py-2 sm:py-3 px-3 sm:px-6 text-left font-bold">Points</th>
-                          <th className="py-2 sm:py-3 px-3 sm:px-6 text-left font-bold">Redeem Amount ($)</th>
+                          <th className="py-2 sm:py-3 px-3 sm:px-6 text-left font-bold">{t('transactions.table.date')}</th>
+                          <th className="py-2 sm:py-3 px-3 sm:px-6 text-left font-bold">{t('transactions.table.amount')}</th>
+                          <th className="py-2 sm:py-3 px-3 sm:px-6 text-left font-bold">{t('transactions.table.points')}</th>
+                          <th className="py-2 sm:py-3 px-3 sm:px-6 text-left font-bold">{t('transactions.table.redeemAmount')}</th>
                         </tr>
                       </thead>
                       <tbody className="text-xs sm:text-sm font-light">
@@ -501,7 +538,7 @@ const UserTransactions = () => {
                               >
                                 <td className="py-2 sm:py-3 px-3 sm:px-6 whitespace-nowrap text-gray-600 font-medium">{index + 1}</td>
                                 <td className="py-2 sm:py-3 px-3 sm:px-6 text-gray-700">{new Date(txn.date).toLocaleDateString()}</td>
-                                <td className="py-2 sm:py-3 chụp-3 px-3 sm:px-6 text-gray-700 font-semibold">${txn.transactionAmount}</td>
+                                <td className="py-2 sm:py-3 px-3 sm:px-6 text-gray-700 font-semibold">${txn.transactionAmount}</td>
                                 
                                 {/* Points: +X / -Y style */}
                                 <td className="py-2 sm:py-3 px-3 sm:px-6">
@@ -533,8 +570,8 @@ const UserTransactions = () => {
                         ) : (
                           <tr>
                             <td colSpan="5" className="text-center py-8 sm:py-10 text-gray-500 bg-gray-50">
-                              <p className="text-base sm:text-lg font-medium">No transactions found for this merchant.</p>
-                              <p className="text-xs sm:text-sm mt-1">Make a purchase to start earning points!</p>
+                              <p className="text-base sm:text-lg font-medium">{t('transactions.noTransactions.title')}</p>
+                              <p className="text-xs sm:text-sm mt-1">{t('transactions.noTransactions.subtitle')}</p>
                             </td>
                           </tr>
                         )}
