@@ -1280,8 +1280,8 @@ const CustomerLookup = () => {
   return (
     <div className="min-h-screen">
       <div className="flex justify-center mt-14 px-4">
-        <div className="text-black border-2 rounded-md p-4 md:p-6 mb-14 max-w-6xl mx-auto w-full">
-          <h1 className="text-3xl md:text-5xl text-center font-black mb-2 tracking-tight">
+        <div className="text-black border-2 border-gray-300 rounded-md p-2 md:p-3 mb-12 max-w-6xl mx-auto w-full">
+          <h1 className="text-2xl md:text-4xl text-center font-black mb-2">
             {t("customerLookup.shopName")}: <span className="text-blue-600">{shopName || t("customerLookup.defaultShopName")}</span>
           </h1>
         </div>

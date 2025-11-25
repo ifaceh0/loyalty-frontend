@@ -801,11 +801,10 @@ const ShopkeeperProfile = () => {
     );
   }
 
-  // --- Render ---
   return (
-    <div className="max-w-full mx-auto bg-gray-50 rounded-md shadow-2xl overflow-hidden mt-2 p-3 sm:p-0">
+    <div className="max-w-6xl mx-auto bg-gray-50 rounded-md shadow-2xl overflow-hidden mt-2 p-3 sm:p-0">
       {/* Header/Navigation */}
-      <nav className="bg-blue-600 text-white px-4 sm:px-8 py-3 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+      <nav className="bg-white border-b border-gray-300 text-violet-700 px-4 sm:px-8 py-3 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
         <h2 className="text-xl sm:text-2xl font-extrabold flex items-center gap-2">
           <FiUser className="w-5 h-5 sm:w-6 sm:h-6"/> {t("shopProfile.header.title")}
         </h2>
@@ -848,7 +847,7 @@ const ShopkeeperProfile = () => {
             {!isEditing && (
                 <button
                 type="button"
-                className="bg-blue-700 hover:bg-blue-800 text-white px-4 sm:px-5 py-2 rounded-sm transition duration-200 flex items-center gap-1.5 sm:gap-2 font-semibold shadow-md text-sm"
+                className="bg-violet-700 hover:bg-violet-800 text-white px-4 sm:px-5 py-2 rounded-sm transition duration-200 flex items-center gap-1.5 sm:gap-2 font-semibold shadow-md text-sm"
                 onClick={() => setIsEditing(true)}
                 >
                 <FiEdit3 className="w-4 h-4 sm:w-5 sm:h-5" />

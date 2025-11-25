@@ -346,13 +346,13 @@ export default function Header() {
           onClick={() => setOpen(!open)}
           className="p-2 rounded-full hover:bg-gray-100 transition"
         >
-          <Globe className="w-5 h-5 text-gray-700" />
+          <Globe className="w-4 h-4 text-gray-700" />
         </button>
 
         {/* Dropdown */}
         {open && (
           <div className="absolute right-0 mt-2 w-32 bg-white border border-gray-200 shadow-lg rounded-md py-1 z-50">
-            {/* <p className='w-full text-left px-4 py-2 text-sm flex items-center gap-2'>Language</p> */}
+            <p className='w-full text-left px-4 py-2 text-sm flex items-center gap-2'>Language</p>
             <button
               onClick={() => changeLang("en")}
               className={`w-full text-left px-4 py-2 text-sm flex items-center gap-2 hover:bg-gray-100 ${

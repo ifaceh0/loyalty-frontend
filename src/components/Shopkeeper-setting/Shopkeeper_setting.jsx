@@ -560,8 +560,8 @@
 
 //translated version
 import React, { useState, useEffect } from "react";
-import { FiTrash2, FiX, FiEdit3, FiSave, FiPlus, FiLoader } from "react-icons/fi";
-import { useTranslation } from "react-i18next"; // ← AÑADIDO
+import { FiTrash2, FiX, FiEdit3, FiSave, FiPlus, FiLoader, FiSettings } from "react-icons/fi";
+import { useTranslation } from "react-i18next"; 
 
 const inputStyle =
   "w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-sm focus:ring-blue-500 focus:border-blue-500 transition duration-200 shadow-sm text-sm sm:text-base";
@@ -792,11 +792,11 @@ const ShopkeeperSetting = () => {
   }
 
   return (
-    <div className="max-w-full mx-auto bg-white rounded-md shadow-2xl overflow-hidden my-2 p-3 sm:p-0">
+    <div className="max-w-6xl mx-auto bg-white rounded-md shadow-2xl overflow-hidden my-2 p-3 sm:p-0">
       {/* Header */}
-      <nav className="bg-blue-600 text-white px-4 sm:px-6 py-3 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
-        <h2 className="text-xl sm:text-2xl font-extrabold tracking-tight">
-          {t("shopSettings.header.title")}
+      <nav className="bg-white text-violet-700 border-b border-gray-300 px-4 sm:px-6 py-3 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+        <h2 className="text-xl sm:text-2xl font-extrabold flex items-center gap-2">
+          <FiSettings className="w-5 h-5 sm:w-6 sm:h-6"/>{t("shopSettings.header.title")}
         </h2>
         
         <div className="flex flex-wrap items-center gap-2">
@@ -817,7 +817,7 @@ const ShopkeeperSetting = () => {
             className={`text-white px-4 sm:px-5 py-2 rounded-sm transition duration-200 flex items-center gap-1.5 sm:gap-2 font-medium sm:font-semibold shadow-md text-sm ${
               isEditMode
                 ? (isSaving ? 'bg-green-400 cursor-not-allowed' : 'bg-green-500 hover:bg-green-600')
-                : 'bg-blue-700 hover:bg-blue-800'
+                : 'bg-violet-700 hover:bg-violet-800'
             }`}
           >
             {isSaving ? (

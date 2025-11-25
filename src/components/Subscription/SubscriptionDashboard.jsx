@@ -183,9 +183,8 @@ const FeatureCard = ({ icon, title, description, gradient }) => (
 );
 
 const SubscriptionDashboard = () => {
-  const { t } = useTranslation(); // ← AÑADIDO
-
-  // Always get the latest email from localStorage
+  const { t } = useTranslation();
+  
   const companyEmail =
     typeof window !== "undefined" ? localStorage.getItem("companyEmail") || "" : "";
 
@@ -233,7 +232,7 @@ const SubscriptionDashboard = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+    <div className="min-h-screen max-w-6xl mx-auto bg-gradient-to-b from-gray-50 to-white">
       {/* ==================== HERO SECTION ==================== */}
       <header className="bg-gradient-to-r from-teal-600 to-indigo-600 py-16 rounded-t-md text-center text-white">
         <div className="mx-auto max-w-5xl px-4">

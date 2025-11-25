@@ -685,23 +685,23 @@ const Shopdashboard = () => {
                   <span className="text-xs sm:text-sm text-gray-500">{t("shopdashboard.monthlySales.subtitle")}</span>
                 </div>
 
-                <div className="h-[220px] sm:h-[280px]">
+                <div className="h-[260px] sm:h-[320px]">
                   <ResponsiveContainer width="100%" height="100%">
                     <LineChart
                       data={monthlySalesData}
                       margin={{ top: 30, right: 20, left: 0, bottom: 0 }}
                     >
                       <XAxis dataKey="month" tick={{ fill: "#6b7280", fontSize: 11 }} />
-                      <YAxis tickFormatter={(val) => `₹${val}`} tick={{ fill: "#6b7280", fontSize: 11 }} />
-                      <Tooltip formatter={(value) => [`₹${value}`, t("shopdashboard.monthlySales.sales")]} contentStyle={{ backgroundColor: "white", borderRadius: "10px", border: "1px solid #e5e7eb" }} />
+                      <YAxis tickFormatter={(val) => `$${val}`} tick={{ fill: "#6b7280", fontSize: 11 }} />
+                      <Tooltip formatter={(value) => [`$${value}`, t("shopdashboard.monthlySales.sales")]} contentStyle={{ backgroundColor: "white", borderRadius: "10px", border: "1px solid #e5e7eb" }} />
                       <Legend />
                       <Line
                         type="monotone"
                         dataKey="sales"
-                        stroke="#EC4899"
+                        stroke="#F97316"
                         strokeWidth={2}
-                        dot={{ r: 4, fill: "#881337" }}
-                        activeDot={{ r: 6, fill: "#EC4899" }}
+                        // dot={{ r: 4, fill: "#ffffffff" }}
+                        activeDot={{ r: 6, fill: "#F97316" }}
                         name={t("shopdashboard.monthlySales.sales")}
                       />
                     </LineChart>
@@ -719,7 +719,7 @@ const Shopdashboard = () => {
                   <span className="text-xs sm:text-sm text-gray-500">{t("shopdashboard.customerComparison.subtitle")}</span>
                 </div>
 
-                <div className="h-[220px] sm:h-[280px]">
+                <div className="h-[260px] sm:h-[320px]">
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={customerComparisonData} margin={{ top: 30, right: 15, left: 0, bottom: 10 }}>
                       <XAxis dataKey="name" tick={{ fill: "#6b7280", fontSize: 11 }} angle={-45} textAnchor="end" height={60} />
@@ -743,14 +743,24 @@ const Shopdashboard = () => {
 
             <Row gutter={[12, 12]}>
               <Col xs={24}>
-                <Card title={t("shopdashboard.cards.mostVisitors")} bordered={false} headStyle={{ background: "linear-gradient(to bottom right, #1e40af, #7c3aed)", color: "#FFFFFF" }}>
+                <Card title={t("shopdashboard.cards.mostVisitors")} bordered={false}
+                  headStyle={{
+                    background: "linear-gradient(to bottom right, #7C3AED, #6D28D9)",
+                    color: "#FFFFFF"
+                  }}
+                >
                   <div className="overflow-x-auto">
                     <Table columns={mostVisitorsColumns} dataSource={topVisitedUsers} pagination={{ pageSize: 5 }} rowKey="userId" size="small" scroll={{ x: 600 }} />
                   </div>
                 </Card>
               </Col>
               <Col xs={24}>
-                <Card title={t("shopdashboard.cards.topRevenue")} bordered={false} headStyle={{ background: "linear-gradient(to bottom right, #7c3aed, #1e40af)", color: "#FFFFFF" }}>
+                <Card title={t("shopdashboard.cards.topRevenue")} bordered={false} 
+                  headStyle={{
+                    background: "linear-gradient(to bottom right, #1e3a8a, #3b82f6)",
+                    color: "#FFFFFF"
+                  }}
+                >
                   <div className="overflow-x-auto">
                     <Table columns={topRevenueColumns} dataSource={topSpendingUsers} pagination={false} rowKey="userId" size="small" scroll={{ x: 600, y: 200 }} />
                   </div>

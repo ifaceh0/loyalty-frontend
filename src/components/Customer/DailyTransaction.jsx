@@ -913,7 +913,7 @@ const DailyTransaction = () => {
                 className={`w-full max-w-xs px-12 py-2 rounded-sm font-bold text-lg text-white shadow-lg transform hover:scale-105 transition-all flex items-center justify-center
                   ${isLoadingDaily 
                     ? 'bg-slate-400 cursor-wait' 
-                    : 'bg-gradient-to-r from-blue-600 to-orange-600 hover:shadow-orange-500/50'
+                    : 'bg-gradient-to-r from-blue-500 to-blue-600 hover:shadow-orange-500/50'
                   }`}
               >
                 {isLoadingDaily ? (
@@ -935,7 +935,7 @@ const DailyTransaction = () => {
         {/* DAILY POPUP */}
         {showDailyPopup && (
           <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 md:p-8 print:hidden">
-            <div className="bg-white rounded-md shadow-2xl w-full max-w-7xl h-[92vh] flex flex-col overflow-hidden border border-blue-200">
+            <div className="bg-white rounded-md shadow-2xl w-full max-w-6xl h-[92vh] flex flex-col overflow-hidden border border-blue-200">
               {/* HEADER */}
               <div className="bg-gradient-to-r from-blue-600 to-orange-600 p-6 md:p-2 rounded-t-md flex justify-between items-center shrink-0">
                 <div>
@@ -1206,7 +1206,7 @@ const DailyTransaction = () => {
         {/* USER POPUP */}
         {showUserPopup && (
           <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 md:p-8 print:hidden">
-            <div className="bg-white rounded-md shadow-2xl w-full max-w-7xl h-[92vh] flex flex-col overflow-hidden border-2 border-orange-200">
+            <div className="bg-white rounded-md shadow-2xl w-full max-w-6xl h-[92vh] flex flex-col overflow-hidden border-2 border-orange-200">
               <div className="bg-gradient-to-r from-blue-600 to-orange-600 p-6 md:p-2 rounded-t-md flex justify-between items-center">
                 <div>
                   <h2 className="text-2xl md:text-3xl font-black text-white">

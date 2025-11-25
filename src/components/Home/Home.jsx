@@ -872,13 +872,13 @@ export default function Home() {
               <p className="text-lg md:text-xl text-white/90 mb-8 drop-shadow-md max-w-2xl mx-auto">
                 {t('home.hero.subtitle')}
               </p>
-              <button
+              {/* <button
                 onClick={() => navigate('/signup-user')}
-                className="inline-flex items-center gap-2 px-8 py-4 bg-emerald-600 text-white font-bold rounded-xl shadow-lg hover:bg-emerald-700 hover:scale-105 transition-all duration-300"
+                className="inline-flex items-center gap-2 px-8 py-4 bg-emerald-600 text-white font-bold rounded-md shadow-lg hover:bg-emerald-700 hover:scale-105 transition-all duration-300"
               >
                 {t('home.hero.cta')}
                 <ArrowRight className="w-5 h-5" />
-              </button>
+              </button> */}
             </div>
           </div>
 
@@ -978,7 +978,7 @@ export default function Home() {
               <div key={i} className="bg-white rounded-md p-8 shadow-xl border border-emerald-100">
                 <stat.Icon className="w-12 h-12 text-emerald-600 mx-auto mb-4" />
                 <div className="text-3xl font-extrabold text-emerald-700">
-                  {loading ? 'Loading...' : <CountUp end={stat.value} duration={2.5} separator="," prefix={stat.prefix || ''} />}
+                  {loading ? '.....' : <CountUp end={stat.value} duration={2.5} separator="," prefix={stat.prefix || ''} />}
                 </div>
                 <p className="text-gray-600 mt-2">{stat.label}</p>
               </div>

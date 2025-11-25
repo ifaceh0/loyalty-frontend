@@ -516,7 +516,7 @@
     "monthlySales": {
       "title": "Monthly Sales (Last 12 Months)",
       "subtitle": "Sales Overview",
-      "sales": "Sales ₹"
+      "sales": "Sales $"
     },
     "customerComparison": {
       "title": "Customer Count Comparison",
