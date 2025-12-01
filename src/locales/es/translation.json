@@ -542,6 +542,58 @@
     }
   },
 
+  "forgotPassword": {
+    "title": "¿Problemas para iniciar sesión?",
+    "subtitle": "Ingresa tu correo y te enviaremos un enlace de recuperación.",
+    "placeholder": {
+      "email": "Ingresa tu dirección de correo"
+    },
+    "button": {
+      "sendLink": "Enviar enlace de recuperación",
+      "sending": "Enviando solicitud..."
+    },
+    "footer": {
+      "returnToSignIn": "Volver al inicio de sesión"
+    },
+    "success": {
+      "checkInbox": "¡Éxito! Revisa tu bandeja de entrada para el enlace de recuperación."
+    },
+    "error": {
+      "somethingWentWrong": "Algo salió mal."
+    }
+  },
+
+  "resetPassword": {
+    "title": "Restablecer tu contraseña",
+    "subtitle": "Crea una nueva contraseña segura para tu cuenta.",
+    "account": "Cuenta",
+    "placeholder": {
+      "newPassword": "Nueva contraseña (mín. 8 caracteres)",
+      "confirmPassword": "Confirmar nueva contraseña",
+      "captcha": "Ingresa el código captcha"
+    },
+    "captcha": {
+      "label": "Verificación de seguridad",
+      "refresh": "Actualizar código"
+    },
+    "button": {
+      "reset": "Restablecer contraseña",
+      "updating": "Actualizando contraseña..."
+    },
+    "footer": {
+      "returnToSignIn": "Volver al inicio de sesión"
+    },
+    "success": {
+      "message": "¡Contraseña restablecida con éxito! Redirigiendo al inicio de sesión..."
+    },
+    "error": {
+      "invalidLink": "Enlace de restablecimiento inválido o faltante.",
+      "passwordTooShort": "La contraseña debe tener al menos 8 caracteres.",
+      "passwordsDontMatch": "Las contraseñas no coinciden.",
+      "invalidCaptcha": "CAPTCHA inválido. Intenta de nuevo.",
+      "resetFailed": "Falló el restablecimiento de contraseña."
+    }
+  },
 
 
 

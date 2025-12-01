@@ -806,7 +806,8 @@ const ShopkeeperProfile = () => {
       {/* Header/Navigation */}
       <nav className="bg-white border-b border-gray-300 text-violet-700 px-4 sm:px-8 py-3 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
         <h2 className="text-xl sm:text-2xl font-extrabold flex items-center gap-2">
-          <FiUser className="w-5 h-5 sm:w-6 sm:h-6"/> {t("shopProfile.header.title")}
+          {/* <FiUser className="w-5 h-5 sm:w-6 sm:h-6"/> */}
+           {t("shopProfile.header.title")}
         </h2>
         <div className="flex flex-wrap items-center gap-2">
             {isEditing && (
@@ -816,7 +817,7 @@ const ShopkeeperProfile = () => {
                 onClick={handleCancel}
                 disabled={isSubmitting}
                 >
-                <FiX className="w-4 h-4 sm:w-5 sm:h-5" />
+                {/* <FiX className="w-4 h-4 sm:w-5 sm:h-5" /> */}
                 <span>{t("shopProfile.buttons.cancel")}</span>
                 </button>
             )}
@@ -837,7 +838,7 @@ const ShopkeeperProfile = () => {
                     </>
                 ) : (
                     <>
-                    <FiSave className="w-4 h-4 sm:w-5 sm:h-5" />
+                    {/* <FiSave className="w-4 h-4 sm:w-5 sm:h-5" /> */}
                     <span>{t("shopProfile.buttons.save")}</span>
                     </>
                 )}
@@ -850,7 +851,7 @@ const ShopkeeperProfile = () => {
                 className="bg-violet-700 hover:bg-violet-800 text-white px-4 sm:px-5 py-2 rounded-sm transition duration-200 flex items-center gap-1.5 sm:gap-2 font-semibold shadow-md text-sm"
                 onClick={() => setIsEditing(true)}
                 >
-                <FiEdit3 className="w-4 h-4 sm:w-5 sm:h-5" />
+                {/* <FiEdit3 className="w-4 h-4 sm:w-5 sm:h-5" /> */}
                 <span>{t("shopProfile.buttons.edit")}</span>
                 </button>
             )}
@@ -858,7 +859,7 @@ const ShopkeeperProfile = () => {
       </nav>
 
       {/* Main Content Area */}
-      <div className="p-4 sm:p-8 space-y-6 sm:space-y-8">
+      <div className="p-2 sm:p-4 space-y-6 sm:space-y-8">
         <form onSubmit={handleSubmit} id="profile-form" className="space-y-6 sm:space-y-8">
           
           {/* Section 1: Logo and Shop Name */}

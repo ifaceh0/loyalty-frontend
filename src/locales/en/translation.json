@@ -486,6 +486,58 @@
     }
   },
 
+  "forgotPassword": {
+    "title": "Trouble Logging In?",
+    "subtitle": "Enter your email and we'll send you a recovery link.",
+    "placeholder": {
+      "email": "Enter Email Address"
+    },
+    "button": {
+      "sendLink": "Send Reset Link",
+      "sending": "Sending Request..."
+    },
+    "footer": {
+      "returnToSignIn": "Return to Sign In"
+    },
+    "success": {
+      "checkInbox": "Success! Check your inbox for the reset link."
+    },
+    "error": {
+      "somethingWentWrong": "Something went wrong."
+    }
+  },
+
+  "resetPassword": {
+    "title": "Reset Your Password",
+    "subtitle": "Create a new, strong password for your account.",
+    "account": "Account",
+    "placeholder": {
+      "newPassword": "New Password (min 8 characters)",
+      "confirmPassword": "Confirm New Password",
+      "captcha": "Enter captcha code"
+    },
+    "captcha": {
+      "label": "Security Check",
+      "refresh": "Refresh Code"
+    },
+    "button": {
+      "reset": "Reset Password",
+      "updating": "Updating Password..."
+    },
+    "footer": {
+      "returnToSignIn": "Return to Sign In"
+    },
+    "success": {
+      "message": "Password reset successful! Redirecting to sign in..."
+    },
+    "error": {
+      "invalidLink": "Invalid or missing reset link parameters.",
+      "passwordTooShort": "Password must be at least 8 characters long.",
+      "passwordsDontMatch": "Passwords do not match.",
+      "invalidCaptcha": "Invalid CAPTCHA. Please try again.",
+      "resetFailed": "Password reset failed."
+    }
+  },
 
 
 

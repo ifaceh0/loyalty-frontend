@@ -391,7 +391,7 @@ const UserTransactions = () => {
 
   return (
     <div className="min-h-screen bg-gray-50/50">
-      <div className="p-3 sm:p-4 md:p-6 max-w-8xl mx-auto">
+      <div className="p-3 sm:p-4 md:p-2 max-w-8xl mx-auto">
         <AnimatePresence mode="wait">
           {loading ? (
             <motion.div

@@ -937,7 +937,7 @@ const DailyTransaction = () => {
           <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 md:p-8 print:hidden">
             <div className="bg-white rounded-md shadow-2xl w-full max-w-6xl h-[92vh] flex flex-col overflow-hidden border border-blue-200">
               {/* HEADER */}
-              <div className="bg-gradient-to-r from-blue-600 to-orange-600 p-6 md:p-2 rounded-t-md flex justify-between items-center shrink-0">
+              <div className="bg-gradient-to-r from-blue-600 to-violet-600 p-6 md:p-2 rounded-t-md flex justify-between items-center shrink-0">
                 <div>
                   <h2 className="text-2xl md:text-3xl font-black text-white">
                     {t('daily.popup.dailyTitle', { date: format(new Date(selectedDate), 'MMMM d, yyyy') })}
@@ -968,7 +968,7 @@ const DailyTransaction = () => {
                       placeholder={t('daily.search.placeholder')}
                       value={userId}
                       onChange={(e) => setUserId(e.target.value)}
-                      className="w-full pl-12 pr-4 py-2 bg-white border-2 border-blue-300 rounded-sm text-slate-800 focus:border-orange-500 focus:ring-4 focus:ring-orange-100 focus:outline-none transition-all font-medium"
+                      className="w-full pl-12 pr-4 py-2 bg-white border-2 border-blue-300 rounded-sm text-slate-800 focus:border-violet-500 focus:ring-4 focus:ring-violet-100 focus:outline-none transition-all font-medium"
                     />
                   </div>
                   <button
@@ -977,7 +977,7 @@ const DailyTransaction = () => {
                     className={`px-4 py-2 rounded-sm font-bold text-white shadow-md transition-all flex items-center
                       ${isLoadingUser
                         ? 'bg-slate-400 cursor-wait'
-                        : 'bg-gradient-to-r from-blue-600 to-orange-600 hover:shadow-orange-500/50'
+                        : 'bg-gradient-to-r from-blue-600 to-violet-600 hover:shadow-violet-500/50'
                       }`}
                   >
                     {isLoadingUser ? (
@@ -1006,7 +1006,7 @@ const DailyTransaction = () => {
                 </button>
                 <button
                   onClick={handlePrint}
-                  className="flex items-center gap-2 px-5 py-2 bg-gradient-to-r from-orange-600 to-orange-700 text-white rounded-sm hover:from-orange-700 hover:to-orange-800 transition-all shadow-lg font-semibold"
+                  className="flex items-center gap-2 px-5 py-2 bg-gradient-to-r from-violet-600 to-violet-700 text-white rounded-sm hover:from-violet-700 hover:to-violet-800 transition-all shadow-lg font-semibold"
                 >
                   <Printer className="w-5 h-5" />
                   {t('daily.buttons.print')}
@@ -1035,10 +1035,10 @@ const DailyTransaction = () => {
                         <p className="text-sm font-bold text-blue-700 uppercase tracking-wider">{t('daily.summary.totalSales')}</p>
                         <p className="text-4xl font-black text-blue-800 mt-2">${dailyData.totalSales?.toFixed(2)}</p>
                       </div>
-                      <div className="bg-gradient-to-br from-orange-50 to-orange-100 rounded-md p-6 text-center border-2 border-orange-200 shadow-md">
-                        <Gift className="w-12 h-12 text-orange-600 mx-auto mb-3" />
-                        <p className="text-sm font-bold text-orange-700 uppercase tracking-wider">{t('daily.summary.totalRedeemed')}</p>
-                        <p className="text-4xl font-black text-orange-800 mt-2">${dailyData.totalRedeemed?.toFixed(2)}</p>
+                      <div className="bg-gradient-to-br from-violet-50 to-violet-100 rounded-md p-6 text-center border-2 border-violet-200 shadow-md">
+                        <Gift className="w-12 h-12 text-violet-600 mx-auto mb-3" />
+                        <p className="text-sm font-bold text-violet-700 uppercase tracking-wider">{t('daily.summary.totalRedeemed')}</p>
+                        <p className="text-4xl font-black text-violet-800 mt-2">${dailyData.totalRedeemed?.toFixed(2)}</p>
                       </div>
                       <div className="bg-gradient-to-br from-indigo-50 to-indigo-100 rounded-md p-6 text-center border-2 border-indigo-200 shadow-md">
                         <ShoppingBag className="w-12 h-12 text-indigo-600 mx-auto mb-3" />
@@ -1056,7 +1056,7 @@ const DailyTransaction = () => {
                       {/* ---------- Desktop / Laptop View ---------- */}
                       <div className="hidden md:block bg-white rounded-md shadow-xl border border-blue-200 overflow-hidden">
                         {/* Table Header */}
-                        <div className="bg-gradient-to-r from-blue-600 to-orange-600 p-4">
+                        <div className="bg-gradient-to-r from-blue-600 to-violet-600 p-4">
                           <div className="grid grid-cols-[60px_1fr_1fr_1fr_1.5fr_1fr_1fr] gap-4 text-white font-semibold text-sm uppercase tracking-wide">
                             <span>{t('daily.table.sno')}</span>
                             <span>{t('daily.table.userId')}</span>
@@ -1073,12 +1073,12 @@ const DailyTransaction = () => {
                           {dailyData.transactions.map((tx, idx) => (
                             <div
                               key={idx}
-                              className="grid grid-cols-[60px_1fr_1fr_1fr_1.5fr_1fr_1fr] gap-4 p-4 border-b border-blue-100 hover:bg-orange-50 transition-colors text-sm items-center"
+                              className="grid grid-cols-[60px_1fr_1fr_1fr_1.5fr_1fr_1fr] gap-4 p-4 border-b border-blue-100 hover:bg-blue-50 transition-colors text-sm items-center"
                             >
                               <span className="font-mono text-slate-600">{idx + 1}</span>
                               <span className="font-mono text-blue-700">{tx.userId}</span>
                               <span className="font-semibold text-slate-800 truncate">{tx.name}</span>
-                              <span className="font-bold text-orange-700">${tx.transactionAmount.toFixed(2)}</span>
+                              <span className="font-bold text-violet-700">${tx.transactionAmount.toFixed(2)}</span>
 
                               {/* Points Column */}
                               <span className="flex items-center gap-2 font-semibold">
@@ -1097,7 +1097,7 @@ const DailyTransaction = () => {
                                 className={`font-semibold px-3 py-1 rounded-full text-xs text-center ${
                                   (tx.redeemAmount ?? 0) === 0
                                     ? "bg-blue-100 text-blue-700"
-                                    : "bg-orange-100 text-orange-700"
+                                    : "bg-teal-100 text-teal-700"
                                 }`}
                               >
                                 ${(tx.redeemAmount ?? 0).toFixed(2)}
@@ -1118,7 +1118,7 @@ const DailyTransaction = () => {
                         {dailyData.transactions.map((tx, idx) => (
                           <div
                             key={idx}
-                            className="p-4 bg-white rounded-md shadow-md border border-blue-100 hover:bg-orange-50 transition-all"
+                            className="p-4 bg-white rounded-md shadow-md border border-blue-100 hover:bg-blue-50 transition-all"
                           >
                             {/* Top Row */}
                             <div className="flex justify-between items-center mb-2">
@@ -1134,7 +1134,7 @@ const DailyTransaction = () => {
                             {/* Amount */}
                             <div className="flex justify-between items-center mb-2">
                               <span className="text-slate-600 font-semibold">{t('daily.table.amount')}:</span>
-                              <span className="font-bold text-orange-700">
+                              <span className="font-bold text-violet-700">
                                 ${tx.transactionAmount.toFixed(2)}
                               </span>
                             </div>
@@ -1161,7 +1161,7 @@ const DailyTransaction = () => {
                                 className={`px-3 py-1 rounded-full text-xs font-bold ${
                                   (tx.redeemAmount ?? 0) === 0
                                     ? "bg-blue-100 text-blue-700"
-                                    : "bg-orange-100 text-orange-700"
+                                    : "bg-teal-100 text-teal-700"
                                 }`}
                               >
                                 ${(tx.redeemAmount ?? 0).toFixed(2)}
@@ -1181,7 +1181,7 @@ const DailyTransaction = () => {
                       </div>
 
                       {/* ---------- Footer ---------- */}
-                      <div className="mt-10 bg-gradient-to-r from-blue-500 to-blue-700 rounded-md p-4 text-center shadow-xl">
+                      <div className="mt-10 bg-gradient-to-r from-blue-700 to-violet-700 rounded-md p-4 text-center shadow-xl">
                         <h3 className="text-2xl md:text-3xl font-black text-white">
                           {t('daily.summary.totalSalesToday')}:
                           <span className="ml-3 font-extrabold">

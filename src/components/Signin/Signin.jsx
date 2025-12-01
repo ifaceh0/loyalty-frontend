@@ -602,7 +602,7 @@ function FloatingInput({
 }
 
 const DemoFeature = ({ icon: Icon, title, description }) => (
-  <div className="flex items-start space-x-4 p-4 rounded-md bg-white/10 backdrop-blur-sm border border-white/20">
+  <div className="flex items-start space-x-4 p-4 rounded-sm bg-white/10 backdrop-blur-sm border border-white/20">
     <div className="flex-shrink-0 p-3 bg-emerald-400 rounded-full text-white shadow-lg">
       <Icon className="w-6 h-6" />
     </div>
@@ -626,7 +626,7 @@ const RoleCard = ({ role, displayName, onClick, disabled }) => {
     <button
       onClick={onClick}
       disabled={disabled}
-      className={`w-full p-5 rounded-md border-2 transition-all duration-200 text-left
+      className={`w-full p-5 rounded border-2 transition-all duration-200 text-left
         ${disabled
           ? "bg-gray-100 border-gray-300 cursor-not-allowed opacity-60"
           : "bg-emerald-50 border-emerald-300 hover:bg-emerald-100 hover:border-emerald-500 hover:shadow-lg"
@@ -856,7 +856,7 @@ const Signin = () => {
     //   }}
     // >
     <div className="min-h-screen bg-gray-200 flex items-center justify-center p-4">
-      <div className="w-full max-w-5xl flex bg-white shadow-xl border border-gray-200 rounded-md overflow-hidden animate-fade-in-up">
+      <div className="w-full max-w-5xl flex bg-white shadow-xl border border-gray-200 rounded overflow-hidden animate-fade-in-up">
         {/* left side */}
         <div className="hidden lg:flex w-6/12 bg-gradient-to-br from-emerald-500 to-sky-600 p-8 flex-col justify-center relative space-y-6">
           <div className="absolute inset-0 opacity-10 bg-[linear-gradient(to_right,#fff3_1px,transparent_1px),linear-gradient(to_bottom,#fff3_1px,transparent_1px)] bg-[size:30px_30px]"></div>
@@ -946,12 +946,12 @@ const Signin = () => {
               />
 
               <div className="space-y-4 pt-3">
-                <div className="flex items-center justify-between p-1 bg-gray-200 rounded-md">
+                <div className="flex items-center justify-between p-1 bg-gray-200 rounded-sm">
                   <canvas
                     ref={canvasRef}
                     width={120}
                     height={40}
-                    className="border border-emerald-300 rounded-md bg-white"
+                    className="border border-emerald-300 rounded-sm bg-white"
                   />
                   <button
                     type="button"
@@ -984,7 +984,7 @@ const Signin = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className={`w-full bg-gradient-to-r from-emerald-500 to-sky-600 text-white py-2 text-lg font-semibold rounded-md shadow-lg transition ${
+                className={`w-full bg-gradient-to-r from-emerald-500 to-sky-600 text-white py-2 text-lg font-semibold rounded-sm shadow-lg transition ${
                   loading ? "opacity-70" : "hover:from-emerald-600 hover:to-sky-700"
                 }`}
               >

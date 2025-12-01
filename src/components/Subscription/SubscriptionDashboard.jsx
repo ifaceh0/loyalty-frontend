@@ -174,7 +174,7 @@ const FeatureCard = ({ icon, title, description, gradient }) => (
       >
         {React.cloneElement(icon, { className: "h-6 w-6" })}
       </div>
-      <h3 className="mb-2 text-lg font-bold text-gray-800 group-hover:text-teal-600 transition-colors">
+      <h3 className="mb-2 text-lg font-bold text-gray-800 group-hover:text-violet-600 transition-colors">
         {title}
       </h3>
       <p className="text-sm text-gray-600 leading-relaxed">{description}</p>
@@ -234,12 +234,12 @@ const SubscriptionDashboard = () => {
   return (
     <div className="min-h-screen max-w-6xl mx-auto bg-gradient-to-b from-gray-50 to-white">
       {/* ==================== HERO SECTION ==================== */}
-      <header className="bg-gradient-to-r from-teal-600 to-indigo-600 py-16 rounded-t-md text-center text-white">
+      <header className="bg-gradient-to-r from-blue-600 to-violet-600 py-16 rounded-t text-center text-white">
         <div className="mx-auto max-w-5xl px-4">
           <h1 className="mb-3 text-3xl md:text-4xl font-bold">
             {t("subscriptionDashboard.hero.title")}
           </h1>
-          <p className="mb-6 text-lg md:text-xl text-teal-100">
+          <p className="mb-6 text-lg md:text-xl">
             {t("subscriptionDashboard.hero.subtitle")}
           </p>
 
@@ -248,7 +248,7 @@ const SubscriptionDashboard = () => {
             href={subscriptionUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-full bg-white px-7 py-3 font-bold text-teal-700 shadow-lg transition-all hover:scale-105 hover:bg-teal-50"
+            className="inline-flex items-center gap-2 rounded-full bg-white px-7 py-3 font-bold text-violet-700 shadow-lg transition-all hover:scale-105 hover:bg-violet-50"
           >
             {t("subscriptionDashboard.hero.ctaMain")}
             <ArrowRight className="h-5 w-5" />
@@ -276,7 +276,7 @@ const SubscriptionDashboard = () => {
       </section>
       
       <section className="mx-auto max-w-5xl px-4 pb-16">
-        <div className="rounded-md bg-gradient-to-r from-teal-50 to-indigo-50 p-8 shadow-lg border border-teal-100 text-center">
+        <div className="rounded-md bg-gradient-to-r from-blue-50 to-violet-50 p-8 shadow-lg border border-blue-100 text-center">
           <h2 className="mb-3 text-2xl font-bold text-gray-800">
             {t("subscriptionDashboard.bottom.title")}
           </h2>
@@ -290,7 +290,7 @@ const SubscriptionDashboard = () => {
               href={subscriptionUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full bg-teal-600 px-10 py-3.5 font-bold text-white shadow-md transition-all hover:bg-teal-700 hover:shadow-lg"
+              className="inline-flex items-center gap-2 rounded-full bg-violet-600 px-10 py-3.5 font-bold text-white shadow-md transition-all hover:bg-violet-700 hover:shadow-lg"
             >
               <RefreshCw className="h-5 w-5" />
               {t("subscriptionDashboard.bottom.ctaSecondary")}
@@ -299,7 +299,7 @@ const SubscriptionDashboard = () => {
             {/* Email Display – Always Visible */}
             <p className="text-sm text-gray-600">
               {t("subscriptionDashboard.bottom.emailLabel")}{" "}
-              <span className="font-semibold text-teal-700">
+              <span className="font-semibold text-violet-700">
                 {localStorage.getItem("companyEmail") || t("subscriptionDashboard.bottom.notLoggedIn")}
               </span>
             </p>

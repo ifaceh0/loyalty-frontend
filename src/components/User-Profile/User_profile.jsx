@@ -647,14 +647,14 @@ const UserProfile = () => {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, type: "spring", stiffness: 100 }}
-        className="w-full max-w-xl bg-white rounded-md shadow-xl border border-gray-100"
+        className="w-full max-w-xl bg-white rounded-md shadow-xl border border-gray-200"
       >
         {/* Header */}
-        <header className="bg-gradient-to-br from-blue-600 to-blue-700 text-white rounded-t-md px-6 py-5 sm:px-8 sm:py-6">
+        <header className="bg-white border-b border-gray-300 text-blue-700 rounded-t px-6 py-4 sm:px-8 sm:py-4">
           <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
            {t('profile.header.welcome', )} {userData.firstName || t('profile.header.user')}!
           </h2>
-          <p className="text-sm sm:text-base text-blue-100 mt-1">
+          <p className="text-sm sm:text-base text-gray-500 mt-1">
             {t('profile.header.subtitle')}
           </p>
         </header>
@@ -674,7 +674,7 @@ const UserProfile = () => {
                 }
               `}
             >
-              {isEditing ? <FiX size={18} /> : <FiEdit3 size={16} />}
+              {/* {isEditing ? <FiX size={18} /> : <FiEdit3 size={16} />} */}
               <span>{isEditing ? t('profile.buttons.cancel') : t('profile.buttons.edit')}</span>
             </button>
           </div>
@@ -766,7 +766,7 @@ const UserProfile = () => {
                     </>
                   ) : (
                     <>
-                      <FiSave size={20} />
+                      {/* <FiSave size={20} /> */}
                       <span>{t('profile.buttons.save')}</span>
                     </>
                   )}

@@ -796,7 +796,8 @@ const ShopkeeperSetting = () => {
       {/* Header */}
       <nav className="bg-white text-violet-700 border-b border-gray-300 px-4 sm:px-6 py-3 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
         <h2 className="text-xl sm:text-2xl font-extrabold flex items-center gap-2">
-          <FiSettings className="w-5 h-5 sm:w-6 sm:h-6"/>{t("shopSettings.header.title")}
+          {/* <FiSettings className="w-5 h-5 sm:w-6 sm:h-6"/> */}
+          {t("shopSettings.header.title")}
         </h2>
         
         <div className="flex flex-wrap items-center gap-2">
@@ -806,7 +807,7 @@ const ShopkeeperSetting = () => {
                 className="bg-red-500 hover:bg-red-600 text-white px-3 sm:px-4 py-2 rounded-sm transition duration-200 flex items-center gap-1 font-medium sm:font-semibold shadow-md text-sm"
                 disabled={isSaving}
             >
-                <FiX className="w-4 h-4 sm:w-5 sm:h-5" />
+                {/* <FiX className="w-4 h-4 sm:w-5 sm:h-5" /> */}
                 <span>{t("shopSettings.buttons.cancel")}</span>
             </button>
           )}
@@ -827,12 +828,12 @@ const ShopkeeperSetting = () => {
               </>
             ) : isEditMode ? (
               <>
-                <FiSave className="w-4 h-4 sm:w-5 sm:h-5" />
+                {/* <FiSave className="w-4 h-4 sm:w-5 sm:h-5" /> */}
                 <span>{t("shopSettings.buttons.save")}</span>
               </>
             ) : (
               <>
-                <FiEdit3 className="w-4 h-4 sm:w-5 sm:h-5" />
+                {/* <FiEdit3 className="w-4 h-4 sm:w-5 sm:h-5" /> */}
                 <span>{t("shopSettings.buttons.edit")}</span>
               </>
             )}
@@ -841,7 +842,7 @@ const ShopkeeperSetting = () => {
       </nav>
 
       {/* Main Content */}
-      <div className="p-4 sm:p-8 space-y-6 sm:space-y-8">
+      <div className="p-2 sm:p-4 space-y-6 sm:space-y-8">
         <form onSubmit={handleSubmit} className="space-y-6 sm:space-y-8">
           {/* Section 1: Basic Point Mechanics */}
           <SectionWrapper title={t("shopSettings.sections.basic")} isEditMode={isEditMode}>
