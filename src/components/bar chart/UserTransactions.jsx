@@ -416,7 +416,7 @@ const UserTransactions = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.4 }}
-              className="bg-red-100 border border-red-400 text-red-700 p-4 sm:p-6 rounded-md text-center shadow-lg"
+              className="bg-red-100 border border-red-400 text-red-700 p-4 sm:p-6 rounded text-center shadow-lg"
             >
               <p className="font-semibold text-base sm:text-lg">{t('transactions.errors.title')}</p>
               <p className="mt-1 text-sm sm:text-base">{error}</p>
@@ -429,7 +429,7 @@ const UserTransactions = () => {
               transition={{ duration: 0.4 }}
             >
               {/* Header */}
-              <header className="bg-white rounded-md mb-6 shadow-lg border border-gray-100">
+              <header className="bg-white rounded mb-6 shadow-lg border border-gray-100">
                 <div className="px-4 sm:px-6 py-4 sm:py-5">
                   <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight flex items-center gap-2 sm:gap-3">
                     <Target className="w-6 h-6 sm:w-8 sm:h-8 text-indigo-600" />
@@ -442,7 +442,7 @@ const UserTransactions = () => {
               </header>
 
               {/* Controls and Stats Panel */}
-              <div className="bg-white rounded-md shadow-xl p-4 sm:p-6 mb-6 border border-gray-100">
+              <div className="bg-white rounded shadow-xl p-4 sm:p-6 mb-6 border border-gray-100">
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 sm:gap-6 items-start">
                   
                   {/* Shop Selection */}
@@ -455,7 +455,7 @@ const UserTransactions = () => {
                       <select
                         value={selectedShop}
                         onChange={handleShopChange}
-                        className="w-full pl-10 pr-8 py-2.5 bg-gray-50 border border-indigo-200 rounded-sm text-gray-800 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-200 appearance-none"
+                        className="w-full pl-10 pr-8 py-2.5 bg-gray-50 border border-indigo-200 rounded text-gray-800 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-200 appearance-none"
                       >
                         {shopNames.map((shop) => (
                           <option key={shop} value={shop}>
@@ -494,7 +494,7 @@ const UserTransactions = () => {
                     <button
                       onClick={downloadExcel}
                       disabled={!currentShopData.transactions?.length}
-                      className="flex items-center justify-center w-full sm:w-auto gap-2 px-4 sm:px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-sm font-medium sm:font-semibold text-sm shadow-md transition duration-300 transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="flex items-center justify-center w-full sm:w-auto gap-2 px-4 sm:px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded font-medium sm:font-semibold text-sm shadow-md transition duration-300 transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       <Download className="w-4 h-4 sm:w-5 sm:h-5" />
                       {t('transactions.exportButton')}
@@ -504,7 +504,7 @@ const UserTransactions = () => {
               </div>
 
               {/* Transactions Table */}
-              <div className="bg-white rounded-md shadow-2xl overflow-hidden border border-gray-100">
+              <div className="bg-white rounded shadow-2xl overflow-hidden border border-gray-100">
                 <div className="p-3 sm:p-4 bg-gray-50 border-b border-gray-100">
                   <h3 className="text-lg sm:text-xl font-semibold text-gray-700">
                     {t('transactions.table.title')} <span className="text-indigo-600">{selectedShop}</span>
@@ -590,7 +590,7 @@ const UserTransactions = () => {
 
 // Helper component for stat cards
 const StatCard = ({ title, value, icon, color }) => (
-  <div className={`bg-white rounded-md shadow-lg p-4 sm:p-5 flex items-center border-l-4 border-${color}-400 transition-all duration-300 hover:shadow-xl`}>
+  <div className={`bg-white rounded shadow-lg p-4 sm:p-5 flex items-center border-l-4 border-${color}-400 transition-all duration-300 hover:shadow-xl`}>
     <div className={`p-2.5 sm:p-3 rounded-full bg-${color}-100 mr-3 sm:mr-4`}>
       {icon}
     </div>

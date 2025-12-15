@@ -655,12 +655,12 @@ export default function ExploreShops() {
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     placeholder={t('explore.searchPlaceholder')}
-                    className="w-full md:w-1/2 px-5 py-2 rounded-sm border-2 border-gray-200 focus:outline-none focus:ring-4 focus:ring-offset-2 focus:ring-blue-400 shadow-md transition"
+                    className="w-full md:w-1/2 px-5 py-2 rounded border-2 border-gray-200 focus:outline-none focus:ring-4 focus:ring-offset-2 focus:ring-blue-400 shadow-md transition"
                 />
                 <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className="px-6 py-2 rounded-sm text-white font-semibold bg-blue-600 hover:bg-blue-700 transition flex items-center justify-center gap-2 shadow-lg"
+                    className="px-6 py-2 rounded text-white font-semibold bg-blue-600 hover:bg-blue-700 transition flex items-center justify-center gap-2 shadow-lg"
                     onClick={() => setIsFilterOpen(!isFilterOpen)}
                 >
                     <FontAwesomeIcon icon={faFilter} />
@@ -669,7 +669,7 @@ export default function ExploreShops() {
 
                 {isFilterOpen && (
                     <motion.div
-                        className="absolute top-full right-0 mt-3 bg-white p-6 rounded-md shadow-2xl w-full md:w-96 z-50 border-t-4 border-blue-600"
+                        className="absolute top-full right-0 mt-3 bg-white p-6 rounded shadow-2xl w-full md:w-96 z-50 border-t-4 border-blue-600"
                         initial={{ opacity: 0, y: -10, scale: 0.9 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         transition={{ duration: 0.3 }}
@@ -686,7 +686,7 @@ export default function ExploreShops() {
                                     setSelectedCountry(e.target.value);
                                     setSelectedCity('');
                                 }}
-                                className="w-full px-4 py-2 rounded-sm border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 appearance-none bg-white"
+                                className="w-full px-4 py-2 rounded border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 appearance-none bg-white"
                             >
                                 <option value="">{t('explore.filter.allCountries')}</option>
                                 {countries.map((country) => (
@@ -703,7 +703,7 @@ export default function ExploreShops() {
                                 value={selectedCity}
                                 onChange={(e) => setSelectedCity(e.target.value)}
                                 disabled={!selectedCountry}
-                                className={`w-full px-4 py-2 rounded-sm border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 appearance-none ${!selectedCountry ? 'bg-gray-100 text-gray-500' : 'bg-white'}`}
+                                className={`w-full px-4 py-2 rounded border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 appearance-none ${!selectedCountry ? 'bg-gray-100 text-gray-500' : 'bg-white'}`}
                             >
                                 <option value="">{t('explore.filter.allCities')}</option>
                                 {cities
@@ -718,13 +718,13 @@ export default function ExploreShops() {
                         </div>
                         <div className="flex justify-end space-x-3">
                             <button
-                                className="px-4 py-2 rounded-sm text-gray-700 font-medium bg-gray-200 hover:bg-gray-300 transition"
+                                className="px-4 py-2 rounded text-gray-700 font-medium bg-gray-200 hover:bg-gray-300 transition"
                                 onClick={handleFilterReset}
                             >
                                 {t('explore.filter.reset')}
                             </button>
                             <button
-                                className="px-4 py-2 rounded-sm text-white font-medium bg-blue-600 hover:bg-blue-700 transition"
+                                className="px-4 py-2 rounded text-white font-medium bg-blue-600 hover:bg-blue-700 transition"
                                 onClick={() => setIsFilterOpen(false)}
                             >
                                 {t('explore.filter.done')}
@@ -734,7 +734,7 @@ export default function ExploreShops() {
                 )}
             </div>
 
-            {error && <p className="text-red-500 text-center font-semibold bg-red-100 p-3 rounded-lg mx-auto max-w-lg mb-6">{error}</p>}
+            {error && <p className="text-red-500 text-center font-semibold bg-red-100 p-3 rounded mx-auto max-w-lg mb-6">{error}</p>}
 
             {currentShops.length === 0 ? (
                 <p className="text-center text-gray-500 font-medium mt-10 p-5">
@@ -746,7 +746,7 @@ export default function ExploreShops() {
                     {currentShops.map((shop) => (
                         <div
                             key={shop.shopId}
-                            className="bg-white rounded-md shadow-lg overflow-hidden hover:shadow-xl transition transform hover:-translate-y-1 border border-blue-100"
+                            className="bg-white rounded shadow-lg overflow-hidden hover:shadow-xl transition transform hover:-translate-y-1 border border-blue-100"
                         >
                             {/* Gradient Header */}
                             <div className="bg-blue-700 p-3 text-white flex items-center">
@@ -805,7 +805,7 @@ export default function ExploreShops() {
                                     whileTap={{ scale: 0.98 }}
                                     onClick={() => handleGenerateQR(shop)}
                                     disabled={loadingShopId === shop.shopId}
-                                    className={`w-full mt-3 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-sm text-sm font-medium transition flex items-center justify-center gap-2
+                                    className={`w-full mt-3 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded text-sm font-medium transition flex items-center justify-center gap-2
                                         ${loadingShopId === shop.shopId ? 'opacity-70 cursor-not-allowed' : ''}`}
                                 >
                                     {loadingShopId === shop.shopId ? (

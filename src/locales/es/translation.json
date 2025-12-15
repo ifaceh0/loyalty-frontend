@@ -384,7 +384,7 @@
     "subscribeButton": "Suscribirse",
     "subscribedText": "¡Enviado!",
     "subscribedSuccess": "¡Estás dentro! Revisa tu correo.",
-    "copyright": "© {year} LoyaltyHub. Todos los derechos reservados.",
+    "copyright": "© {{year}} LoyaltyHub. Todos los derechos reservados.",
     "privacy": "Política de Privacidad",
     "terms": "Términos de Servicio"
   },

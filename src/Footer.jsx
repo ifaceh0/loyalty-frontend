@@ -236,7 +236,7 @@ export default function Footer() {
                   key={social.label}
                   href="#"
                   aria-label={social.label}
-                  className="w-10 h-10 rounded-sm bg-white/10 backdrop-blur-sm flex items-center justify-center hover:bg-emerald-500/20 hover:scale-110 transition-all duration-300 group"
+                  className="w-10 h-10 rounded bg-white/10 backdrop-blur-sm flex items-center justify-center hover:bg-emerald-500/20 hover:scale-110 transition-all duration-300 group"
                 >
                   <social.Icon className="w-5 h-5 text-gray-300 group-hover:text-emerald-400 transition" />
                 </a>
@@ -263,12 +263,12 @@ export default function Footer() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder={t('footer.newsletterPlaceholder')}
-                className="flex-1 px-4 py-2.5 rounded-sm bg-white/10 backdrop-blur-sm border border-white/20 text-white placeholder:text-gray-500 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition"
+                className="flex-1 px-4 py-2.5 rounded bg-white/10 backdrop-blur-sm border border-white/20 text-white placeholder:text-gray-500 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition"
                 required
               />
               <button
                 type="submit"
-                className="px-5 py-2.5 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-sm font-medium text-white shadow-lg hover:shadow-emerald-500/50 hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2"
+                className="px-5 py-2.5 bg-gradient-to-r from-emerald-500 to-teal-600 rounded font-medium text-white shadow-lg hover:shadow-emerald-500/50 hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2"
               >
                 {subscribed ? (
                   <>

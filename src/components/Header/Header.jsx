@@ -324,7 +324,7 @@ export default function Header() {
   };
 
   const navLinkClasses = ({ isActive }) =>
-    `relative px-3 py-1.5 rounded-md transition-all duration-200
+    `relative px-3 py-1.5 rounded transition-all duration-200
      ${isActive
        ? 'text-white bg-emerald-500'
        : 'text-black hover:text-emerald-600'
@@ -351,7 +351,7 @@ export default function Header() {
 
         {/* Dropdown */}
         {open && (
-          <div className="absolute right-0 mt-2 w-32 bg-white border border-gray-200 shadow-lg rounded-md py-1 z-50">
+          <div className="absolute right-0 mt-2 w-32 bg-white border border-gray-200 shadow-lg rounded py-1 z-50">
             <p className='w-full text-left px-4 py-2 text-sm flex items-center gap-2'>Language</p>
             <button
               onClick={() => changeLang("en")}
@@ -399,14 +399,14 @@ export default function Header() {
         <div className="flex flex-col gap-1">
           <NavLink
             to="/signup-shopkeeper"
-            className="px-2 py-1 text-sm text-emerald-700 hover:bg-emerald-200 rounded-sm font-medium"
+            className="px-2 py-2 text-sm text-emerald-700 hover:bg-emerald-200 rounded font-medium"
             onClick={() => setMobileMenuOpen(false)}
           >
             {t('header.signUpShopkeeper')}
           </NavLink>
           <NavLink
             to="/signup-user"
-            className="px-2 py-1 text-sm text-emerald-700 hover:bg-emerald-200 rounded-sm font-medium"
+            className="px-2 py-2 text-sm text-emerald-700 hover:bg-emerald-200 rounded font-medium"
             onClick={() => setMobileMenuOpen(false)}
           >
             {t('header.signUpUser')}
@@ -416,7 +416,7 @@ export default function Header() {
 
       <NavLink
         to="/signin"
-        className="bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-sm text-sm px-5 py-2 transition shadow-md text-center"
+        className="bg-blue-500 hover:bg-blue-600 text-white font-medium rounded text-sm px-5 py-2 transition shadow-md text-center"
         onClick={() => setMobileMenuOpen(false)}
       >
         {t('header.signIn')}
@@ -439,14 +439,14 @@ export default function Header() {
           setSidebarOpen(true);
           setMobileMenuOpen(false);
         }}
-        className="text-left px-3 py-2 text-emerald-700 hover:bg-emerald-100 rounded-md font-medium"
+        className="text-left px-3 py-2 text-emerald-700 hover:bg-emerald-100 rounded font-medium"
       >
         {t('header.openDashboard')}
       </button>
 
       <button
         onClick={handleLogout}
-        className="flex items-center gap-2 px-3 py-2 text-red-600 hover:bg-red-50 rounded-md font-medium"
+        className="flex items-center gap-2 px-3 py-2 text-red-600 hover:bg-red-50 rounded font-medium"
       >
         <FaSignOutAlt className="w-4 h-4" />
         {t('header.logout')}
@@ -498,19 +498,19 @@ export default function Header() {
             {!isLoggedIn ? (
               <>
                 <div className="relative group">
-                  <div className="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-medium rounded-md text-sm px-3 py-2 cursor-pointer transition shadow-md">
+                  <div className="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-medium rounded text-sm px-3 py-2 cursor-pointer transition shadow-md">
                     {t('header.signUp')}
                   </div>
-                  <div className="absolute right-0 mt-2 bg-white rounded-md shadow-xl z-10 min-w-[160px] opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-200 border border-gray-200">
+                  <div className="absolute right-0 mt-2 bg-white rounded shadow-xl z-10 min-w-[160px] opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-200 border border-gray-200">
                     <NavLink
                       to="/signup-shopkeeper"
-                      className="block px-3 py-2 text-sm text-emerald-700 hover:bg-emerald-100 transition rounded-t-md"
+                      className="block px-3 py-2 text-sm text-emerald-700 hover:bg-emerald-100 transition rounded-t"
                     >
                       {t('header.signUpShopkeeper')}
                     </NavLink>
                     <NavLink
                       to="/signup-user"
-                      className="block px-3 py-2 text-sm text-emerald-700 hover:bg-emerald-100 transition rounded-b-md"
+                      className="block px-3 py-2 text-sm text-emerald-700 hover:bg-emerald-100 transition rounded-b"
                     >
                       {t('header.signUpUser')}
                     </NavLink>
@@ -519,7 +519,7 @@ export default function Header() {
 
                 <NavLink
                   to="/signin"
-                  className="bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-md text-sm px-3 py-2 transition shadow-md"
+                  className="bg-blue-500 hover:bg-blue-600 text-white font-medium rounded text-sm px-3 py-2 transition shadow-md"
                 >
                   {t('header.signIn')}
                 </NavLink>
@@ -530,10 +530,10 @@ export default function Header() {
                   <FaUser className="text-blue-600" />
                   <span className="text-blue-600 font-medium">{userName || 'User'}</span>
                 </button>
-                <div className="hidden group-hover:block absolute top-full right-0 w-40 bg-white shadow-lg border rounded-md p-2">
+                <div className="hidden group-hover:block absolute top-full right-0 w-40 bg-white shadow-lg border rounded p-2">
                   <button
                     onClick={handleLogout}
-                    className="flex w-full items-center py-1 px-2 text-sm hover:bg-gray-100 text-left text-red-600"
+                    className="flex w-full items-center py-2 px-2 text-sm hover:bg-gray-100 text-left text-red-600"
                   >
                     <FaSignOutAlt className="mr-2" />
                     <span>{t('header.logout')}</span>

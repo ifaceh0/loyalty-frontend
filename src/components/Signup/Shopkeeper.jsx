@@ -472,7 +472,7 @@ function FlatInput({ label, name, value, onChange, type = "text", Icon, ToggleIc
         {label}
       </label>
       
-      <div className="flex items-center w-full h-12 bg-white border border-gray-300 rounded-sm transition-all duration-200 focus-within:border-teal-500 focus-within:ring-2 focus-within:ring-teal-200">
+      <div className="flex items-center w-full h-12 bg-white border border-gray-300 rounded transition-all duration-200 focus-within:border-teal-500 focus-within:ring-2 focus-within:ring-teal-200">
         
         {Icon && <Icon className="flex-shrink-0 ml-4 h-5 w-5 text-gray-400 transition-colors duration-200 focus-within:text-teal-600" />}
 
@@ -695,7 +695,7 @@ function Shopkeeper() {
     >
       {success && <Confetti recycle={false} numberOfPieces={300} />}
       
-      <div className="w-full max-w-xl bg-white border border-gray-200 rounded-md p-6 shadow-2xl">
+      <div className="w-full max-w-xl bg-white border border-gray-200 rounded p-6 shadow-2xl">
         <h2 className="text-3xl font-extrabold text-teal-700 text-center mb-1">
           {t("shopkeeper.title")}
         </h2>
@@ -709,7 +709,7 @@ function Shopkeeper() {
         </div>
         
         {error && (
-            <div className="flex items-center p-3 mb-5 text-sm text-red-800 rounded-lg bg-red-50 border border-red-200" role="alert">
+            <div className="flex items-center p-3 mb-5 text-sm text-red-800 rounded bg-red-50 border border-red-200" role="alert">
                 <FaInfoCircle className="flex-shrink-0 inline w-4 h-4 mr-2" />
                 <span className="font-medium">{error}</span>
             </div>
@@ -724,7 +724,7 @@ function Shopkeeper() {
               <div className="flex flex-col space-y-1">
                 <label className="text-sm font-semibold text-gray-700 ml-1">{t("shopkeeper.personalPhone")}</label>
                 <div className="relative">
-                  <div className={`flex items-center w-full h-12 bg-white border rounded-sm transition-all duration-200 focus-within:border-teal-500 focus-within:ring-2 focus-within:ring-teal-200 ${
+                  <div className={`flex items-center w-full h-12 bg-white border rounded transition-all duration-200 focus-within:border-teal-500 focus-within:ring-2 focus-within:ring-teal-200 ${
                     formData.phone && formData.phone.length !== 10 ? 'border-red-400' : 'border-gray-300'
                   }`}>
                     <Smartphone className="flex-shrink-0 ml-4 h-5 w-5 text-gray-400" />
@@ -757,7 +757,7 @@ function Shopkeeper() {
               <div className="flex flex-col space-y-1">
                 <label htmlFor="companyEmail" className="text-sm font-semibold text-gray-700 ml-1">{t("shopkeeper.companyEmail")}</label>
                 <div className="relative">
-                    <div className="flex items-center w-full h-12 bg-white border border-gray-300 rounded-sm transition-all duration-200 focus-within:border-teal-500 focus-within:ring-2 focus-within:ring-teal-200">
+                    <div className="flex items-center w-full h-12 bg-white border border-gray-300 rounded transition-all duration-200 focus-within:border-teal-500 focus-within:ring-2 focus-within:ring-teal-200">
                         <Mail className="flex-shrink-0 ml-4 h-5 w-5 text-gray-400" />
                         <input
                             type="email"
@@ -780,7 +780,7 @@ function Shopkeeper() {
                       type="button"
                       onClick={verifyEmail}
                       disabled={isVerifying || !formData.companyEmail || !validateEmail(formData.companyEmail) || isEmailVerified}
-                      className={`absolute right-1 top-1/2 -translate-y-1/2 mr-1 px-3 py-1.5 rounded-sm text-xs font-bold transition z-10
+                      className={`absolute right-1 top-1/2 -translate-y-1/2 mr-1 px-3 py-1.5 rounded text-xs font-bold transition z-10
                         ${isEmailVerified 
                             ? "bg-green-600 text-white" 
                             : "bg-teal-500 text-white hover:bg-teal-600"}
@@ -794,7 +794,7 @@ function Shopkeeper() {
               <div className="flex flex-col space-y-1">
                 <label className="text-sm font-semibold text-gray-700 ml-1">{t("shopkeeper.companyPhone")}</label>
                 <div className="relative">
-                  <div className={`flex items-center w-full h-12 bg-white border rounded-lg transition-all duration-200 focus-within:border-teal-500 focus-within:ring-2 focus-within:ring-teal-200 ${
+                  <div className={`flex items-center w-full h-12 bg-white border rounded transition-all duration-200 focus-within:border-teal-500 focus-within:ring-2 focus-within:ring-teal-200 ${
                     formData.companyPhone && formData.companyPhone.length !== 10 ? 'border-red-400' : 'border-gray-300'
                   }`}>
                     <Smartphone className="flex-shrink-0 ml-4 h-5 w-5 text-gray-400" />
@@ -846,7 +846,7 @@ function Shopkeeper() {
                 <div className="flex-grow">
                   <FlatInput label={t("shopkeeper.enterCaptcha")} name="captchaInput" value={formData.captchaInput} onChange={handleChange} Icon={Puzzle} />
                 </div>
-                <div className="flex-shrink-0 w-32 h-12 bg-gray-100 border border-gray-300 rounded-sm overflow-hidden flex items-center justify-center">
+                <div className="flex-shrink-0 w-32 h-12 bg-gray-100 border border-gray-300 rounded overflow-hidden flex items-center justify-center">
                   <canvas ref={captchaCanvasRef} width={120} height={40} className="w-full h-full" />
                 </div>
                 <button 
@@ -862,7 +862,7 @@ function Shopkeeper() {
               <button
                 type="submit"
                 disabled={loading}
-                className={`w-full bg-teal-500 text-white font-bold py-3 rounded-sm shadow-lg transition-all duration-300 text-lg
+                className={`w-full bg-teal-500 text-white font-bold py-3 rounded shadow-lg transition-all duration-300 text-lg
                 ${loading ? "opacity-60 cursor-not-allowed" : "hover:bg-teal-600 active:scale-[0.99]"}`}
               >
                 {loading ? (
@@ -886,7 +886,7 @@ function Shopkeeper() {
               type="button"
               onClick={nextStep}
               disabled={step === 2 && !isEmailVerified}
-              className={`w-full py-3 bg-teal-500 text-white font-semibold rounded-sm shadow-lg transition-all duration-300 text-lg
+              className={`w-full py-3 bg-teal-500 text-white font-semibold rounded shadow-lg transition-all duration-300 text-lg
               ${(step === 2 && !isEmailVerified) ? "opacity-60 cursor-not-allowed" : "hover:bg-teal-600 active:scale-[0.99]"}
               `}
             >
@@ -898,7 +898,7 @@ function Shopkeeper() {
             <button
               type="button"
               onClick={() => { setStep((p) => p - 1); if (step === 2) setIsEmailVerified(false); }}
-              className="w-full py-3 bg-gray-200 hover:bg-gray-300 active:scale-[0.99] text-gray-700 font-semibold rounded-sm transition-all duration-300"
+              className="w-full py-3 bg-gray-200 hover:bg-gray-300 active:scale-[0.99] text-gray-700 font-semibold rounded transition-all duration-300"
             >
               {t("shopkeeper.back")}
             </button>

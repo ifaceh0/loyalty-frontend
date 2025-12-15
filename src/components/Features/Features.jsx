@@ -286,7 +286,7 @@ export default function Features() {
       <section className="py-10 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-slate-50 to-white">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h1 className="text-4xl sm:text-5xl font-extrabold bg-gradient-to-r from-emerald-600 to-teal-700 bg-clip-text text-transparent mb-4">
+            <h1 className="text-4xl sm:text-5xl font-extrabold text-emerald-600 mb-4">
               {t('features.title')}
             </h1>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
@@ -302,12 +302,12 @@ export default function Features() {
                 <button
                   key={idx}
                   onClick={() => openModal(feature)}
-                  className="group relative bg-white rounded-md p-1 shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden text-left"
+                  className="group relative bg-white rounded p-1 shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden text-left"
                 >
                   <div className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-20 transition-opacity duration-300`} />
 
-                  <div className="relative bg-white rounded-md p-6 h-full border border-gray-100">
-                    <div className="mb-5 w-14 h-14 rounded-md bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center text-3xl shadow-md group-hover:scale-110 transition-transform duration-300">
+                  <div className="relative bg-white rounded p-6 h-full border border-gray-100">
+                    <div className="mb-5 w-14 h-14 rounded bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center text-3xl shadow-md group-hover:scale-110 transition-transform duration-300">
                       <Icon className="w-7 h-7 text-emerald-600" />
                     </div>
 
@@ -339,7 +339,7 @@ export default function Features() {
           onClick={closeModal}
         >
           <div
-            className="relative max-w-2xl w-full bg-white rounded-md shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-300"
+            className="relative max-w-2xl w-full bg-white rounded shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-300"
             onClick={(e) => e.stopPropagation()}
           >
             <button
@@ -361,7 +361,7 @@ export default function Features() {
 
             <div className="p-6 lg:p-8">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-12 h-12 rounded-md bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
+                <div className="w-12 h-12 rounded bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
                   <modalOpen.Icon className="w-7 h-7 text-emerald-600" />
                 </div>
                 <h2 className="text-2xl font-bold text-gray-800">
@@ -376,7 +376,7 @@ export default function Features() {
               <div className="mt-6 flex justify-end">
                 <button
                   onClick={closeModal}
-                  className="px-5 py-2 bg-emerald-600 text-white rounded-sm hover:bg-emerald-700 transition"
+                  className="px-5 py-2 bg-emerald-600 text-white rounded hover:bg-emerald-700 transition"
                 >
                   {t('features.gotIt')}
                 </button>

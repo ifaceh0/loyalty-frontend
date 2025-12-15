@@ -341,7 +341,7 @@ export default function Resources() {
       <section className="py-10 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-slate-50 to-white">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h1 className="text-4xl sm:text-5xl font-extrabold bg-gradient-to-r from-emerald-600 to-teal-700 bg-clip-text text-transparent mb-4">
+            <h1 className="text-4xl sm:text-5xl font-extrabold text-emerald-600 mb-4">
               {t('resources.title')}
             </h1>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
@@ -359,10 +359,10 @@ export default function Resources() {
                   onClick={() => openModal({ ...resource, details: getDetails(resource.key) })}
                   className="group block text-left"
                 >
-                  <div className="relative bg-white/80 backdrop-blur-sm rounded-md p-1 shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100">
+                  <div className="relative bg-white/80 backdrop-blur-sm rounded p-1 shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100">
                     <div className={`absolute inset-0 bg-gradient-to-br ${resource.gradient} opacity-0 group-hover:opacity-30 transition-opacity duration-300`} />
-                    <div className="relative bg-white rounded-md p-6 h-full">
-                      <div className="mb-4 w-12 h-12 rounded-md bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform duration-300">
+                    <div className="relative bg-white rounded p-6 h-full">
+                      <div className="mb-4 w-12 h-12 rounded bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform duration-300">
                         <Icon className="w-6 h-6 text-emerald-600" />
                       </div>
                       <h3 className="text-xl font-bold text-gray-800 mb-2 group-hover:text-emerald-700 transition-colors">
@@ -390,7 +390,7 @@ export default function Resources() {
       {modalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50" onClick={closeModal}>
           <div
-            className="relative max-w-2xl w-full bg-white rounded-md shadow-2xl overflow-hidden"
+            className="relative max-w-2xl w-full bg-white rounded shadow-2xl overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
             <button
@@ -402,7 +402,7 @@ export default function Resources() {
 
             <div className="p-6 lg:p-8">
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 rounded-md bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
+                <div className="w-12 h-12 rounded bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
                   <modalOpen.Icon className="w-7 h-7 text-emerald-600" />
                 </div>
                 <h2 className="text-2xl font-bold text-gray-800">
@@ -421,7 +421,7 @@ export default function Resources() {
                     );
                   if (item.type === 'stat')
                     return (
-                      <div key={i} className="bg-emerald-50 text-emerald-800 px-4 py py-2 rounded-md font-medium">
+                      <div key={i} className="bg-emerald-50 text-emerald-800 px-4 py py-2 rounded font-medium">
                         {item.text}
                       </div>
                     );
@@ -443,7 +443,7 @@ export default function Resources() {
                     );
                   if (item.type === 'promo')
                     return (
-                      <div key={i} className="bg-gradient-to-r from-emerald-50 to-teal-50 text-emerald-800 px-4 py-2 rounded-md font-medium flex items-center gap-2">
+                      <div key={i} className="bg-gradient-to-r from-emerald-50 to-teal-50 text-emerald-800 px-4 py-2 rounded font-medium flex items-center gap-2">
                         <Gift className="w-4 h-4" />
                         {item.text}
                       </div>
@@ -462,7 +462,7 @@ export default function Resources() {
               <div className="mt-8 flex justify-end">
                 <button
                   onClick={closeModal}
-                  className="px-5 py-2.5 bg-emerald-600 text-white font-medium rounded-sm hover:bg-emerald-700 transition shadow-md"
+                  className="px-5 py-2.5 bg-emerald-600 text-white font-medium rounded hover:bg-emerald-700 transition shadow-md"
                 >
                   {t('resources.gotIt')}
                 </button>

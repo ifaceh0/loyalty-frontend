@@ -622,10 +622,10 @@ export default function EmployeeSignupPage() {
   if (!token) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-red-50 p-4">
-        <div className="bg-white p-8 rounded-md shadow-xl text-center max-w-sm w-full">
+        <div className="bg-white p-8 rounded shadow-xl text-center max-w-sm w-full">
           <h2 className="text-2xl font-bold text-red-700 mb-3">{t("employeeSignup.invalidLinkTitle")}</h2>
           <p className="text-gray-600 mb-6">{t("employeeSignup.invalidLinkMessage")}</p>
-          <button onClick={() => navigate("/")} className="w-full bg-red-600 text-white py-3 rounded-sm hover:bg-red-700">
+          <button onClick={() => navigate("/")} className="w-full bg-red-600 text-white py-3 rounded hover:bg-red-700">
             {t("employeeSignup.goHome")}
           </button>
         </div>
@@ -646,7 +646,7 @@ export default function EmployeeSignupPage() {
     >
       {success && <Confetti recycle={false} numberOfPieces={300} />}
 
-      <div className="w-full max-w-xl bg-white rounded-md p-10 shadow-2xl border border-gray-200">
+      <div className="w-full max-w-xl bg-white rounded p-10 shadow-2xl border border-gray-200">
         <h2 className="text-3xl font-extrabold text-emerald-600 text-center mb-3">
           {t("employeeSignup.title")}
         </h2>
@@ -658,7 +658,7 @@ export default function EmployeeSignupPage() {
         </div>
 
         {error && (
-          <p className="text-red-500 text-sm text-center mb-4 animate-pulse border border-red-200 bg-red-50 p-2 rounded-sm">
+          <p className="text-red-500 text-sm text-center mb-4 animate-pulse border border-red-200 bg-red-50 p-2 rounded">
             {error}
           </p>
         )}
@@ -686,7 +686,7 @@ export default function EmployeeSignupPage() {
                 />
                 <div className="absolute top-1/2 right-3 -translate-y-1/2 group cursor-pointer">
                   <FaInfoCircle className="text-gray-500 cursor-pointer" />
-                    <div className="absolute left-8 top-1/2 -translate-y-1/2 bg-gray-800 text-white text-sm rounded-sm px-3 py-2 opacity-0 group-hover:opacity-100 group-focus:opacity-100 transition-opacity duration-300 whitespace-nowrap shadow-lg z-50">
+                    <div className="absolute left-8 top-1/2 -translate-y-1/2 bg-gray-800 text-white text-sm rounded px-3 py-2 opacity-0 group-hover:opacity-100 group-focus:opacity-100 transition-opacity duration-300 whitespace-nowrap shadow-lg z-50">
                       <p>{t("employeeSignup.emailTooltip.line1")}</p>
                       <p>{t("employeeSignup.emailTooltip.line2")}</p>
                     </div>
@@ -722,7 +722,7 @@ export default function EmployeeSignupPage() {
                 <div className="flex-grow">
                   <UnderlineInput label={t("employeeSignup.enterCaptcha")} name="captchaInput" value={formData.captchaInput} onChange={handleChange} Icon={Puzzle} />
                 </div>
-                <div className="flex-shrink-0 w-24 h-10 bg-gray-100 border border-gray-300 rounded-sm overflow-hidden flex items-center justify-center">
+                <div className="flex-shrink-0 w-24 h-10 bg-gray-100 border border-gray-300 rounded overflow-hidden flex items-center justify-center">
                   <canvas ref={canvasRef} width={100} height={40} className="w-full h-full" />
                 </div>
                 <button type="button" onClick={generateCaptcha}
@@ -734,7 +734,7 @@ export default function EmployeeSignupPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className={`w-full bg-gradient-to-r from-green-500 to-blue-600 text-white font-bold py-3 rounded-sm shadow-lg transition-all duration-300 text-lg
+                className={`w-full bg-gradient-to-r from-green-500 to-blue-600 text-white font-bold py-3 rounded shadow-lg transition-all duration-300 text-lg
                   ${loading ? "opacity-60 cursor-not-allowed" : "hover:from-green-600 hover:to-blue-700 active:scale-[0.99]"}`}
               >
                 {loading ? (
@@ -754,13 +754,13 @@ export default function EmployeeSignupPage() {
         <div className="mt-8 space-y-3">
           {step < 3 && (
             <button type="button" onClick={nextStep}
-              className="w-full py-3 font-bold rounded-sm shadow-lg transition-all duration-300 text-lg bg-gradient-to-r from-emerald-500 to-blue-600 text-white hover:from-emerald-600 hover:to-blue-700 active:scale-[0.99]">
+              className="w-full py-3 font-bold rounded shadow-lg transition-all duration-300 text-lg bg-gradient-to-r from-emerald-500 to-blue-600 text-white hover:from-emerald-600 hover:to-blue-700 active:scale-[0.99]">
               {t("employeeSignup.next")}
             </button>
           )}
           {step > 1 && step < 4 && (
             <button type="button" onClick={() => setStep(prev => prev - 1)}
-              className="w-full py-3 bg-gray-200 hover:bg-gray-300 active:scale-[0.99] text-gray-700 font-semibold rounded-sm transition-all duration-300">
+              className="w-full py-3 bg-gray-200 hover:bg-gray-300 active:scale-[0.99] text-gray-700 font-semibold rounded transition-all duration-300">
               {t("employeeSignup.back")}
             </button>
           )}

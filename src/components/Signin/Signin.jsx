@@ -602,7 +602,7 @@ function FloatingInput({
 }
 
 const DemoFeature = ({ icon: Icon, title, description }) => (
-  <div className="flex items-start space-x-4 p-4 rounded-sm bg-white/10 backdrop-blur-sm border border-white/20">
+  <div className="flex items-start space-x-4 p-4 rounded bg-white/10 backdrop-blur-sm border border-white/20">
     <div className="flex-shrink-0 p-3 bg-emerald-400 rounded-full text-white shadow-lg">
       <Icon className="w-6 h-6" />
     </div>
@@ -946,12 +946,12 @@ const Signin = () => {
               />
 
               <div className="space-y-4 pt-3">
-                <div className="flex items-center justify-between p-1 bg-gray-200 rounded-sm">
+                <div className="flex items-center justify-between p-1 bg-gray-200 rounded">
                   <canvas
                     ref={canvasRef}
                     width={120}
                     height={40}
-                    className="border border-emerald-300 rounded-sm bg-white"
+                    className="border border-emerald-300 rounded bg-white"
                   />
                   <button
                     type="button"
@@ -984,7 +984,7 @@ const Signin = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className={`w-full bg-gradient-to-r from-emerald-500 to-sky-600 text-white py-2 text-lg font-semibold rounded-sm shadow-lg transition ${
+                className={`w-full bg-gradient-to-r from-emerald-500 to-sky-600 text-white py-2 text-lg font-semibold rounded shadow-lg transition ${
                   loading ? "opacity-70" : "hover:from-emerald-600 hover:to-sky-700"
                 }`}
               >

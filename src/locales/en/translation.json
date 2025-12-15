@@ -328,7 +328,7 @@
     "subscribeButton": "Subscribe",
     "subscribedText": "Sent!",
     "subscribedSuccess": "You're in! Check your email.",
-    "copyright": "© {year} LoyaltyHub. All rights reserved.",
+    "copyright": "© {{year}} LoyaltyHub. All rights reserved.",
     "privacy": "Privacy Policy",
     "terms": "Terms of Service"
   },

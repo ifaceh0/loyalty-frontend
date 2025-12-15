@@ -257,16 +257,16 @@ export default function ContactUs() {
   return (
     <section className="py-10 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-slate-50 to-white">
       <div className="max-w-3xl mx-auto">
-        <div className="relative bg-white/70 backdrop-blur-lg rounded-md p-8 shadow-xl border border-emerald-200 overflow-hidden">
+        <div className="relative bg-white/70 backdrop-blur-lg rounded p-8 shadow-xl border border-emerald-200 overflow-hidden">
           <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-full blur-3xl opacity-20 -z-10" />
 
-          <h2 className="text-3xl sm:text-4xl font-extrabold bg-gradient-to-r from-emerald-600 to-teal-700 bg-clip-text text-transparent text-center mb-8 flex items-center justify-center gap-2">
-            <Send className="w-8 h-8" />
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-emerald-600 text-center mb-8 flex items-center justify-center gap-2">
+            <Send className="w-8 h-7" />
             {t('contact.title')}
           </h2>
 
           {submitted && (
-            <div className="mb-6 p-5 bg-emerald-50 border border-emerald-200 rounded-md text-emerald-800 text-center font-semibold flex items-center justify-center gap-2 animate-in fade-in slide-in-from-top duration-500">
+            <div className="mb-6 p-5 bg-emerald-50 border border-emerald-200 rounded text-emerald-800 text-center font-semibold flex items-center justify-center gap-2 animate-in fade-in slide-in-from-top duration-500">
               <CheckCircle className="w-6 h-6 text-emerald-600" />
               {t('contact.success')}
               <Sparkles className="w-5 h-5 text-emerald-500" />
@@ -286,7 +286,7 @@ export default function ContactUs() {
                 value={formData.fullName}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all duration-200 placeholder:text-gray-400"
+                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all duration-200 placeholder:text-gray-400"
               />
             </div>
 
@@ -302,7 +302,7 @@ export default function ContactUs() {
                 value={formData.email}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all duration-200 placeholder:text-gray-400"
+                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all duration-200 placeholder:text-gray-400"
               />
             </div>
 
@@ -318,7 +318,7 @@ export default function ContactUs() {
                 value={formData.subject}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all duration-200 placeholder:text-gray-400"
+                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all duration-200 placeholder:text-gray-400"
               />
             </div>
 
@@ -334,7 +334,7 @@ export default function ContactUs() {
                 value={formData.message}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-md focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all duration-200 placeholder:text-gray-400 resize-none"
+                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all duration-200 placeholder:text-gray-400 resize-none"
               />
             </div>
 
@@ -351,7 +351,7 @@ export default function ContactUs() {
                 />
                 <label
                   htmlFor="isHuman"
-                  className={`flex items-center justify-center w-6 h-6 rounded-sm border-2 transition-all cursor-pointer ${
+                  className={`flex items-center justify-center w-6 h-6 rounded border-2 transition-all cursor-pointer ${
                     formData.isHuman
                       ? 'bg-emerald-600 border-emerald-600'
                       : 'bg-white border-gray-300 hover:border-emerald-400'
@@ -383,7 +383,7 @@ export default function ContactUs() {
             <div className="pt-4 text-center">
               <button
                 type="submit"
-                className="group inline-flex items-center gap-2 px-8 py-3.5 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-semibold rounded-sm shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="group inline-flex items-center gap-2 px-8 py-3.5 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-semibold rounded shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                 disabled={!formData.isHuman}
               >
                 <Send className="w-5 h-5 group-hover:translate-x-1 transition-transform" />

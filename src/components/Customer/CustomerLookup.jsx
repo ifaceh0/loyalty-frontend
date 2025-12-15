@@ -718,7 +718,7 @@ import {
   faCheckCircle,
   faExclamationCircle,
   faExclamationTriangle,
-  faTimesCircle,
+  faXmark,
   faArrowRotateLeft,
   faDollarSign,
   faUser,
@@ -727,7 +727,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useTranslation } from "react-i18next"; // ← ADDED
 
-const PRIMARY_COLOR = "blue-700";
+const PRIMARY_COLOR = "blue-600";
 const ACCENT_COLOR = "cyan-500";
 const SUCCESS_COLOR = "green-600";
 const ERROR_COLOR = "red-600";
@@ -1066,15 +1066,15 @@ const CustomerLookup = () => {
                 <h2 className="text-2xl font-bold">{t("customerLookup.transaction.title")}</h2>
                 <button
                   onClick={resetAll}
-                  className={`text-white p-2 rounded-full hover:bg-blue-800 transition duration-200`}
+                  className={`text-white p-1 rounded hover:bg-blue-500 transition duration-200`}
                   aria-label={t("customerLookup.buttons.close")}
                 >
-                  <FontAwesomeIcon icon={faTimesCircle} className="w-7 h-7" />
+                  <FontAwesomeIcon icon={faXmark} className="w-6 h-6" />
                 </button>
               </nav>
 
               <div className="p-6 overflow-y-auto flex-1 flex flex-col items-center justify-between">
-                <div className="w-full bg-white border border-gray-200 rounded-md p-6 text-gray-800 shadow-lg">
+                <div className="w-full bg-white border border-gray-200 rounded p-6 text-gray-800 shadow-lg">
                   <h3 className={`text-xl font-bold text-${PRIMARY_COLOR} border-b-2 border-gray-200 pb-2 mb-4 flex items-center`}>
                     <FontAwesomeIcon icon={faIdCard} className={`text-${ACCENT_COLOR} mr-3`} />
                     {t("customerLookup.transaction.details")}
@@ -1093,7 +1093,7 @@ const CustomerLookup = () => {
                     <div>
                       <h4 className="text-md font-semibold text-gray-700 mb-2">{t("customerLookup.points.title")}:</h4>
                       <div
-                        className={`py-2 px-3 rounded-sm border-2 border-solid border-${ACCENT_COLOR} bg-blue-50 transition-all duration-300 ${
+                        className={`py-2 px-2 rounded border-2 border-solid border-${ACCENT_COLOR} bg-blue-50 transition-all duration-300 ${
                           successAnimation ? "text-xl font-bold scale-[1.02] bg-cyan-100" : ""
                         }`}
                       >
@@ -1126,12 +1126,12 @@ const CustomerLookup = () => {
                           else setPurchaseAmount(v);
                         }}
                         required
-                        className={`w-full pl-10 pr-4 py-2 bg-white border-2 border-gray-300 rounded-sm text-2xl font-bold text-gray-700 placeholder-gray-400 focus:ring-2 focus:ring-${ACCENT_COLOR} focus:border-${ACCENT_COLOR} outline-none transition duration-150 shadow-inner`}
+                        className={`w-full pl-10 pr-4 py-2 bg-white border-2 border-gray-300 rounded text-2xl font-bold text-gray-700 placeholder-gray-400 focus:ring-2 focus:ring-${ACCENT_COLOR} focus:border-${ACCENT_COLOR} outline-none transition duration-150 shadow-inner`}
                       />
                     </div>
 
                     {!associated && (
-                      <p className={`text-sm text-${INFO_COLOR} font-medium p-3 bg-blue-50 rounded-sm border border-blue-200 flex items-center`}>
+                      <p className={`text-sm text-${INFO_COLOR} font-medium p-3 bg-blue-50 rounded border border-blue-200 flex items-center`}>
                         <FontAwesomeIcon icon={faUser} className={`text-${INFO_COLOR} mr-2`} />
                         {t("customerLookup.newCustomerNote")}
                       </p>
@@ -1140,7 +1140,7 @@ const CustomerLookup = () => {
                     <button
                       type="submit"
                       disabled={isSubmitting || !purchaseAmount || parseFloat(purchaseAmount) <= 0}
-                      className={`bg-${PRIMARY_COLOR} hover:bg-blue-800 text-white font-bold py-2 rounded-sm shadow-md transition duration-200 disabled:opacity-60 text-lg`}
+                      className={`bg-${PRIMARY_COLOR} hover:bg-blue-800 text-white font-bold py-2 rounded shadow-md transition duration-200 disabled:opacity-60 text-lg`}
                     >
                       {isSubmitting ? t("customerLookup.buttons.processing") : t("customerLookup.buttons.submitPreview")}
                     </button>
@@ -1161,13 +1161,13 @@ const CustomerLookup = () => {
 
           {showSuccessPopup && (
             <div className="absolute inset-0 flex items-center justify-center z-50">
-              <div className={`bg-white p-8 rounded-md shadow-2xl text-center w-full max-w-sm border-t-8 border-t-${SUCCESS_COLOR} animate-fade-in`}>
+              <div className={`bg-white p-8 rounded shadow-2xl text-center w-full max-w-sm border-t-8 border-t-${SUCCESS_COLOR} animate-fade-in`}>
                 <FontAwesomeIcon icon={faCheckCircle} className={`text-${successIconColor} text-5xl mb-4`} />
                 <h3 className={`text-2xl font-bold text-gray-800 mb-2`}>{successTitle}</h3>
                 {successMessage && <p className="text-md text-gray-600 mt-1 mb-4 whitespace-pre-line">{successMessage}</p>}
                 <button
                   onClick={() => { setShowSuccessPopup(false); resetAll(); }}
-                  className={`mt-4 w-full bg-${PRIMARY_COLOR} hover:bg-blue-800 text-white font-semibold px-5 py-3 rounded-sm transition duration-200`}
+                  className={`mt-4 w-full bg-${PRIMARY_COLOR} hover:bg-blue-800 text-white font-semibold px-5 py-2 rounded transition duration-200`}
                 >
                   {t("customerLookup.buttons.done")}
                 </button>
@@ -1177,13 +1177,13 @@ const CustomerLookup = () => {
 
           {showErrorPopup && (
             <div className="absolute inset-0 flex items-center justify-center z-50">
-              <div className={`bg-white p-8 rounded-md shadow-2xl text-center w-full max-w-sm border-t-8 border-t-${ERROR_COLOR} animate-fade-in`}>
+              <div className={`bg-white p-8 rounded shadow-2xl text-center w-full max-w-sm border-t-8 border-t-${ERROR_COLOR} animate-fade-in`}>
                 <FontAwesomeIcon icon={faExclamationTriangle} className={`text-${ERROR_COLOR} text-5xl mb-4`} />
                 <h3 className="text-2xl font-bold text-red-700 mb-2">{t("customerLookup.error.title")}</h3>
                 <p className="text-md text-gray-600 mt-1 mb-4">{error || t("customerLookup.error.generic")}</p>
                 <button
                   onClick={() => { setShowErrorPopup(false); setError(null); resetAll(); }}
-                  className={`mt-4 w-full bg-${ERROR_COLOR} hover:bg-red-700 text-white font-semibold px-5 py-3 rounded-sm transition duration-200`}
+                  className={`mt-4 w-full bg-${ERROR_COLOR} hover:bg-red-700 text-white font-semibold px-5 py-2 rounded transition duration-200`}
                 >
                   {t("customerLookup.buttons.closeRestart")}
                 </button>
@@ -1193,20 +1193,20 @@ const CustomerLookup = () => {
 
           {showClaimIntentPopup && (
             <div className="absolute inset-0 flex items-center justify-center z-50">
-              <div className={`bg-white p-8 rounded-md shadow-2xl text-center w-full max-w-sm border-t-8 border-t-${ACCENT_COLOR} animate-fade-in`}>
+              <div className={`bg-white p-8 rounded shadow-2xl text-center w-full max-w-sm border-t-8 border-t-${ACCENT_COLOR} animate-fade-in`}>
                 <FontAwesomeIcon icon={faDollarSign} className={`text-${ACCENT_COLOR} text-5xl mb-4`} />
                 <h3 className="text-2xl font-bold text-gray-800 mb-2">{t("customerLookup.claim.eligibleTitle")}</h3>
                 <p className="text-md text-gray-700 mb-3" dangerouslySetInnerHTML={{ __html: t("customerLookup.claim.eligibleText", { amount: eligibleReward.toFixed(2) }) }} />
                 <p className="text-sm text-gray-600 mb-4" dangerouslySetInnerHTML={{ __html: t("customerLookup.claim.minSpend", { amount: minRewardAmount.toFixed(2) }) }} />
                 <button
                   onClick={() => { setShowClaimIntentPopup(false); setShowConfirmClaimPopup(true); }}
-                  className={`w-full bg-${SUCCESS_COLOR} hover:bg-green-700 text-white font-bold px-5 py-3 rounded-sm shadow-md transition duration-200 mb-3`}
+                  className={`w-full bg-${SUCCESS_COLOR} hover:bg-green-700 text-white font-bold px-5 py-2 rounded shadow-md transition duration-200 mb-3`}
                 >
                   {t("customerLookup.claim.yesProceed")}
                 </button>
                 <button
                   onClick={() => { setIntentToClaim(false); setShowClaimIntentPopup(false); }}
-                  className={`w-full bg-gray-500 hover:bg-gray-600 text-white font-semibold px-5 py-3 rounded-sm transition duration-200`}
+                  className={`w-full bg-gray-500 hover:bg-gray-600 text-white font-semibold px-5 py-2 rounded transition duration-200`}
                 >
                   {t("customerLookup.claim.noPointsOnly")}
                 </button>
@@ -1216,19 +1216,19 @@ const CustomerLookup = () => {
 
           {showConfirmClaimPopup && (
             <div className="absolute inset-0 flex items-center justify-center z-50">
-              <div className={`bg-white p-8 rounded-md shadow-2xl text-center w-full max-w-sm border-t-8 border-t-${ACCENT_COLOR} animate-fade-in`}>
+              <div className={`bg-white p-8 rounded shadow-2xl text-center w-full max-w-sm border-t-8 border-t-${ACCENT_COLOR} animate-fade-in`}>
                 <FontAwesomeIcon icon={faDollarSign} className={`text-${ACCENT_COLOR} text-5xl mb-4`} />
                 <h3 className="text-2xl font-bold text-gray-800 mb-2">{t("customerLookup.claim.confirmTitle")}</h3>
                 <p className="text-md text-gray-700 mb-4">{t("customerLookup.claim.confirmText", { amount: eligibleReward.toFixed(2) })}</p>
                 <button
                   onClick={() => { setIntentToClaim(true); setShowConfirmClaimPopup(false); }}
-                  className={`w-full bg-${SUCCESS_COLOR} hover:bg-green-700 text-white font-bold px-5 py-3 rounded-sm shadow-md transition duration-200 mb-3`}
+                  className={`w-full bg-${SUCCESS_COLOR} hover:bg-green-700 text-white font-bold px-5 py-2 rounded shadow-md transition duration-200 mb-3`}
                 >
                   {t("customerLookup.claim.yesClaim")}
                 </button>
                 <button
                   onClick={() => { setIntentToClaim(false); setShowConfirmClaimPopup(false); }}
-                  className={`w-full bg-gray-500 hover:bg-gray-600 text-white font-semibold px-5 py-3 rounded-sm transition duration-200`}
+                  className={`w-full bg-gray-500 hover:bg-gray-600 text-white font-semibold px-5 py-2 rounded transition duration-200`}
                 >
                   {t("customerLookup.claim.noCancel")}
                 </button>
@@ -1238,7 +1238,7 @@ const CustomerLookup = () => {
 
           {showPreviewPopup && previewData && (
             <div className="absolute inset-0 flex items-center justify-center z-50">
-              <div className={`bg-white p-8 rounded-md shadow-2xl text-center w-full max-w-sm border-t-8 border-t-${INFO_COLOR} animate-fade-in`}>
+              <div className={`bg-white p-8 rounded shadow-2xl text-center w-full max-w-sm border-t-8 border-t-${INFO_COLOR} animate-fade-in`}>
                 <FontAwesomeIcon icon={faDollarSign} className={`text-${INFO_COLOR} text-5xl mb-4`} />
                 <h3 className="text-2xl font-bold text-gray-800 mb-2">{t("customerLookup.preview.title")}</h3>
                 <p className="text-md text-gray-700 mb-3" dangerouslySetInnerHTML={{ __html: t("customerLookup.preview.amount", { amount: previewData.originalDollarAmount }) }} />
@@ -1252,13 +1252,13 @@ const CustomerLookup = () => {
                 <button
                   onClick={handleConfirmProcess}
                   disabled={isConfirming}                     
-                  className={`w-full bg-${SUCCESS_COLOR} hover:bg-green-700 text-white font-bold px-5 py-3 rounded-sm shadow-md transition duration-200 mb-3 disabled:opacity-60`}
+                  className={`w-full bg-${SUCCESS_COLOR} hover:bg-green-700 text-white font-bold px-5 py-2 rounded shadow-md transition duration-200 mb-3 disabled:opacity-60`}
                 >
                   {isConfirming ? t("customerLookup.buttons.processing") : t("customerLookup.preview.process")}
                 </button>
                 <button
                   onClick={() => { setShowPreviewPopup(false); setPreviewData(null); }}
-                  className={`w-full bg-gray-500 hover:bg-gray-600 text-white font-semibold px-5 py-3 rounded-sm transition duration-200`}
+                  className={`w-full bg-gray-500 hover:bg-gray-600 text-white font-semibold px-5 py-2 rounded transition duration-200`}
                 >
                   {t("customerLookup.buttons.cancel")}
                 </button>
@@ -1280,7 +1280,7 @@ const CustomerLookup = () => {
   return (
     <div className="min-h-screen">
       <div className="flex justify-center mt-14 px-4">
-        <div className="text-black border-2 border-gray-300 rounded-md p-2 md:p-3 mb-12 max-w-6xl mx-auto w-full">
+        <div className="text-black border-2 border-gray-300 rounded p-2 md:p-3 mb-12 max-w-6xl mx-auto w-full">
           <h1 className="text-2xl md:text-4xl text-center font-black mb-2">
             {t("customerLookup.shopName")}: <span className="text-blue-600">{shopName || t("customerLookup.defaultShopName")}</span>
           </h1>
@@ -1289,12 +1289,12 @@ const CustomerLookup = () => {
 
       <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4 max-w-6xl mx-auto">
         {/* QR Scanner */}
-        <div className="rounded-md border border-blue-100 bg-blue-50 p-6 shadow-lg text-center">
+        <div className="rounded border border-blue-100 bg-blue-50 p-6 shadow-lg text-center">
           <QrCode className="text-blue-600 mx-auto mb-3" size={36} />
           <h2 className="text-lg font-semibold mb-3 text-black-500">⚡ {t("customerLookup.cards.quickScan.title")}</h2>
           <p className="text-sm text-gray-600 mb-6">{t("customerLookup.cards.quickScan.desc")}</p>
           <button
-            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-sm font-medium"
+            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded font-medium"
             onClick={() => setShowScanner(true)}
           >
             {t("customerLookup.cards.quickScan.button")}
@@ -1302,7 +1302,7 @@ const CustomerLookup = () => {
         </div>
      
         {/* Phone */}
-        <div className="rounded-md border border-indigo-100 bg-indigo-50 p-6 shadow-lg">
+        <div className="rounded border border-indigo-100 bg-indigo-50 p-6 shadow-lg">
           <h2 className="text-lg font-semibold text-black-500 mb-5">📞 {t("customerLookup.cards.phone.title")}</h2>
           <input
             type="text"
@@ -1315,7 +1315,7 @@ const CustomerLookup = () => {
             }}
             placeholder={t("customerLookup.cards.phone.placeholder")}
             maxLength={10}
-            className={`w-full px-4 py-2 border rounded-sm focus:outline-none focus:ring-2 mb-6 ${
+            className={`w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 mb-6 ${
               phone && phone.length !== 10 ? "border-red-400 focus:ring-red-400" : "border-indigo-300 focus:ring-indigo-400"
             }`}
           />
@@ -1325,7 +1325,7 @@ const CustomerLookup = () => {
           <button
             onClick={() => handleSearch("phone")}
             disabled={!phone.trim() || loading.phone}
-            className={`w-full py-2 rounded-sm text-white font-medium ${
+            className={`w-full py-2 rounded text-white font-medium ${
               loading.phone ? "bg-indigo-300" : "bg-indigo-600 hover:bg-indigo-700"
             }`}
           >
@@ -1337,19 +1337,19 @@ const CustomerLookup = () => {
         </div>
 
         {/* Email */}
-        <div className="rounded-md border border-sky-100 bg-sky-50 p-6 shadow-lg">
+        <div className="rounded border border-sky-100 bg-sky-50 p-6 shadow-lg">
           <h2 className="text-lg font-semibold text-black-500 mb-5">📧 {t("customerLookup.cards.email.title")}</h2>
           <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder={t("customerLookup.cards.email.placeholder")}
-            className="w-full px-4 py-2 border border-sky-300 rounded-sm focus:outline-none focus:ring-2 focus:ring-sky-400 mb-6"
+            className="w-full px-4 py-2 border border-sky-300 rounded focus:outline-none focus:ring-2 focus:ring-sky-400 mb-6"
           />
           <button
             onClick={() => handleSearch("email")}
             disabled={!email.trim() || loading.email}
-            className={`w-full py-2 rounded-sm text-white font-medium ${
+            className={`w-full py-2 rounded text-white font-medium ${
               loading.email ? "bg-sky-300" : "bg-sky-600 hover:bg-sky-700"
             }`}
           >
@@ -1359,19 +1359,19 @@ const CustomerLookup = () => {
         </div>
 
         {/* Invite */}
-        <div className="rounded-md border border-violet-100 bg-violet-50 p-6 shadow-lg">
+        <div className="rounded border border-violet-100 bg-violet-50 p-6 shadow-lg">
           <h2 className="text-lg font-semibold text-black-500 mb-5">✉️ {t("customerLookup.cards.invite.title")}</h2>
           <input
             type="email"
             value={inviteEmail}
             onChange={(e) => setInviteEmail(e.target.value)}
             placeholder={t("customerLookup.cards.invite.placeholder")}
-            className="w-full px-4 py-2 border border-violet-300 rounded-sm focus:outline-none focus:ring-2 focus:ring-violet-400 mb-6"
+            className="w-full px-4 py-2 border border-violet-300 rounded focus:outline-none focus:ring-2 focus:ring-violet-400 mb-6"
           />
           <button
             onClick={handleSendInvite}
             disabled={!inviteEmail.trim() || sendingInvite}
-            className={`w-full py-2 rounded-sm text-white font-medium ${
+            className={`w-full py-2 rounded text-white font-medium ${
               sendingInvite ? "bg-violet-300" : "bg-violet-600 hover:bg-violet-700"
             }`}
           >
@@ -1384,7 +1384,7 @@ const CustomerLookup = () => {
       {/* Not Found Modal */}
       {showNotFound && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-          <div className="bg-white rounded-md w-full shadow-2xl max-w-sm border-t-8 border-red-600 p-6 transition-all duration-300">
+          <div className="bg-white rounded w-full shadow-2xl max-w-sm border-t-8 border-red-600 p-6 transition-all duration-300">
             <h2 className="text-2xl font-bold mb-4 text-center text-red-700 flex items-center justify-center gap-3">
               <FontAwesomeIcon icon={faExclamationCircle} className="text-red-600" />
               {t("customerLookup.notFound.title")}
@@ -1394,7 +1394,7 @@ const CustomerLookup = () => {
               <p>{t("customerLookup.notFound.message2")}</p>
             </div>
             <button
-              className="mt-8 w-full py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg font-bold shadow-md transition-all duration-200 text-lg"
+              className="mt-8 w-full py-2 bg-red-600 hover:bg-red-700 text-white rounded font-bold shadow-md transition-all duration-200 text-lg"
               onClick={() => setShowNotFound(false)}
             >
               {t("customerLookup.notFound.closeButton")}

@@ -874,7 +874,7 @@ export default function Home() {
               </p>
               {/* <button
                 onClick={() => navigate('/signup-user')}
-                className="inline-flex items-center gap-2 px-8 py-4 bg-emerald-600 text-white font-bold rounded-md shadow-lg hover:bg-emerald-700 hover:scale-105 transition-all duration-300"
+                className="inline-flex items-center gap-2 px-8 py-4 bg-emerald-600 text-white font-bold rounded shadow-lg hover:bg-emerald-700 hover:scale-105 transition-all duration-300"
               >
                 {t('home.hero.cta')}
                 <ArrowRight className="w-5 h-5" />
@@ -921,7 +921,7 @@ export default function Home() {
               { icon: <Store className="w-12 h-12 text-teal-600" />, title: t('home.howItWorks.steps.1.title'), desc: t('home.howItWorks.steps.1.desc') },
               { icon: <Gift className="w-12 h-12 text-indigo-600" />, title: t('home.howItWorks.steps.2.title'), desc: t('home.howItWorks.steps.2.desc') },
             ].map((step, i) => (
-              <div key={i} className="group bg-white rounded-md p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100">
+              <div key={i} className="group bg-white rounded p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100">
                 <div className="mb-6 flex justify-center">{step.icon}</div>
                 <h3 className="text-xl font-bold text-gray-800 mb-3 group-hover:text-emerald-700 transition">
                   {step.title}
@@ -951,7 +951,7 @@ export default function Home() {
               { icon: <Heart className="w-8 h-8" />, name: t('home.categories.items.4.name'), count: t('home.categories.items.4.count') },
               { icon: <Gamepad2 className="w-8 h-8" />, name: t('home.categories.items.5.name'), count: t('home.categories.items.5.count') },
             ].map((category, i) => (
-              <div key={i} className="group bg-gradient-to-br from-emerald-50 to-teal-50 p-6 rounded-md border-2 border-emerald-100 hover:border-emerald-300 hover:shadow-lg transition-all duration-300 cursor-pointer">
+              <div key={i} className="group bg-gradient-to-br from-emerald-50 to-teal-50 p-6 rounded border-2 border-emerald-100 hover:border-emerald-300 hover:shadow-lg transition-all duration-300 cursor-pointer">
                 <div className="text-emerald-600 flex justify-center mb-3 group-hover:scale-110 transition-transform">
                   {category.icon}
                 </div>
@@ -975,7 +975,7 @@ export default function Home() {
               { Icon: Store, label: t('home.stats.items.1.label'), value: stats.totalShops },
               { Icon: DollarSign, label: t('home.stats.items.2.label'), value: stats.totalTransactionAmount, prefix: '$' },
             ].map((stat, i) => (
-              <div key={i} className="bg-white rounded-md p-8 shadow-xl border border-emerald-100">
+              <div key={i} className="bg-white rounded p-8 shadow-xl border border-emerald-100">
                 <stat.Icon className="w-12 h-12 text-emerald-600 mx-auto mb-4" />
                 <div className="text-3xl font-extrabold text-emerald-700">
                   {loading ? '.....' : <CountUp end={stat.value} duration={2.5} separator="," prefix={stat.prefix || ''} />}
@@ -1005,7 +1005,7 @@ export default function Home() {
               { icon: <MapPin className="w-8 h-8" />, title: t('home.mobile.features.2.title'), desc: t('home.mobile.features.2.desc') },
               { icon: <TrendingUp className="w-8 h-8" />, title: t('home.mobile.features.3.title'), desc: t('home.mobile.features.3.desc') },
             ].map((feature, i) => (
-              <div key={i} className="bg-white p-6 rounded-md shadow-lg hover:shadow-xl transition-all duration-300 border border-blue-100">
+              <div key={i} className="bg-white p-6 rounded shadow-lg hover:shadow-xl transition-all duration-300 border border-blue-100">
                 <div className="text-blue-600 mb-4">{feature.icon}</div>
                 <h4 className="font-bold text-blue-900 mb-2">{feature.title}</h4>
                 <p className="text-sm text-gray-600">{feature.desc}</p>
@@ -1016,7 +1016,7 @@ export default function Home() {
       </section>
 
       {/* SEASONAL PROMOTIONS */}
-      <section className="py-16 md:py-20 px-4 bg-gradient-to-r from-purple-50 to-pink-50">
+      {/* <section className="py-16 md:py-20 px-4 bg-gradient-to-r from-purple-50 to-pink-50">
         <div className="max-w-7xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-purple-600 to-pink-700 bg-clip-text text-transparent mb-12">
             {t('home.promotions.title')}
@@ -1026,7 +1026,7 @@ export default function Home() {
             {t('home.promotions.items', { returnObjects: true }).map((bonus, index) => (
               <div
                 key={index}
-                className="bg-white rounded-md p-8 shadow-lg border-2 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
+                className="bg-white rounded p-8 shadow-lg border-2 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
                 style={{
                   borderColor: index === 0 ? "#10b981" : index % 3 === 0 ? "#c084fc" : index % 3 === 1 ? "#f472b6" : "#8b5cf6",
                 }}
@@ -1060,7 +1060,7 @@ export default function Home() {
             </p>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* BENEFITS */}
       <section className="py-16 md:py-20 px-4 bg-white">
@@ -1070,7 +1070,7 @@ export default function Home() {
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {t('home.benefits.items', { returnObjects: true }).map((benefit, i) => (
-              <div key={i} className="bg-gradient-to-br from-emerald-50 to-teal-50 p-6 rounded-md text-center border border-emerald-200 hover:shadow-lg transition">
+              <div key={i} className="bg-gradient-to-br from-emerald-50 to-teal-50 p-6 rounded text-center border border-emerald-200 hover:shadow-lg transition">
                 <Star className="w-8 h-8 text-emerald-600 mx-auto mb-3" />
                 <p className="font-semibold text-emerald-900">{benefit}</p>
               </div>
@@ -1087,7 +1087,7 @@ export default function Home() {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {t('home.testimonials.items', { returnObjects: true }).map((testimonial, i) => (
-              <div key={i} className="bg-white rounded-md p-6 shadow-lg border border-gray-200">
+              <div key={i} className="bg-white rounded p-6 shadow-lg border border-gray-200">
                 <div className="flex justify-center mb-3">
                   {[...Array(testimonial.rating)].map((_, j) => (
                     <Star key={j} className="w-5 h-5 text-yellow-400 fill-current" />
@@ -1113,7 +1113,7 @@ export default function Home() {
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
             {t('home.leaderboard.items', { returnObjects: true }).map((user) => (
-              <div key={user.rank} className={`relative bg-white rounded-md p-6 shadow-lg border-2 ${user.rank === 1 ? 'border-yellow-400' : 'border-emerald-200'}`}>
+              <div key={user.rank} className={`relative bg-white rounded p-6 shadow-lg border-2 ${user.rank === 1 ? 'border-yellow-400' : 'border-emerald-200'}`}>
                 {user.rank === 1 && (
                   <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-yellow-400 text-white text-xs font-bold px-3 py-1 rounded-full">
                     #1
@@ -1136,7 +1136,7 @@ export default function Home() {
           </h2>
           <div className="space-y-3">
             {t('home.faq.items', { returnObjects: true }).map((faq, i) => (
-              <details key={i} className="group bg-gray-50 rounded-md overflow-hidden border border-gray-200 shadow-sm">
+              <details key={i} className="group bg-gray-50 rounded overflow-hidden border border-gray-200 shadow-sm">
                 <summary className="flex justify-between items-center p-5 font-semibold text-emerald-800 cursor-pointer hover:bg-emerald-50 transition">
                   {faq.q}
                   <ChevronRight className="w-5 h-5 text-emerald-600 group-open:rotate-90 transition-transform" />
@@ -1160,14 +1160,14 @@ export default function Home() {
           <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
             <button
               onClick={() => navigate('/signup-user')}
-              className="inline-flex items-center gap-3 px-8 py-4 bg-white text-emerald-700 font-bold text-lg rounded-md shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 w-full sm:w-auto justify-center"
+              className="inline-flex items-center gap-3 px-8 py-4 bg-white text-emerald-700 font-bold text-lg rounded shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 w-full sm:w-auto justify-center"
             >
               {t('home.finalCTA.userCTA')}
               <ArrowRight className="w-6 h-6" />
             </button>
             <button
               onClick={() => navigate('/signup-shopkeeper')}
-              className="inline-flex items-center gap-3 px-8 py-4 bg-transparent border-2 border-white text-white font-bold text-lg rounded-md shadow-xl hover:bg-white/10 hover:scale-105 transition-all duration-300 w-full sm:w-auto justify-center"
+              className="inline-flex items-center gap-3 px-8 py-4 bg-transparent border-2 border-white text-white font-bold text-lg rounded shadow-xl hover:bg-white/10 hover:scale-105 transition-all duration-300 w-full sm:w-auto justify-center"
             >
               {t('home.finalCTA.businessCTA')}
               <Store className="w-6 h-6" />

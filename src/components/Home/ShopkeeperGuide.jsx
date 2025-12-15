@@ -569,7 +569,7 @@ export default function ShopkeeperFullFlowDemo() {
           animate={{ opacity: 1, y: 0 }}
           className="text-center max-w-5xl mx-auto mb-16"
         >
-          <h1 className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-emerald-500 via-emerald-600 to-emerald-700 bg-clip-text text-transparent">
+          <h1 className="text-4xl md:text-5xl font-extrabold text-emerald-600">
             {t("flow.hero.title")}
           </h1>
 
@@ -643,10 +643,10 @@ export default function ShopkeeperFullFlowDemo() {
                     initial={{ opacity: 0, scale: 0.85 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: idx * 0.25 }}
-                    className={`w-full p-5 rounded-md shadow-xl border-2 ${step.border} ${step.bg} flex flex-col`}
+                    className={`w-full p-5 rounded shadow-xl border-2 ${step.border} ${step.bg} flex flex-col`}
                   >
                     <div className={`flex ${align === "text-right" ? "justify-end" : "justify-start"} mb-3`}>
-                      <div className="p-2.5 bg-white rounded-md shadow-sm">
+                      <div className="p-2.5 bg-white rounded shadow-sm">
                         <step.icon className="w-6 h-6 text-orange-600" />
                       </div>
                     </div>
@@ -675,7 +675,7 @@ export default function ShopkeeperFullFlowDemo() {
                     </ul>
 
                     {step.formPreview && (
-                      <div className="mt-3 p-3 bg-white rounded-lg border border-gray-200 shadow-inner space-y-2 text-xs">
+                      <div className="mt-3 p-3 bg-white rounded border border-gray-200 shadow-inner space-y-2 text-xs">
                         {step.title.includes("Password") || step.title.includes("Contraseña") ? (
                           <>
                             <div className="h-9 bg-gray-100 rounded flex items-center px-2">
@@ -783,7 +783,7 @@ export default function ShopkeeperFullFlowDemo() {
                 initial={{ opacity: 0, x: -30 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: i * 0.1 }}
-                className="bg-white rounded-md shadow-md border border-gray-200 overflow-hidden"
+                className="bg-white rounded shadow-md border border-gray-200 overflow-hidden"
               >
                 <button
                   onClick={() =>

@@ -885,7 +885,7 @@ const DailyTransaction = () => {
         </header>
 
         <main className="flex justify-center">
-          <div className="bg-white rounded-md shadow-xl p-8 md:p-12 w-full max-w-5xl border border-blue-200">
+          <div className="bg-white rounded shadow-xl p-8 md:p-12 w-full max-w-5xl border border-blue-200">
             <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center text-blue-800">
               {t('daily.page.subtitle')}
             </h2>
@@ -903,14 +903,14 @@ const DailyTransaction = () => {
                   type="date"
                   value={selectedDate}
                   onChange={(e) => setSelectedDate(e.target.value)}
-                  className="w-full pl-12 pr-4 py-2 bg-slate-50 border-2 border-blue-300 rounded-sm text-slate-800 focus:border-orange-500 focus:ring-4 focus:ring-orange-100 focus:outline-none transition-all text-lg font-medium"
+                  className="w-full pl-12 pr-4 py-2 bg-slate-50 border-2 border-blue-300 rounded text-slate-800 focus:border-orange-500 focus:ring-4 focus:ring-orange-100 focus:outline-none transition-all text-lg font-medium"
                 />
               </div>
 
               <button
                 onClick={renderDailyData}
                 disabled={isLoadingDaily}
-                className={`w-full max-w-xs px-12 py-2 rounded-sm font-bold text-lg text-white shadow-lg transform hover:scale-105 transition-all flex items-center justify-center
+                className={`w-full max-w-xs px-12 py-2 rounded font-bold text-lg text-white shadow-lg transform hover:scale-105 transition-all flex items-center justify-center
                   ${isLoadingDaily 
                     ? 'bg-slate-400 cursor-wait' 
                     : 'bg-gradient-to-r from-blue-500 to-blue-600 hover:shadow-orange-500/50'
@@ -935,9 +935,9 @@ const DailyTransaction = () => {
         {/* DAILY POPUP */}
         {showDailyPopup && (
           <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 md:p-8 print:hidden">
-            <div className="bg-white rounded-md shadow-2xl w-full max-w-6xl h-[92vh] flex flex-col overflow-hidden border border-blue-200">
+            <div className="bg-white rounded shadow-2xl w-full max-w-6xl h-[92vh] flex flex-col overflow-hidden border border-blue-200">
               {/* HEADER */}
-              <div className="bg-gradient-to-r from-blue-600 to-violet-600 p-6 md:p-2 rounded-t-md flex justify-between items-center shrink-0">
+              <div className="bg-gradient-to-r from-blue-600 to-violet-600 p-6 md:p-2 rounded-t flex justify-between items-center shrink-0">
                 <div>
                   <h2 className="text-2xl md:text-3xl font-black text-white">
                     {t('daily.popup.dailyTitle', { date: format(new Date(selectedDate), 'MMMM d, yyyy') })}
@@ -968,13 +968,13 @@ const DailyTransaction = () => {
                       placeholder={t('daily.search.placeholder')}
                       value={userId}
                       onChange={(e) => setUserId(e.target.value)}
-                      className="w-full pl-12 pr-4 py-2 bg-white border-2 border-blue-300 rounded-sm text-slate-800 focus:border-violet-500 focus:ring-4 focus:ring-violet-100 focus:outline-none transition-all font-medium"
+                      className="w-full pl-12 pr-4 py-2 bg-white border-2 border-blue-300 rounded text-slate-800 focus:border-violet-500 focus:ring-4 focus:ring-violet-100 focus:outline-none transition-all font-medium"
                     />
                   </div>
                   <button
                     onClick={searchUser}
                     disabled={isLoadingUser}
-                    className={`px-4 py-2 rounded-sm font-bold text-white shadow-md transition-all flex items-center
+                    className={`px-4 py-2 rounded font-bold text-white shadow-md transition-all flex items-center
                       ${isLoadingUser
                         ? 'bg-slate-400 cursor-wait'
                         : 'bg-gradient-to-r from-blue-600 to-violet-600 hover:shadow-violet-500/50'
@@ -996,17 +996,17 @@ const DailyTransaction = () => {
               </div>
 
               {/* ACTION BUTTONS */}
-              <div className="flex justify-end gap-3 p-2 bg-blue-50 border-b-2 border-blue-200">
+              <div className="flex justify-end gap-3 p-2 bg-blue-50 border-b-2 border-blue-200 print:hidden">
                 <button
                   onClick={exportToCSV}
-                  className="flex items-center gap-2 px-5 py-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-sm hover:from-blue-700 hover:to-blue-800 transition-all shadow-lg font-semibold"
+                  className="flex items-center gap-2 px-5 py-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded hover:from-blue-700 hover:to-blue-800 transition-all shadow-lg font-semibold"
                 >
                   <Download className="w-5 h-5" />
                   {t('daily.buttons.exportCSV')}
                 </button>
                 <button
                   onClick={handlePrint}
-                  className="flex items-center gap-2 px-5 py-2 bg-gradient-to-r from-violet-600 to-violet-700 text-white rounded-sm hover:from-violet-700 hover:to-violet-800 transition-all shadow-lg font-semibold"
+                  className="flex items-center gap-2 px-5 py-2 bg-gradient-to-r from-violet-600 to-violet-700 text-white rounded hover:from-violet-700 hover:to-violet-800 transition-all shadow-lg font-semibold"
                 >
                   <Printer className="w-5 h-5" />
                   {t('daily.buttons.print')}
@@ -1014,7 +1014,7 @@ const DailyTransaction = () => {
               </div>
 
               {/* PRINTABLE CONTENT */}
-              <div ref={printRef} className="flex-1 overflow-y-auto p-6 md:p-8 bg-gradient-to-b from-white to-blue-50">
+              <div ref={printRef} className="flex-1 overflow-y-auto p-6 md:p-8 bg-gradient-to-b from-white to-blue-50 print-content">
                 {dailyError ? (
                   <div className="flex flex-col items-center justify-center py-24 text-center">
                     <AlertCircle className="w-20 h-20 text-orange-500 mb-6" />
@@ -1030,17 +1030,17 @@ const DailyTransaction = () => {
                   <>
                     {/* SUMMARY CARDS */}
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-                      <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-md p-6 text-center border-2 border-blue-200 shadow-md">
+                      <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded p-6 text-center border-2 border-blue-200 shadow-md">
                         <DollarSign className="w-12 h-12 text-blue-600 mx-auto mb-3" />
                         <p className="text-sm font-bold text-blue-700 uppercase tracking-wider">{t('daily.summary.totalSales')}</p>
                         <p className="text-4xl font-black text-blue-800 mt-2">${dailyData.totalSales?.toFixed(2)}</p>
                       </div>
-                      <div className="bg-gradient-to-br from-violet-50 to-violet-100 rounded-md p-6 text-center border-2 border-violet-200 shadow-md">
+                      <div className="bg-gradient-to-br from-violet-50 to-violet-100 rounded p-6 text-center border-2 border-violet-200 shadow-md">
                         <Gift className="w-12 h-12 text-violet-600 mx-auto mb-3" />
                         <p className="text-sm font-bold text-violet-700 uppercase tracking-wider">{t('daily.summary.totalRedeemed')}</p>
                         <p className="text-4xl font-black text-violet-800 mt-2">${dailyData.totalRedeemed?.toFixed(2)}</p>
                       </div>
-                      <div className="bg-gradient-to-br from-indigo-50 to-indigo-100 rounded-md p-6 text-center border-2 border-indigo-200 shadow-md">
+                      <div className="bg-gradient-to-br from-indigo-50 to-indigo-100 rounded p-6 text-center border-2 border-indigo-200 shadow-md">
                         <ShoppingBag className="w-12 h-12 text-indigo-600 mx-auto mb-3" />
                         <p className="text-sm font-bold text-indigo-700 uppercase tracking-wider">{t('daily.summary.totalTransactions')}</p>
                         <p className="text-4xl font-black text-indigo-800 mt-2">{dailyData.transactions.length}</p>
@@ -1054,7 +1054,7 @@ const DailyTransaction = () => {
                       </h3>
 
                       {/* ---------- Desktop / Laptop View ---------- */}
-                      <div className="hidden md:block bg-white rounded-md shadow-xl border border-blue-200 overflow-hidden">
+                      <div className="hidden md:block bg-white rounded shadow-xl border border-blue-200 overflow-hidden">
                         {/* Table Header */}
                         <div className="bg-gradient-to-r from-blue-600 to-violet-600 p-4">
                           <div className="grid grid-cols-[60px_1fr_1fr_1fr_1.5fr_1fr_1fr] gap-4 text-white font-semibold text-sm uppercase tracking-wide">
@@ -1118,7 +1118,7 @@ const DailyTransaction = () => {
                         {dailyData.transactions.map((tx, idx) => (
                           <div
                             key={idx}
-                            className="p-4 bg-white rounded-md shadow-md border border-blue-100 hover:bg-blue-50 transition-all"
+                            className="p-4 bg-white rounded shadow-md border border-blue-100 hover:bg-blue-50 transition-all"
                           >
                             {/* Top Row */}
                             <div className="flex justify-between items-center mb-2">
@@ -1181,7 +1181,7 @@ const DailyTransaction = () => {
                       </div>
 
                       {/* ---------- Footer ---------- */}
-                      <div className="mt-10 bg-gradient-to-r from-blue-700 to-violet-700 rounded-md p-4 text-center shadow-xl">
+                      <div className="mt-10 bg-gradient-to-r from-blue-700 to-violet-700 rounded p-4 text-center shadow-xl">
                         <h3 className="text-2xl md:text-3xl font-black text-white">
                           {t('daily.summary.totalSalesToday')}:
                           <span className="ml-3 font-extrabold">
@@ -1206,8 +1206,8 @@ const DailyTransaction = () => {
         {/* USER POPUP */}
         {showUserPopup && (
           <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 md:p-8 print:hidden">
-            <div className="bg-white rounded-md shadow-2xl w-full max-w-6xl h-[92vh] flex flex-col overflow-hidden border-2 border-orange-200">
-              <div className="bg-gradient-to-r from-blue-600 to-orange-600 p-6 md:p-2 rounded-t-md flex justify-between items-center">
+            <div className="bg-white rounded shadow-2xl w-full max-w-6xl h-[92vh] flex flex-col overflow-hidden border-2 border-orange-200">
+              <div className="bg-gradient-to-r from-blue-600 to-orange-600 p-6 md:p-2 rounded-t flex justify-between items-center">
                 <div>
                   <h2 className="text-2xl md:text-3xl font-black text-white">
                     {popupTitle === t('daily.popup.error') 
@@ -1282,7 +1282,7 @@ const DailyTransaction = () => {
                             {t('daily.user.transactionHistory')}
                           </h3>
 
-                          <div className="bg-white rounded-md shadow-xl border border-blue-200 overflow-hidden">
+                          <div className="bg-white rounded shadow-xl border border-blue-200 overflow-hidden">
                             {/* ---------- Desktop / Laptop View ---------- */}
                             <div className="hidden md:grid grid-cols-[60px_1.5fr_1fr_1.5fr_1fr] bg-gradient-to-r from-blue-600 to-orange-600 p-4 text-white font-semibold text-sm uppercase tracking-wide">
                               <span>{t('daily.table.sno')}</span>
@@ -1331,7 +1331,7 @@ const DailyTransaction = () => {
                               {userData.transactions.map((tx, index) => (
                                 <div
                                   key={index}
-                                  className="p-4 bg-white hover:bg-orange-50 transition-colors rounded-md"
+                                  className="p-4 bg-white hover:bg-orange-50 transition-colors rounded"
                                 >
                                   <div className="flex justify-between items-center mb-2">
                                     <span className="text-xs  font-semibold text-slate-500">#{index + 1}</span>
@@ -1409,12 +1409,29 @@ const DailyTransaction = () => {
             left: 0;
             top: 0;
             width: 100%;
+            background: white !important;
+            padding: 20px;
           }
+
+          /* Hide the modal overlay/backdrop */
+          .fixed.inset-0 {
+            display: none !important;
+          }
+
+          /* Hide action buttons (Export/Print) during print */
           .print\\:hidden {
             display: none !important;
           }
+
+          /* Avoid extra blank pages */
           @page {
-            margin: 0.5cm;
+            margin: 1cm;
+            size: A4 portrait;
+          }
+
+          /* Prevent bad page breaks in tables */
+          table, tr, td, th {
+            page-break-inside: avoid;
           }
         }
       `}</style>
@@ -1423,7 +1440,7 @@ const DailyTransaction = () => {
 };
 
 const Card = ({ icon: Icon, color, bg, title, value, unit }) => (
-  <div className={`bg-gradient-to-br ${bg} rounded-md p-6 shadow-lg border-2 border-white/50`}>
+  <div className={`bg-gradient-to-br ${bg} rounded p-6 shadow-lg border-2 border-white/50`}>
     <div className={`p-3 rounded-full inline-block mb-4 bg-white/70 shadow-md`}>
       <Icon className={`w-8 h-8 ${color}`} />
     </div>

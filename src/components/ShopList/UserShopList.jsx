@@ -543,12 +543,12 @@ export default function UserShopList() {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           placeholder={t('userShopList.searchPlaceholder')}
-          className="w-full md:w-1/2 px-5 py-2 rounded-sm border-2 border-blue-200 focus:outline-none focus:ring-4 focus:ring-offset-2 focus:ring-blue-400 shadow-md transition"
+          className="w-full md:w-1/2 px-5 py-2 rounded border-2 border-blue-200 focus:outline-none focus:ring-4 focus:ring-offset-2 focus:ring-blue-400 shadow-md transition"
         />
       </div>
 
       {error && (
-        <p className="text-red-500 text-center font-semibold bg-red-100 p-3 rounded-sm mx-auto max-w-lg mb-6">
+        <p className="text-red-500 text-center font-semibold bg-red-100 p-3 rounded mx-auto max-w-lg mb-6">
           {error}
         </p>
       )}
@@ -563,7 +563,7 @@ export default function UserShopList() {
           {currentShops.map((shop) => (
             <div
               key={shop.shopId}
-              className="bg-white rounded-md shadow-lg overflow-hidden hover:shadow-xl transition transform hover:-translate-y-1 border border-blue-100"
+              className="bg-white rounded shadow-lg overflow-hidden hover:shadow-xl transition transform hover:-translate-y-1 border border-blue-100"
             >
               {/* Gradient Header with Check */}
               <div className="bg-blue-700 p-3 text-white flex items-center justify-between">
@@ -635,7 +635,7 @@ export default function UserShopList() {
                   whileTap={{ scale: 0.98 }}
                   onClick={() => handleGenerateQR(shop)}
                   disabled={loadingShopId === shop.shopId}
-                  className={`w-full mt-3 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-sm text-sm font-medium transition flex items-center justify-center gap-2
+                  className={`w-full mt-3 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded text-sm font-medium transition flex items-center justify-center gap-2
                     ${loadingShopId === shop.shopId ? 'opacity-70 cursor-not-allowed' : ''}`}
                 >
                   {loadingShopId === shop.shopId ? (

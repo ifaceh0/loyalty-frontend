@@ -726,12 +726,12 @@ const Shopdashboard = () => {
                       <YAxis tick={{ fill: "#6b7280", fontSize: 11 }} allowDecimals={false} />
                       <Tooltip contentStyle={{ backgroundColor: "white", borderRadius: "10px", border: "1px solid #e5e7eb", fontSize: "12px" }} />
                       <Legend wrapperStyle={{ fontSize: "11px" }} verticalAlign="top" height={36} />
-                      <Bar dataKey="customers" name={t("shopdashboard.customerComparison.customers")} fill="#3B82F6" barSize={30} radius={[6, 6, 0, 0]}>
+                      <Bar dataKey="customers" name={t("shopdashboard.customerComparison.customers")} fill="#2563eb" barSize={30} radius={[6, 6, 0, 0]}>
                         <LabelList
                           dataKey="growth"
                           position="top"
                           formatter={(val) => `${val >= 0 ? "+" : ""}${val.toFixed(1)}%`}
-                          fill="#1E40AF"
+                          fill="#2563eb"
                           fontSize={10}
                         />
                       </Bar>
@@ -745,7 +745,7 @@ const Shopdashboard = () => {
               <Col xs={24}>
                 <Card title={t("shopdashboard.cards.mostVisitors")} bordered={false}
                   headStyle={{
-                    background: "linear-gradient(to bottom right, #7C3AED, #6D28D9)",
+                    background: "linear-gradient(to bottom right, #6D28D9, #6D28D9)",
                     color: "#FFFFFF"
                   }}
                 >
@@ -757,7 +757,7 @@ const Shopdashboard = () => {
               <Col xs={24}>
                 <Card title={t("shopdashboard.cards.topRevenue")} bordered={false} 
                   headStyle={{
-                    background: "linear-gradient(to bottom right, #1e3a8a, #3b82f6)",
+                    background: "linear-gradient(to bottom right, #2563eb, #2563eb)",
                     color: "#FFFFFF"
                   }}
                 >

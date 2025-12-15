@@ -564,10 +564,10 @@ import { FiTrash2, FiX, FiEdit3, FiSave, FiPlus, FiLoader, FiSettings } from "re
 import { useTranslation } from "react-i18next"; 
 
 const inputStyle =
-  "w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-sm focus:ring-blue-500 focus:border-blue-500 transition duration-200 shadow-sm text-sm sm:text-base";
+  "w-full px-3 sm:px-4 py-2 border border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500 transition duration-200 shadow-sm text-sm sm:text-base";
 
 const SectionWrapper = ({ title, children, isEditMode }) => (
-  <div className={`p-4 sm:p-6 rounded-md border-2 ${isEditMode ? 'border-blue-200 bg-white shadow-lg' : 'border-gray-100 bg-gray-50 shadow-inner'} space-y-3 sm:space-y-4 transition-colors duration-300`}>
+  <div className={`p-4 sm:p-6 rounded border-2 ${isEditMode ? 'border-blue-200 bg-white shadow-lg' : 'border-gray-100 bg-gray-50 shadow-inner'} space-y-3 sm:space-y-4 transition-colors duration-300`}>
     <h3 className="text-lg sm:text-xl font-bold text-blue-700 border-b pb-2">{title}</h3>
     {children}
   </div>
@@ -792,7 +792,7 @@ const ShopkeeperSetting = () => {
   }
 
   return (
-    <div className="max-w-6xl mx-auto bg-white rounded-md shadow-2xl overflow-hidden my-2 p-3 sm:p-0">
+    <div className="max-w-6xl mx-auto bg-white rounded shadow-2xl overflow-hidden my-2 p-3 sm:p-0">
       {/* Header */}
       <nav className="bg-white text-violet-700 border-b border-gray-300 px-4 sm:px-6 py-3 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
         <h2 className="text-xl sm:text-2xl font-extrabold flex items-center gap-2">
@@ -804,7 +804,7 @@ const ShopkeeperSetting = () => {
           {isEditMode && (
              <button
                 onClick={handleCancelEdit}
-                className="bg-red-500 hover:bg-red-600 text-white px-3 sm:px-4 py-2 rounded-sm transition duration-200 flex items-center gap-1 font-medium sm:font-semibold shadow-md text-sm"
+                className="bg-red-500 hover:bg-red-600 text-white px-3 sm:px-4 py-2 rounded transition duration-200 flex items-center gap-1 font-medium sm:font-semibold shadow-md text-sm"
                 disabled={isSaving}
             >
                 {/* <FiX className="w-4 h-4 sm:w-5 sm:h-5" /> */}
@@ -815,7 +815,7 @@ const ShopkeeperSetting = () => {
           <button
             onClick={handleSubmit}
             disabled={isSaving}
-            className={`text-white px-4 sm:px-5 py-2 rounded-sm transition duration-200 flex items-center gap-1.5 sm:gap-2 font-medium sm:font-semibold shadow-md text-sm ${
+            className={`text-white px-4 sm:px-5 py-2 rounded transition duration-200 flex items-center gap-1.5 sm:gap-2 font-medium sm:font-semibold shadow-md text-sm ${
               isEditMode
                 ? (isSaving ? 'bg-green-400 cursor-not-allowed' : 'bg-green-500 hover:bg-green-600')
                 : 'bg-violet-700 hover:bg-violet-800'
@@ -867,7 +867,7 @@ const ShopkeeperSetting = () => {
               </div>
 
               {/* Dollar to Point Mapping */}
-              <div className="border p-3 sm:p-4 rounded-md bg-white shadow-inner">
+              <div className="border p-3 sm:p-4 rounded bg-white shadow-inner">
                 <label className="block text-xs sm:text-sm font-semibold mb-1 text-gray-700">
                   {t("shopSettings.basic.pointsPerDollar.label")}
                 </label>
@@ -891,7 +891,7 @@ const ShopkeeperSetting = () => {
             </div>
 
             <div className="mt-4 sm:mt-6 border-t pt-4">
-              <div className="border p-3 sm:p-4 rounded-md bg-white shadow-inner">
+              <div className="border p-3 sm:p-4 rounded bg-white shadow-inner">
                 <label className="block text-xs sm:text-sm font-semibold mb-1 text-gray-700">
                   {t("shopSettings.basic.minAmount.label")}
                 </label>
@@ -925,7 +925,7 @@ const ShopkeeperSetting = () => {
                     </h4>
                     <p className="text-xs sm:text-sm text-gray-500 mb-3 sm:mb-4">{t("shopSettings.advanced.purchase.desc")}</p>
                     {formData.purchaseRewards.map((r, i) => (
-                    <div key={i} className="flex flex-col sm:flex-row items-start sm:items-end gap-2 sm:gap-3 p-3 border-l-4 border-yellow-500 bg-white shadow-md mb-3 rounded-md">
+                    <div key={i} className="flex flex-col sm:flex-row items-start sm:items-end gap-2 sm:gap-3 p-3 border-l-4 border-yellow-500 bg-white shadow-md mb-3 rounded">
                         <span className="font-medium text-base sm:text-lg text-yellow-700 w-6 flex-shrink-0">{i + 1}.</span>
                         
                         <div className="flex-1 w-full">
@@ -980,7 +980,7 @@ const ShopkeeperSetting = () => {
                     </h4>
                     <p className="text-xs sm:text-sm text-gray-500 mb-3 sm:mb-4">{t("shopSettings.advanced.milestone.desc")}</p>
                     {formData.milestoneRewards.map((m, i) => (
-                    <div key={i} className="flex flex-col sm:flex-row items-start sm:items-end gap-2 sm:gap-3 p-3 border-l-4 border-green-500 bg-white shadow-md mb-3 rounded-md">
+                    <div key={i} className="flex flex-col sm:flex-row items-start sm:items-end gap-2 sm:gap-3 p-3 border-l-4 border-green-500 bg-white shadow-md mb-3 rounded">
                         <span className="font-medium text-base sm:text-lg text-green-700 w-6 flex-shrink-0">{i + 1}.</span>
                         
                         <div className="flex-1 w-full">
@@ -1035,7 +1035,7 @@ const ShopkeeperSetting = () => {
             <p className="text-xs sm:text-sm text-gray-500 mb-3 sm:mb-4">{t("shopSettings.campaigns.desc")}</p>
             <div className="space-y-4 sm:space-y-6">
                 {formData.specialBonuses.map((b, i) => (
-                <div key={i} className="p-3 sm:p-4 border-l-4 border-purple-500 bg-white shadow-lg rounded-md space-y-3">
+                <div key={i} className="p-3 sm:p-4 border-l-4 border-purple-500 bg-white shadow-lg rounded space-y-3">
                     <div className="flex justify-between items-start">
                         <h5 className="font-medium text-purple-700 text-sm sm:text-base">
                           {t("shopSettings.campaigns.campaign", { number: i + 1 })}
