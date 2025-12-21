@@ -387,6 +387,15 @@ export default function Header() {
       <NavLink to="/resources" className={navLinkClasses} onClick={() => setMobileMenuOpen(false)}>
         {t('header.resources')}
       </NavLink>
+      <a
+        href="https://subscription-frontend-psi.vercel.app/subscription"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-black hover:text-emerald-600 px-3 py-1.5"
+        onClick={() => setMobileMenuOpen(false)}
+      >
+        {t('header.subscription')}
+      </a>
       <NavLink to="/onboarding-guide" className={navLinkClasses} onClick={() => setMobileMenuOpen(false)}>
         {t('header.faq')}
       </NavLink>
@@ -481,6 +490,14 @@ export default function Header() {
               <NavLink to="/" className={navLinkClasses}>{t('header.home')}</NavLink>
               <NavLink to="/features" className={navLinkClasses}>{t('header.features')}</NavLink>
               <NavLink to="/resources" className={navLinkClasses}>{t('header.resources')}</NavLink>
+              <a 
+                href="https://subscription-frontend-psi.vercel.app/subscription"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-black hover:text-emerald-600 px-3 py-1.5"
+              >
+                {t('header.subscription')}
+              </a>
               <NavLink to="/onboarding-guide" className={navLinkClasses}>{t('header.faq')}</NavLink>
               <NavLink to="/contact" className={navLinkClasses}>{t('header.contact')}</NavLink>
             </>
