@@ -927,17 +927,40 @@ export default function InviteEmployeePage() {
     }
   };
 
-  const toggleStatus = async (userId, current) => {
+  // const toggleStatus = async (userId, current) => {
+  //   const willBeActive = !current;
+  //   if (!confirm(t('employee.confirm.toggle', { action: willBeActive ? t('employee.status.activate') : t('employee.status.deactivate') }))) return;
+
+  //   try {
+  //     const res = await fetch(`${API_BASE}/employee/toggleEmployeeStatus?userId=${userId}&active=${willBeActive}`, {
+  //       method: 'PATCH',
+  //       credentials: 'include',
+  //     });
+  //     if (!res.ok) throw new Error(t('employee.alerts.toggleFailed'));
+  //     fetchData();
+  //   } catch (err) {
+  //     alert(err.message);
+  //   }
+  // };
+  const toggleStatus = async (userId, current, shopId) => {
     const willBeActive = !current;
     if (!confirm(t('employee.confirm.toggle', { action: willBeActive ? t('employee.status.activate') : t('employee.status.deactivate') }))) return;
 
     try {
-      const res = await fetch(`${API_BASE}/employee/toggleEmployeeStatus?userId=${userId}&active=${willBeActive}`, {
-        method: 'PATCH',
-        credentials: 'include',
-      });
-      if (!res.ok) throw new Error(t('employee.alerts.toggleFailed'));
-      fetchData();
+      const res = await fetch(
+        `${API_BASE}/employee/toggleEmployeeStatus?shopId=${shopId}&userId=${userId}&active=${willBeActive}`,
+        {
+          method: 'PATCH',
+          credentials: 'include',
+        }
+      );
+
+      if (!res.ok) {
+        const errData = await res.json();
+        throw new Error(errData.error || t('employee.alerts.toggleFailed'));
+      }
+
+      fetchData(); // Refresh lists
     } catch (err) {
       alert(err.message);
     }
@@ -1071,7 +1094,7 @@ export default function InviteEmployeePage() {
                               </div>
                             </div>
 
-                            <button
+                            {/* <button
                               onClick={() => toggleStatus(emp.userId, emp.isActive)}
                               className={`px-4 py-2.5 rounded font-medium text-sm transition mt-2 sm:mt-0 w-full sm:w-auto
                                 ${emp.isActive
@@ -1080,6 +1103,22 @@ export default function InviteEmployeePage() {
                                 }`}
                             >
                               {emp.isActive ? t('employee.buttons.deactivate') : t('employee.buttons.activate')}
+                            </button> */}
+                            <button
+                              onClick={() => toggleStatus(emp.userId, emp.isActive, shopId)}
+                              disabled={loading}
+                              className={`px-5 py-2.5 rounded font-medium text-sm transition-all mt-2 sm:mt-0 w-full sm:w-auto flex items-center justify-center gap-2 shadow-sm
+                                ${emp.isActive 
+                                  ? 'bg-red-50 text-red-700 hover:bg-red-100 border border-red-200' 
+                                  : 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200'}
+                                ${loading ? 'opacity-50 cursor-not-allowed' : 'hover:shadow-md'}
+                              `}
+                            >
+                              {emp.isActive ? (
+                                <>Deactivate <ToggleRight className="w-5 h-5" /></>
+                              ) : (
+                                <>Activate <ToggleLeft className="w-5 h-5" /></>
+                              )}
                             </button>
                           </div>
                         ))

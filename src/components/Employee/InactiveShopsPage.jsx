@@ -1,0 +1,197 @@
+import { useState, useEffect } from 'react';
+import { 
+  Store, 
+  Calendar, 
+  Clock, 
+  AlertCircle, 
+  Loader2,
+  Mail,
+  Phone
+} from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+
+const API_BASE = 'https://loyalty-backend-java.onrender.com/api';
+
+export default function InactiveShopsPage() {
+  const { t } = useTranslation();
+
+  const [userId, setUserId] = useState(null);
+  const [inactiveShops, setInactiveShops] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    const role = localStorage.getItem("role");
+
+    if (role !== "EMPLOYEE") {
+      setError(t('inactiveShops.error.notEmployee'));
+      setLoading(false);
+      return;
+    }
+
+    const employeeUserId = localStorage.getItem("employeeUserId");
+
+    if (!employeeUserId) {
+      setError(t('inactiveShops.error.noUserId'));
+      setLoading(false);
+      return;
+    }
+
+    setUserId(employeeUserId);
+  }, [t]); // ← Add t to deps to re-evaluate on language change
+
+  useEffect(() => {
+    if (!userId) return;
+
+    const fetchInactiveShops = async () => {
+      setLoading(true);
+      setError('');
+      try {
+        const res = await fetch(
+          `${API_BASE}/employee/my-inactive-shops?userId=${userId}`,
+          { 
+            method: 'GET',
+            credentials: 'include' 
+          }
+        );
+
+        if (!res.ok) {
+          const errData = await res.json().catch(() => ({}));
+          throw new Error(errData.error || t('inactiveShops.error.loadFailed'));
+        }
+
+        const data = await res.json();
+        setInactiveShops(data);
+      } catch (err) {
+        setError(err.message || t('inactiveShops.error.generic'));
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchInactiveShops();
+  }, [userId, t]);
+
+  const formatDate = (dateString) => {
+    if (!dateString) return "—";
+    return new Date(dateString).toLocaleDateString(undefined, {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  };
+
+  return (
+    <div className="min-h-screen">
+      <div className="max-w-6xl mx-auto p-4 sm:p-6 lg:p-8">
+        {/* Header */}
+        <div className="bg-white rounded shadow-sm border border-gray-200 p-6 mb-8">
+          <div className="flex items-center gap-4">
+            <div className="p-3 bg-red-100 rounded-full">
+              <AlertCircle className="w-8 h-8 text-red-600" />
+            </div>
+            <div>
+              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
+                {t('inactiveShops.title')}
+              </h1>
+              <p className="text-gray-600 mt-1">
+                {t('inactiveShops.subtitle')}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Loading */}
+        {loading && (
+          <div className="flex flex-col items-center justify-center py-20">
+            <Loader2 className="w-12 h-12 animate-spin text-indigo-600 mb-4" />
+            <p className="text-gray-600">{t('inactiveShops.loading')}</p>
+          </div>
+        )}
+
+        {/* Error */}
+        {error && (
+          <div className="bg-red-50 border border-red-200 rounded p-6 text-center">
+            <AlertCircle className="w-12 h-12 text-red-600 mx-auto mb-4" />
+            <p className="text-red-700 font-medium">{error}</p>
+            <p className="text-sm text-red-600 mt-2">
+              {t('inactiveShops.error.tryAgain')}
+            </p>
+          </div>
+        )}
+
+        {/* Empty State */}
+        {!loading && !error && inactiveShops.length === 0 && (
+          <div className="bg-white rounded shadow-sm border border-gray-200 p-12 text-center">
+            <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+              <Store className="w-10 h-10 text-green-600" />
+            </div>
+            <h3 className="text-xl font-semibold text-gray-900 mb-2">
+              {t('inactiveShops.empty.title')}
+            </h3>
+            <p className="text-gray-600">
+              {t('inactiveShops.empty.message')}
+            </p>
+          </div>
+        )}
+
+        {/* Inactive Shops List */}
+        {!loading && !error && inactiveShops.length > 0 && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {inactiveShops.map((shop) => (
+              <div
+                key={shop.shopId}
+                className="bg-white rounded shadow-md border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow"
+              >
+                <div className="bg-gradient-to-r from-red-500 to-pink-600 p-6 text-white">
+                  <div className="flex items-center justify-between mb-4">
+                    <Store className="w-10 h-10 opacity-90" />
+                    <span className="bg-white/20 px-3 py-1 rounded-full text-sm font-medium">
+                      {t('inactiveShops.status.inactive')}
+                    </span>
+                  </div>
+                  <h3 className="text-xl font-bold truncate">{shop.shopName}</h3>
+                  <p className="text-sm opacity-90 mt-1">{shop.companyName}</p>
+                </div>
+
+                <div className="p-6 space-y-4">
+                  <div className="text-sm text-gray-600 space-y-2">
+                    <div className="flex items-center gap-2">
+                      <Calendar className="w-4 h-4 text-gray-500" />
+                      <span>
+                        <strong>{t('inactiveShops.labels.joined')}:</strong> {formatDate(shop.joinDate)}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Clock className="w-4 h-4 text-gray-500" />
+                      <span>
+                        <strong>{t('inactiveShops.labels.deactivated')}:</strong> {formatDate(shop.resignDate) || "—"}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="pt-4 border-t border-gray-200 text-xs text-gray-500 space-y-1">
+                    <p className="flex items-center gap-2">
+                      <Mail className="w-3.5 h-3.5" />
+                      {shop.companyEmail || "—"}
+                    </p>
+                    <p className="flex items-center gap-2">
+                      <Phone className="w-3.5 h-3.5" />
+                      {shop.companyPhone || "—"}
+                    </p>
+                  </div>
+
+                  <div className="pt-4 text-center">
+                    <p className="text-sm text-gray-600 italic">
+                      {t('inactiveShops.contactMessage')}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}

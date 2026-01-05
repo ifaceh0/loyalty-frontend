@@ -34,6 +34,8 @@ import EmployeeSignupPage from './components/Signup/EmployeeSignupPage.jsx';
 import InviteEmployeePage from './components/Employee/InviteEmployeePage.jsx';
 import DailyTransactionReport from './components/Customer/DailyTransaction.jsx'
 import ShopkeeperGuide from './components/Home/ShopkeeperGuide.jsx'
+import InactiveShopsPage from './components/Employee/InactiveShopsPage.jsx'
+import EmployeeDashboard from './components/Dashboards/EmployeeDashboard.jsx';
 
 import './i18n';
 
@@ -137,8 +139,15 @@ const router = createBrowserRouter([
       {
         path:"onboarding-guide",
         element:<ShopkeeperGuide/>
+      },
+      {
+        path:"/employee/inactive-shops",
+        element:<InactiveShopsPage/>
+      },
+      {
+        path:"/employee/dashboard",
+        element:<EmployeeDashboard/>
       }
-
 
     ]
 

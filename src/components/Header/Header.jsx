@@ -308,19 +308,36 @@ export default function Header() {
     setMobileMenuOpen(false);
   }, [location]);
 
+  // const handleLogout = async () => {
+  //   try {
+  //     await fetch(LOGOUT_API, { method: 'POST', credentials: 'include' });
+  //   } catch (e) {
+  //     console.error(e);
+  //   } finally {
+  //     localStorage.removeItem('isLoggedIn');
+  //     localStorage.removeItem('id');
+  //     localStorage.removeItem('name');
+  //     localStorage.removeItem('CompanyEmail');
+  //     navigate('/signin');
+  //     setMobileMenuOpen(false);
+  //   }
+  // };
+
+  // Updated handleLogout
   const handleLogout = async () => {
-    try {
-      await fetch(LOGOUT_API, { method: 'POST', credentials: 'include' });
-    } catch (e) {
-      console.error(e);
-    } finally {
-      localStorage.removeItem('isLoggedIn');
-      localStorage.removeItem('id');
-      localStorage.removeItem('name');
-      localStorage.removeItem('CompanyEmail');
-      navigate('/signin');
-      setMobileMenuOpen(false);
-    }
+  
+    localStorage.clear();
+    document.cookie = "jwt=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"; 
+
+    navigate('/signin');
+    setMobileMenuOpen(false);
+
+    fetch(LOGOUT_API, {
+      method: 'POST',
+      credentials: 'include',
+    }).catch(err => {
+      console.log("Backend logout failed (server asleep?), but client session cleared");
+    });
   };
 
   const navLinkClasses = ({ isActive }) =>
@@ -563,7 +580,7 @@ export default function Header() {
           {/* Mobile Toggle */}
           <button
             onClick={() => setMobileMenuOpen(v => !v)}
-            className="lg:hidden text-emerald-600 hover:text-emerald-700"
+            className="lg:hidden text-blue-600 hover:text-blue-700"
           >
             {mobileMenuOpen ? <X size={22} /> : <PanelRightOpen size={24} />}
           </button>
@@ -592,327 +609,3 @@ export default function Header() {
     </header>
   );
 }
-
-
-
-
-
-
-
-
-
-
-
-// // DARK MODE
-// 'use client';
-
-// import { useState, useEffect } from 'react';
-// import {
-//   Link,
-//   NavLink,
-//   useLocation,
-//   useNavigate,
-// } from 'react-router-dom';
-// import { FaUser, FaSignOutAlt, FaSun, FaMoon } from 'react-icons/fa';
-// import { Menu, X } from 'lucide-react';
-// import { useSidebar } from '../../context/SidebarContext';
-
-// const LOGOUT_API =
-//   'https://loyalty-backend-java.onrender.com/api/auth/logout';
-
-// export default function Header() {
-//   const [isLoggedIn, setIsLoggedIn] = useState(false);
-//   const [userName, setUserName] = useState('');
-//   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-//   const [isDark, setIsDark] = useState(false);
-
-//   const location = useLocation();
-//   const navigate = useNavigate();
-//   const { setSidebarOpen } = useSidebar();
-
-//   // === DARK MODE LOGIC ===
-//   useEffect(() => {
-//     // Check system preference
-//     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-//     const saved = localStorage.getItem('darkMode');
-//     const initial = saved === 'true' || (!saved && prefersDark);
-    
-//     setIsDark(initial);
-//     if (initial) document.documentElement.classList.add('dark');
-//   }, []);
-
-//   const toggleDarkMode = () => {
-//     const newDark = !isDark;
-//     setIsDark(newDark);
-//     localStorage.setItem('darkMode', newDark);
-//     if (newDark) {
-//       document.documentElement.classList.add('dark');
-//     } else {
-//       document.documentElement.classList.remove('dark');
-//     }
-//   };
-
-//   // === AUTH & USERNAME ===
-//   useEffect(() => {
-//     const login = localStorage.getItem('isLoggedIn') === 'true';
-//     setIsLoggedIn(login);
-//     const name = localStorage.getItem('name');
-//     if (name) setUserName(name);
-//     setMobileMenuOpen(false);
-//   }, [location]);
-
-//   const handleLogout = async () => {
-//     try {
-//       await fetch(LOGOUT_API, { method: 'POST', credentials: 'include' });
-//     } catch (e) {
-//       console.error(e);
-//     } finally {
-//       localStorage.removeItem('isLoggedIn');
-//       localStorage.removeItem('id');
-//       localStorage.removeItem('name');
-//       localStorage.removeItem('CompanyEmail');
-//       navigate('/signin');
-//       setMobileMenuOpen(false);
-//     }
-//   };
-
-//   const navLinkClasses = ({ isActive }) =>
-//     `relative px-3 py-2 rounded-md transition-all duration-200 font-medium
-//      ${isActive
-//        ? 'text-white bg-emerald-500 dark:bg-emerald-600'
-//        : 'text-gray-800 hover:text-emerald-600 dark:text-gray-200 dark:hover:text-emerald-400'
-//      }`;
-
-//   // Mobile Drawer for GUEST
-//   const GuestMobileDrawer = () => (
-//     <div className="flex flex-col gap-4 p-4">
-//       <NavLink to="/" className={navLinkClasses} onClick={() => setMobileMenuOpen(false)}>
-//         Home
-//       </NavLink>
-//       <NavLink to="/features" className={navLinkClasses} onClick={() => setMobileMenuOpen(false)}>
-//         Features
-//       </NavLink>
-//       <a
-//         href="https://subscription-frontend-psi.vercel.app/subscription"
-//         className="px-3 py-2 rounded-md text-gray-800 dark:text-gray-200 hover:text-white hover:bg-emerald-500 dark:hover:bg-emerald-600 transition font-medium"
-//         onClick={() => setMobileMenuOpen(false)}
-//       >
-//         Subscription
-//       </a>
-//       <NavLink to="/resources" className={navLinkClasses} onClick={() => setMobileMenuOpen(false)}>
-//         Resources
-//       </NavLink>
-//       <NavLink to="/contact" className={navLinkClasses} onClick={() => setMobileMenuOpen(false)}>
-//         Contact
-//       </NavLink>
-
-//       <div className="mt-4">
-//         <p className="font-medium text-gray-700 dark:text-gray-300 mb-1">Sign up as</p>
-//         <div className="flex flex-col gap-1">
-//           <NavLink
-//             to="/signup-shopkeeper"
-//             className="px-3 py-2 text-sm text-emerald-700 dark:text-emerald-400 hover:bg-emerald-100 dark:hover:bg-emerald-900 rounded-md font-medium"
-//             onClick={() => setMobileMenuOpen(false)}
-//           >
-//             Shopkeeper
-//           </NavLink>
-//           <NavLink
-//             to="/signup-user"
-//             className="px-3 py-2 text-sm text-emerald-700 dark:text-emerald-400 hover:bg-emerald-100 dark:hover:bg-emerald-900 rounded-md font-medium"
-//             onClick={() => setMobileMenuOpen(false)}
-//           >
-//             User
-//           </NavLink>
-//         </div>
-//       </div>
-
-//       <NavLink
-//         to="/signin"
-//         className="bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-md text-sm px-5 py-2.5 transition shadow-md text-center"
-//         onClick={() => setMobileMenuOpen(false)}
-//       >
-//         Sign in
-//       </NavLink>
-//     </div>
-//   );
-
-//   // Mobile Drawer for LOGGED-IN USER
-//   const LoggedInMobileDrawer = () => (
-//     <div className="flex flex-col gap-4 p-4">
-//       <div className="flex items-center gap-3 p-3 border-b border-gray-200 dark:border-gray-700">
-//         <FaUser className="w-6 h-6 text-emerald-600 dark:text-emerald-400" />
-//         <div>
-//           <p className="font-semibold text-gray-800 dark:text-gray-200">{userName || 'User'}</p>
-//           <p className="text-xs text-gray-500 dark:text-gray-400">Welcome back!</p>
-//         </div>
-//       </div>
-
-//       <button
-//         onClick={() => {
-//           setSidebarOpen(true);
-//           setMobileMenuOpen(false);
-//         }}
-//         className="text-left px-3 py-2 text-emerald-700 dark:text-emerald-400 hover:bg-emerald-100 dark:hover:bg-emerald-900 rounded-md font-medium"
-//       >
-//         Open Dashboard
-//       </button>
-
-//       <button
-//         onClick={handleLogout}
-//         className="flex items-center gap-2 px-3 py-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-md font-medium"
-//       >
-//         <FaSignOutAlt className="w-4 h-4" />
-//         Logout
-//       </button>
-//     </div>
-//   );
-
-//   return (
-//     <header className="sticky top-0 z-50 bg-white dark:bg-gray-900 shadow-lg border-b border-gray-200 dark:border-gray-700 transition-colors">
-//       <nav className="px-4 lg:px-8 py-3 flex items-center justify-between">
-//         {/* Left: Logo or Hamburger */}
-//         <div className="flex items-center">
-//           {isLoggedIn ? (
-//             <button
-//               onClick={() => setSidebarOpen(true)}
-//               className="text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300 transition"
-//             >
-//               <Menu size={24} />
-//             </button>
-//           ) : (
-//             <Link
-//               to="/"
-//               className="text-2xl font-bold bg-gradient-to-r from-emerald-500 to-teal-600 dark:from-emerald-400 dark:to-teal-500 bg-clip-text text-transparent drop-shadow-sm"
-//             >
-//               LoyaltyHub
-//             </Link>
-//           )}
-//         </div>
-
-//         {/* Desktop Navigation */}
-//         <div className="hidden lg:flex items-center gap-6">
-//           {!isLoggedIn && (
-//             <>
-//               <NavLink to="/" className={navLinkClasses}>Home</NavLink>
-//               <NavLink to="/features" className={navLinkClasses}>Features</NavLink>
-//               <a
-//                 href="https://subscription-frontend-psi.vercel.app/subscription"
-//                 className="px-3 py-2.5 rounded-md text-gray-800 dark:text-gray-200 hover:text-white hover:bg-emerald-500 dark:hover:bg-emerald-600 transition font-medium"
-//               >
-//                 Subscription
-//               </a>
-//               <NavLink to="/resources" className={navLinkClasses}>Resources</NavLink>
-//               <NavLink to="/contact" className={navLinkClasses}>Contact</NavLink>
-//             </>
-//           )}
-//         </div>
-
-//         {/* Right: Auth + Dark Mode + Mobile Toggle */}
-//         <div className="flex items-center gap-3">
-//           {/* Dark Mode Toggle (Desktop & Mobile) */}
-//           <button
-//             onClick={toggleDarkMode}
-//             className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300"
-//             aria-label="Toggle dark mode"
-//           >
-//             <div className="relative w-5 h-5">
-//               <FaSun
-//                 className={`absolute inset-0 w-5 h-5 transition-all duration-500 ${
-//                   isDark ? 'opacity-0 rotate-180 scale-0' : 'opacity-100 rotate-0 scale-100'
-//                 }`}
-//               />
-//               <FaMoon
-//                 className={`absolute inset-0 w-5 h-5 text-yellow-500 transition-all duration-500 ${
-//                   isDark ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 -rotate-180 scale-0'
-//                 }`}
-//               />
-//             </div>
-//           </button>
-
-//           {/* Desktop Auth */}
-//           <div className="hidden lg:flex items-center gap-4">
-//             {!isLoggedIn ? (
-//               <>
-//                 <div className="relative group">
-//                   <div className="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-medium rounded-md text-sm px-5 py-2.5 cursor-pointer transition shadow-md">
-//                     Sign up
-//                   </div>
-//                   <div className="absolute right-0 mt-2 bg-white dark:bg-gray-800 rounded-md shadow-xl z-10 min-w-[160px] opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-200 border border-gray-200 dark:border-gray-700">
-//                     <NavLink
-//                       to="/signup-shopkeeper"
-//                       className="block px-4 py-2.5 text-sm text-emerald-700 dark:text-emerald-400 hover:bg-emerald-100 dark:hover:bg-emerald-900 transition rounded-t-md"
-//                     >
-//                       Shopkeeper
-//                     </NavLink>
-//                     <NavLink
-//                       to="/signup-user"
-//                       className="block px-4 py-2.5 text-sm text-emerald-700 dark:text-emerald-400 hover:bg-emerald-100 dark:hover:bg-emerald-900 transition rounded-b-md"
-//                     >
-//                       User
-//                     </NavLink>
-//                   </div>
-//                 </div>
-
-//                 <NavLink
-//                   to="/signin"
-//                   className="bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-md text-sm px-5 py-2.5 transition shadow-md"
-//                 >
-//                   Sign in
-//                 </NavLink>
-//               </>
-//             ) : (
-//               <div className="relative group">
-//                 <button className="flex items-center space-x-2 focus:outline-none">
-//                   <FaUser className="text-emerald-600 dark:text-emerald-400" />
-//                   <span className="text-emerald-600 dark:text-emerald-400 font-medium">{userName || 'User'}</span>
-//                 </button>
-
-//                 <div className="hidden group-hover:block absolute top-full right-0 w-40 bg-white dark:bg-gray-800 shadow-lg border dark:border-gray-700 rounded-md p-2">
-//                   <button
-//                     onClick={handleLogout}
-//                     className="flex w-full items-center py-1 px-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 text-left text-red-600 dark:text-red-400"
-//                   >
-//                     <FaSignOutAlt className="mr-2" />
-//                     <span>Logout</span>
-//                   </button>
-//                 </div>
-//               </div>
-//             )}
-//           </div>
-
-//           {/* Mobile Menu Toggle */}
-//           <button
-//             onClick={() => setMobileMenuOpen((v) => !v)}
-//             className="lg:hidden text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300"
-//           >
-//             {mobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
-//           </button>
-//         </div>
-//       </nav>
-
-//       {/* MOBILE MENU */}
-//       {mobileMenuOpen && (
-//         <div className="fixed inset-0 z-40 flex flex-col bg-white dark:bg-gray-900 lg:hidden">
-//           <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
-//             <Link
-//               to="/"
-//               className="text-2xl font-bold bg-gradient-to-r from-emerald-500 to-teal-600 dark:from-emerald-400 dark:to-teal-500 bg-clip-text text-transparent"
-//             >
-//               LoyaltyHub
-//             </Link>
-//             <button
-//               onClick={() => setMobileMenuOpen(false)}
-//               className="text-emerald-600 dark:text-emerald-400"
-//             >
-//               <X size={28} />
-//             </button>
-//           </div>
-
-//           <div className="flex-1 overflow-y-auto px-4 py-6">
-//             {isLoggedIn ? <LoggedInMobileDrawer /> : <GuestMobileDrawer />}
-//           </div>
-//         </div>
-//       )}
-//     </header>
-//   );
-// }

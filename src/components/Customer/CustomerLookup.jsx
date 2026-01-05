@@ -1218,7 +1218,7 @@ const CustomerLookup = () => {
             <div className="absolute inset-0 flex items-center justify-center z-50">
               <div className={`bg-white p-8 rounded shadow-2xl text-center w-full max-w-sm border-t-8 border-t-${ACCENT_COLOR} animate-fade-in`}>
                 <FontAwesomeIcon icon={faDollarSign} className={`text-${ACCENT_COLOR} text-5xl mb-4`} />
-                <h3 className="text-2xl font-bold text-gray-800 mb-2">{t("customerLookup.claim.confirmTitle")}</h3>
+                <h3 className="text-2xl font-bold text-gray-800 mb-2">{t("customerLookup.claim.confirmationTitle")}</h3>
                 <p className="text-md text-gray-700 mb-4">{t("customerLookup.claim.confirmText", { amount: eligibleReward.toFixed(2) })}</p>
                 <button
                   onClick={() => { setIntentToClaim(true); setShowConfirmClaimPopup(false); }}

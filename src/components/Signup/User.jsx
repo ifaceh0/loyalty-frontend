@@ -631,7 +631,7 @@ function UserSignup() {
         generateCaptcha();
         setSuccess(true);
         if (audioRef.current) audioRef.current.play();
-        setTimeout(() => navigate("/signin"), 3000);
+        setTimeout(() => navigate("/signin"), 7000);
       } else {
         const errorMessage = contentType && contentType.includes("application/json")
           ? (await response.json()).message
@@ -683,19 +683,27 @@ function UserSignup() {
 
   return (
     <div
-      className="min-h-screen flex items-center justify-center px-4 bg-gray-200"
-      // style={{
-      //   backgroundImage: `
-      //     linear-gradient(to right, rgba(0,0,0,0.06) 1px, transparent 1px),
-      //     linear-gradient(to bottom, rgba(0,0,0,0.06) 1px, transparent 1px)
-      //   `,
-      //   backgroundSize: "40px 40px, 40px 40px",
-      //   backgroundAttachment: "fixed",
-      // }}
-    >
-      {success && <Confetti recycle={false} numberOfPieces={300} />}
+      className="min-h-screen flex items-center justify-center px-4 bg-gray-200">
+      {/* {success && <Confetti recycle={false} numberOfPieces={300} />} */}
+      {success && (
+        <>
+          <Confetti recycle={false} numberOfPieces={300} />
+          <div className="mb-6 p-4 rounded border border-green-200 bg-green-50 text-center">
+            <h3 className="text-green-700 font-bold text-lg mb-2">
+              {t("userSignup.successTitle")}
+            </h3>
+            <p className="text-green-700 text-sm">
+              🔐 {t("userSignup.passwordNotice")}
+            </p>
+            <p className="text-gray-600 text-sm mt-2">
+              {t("userSignup.redirecting")}
+            </p>
+          </div>
+        </>
+      )}
+
       
-      <div className="w-full max-w-xl bg-white rounded p-10 shadow-2xl border border-gray-200">
+      <div className="w-full max-w-lg bg-white rounded p-10 shadow-2xl border border-gray-200">
         <h2 className="text-3xl font-extrabold text-emerald-600 text-center mb-3">
             {t("userSignup.title")}
         </h2>

@@ -413,8 +413,10 @@
     "signInButton": "Iniciar Sesión",
     "loggingIn": "Iniciando sesión...",
     "chooseRole": "Elige cómo deseas iniciar sesión:",
+    "chooseShop": "Selecciona el comercio al que deseas acceder:",
     "select": "Seleccionar",
     "backToPassword": "Volver a la contraseña",
+    "back": "Volver",
     "success": "¡Sesión iniciada con éxito!",
     "redirecting": "Redirigiendo a la página de suscripción en",
     "subscriptionMessage": "Tu suscripción no incluye la app de Loyalty. Redirigiendo...",
@@ -435,6 +437,9 @@
   },
 
   "shopkeeper": {
+    "successTitle": "¡Cuenta creada con éxito!",
+    "passwordNotice": "Esta contraseña se utilizará para iniciar sesión en todos sus roles.",
+    "redirecting": "Redirigiendo al inicio de sesión...",
     "title": "Registro de Comerciante",
     "step": "Paso",
     "of": "de",
@@ -477,6 +482,9 @@
   },
 
   "userSignup": {
+    "successTitle": "¡Cuenta creada con éxito!",
+    "passwordNotice": "Esta contraseña se utilizará para iniciar sesión en todos sus roles.",
+    "redirecting": "Redirigiendo al inicio de sesión...",
     "title": "Crea tu Cuenta",
     "step": "Paso",
     "of": "de",
@@ -506,6 +514,9 @@
   },
 
   "employeeSignup": {
+    "successTitle": "¡Cuenta creada con éxito!",
+    "passwordNotice": "Esta contraseña se utilizará para iniciar sesión en todos sus roles.",
+    "redirecting": "Redirigiendo al inicio de sesión...",
     "title": "Registro de Empleado",
     "step": "Paso",
     "of": "de",
@@ -825,7 +836,7 @@
       "eligibleText": "Reclama una recompensa de <span class=\"text-3xl font-extrabold text-green-600\">${{amount}}</span>.",
       "minSpend": "Compra al menos <span class=\"font-bold text-blue-700\">${{amount}}</span> para calificar.",
       "yesProceed": "Sí, Proceder a Reclamar", "noPointsOnly": "No, Solo Ganar Puntos",
-      "confirmTitle": "¿Estás seguro?", "confirmText": "¿Reclamar la recompensa de ${{amount}}?", "yesClaim": "Sí, Reclamar", "noCancel": "No, Cancelar"
+      "confirmationTitle": "¿Estás seguro?", "confirmText": "¿Reclamar la recompensa de ${{amount}}?", "yesClaim": "Sí, Reclamar", "noCancel": "No, Cancelar"
     },
     "preview": {
       "title": "Confirmar Compra",
@@ -1287,6 +1298,54 @@
       "title": "Error al Cargar Datos",
       "fetchFailed": "No se pudieron obtener las transacciones",
       "loadFailed": "Error al cargar los datos de transacciones."
+    }
+  },
+
+
+
+
+
+
+
+
+
+  "inactiveShops": {
+    "title": "Comercios Inactivos",
+    "subtitle": "Lista de comercios donde tu acceso ha sido desactivado",
+    "loading": "Cargando tus comercios inactivos...",
+    "status": {
+      "inactive": "Inactivo"
+    },
+    "labels": {
+      "joined": "Ingresó",
+      "deactivated": "Desactivado"
+    },
+    "contactMessage": "Contacta al dueño del comercio para recuperar el acceso.",
+    "error": {
+      "notEmployee": "Esta página solo es accesible para empleados.",
+      "noUserId": "Información del empleado no encontrada. Por favor inicia sesión nuevamente.",
+      "loadFailed": "Error al cargar comercios inactivos",
+      "generic": "Ocurrió un error al cargar los datos",
+      "tryAgain": "Por favor intenta iniciar sesión nuevamente o contacta al soporte."
+    },
+    "empty": {
+      "title": "Sin Comercios Inactivos",
+      "message": "¡Excelente! Actualmente estás activo en todos los comercios asignados."
+    },
+    "sidebar": {
+      "title": "Panel del Empleado",
+      "dashboard": "Tablero",
+      "inactiveShops": "Comercios Inactivos"
+    }
+  },
+  "employeeDashboard": {
+    "sidebar": {
+      "title": "Panel del Empleado",
+      "dashboard": "Búsqueda de Clientes",
+      "inactiveShops": "Comercios Inactivos",
+      "logout": "Cerrar Sesión",
+      "close": "Cerrar",
+      "help": "Ayuda y Soporte"
     }
   }
 }

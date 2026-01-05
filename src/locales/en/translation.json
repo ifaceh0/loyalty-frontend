@@ -357,8 +357,10 @@
     "signInButton": "Sign In",
     "loggingIn": "Logging in...",
     "chooseRole": "Choose how you want to sign in:",
+    "chooseShop": "Select the shop you want to access:",
     "select": "Select",
     "backToPassword": "Back to password",
+    "back": "Back",
     "success": "Signed in Successfully!",
     "redirecting": "Redirecting to subscription page in",
     "subscriptionMessage": "Your subscription does not include the Loyalty app. Redirecting...",
@@ -379,6 +381,9 @@
   },
 
   "shopkeeper": {
+    "successTitle": "Account Created Successfully!",
+    "passwordNotice": "This password will be used to log in to all your roles.",
+    "redirecting": "Redirecting you to login...",
     "title": "Shopkeeper Registration",
     "step": "Step",
     "of": "of",
@@ -421,6 +426,9 @@
   },
 
   "userSignup": {
+    "successTitle": "Account Created Successfully!",
+    "passwordNotice": "This password will be used to log in to all your roles.",
+    "redirecting": "Redirecting you to login...",
     "title": "Create Your Account",
     "step": "Step",
     "of": "of",
@@ -450,6 +458,9 @@
   },
 
   "employeeSignup": {
+    "successTitle": "Account Created Successfully!",
+    "passwordNotice": "This password will be used to log in to all your roles.",
+    "redirecting": "Redirecting you to login...",
     "title": "Employee Signup",
     "step": "Step",
     "of": "of",
@@ -1213,6 +1224,53 @@
       "title": "Error Loading Data",
       "fetchFailed": "Failed to fetch transactions",
       "loadFailed": "Failed to load transaction data."
+    }
+  },
+
+
+
+
+
+
+
+
+  "inactiveShops": {
+    "title": "Inactive Shops",
+    "subtitle": "List of shops where your access has been deactivated",
+    "loading": "Loading your inactive shops...",
+    "status": {
+      "inactive": "Inactive"
+    },
+    "labels": {
+      "joined": "Joined",
+      "deactivated": "Deactivated"
+    },
+    "contactMessage": "Contact the shop owner to regain access.",
+    "error": {
+      "notEmployee": "This page is only accessible to employees.",
+      "noUserId": "Employee information not found. Please log in again.",
+      "loadFailed": "Failed to load inactive shops",
+      "generic": "An error occurred while loading data",
+      "tryAgain": "Please try logging in again or contact support."
+    },
+    "empty": {
+      "title": "No Inactive Shops",
+      "message": "Great! You are currently active in all your assigned shops."
+    },
+    "sidebar": {
+      "title": "Employee Panel",
+      "dashboard": "Dashboard",
+      "inactiveShops": "Inactive Shops"
+    }
+  },
+  "employeeDashboard": {
+    "sidebar": {
+      "title": "Employee",
+      "dashboard": "Customer Lookup",
+      "inactiveShops": "Inactive Shops",
+      "logout": "Logout",
+      "close": "Close",
+      "help": "Help & Support"
     }
   }
 }

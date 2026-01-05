@@ -643,7 +643,7 @@ function Shopkeeper() {
         generateCaptcha();
         setSuccess(true);
         if (audioRef.current) audioRef.current.play();
-        setTimeout(() => navigate("/signin"), 2000);
+        setTimeout(() => navigate("/signin"), 7000);
       } else {
         const msg = contentType && contentType.includes("application/json")
           ? (await res.json()).message : await res.text();
@@ -683,19 +683,28 @@ function Shopkeeper() {
 
   return (
     <div
-      className="min-h-screen flex items-center justify-center p-6 bg-gray-200"
-      // style={{
-      //   backgroundImage: `
-      //     linear-gradient(to right, rgba(0,0,0,0.06) 1px, transparent 1px),
-      //     linear-gradient(to bottom, rgba(0,0,0,0.06) 1px, transparent 1px)
-      //   `,
-      //   backgroundSize: "40px 40px, 40px 40px",
-      //   backgroundAttachment: "fixed",
-      // }}
-    >
-      {success && <Confetti recycle={false} numberOfPieces={300} />}
+      className="min-h-screen flex items-center justify-center p-6 bg-gray-200">
+      {/* {success && <Confetti recycle={false} numberOfPieces={300} />} */}
+
+      {success && (
+        <>
+          <Confetti recycle={false} numberOfPieces={300} />
+          <div className="mb-6 p-4 rounded border border-green-200 bg-green-50 text-center">
+            <h3 className="text-green-700 font-bold text-lg mb-2">
+              {t("shopkeeper.successTitle")}
+            </h3>
+            <p className="text-green-700 text-sm">
+              🔐 {t("shopkeeper.passwordNotice")}
+            </p>
+            <p className="text-gray-600 text-sm mt-2">
+              {t("shopkeeper.redirecting")}
+            </p>
+          </div>
+        </>
+      )}
+
       
-      <div className="w-full max-w-xl bg-white border border-gray-200 rounded p-6 shadow-2xl">
+      <div className="w-full max-w-lg bg-white border border-gray-200 rounded p-6 shadow-2xl">
         <h2 className="text-3xl font-extrabold text-teal-700 text-center mb-1">
           {t("shopkeeper.title")}
         </h2>

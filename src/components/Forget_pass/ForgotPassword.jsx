@@ -169,6 +169,7 @@ const ForgotPassword = () => {
         }
       }
       setMessage(t("forgotPassword.success.checkInbox"));
+      setTimeout(() => navigate("/signin"), 2000);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -186,7 +187,7 @@ const ForgotPassword = () => {
       }}
     >
       {/* Card: Clean white, sharply rounded, strong shadow */}
-      <div className="w-full max-w-xl bg-white rounded p-6 shadow-2xl border border-gray-200">
+      <div className="w-full max-w-lg bg-white rounded p-6 shadow-2xl border border-gray-200">
         <div className="text-center mb-8">
           <Lock className="h-10 w-10 text-purple-700 mx-auto mb-2 transform rotate-45" />
           <h2 className="text-3xl font-extrabold text-gray-800">
