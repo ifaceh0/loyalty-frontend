@@ -1413,15 +1413,27 @@ const Signin = () => {
   };
 
   const finishLogin = (data) => {
-    const loginRole = data.role;
-    const loginId = data.id;
-    const loginName = data.name;
+    let loginRole = data.role;   
+    let loginId = data.id;        
+    let loginName = data.name;
+
+    // Handle single role auto-login (when backend sends direct response)
+    if (data.roles && data.roles.length === 1) {
+      const single = data.roles[0];
+      loginRole = single.role;
+      loginId = single.refId;
+      loginName = single.displayName;
+    }
 
     localStorage.setItem("isLoggedIn", "true");
     localStorage.setItem("id", String(loginId || ""));
     localStorage.setItem("name", loginName || "");
     localStorage.setItem("companyEmail", data.companyEmail || "");
     localStorage.setItem("role", loginRole || "");
+
+    if (loginRole === "EMPLOYEE" && data.userId) {
+      localStorage.setItem("employeeUserId", data.userId);
+    }
 
     setSuccess(true);
 
@@ -1430,8 +1442,7 @@ const Signin = () => {
         navigate("/shopkeeper/dashboard");
       } else if (loginRole === "USER") {
         navigate("/user/dashboard");
-      } else if (loginRole === "EMPLOYEE" && data.userId) {
-        localStorage.setItem("employeeUserId", data.userId);
+      } else if (loginRole === "EMPLOYEE") {
         navigate("/employee/dashboard");
       } else {
         setError(t("signin.error.unknownRole", { role: loginRole }));
