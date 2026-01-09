@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { 
   faChartBar, 
@@ -7,7 +7,7 @@ import {
   faStore, 
   faSignOutAlt 
 } from "@fortawesome/free-solid-svg-icons";
-import { X, Menu } from "lucide-react";
+import { Mail, X, Menu } from "lucide-react";
 import CustomerLookup from "../Customer/CustomerLookup"; 
 import InactiveShopsPage from "../Employee/InactiveShopsPage";
 import { useSidebar } from "../../context/SidebarContext";
@@ -130,16 +130,18 @@ const EmployeeDashboard = () => {
         </nav>
 
         <div className="absolute bottom-4 left-0 w-full px-3 sm:px-4">
-          <a
-            href="#"
-            className={`w-full text-center py-1 text-xs sm:text-sm hover:underline transition block ${
-              isSidebarExpanded ? "" : "flex items-center justify-center"
+          <Link
+            to="/contact"
+            className={`w-full text-center py-5 text-sm sm:text-md hover:underline transition block ${
+              isSidebarExpanded ? "hover:text-blue-600" : "flex items-center justify-center"
             }`}
+            onClick={() => setSidebarOpen(false)}
           >
             <span className={`${!isSidebarExpanded && "hidden"}`}>
-              {t("employeeDashboard.sidebar.help") || "Help & Support"}
+              {t("employeeDashboard.sidebar.contactUs") || "Contact Us"}
             </span>
-          </a>
+            {!isSidebarExpanded && <Mail className="w-5 h-5 text-blue-600" />}
+          </Link>
         </div>
       </aside>
 

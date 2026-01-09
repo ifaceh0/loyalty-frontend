@@ -1603,14 +1603,13 @@ const Signin = () => {
           )}
 
           {/* STEP 3: Shop Selection for Employee */}
-          {showShopSelection && (
-            <div className="mt-6 space-y-6">
+          {/* {showShopSelection && (
+            <div className="mt-6 space-y-4">
               <h3 className="text-2xl font-bold text-center text-gray-800">
                 {t("signin.chooseShop") || "Select Your Shop"}
               </h3>
 
-              {/* Tile/Grid Layout */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-14">
                 {employeeShops.map((shop) => (
                   <div
                     key={shop.refId}
@@ -1623,24 +1622,47 @@ const Signin = () => {
                       ${loading ? "opacity-60 cursor-not-allowed" : ""}
                     `}
                   >
-                    {/* Shop Tile Card */}
-                    <div className="bg-gradient-to-br from-emerald-500 to-teal-600 p-3 text-white h-full flex flex-col items-center justify-center text-center">
-                      <UsersIcon className="w-7 h-7 mb-2 opacity-90" />
-                      <h4 className="text-xl font-bold mb-1">{shop.displayName}</h4>
-                      <p className="text-sm opacity-90">Shop Employee Access</p>
-
-                      {/* Selected Checkmark */}
-                      {selectedRoleInfo && selectedRoleInfo.refId === shop.refId && (
-                        <div className="absolute top-1 right-1 bg-white rounded-full p-1 shadow-lg">
-                          <CheckCircle className="w-4 h-4 text-emerald-600" />
+                    
+                    <div className="bg-white border border-gray-200 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out 
+                                flex flex-col items-center justify-center p-3 text-center relative cursor-pointer
+                                // Conditional styling for when the shop is selected
+                                ${selectedRoleInfo && selectedRoleInfo.refId === shop.refId 
+                                    ? 'ring-4 ring-emerald-500 border-emerald-500' // Stronger focus ring
+                                    : ''
+                                }"
+                    >
+                        
+                        <div className="w-16 h-16 mb-3 flex items-center justify-center">
+                            {shop.shopLogoBase64 ? (
+                                <img
+                                    src={`data:image/png;base64,${shop.shopLogoBase64}`}
+                                    alt={`${shop.displayName} logo`}
+                                    className="w-full h-full object-contain rounded-full border border-gray-100 shadow-md"
+                                    onError={(e) => {
+                                        e.target.style.display = 'none'; // hide broken image
+                                    }}
+                                />
+                            ) : (
+                                // Fallback icon with a subtle background for visibility
+                                <div className="w-16 h-16 rounded-full bg-emerald-50 flex items-center justify-center">
+                                    <Store className="w-8 h-8 text-emerald-600" />
+                                </div>
+                            )}
                         </div>
-                      )}
+
+                        <h4 className="text-lg font-semibold text-gray-800 truncate max-w-[150px]">{shop.displayName}</h4>
+                        
+                        {selectedRoleInfo && selectedRoleInfo.refId === shop.refId && (
+                            // Checkmark position: top-right corner, fixed size, color pop
+                            <div className="absolute -top-3 -right-3 bg-emerald-600 rounded-full p-2 shadow-2xl border-4 border-white">
+                                <CheckCircle className="w-5 h-5 text-white" />
+                            </div>
+                        )}
                     </div>
                   </div>
                 ))}
               </div>
 
-              {/* Sign In Button */}
               <button
                 onClick={performLogin}
                 disabled={!selectedRoleInfo || loading}
@@ -1654,7 +1676,6 @@ const Signin = () => {
                 {loading ? t("signin.loggingIn") : t("signin.signInButton")}
               </button>
 
-              {/* Back Button */}
               <button
                 onClick={() => {
                   setShowShopSelection(false);
@@ -1662,6 +1683,95 @@ const Signin = () => {
                   setSelectedRoleInfo(null);
                 }}
                 className="w-full text-center text-gray-600 hover:text-gray-800 underline flex items-center justify-center gap-2 mt-4"
+              >
+                <ArrowLeft className="w-5 h-5" />
+                {t("signin.back") || "Back to Roles"}
+              </button>
+            </div>
+          )} */}
+
+          {showShopSelection && (
+            <div className="mt-4 space-y-6"> 
+              <h3 className="text-2xl font-bold text-center text-gray-800 mb-2">
+                {t("signin.chooseShop") || "Select Your Shop"}
+              </h3>
+
+              {/* Responsive Grid Layout (Max 3 columns, good width) */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 justify-center max-w-xl mx-auto">
+                {employeeShops.map((shop) => (
+                  <div
+                    key={shop.refId}
+                    onClick={() => handleRoleSelect(shop)}
+                    className={`
+                      bg-white border border-gray-300 rounded shadow-lg relative cursor-pointer
+                      overflow-hidden // Crucial for the colored top bar
+                      transition-all duration-300 ease-in-out w-full
+
+                      ${loading ? "opacity-60 cursor-not-allowed" : "hover:shadow-xl hover:border-emerald-500"}
+                      
+                      ${selectedRoleInfo && selectedRoleInfo.refId === shop.refId
+                        ? "ring-2 ring-emerald-500 border-emerald-500 shadow-2xl" 
+                        : ""
+                      }
+                    `}
+                  >
+
+                    <div className="flex flex-col items-center justify-center p-2">
+                        
+                        {/* Shop Logo Container (Large focus: w-16 h-16) */}
+                        <div className="w-20 h-16 flex items-center justify-center bg-white rounded shadow-md">
+                          {shop.shopLogoBase64 ? (
+                            <img
+                              src={`data:image/png;base64,${shop.shopLogoBase64}`}
+                              alt={`${shop.displayName} logo`}
+                              className="w-full h-full object-contain rounded"
+                              onError={(e) => { e.target.style.display = 'none'; }}
+                            />
+                          ) : (
+                            <div className="w-full h-full rounded bg-emerald-100 flex items-center justify-center">
+                              <Store className="w-8 h-8 text-emerald-600" />
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Shop Name (Large, clear, and allowed to wrap) */}
+                        <h4 className="text-md font-bold text-gray-800 text-center leading-snug break-words mt-1"> 
+                            {shop.displayName}
+                        </h4>
+                    </div>
+                    
+                    {/* Selected Checkmark (Prominent on the main card body) */}
+                    {selectedRoleInfo && selectedRoleInfo.refId === shop.refId && (
+                      <div className="absolute top-1 right-1 bg-emerald-600 rounded-full p-1 shadow-xl border-1 border-white">
+                        <CheckCircle className="w-4 h-4 text-white" />
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+
+              {/* Sign In Button */}
+              <button
+                onClick={performLogin}
+                disabled={!selectedRoleInfo || loading}
+                className={`w-full max-w-sm mx-auto flex items-center justify-center gap-3 bg-gradient-to-r from-emerald-500 to-sky-600 text-white py-2 text-xl font-bold rounded shadow-xl transition
+                  ${!selectedRoleInfo || loading 
+                    ? "opacity-70 cursor-not-allowed" 
+                    : "hover:from-emerald-600 hover:to-sky-700 hover:shadow-2xl transform hover:-translate-y-0.5"
+                  }`}
+              >
+                <LogIn className="w-5 h-5" />
+                {loading ? t("signin.loggingIn") : t("signin.signInButton")}
+              </button>
+
+              {/* Back Button */}
+              <button
+                onClick={() => {
+                  setShowShopSelection(false);
+                  setEmployeeShops([]);
+                  setSelectedRoleInfo(null);
+                }}
+                className="w-full max-w-sm mx-auto text-center text-gray-600 hover:text-gray-800 underline flex items-center justify-center gap-2 mt-4"
               >
                 <ArrowLeft className="w-5 h-5" />
                 {t("signin.back") || "Back to Roles"}

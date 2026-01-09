@@ -38,7 +38,7 @@ export default function InactiveShopsPage() {
     }
 
     setUserId(employeeUserId);
-  }, [t]); // ← Add t to deps to re-evaluate on language change
+  }, [t]);
 
   useEffect(() => {
     if (!userId) return;
@@ -114,9 +114,6 @@ export default function InactiveShopsPage() {
           <div className="bg-red-50 border border-red-200 rounded p-6 text-center">
             <AlertCircle className="w-12 h-12 text-red-600 mx-auto mb-4" />
             <p className="text-red-700 font-medium">{error}</p>
-            <p className="text-sm text-red-600 mt-2">
-              {t('inactiveShops.error.tryAgain')}
-            </p>
           </div>
         )}
 
@@ -135,56 +132,77 @@ export default function InactiveShopsPage() {
           </div>
         )}
 
-        {/* Inactive Shops List */}
+        {/* Inactive Shops Grid */}
         {!loading && !error && inactiveShops.length > 0 && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {inactiveShops.map((shop) => (
               <div
                 key={shop.shopId}
                 className="bg-white rounded shadow-md border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow"
               >
-                <div className="bg-gradient-to-r from-red-500 to-pink-600 p-6 text-white">
-                  <div className="flex items-center justify-between mb-4">
-                    <Store className="w-10 h-10 opacity-90" />
-                    <span className="bg-white/20 px-3 py-1 rounded-full text-sm font-medium">
-                      {t('inactiveShops.status.inactive')}
-                    </span>
-                  </div>
-                  <h3 className="text-xl font-bold truncate">{shop.shopName}</h3>
-                  <p className="text-sm opacity-90 mt-1">{shop.companyName}</p>
+                {/* Header with Logo */}
+                <div className="relative bg-gradient-to-r from-red-500 to-pink-600 flex items-center justify-center">
+                  {shop.shopLogoBase64 ? (
+                    <img
+                      src={`data:image/png;base64,${shop.shopLogoBase64}`}
+                      alt={`${shop.shopName} logo`}
+                      className="object-contain rounded shadow-lg bg-white"
+                      onError={(e) => {
+                        e.target.src = ''; 
+                        e.target.style.display = 'none';
+                      }}
+                    />
+                  ) : (
+                    <Store className="w-20 h-20 text-white/70" />
+                  )}
+
+                  {/* Inactive Badge */}
+                  <span className="absolute top-4 right-4 bg-white/25 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-medium text-white border border-white/30">
+                    {t('inactiveShops.status.inactive')}
+                  </span>
                 </div>
 
-                <div className="p-6 space-y-4">
+                {/* Content */}
+                <div className="p-4 space-y-3">
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-900 truncate">
+                      {shop.shopName}
+                    </h3>
+                    <p className="text-sm text-gray-600 mt-1">
+                      {shop.companyName}
+                    </p>
+                  </div>
+
                   <div className="text-sm text-gray-600 space-y-2">
                     <div className="flex items-center gap-2">
                       <Calendar className="w-4 h-4 text-gray-500" />
                       <span>
-                        <strong>{t('inactiveShops.labels.joined')}:</strong> {formatDate(shop.joinDate)}
+                        <strong>{t('inactiveShops.labels.joined')}:</strong>{' '}
+                        {formatDate(shop.joinDate)}
                       </span>
                     </div>
                     <div className="flex items-center gap-2">
                       <Clock className="w-4 h-4 text-gray-500" />
                       <span>
-                        <strong>{t('inactiveShops.labels.deactivated')}:</strong> {formatDate(shop.resignDate) || "—"}
+                        <strong>{t('inactiveShops.labels.deactivated')}:</strong>{' '}
+                        {formatDate(shop.resignDate) || "—"}
                       </span>
                     </div>
                   </div>
 
-                  <div className="pt-4 border-t border-gray-200 text-xs text-gray-500 space-y-1">
+                  <div className="pt-4 border-t border-gray-200 text-xs text-gray-600 space-y-2">
                     <p className="flex items-center gap-2">
-                      <Mail className="w-3.5 h-3.5" />
+                      <Mail className="w-4 h-4" />
                       {shop.companyEmail || "—"}
                     </p>
                     <p className="flex items-center gap-2">
-                      <Phone className="w-3.5 h-3.5" />
+                      <Phone className="w-4 h-4" />
                       {shop.companyPhone || "—"}
                     </p>
                   </div>
 
-                  <div className="pt-4 text-center">
-                    <p className="text-sm text-gray-600 italic">
-                      {t('inactiveShops.contactMessage')}
-                    </p>
+                  <div className="pt-2 text-center text-sm text-gray-500 italic">
+                    {t('inactiveShops.contactMessage')}
                   </div>
                 </div>
               </div>

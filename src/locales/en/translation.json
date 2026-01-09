@@ -296,18 +296,28 @@
   
   "contact": {
     "title": "Contact Loyalty Support",
-    "success": "Thank you! Your message has been sent.",
+    "subtitle": "We're here to help! Send us a message and we'll get back to you soon.",
+    "loggedInAs": "Logged in as:",
+    "autoFilled": "(Auto-filled)",
     "fullName": "Full Name",
-    "fullNamePlaceholder": "John Doe",
     "email": "Email Address",
-    "emailPlaceholder": "john@example.com",
     "subject": "Subject",
-    "subjectPlaceholder": "How can we help?",
+    "subjectPlaceholder": "How can we help you?",
     "message": "Your Message",
-    "messagePlaceholder": "Tell us more...",
-    "humanCheck": "I am not a robot",
+    "messagePlaceholder": "Tell us more about your issue or question...",
+    "captchaLabel": "Security Check",
+    "captchaPlaceholder": "Enter the code shown above",
+    "captchaError": "Invalid CAPTCHA code. Please try again.",
     "sendButton": "Send Message",
-    "responseTime": "We typically respond within <1>24 hours</1>."
+    "sending": "Sending your message...",
+    "success": "Thank you! Your message has been sent successfully.",
+    "error": "Failed to send message. Please try again.",
+    "responseTime": "We typically respond within 24 hours"
+  },
+  "roles": {
+    "user": "Customer",
+    "shopkeeper": "Shop Owner",
+    "employee": "Employee"
   },
   "footer": {
     "brandTitle": "LoyaltyHub",
@@ -575,7 +585,7 @@
       "subscription": "Subscription",
       "employees": "Employee Manage",
       "transactions": "Daily Transaction",
-      "help": "Need Help?"
+      "contactUs": "Contact Us"
     },
     "monthlySales": {
       "title": "Monthly Sales (Last 12 Months)",
@@ -1073,7 +1083,7 @@
       "profile": "Profile",
       "transactions": "Transactions",
       "visitedShops": "Visited Shops",
-      "help": "Need Help?"
+      "contactUs": "Contact Us"
     }
   },
 
@@ -1265,12 +1275,12 @@
   },
   "employeeDashboard": {
     "sidebar": {
-      "title": "Employee",
+      "title": "Employee Panel",
       "dashboard": "Customer Lookup",
       "inactiveShops": "Inactive Shops",
       "logout": "Logout",
       "close": "Close",
-      "help": "Help & Support"
+      "contactUs": "Contact Us"
     }
   }
 }

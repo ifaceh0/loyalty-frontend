@@ -36,6 +36,7 @@ import DailyTransactionReport from './components/Customer/DailyTransaction.jsx'
 import ShopkeeperGuide from './components/Home/ShopkeeperGuide.jsx'
 import InactiveShopsPage from './components/Employee/InactiveShopsPage.jsx'
 import EmployeeDashboard from './components/Dashboards/EmployeeDashboard.jsx';
+import AdminSupportInbox from './components/Contact/AdminSupportInbox.jsx';
 
 import './i18n';
 
@@ -147,6 +148,10 @@ const router = createBrowserRouter([
       {
         path:"/employee/dashboard",
         element:<EmployeeDashboard/>
+      },
+      {
+        path:"/support-inbox",
+        element:<AdminSupportInbox/>
       }
 
     ]

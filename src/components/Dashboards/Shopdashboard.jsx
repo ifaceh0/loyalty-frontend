@@ -429,7 +429,7 @@
 
 //translated
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Table, Card, Col, Row } from "antd";
 import {
   LineChart,
@@ -451,7 +451,7 @@ import DailyTransactionReport from "../Customer/DailyTransaction";
 import InviteEmployeePage from "../Employee/InviteEmployeePage";
 import UserPurchaseChart from "../bar chart/UserPurchaseChart";
 import { useSidebar } from "../../context/SidebarContext";
-import { X, Menu } from "lucide-react";
+import { Mail, X, Menu } from "lucide-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChartBar, faUser, faCog, faUsers, faCreditCard, faUserTie, faFileInvoiceDollar, faQuestionCircle } from "@fortawesome/free-solid-svg-icons";
 import { useTranslation } from "react-i18next"; // ← AÑADIDO
@@ -655,14 +655,18 @@ const Shopdashboard = () => {
           ))}
         </nav>
         <div className="absolute bottom-4 left-0 w-full px-3 sm:px-4">
-          <a
-            href="#"
-            className={`w-full text-center py-1 text-xs sm:text-sm hover:underline transition block ${
-              isSidebarExpanded ? "" : "flex items-center justify-center"
+          <Link
+            to="/contact"
+            className={`w-full text-center py-5 text-sm sm:text-md hover:underline transition block ${
+              isSidebarExpanded ? "hover:text-blue-600" : "flex items-center justify-center"
             }`}
+            onClick={() => setSidebarOpen(false)}
           >
-            <span className={`${!isSidebarExpanded && "hidden"}`}>{t("shopdashboard.sidebar.help")}</span>
-          </a>
+            <span className={`${!isSidebarExpanded && "hidden"}`}>
+              {t("shopdashboard.sidebar.contactUs") || "Contact Us"}
+            </span>
+            {!isSidebarExpanded && <Mail className="w-5 h-5 text-blue-600" />}
+          </Link>
         </div>
       </aside>
 

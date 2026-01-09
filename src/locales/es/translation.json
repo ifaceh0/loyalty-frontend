@@ -352,18 +352,28 @@
   },
   "contact": {
     "title": "Contacto con Soporte de Fidelidad",
-    "success": "¡Gracias! Tu mensaje ha sido enviado.",
+    "subtitle": "¡Estamos aquí para ayudarte! Envíanos un mensaje y te responderemos pronto.",
+    "loggedInAs": "Sesión iniciada como:",
+    "autoFilled": "(Auto-completado)",
     "fullName": "Nombre Completo",
-    "fullNamePlaceholder": "Juan Pérez",
     "email": "Correo Electrónico",
-    "emailPlaceholder": "juan@ejemplo.com",
     "subject": "Asunto",
     "subjectPlaceholder": "¿En qué podemos ayudarte?",
     "message": "Tu Mensaje",
-    "messagePlaceholder": "Cuéntanos más...",
-    "humanCheck": "No soy un robot",
+    "messagePlaceholder": "Cuéntanos más sobre tu consulta o problema...",
+    "captchaLabel": "Verificación de Seguridad",
+    "captchaPlaceholder": "Ingresa el código mostrado arriba",
+    "captchaError": "Código CAPTCHA inválido. Por favor intenta nuevamente.",
     "sendButton": "Enviar Mensaje",
-    "responseTime": "Normalmente respondemos en <1>24 horas</1>."
+    "sending": "Enviando tu mensaje...",
+    "success": "¡Gracias! Tu mensaje ha sido enviado exitosamente.",
+    "error": "Error al enviar el mensaje. Por favor intenta nuevamente.",
+    "responseTime": "Normalmente respondemos en menos de 24 horas"
+  },
+  "roles": {
+    "user": "Cliente",
+    "shopkeeper": "Dueño de Comercio",
+    "employee": "Empleado"
   },
   "footer": {
     "brandTitle": "LoyaltyHub",
@@ -631,7 +641,7 @@
       "subscription": "Suscripción",
       "employees": "Gestión de Empleados",
       "transactions": "Transacciones Diarias",
-      "help": "¿Necesitas ayuda?"
+      "contactUs": "Contáctanos"
     },
     "monthlySales": {
       "title": "Ventas Mensuales (Últimos 12 Meses)",
@@ -1147,7 +1157,7 @@
       "profile": "Mi Perfil",
       "transactions": "Transacciones",
       "visitedShops": "Tiendas Visitadas",
-      "help": "¿Necesitas ayuda?"
+      "contactUs": "Contáctanos"
     }
   },
 
@@ -1345,7 +1355,7 @@
       "inactiveShops": "Comercios Inactivos",
       "logout": "Cerrar Sesión",
       "close": "Cerrar",
-      "help": "Ayuda y Soporte"
+      "contactUs": "Contáctanos"
     }
   }
 }

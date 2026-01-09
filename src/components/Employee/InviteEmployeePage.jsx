@@ -1054,7 +1054,7 @@ export default function InviteEmployeePage() {
                         employees.map(emp => (
                           <div
                             key={emp.userId}
-                            className="flex flex-col sm:flex-row gap-4 p-4 sm:p-5 bg-slate-50 rounded hover:bg-slate-100 transition-all"
+                            className="flex flex-col sm:flex-row items-center gap-4 p-4 sm:p-5 bg-slate-50 rounded hover:bg-slate-100 transition-all"
                           >
                             <div className="flex items-start gap-4 flex-1">
                               <div className="w-11 h-11 sm:w-12 sm:h-12 bg-gradient-to-br from-indigo-600 to-indigo-700 rounded-full flex items-center justify-center text-white font-bold text-base sm:text-lg shrink-0">
@@ -1107,7 +1107,7 @@ export default function InviteEmployeePage() {
                             <button
                               onClick={() => toggleStatus(emp.userId, emp.isActive, shopId)}
                               disabled={loading}
-                              className={`px-5 py-2.5 rounded font-medium text-sm transition-all mt-2 sm:mt-0 w-full sm:w-auto flex items-center justify-center gap-2 shadow-sm
+                              className={`px-3 py-2 rounded-full font-medium text-sm transition-all mt-2 sm:mt-0 w-full sm:w-auto flex items-center justify-center gap-2 shadow-sm
                                 ${emp.isActive 
                                   ? 'bg-red-50 text-red-700 hover:bg-red-100 border border-red-200' 
                                   : 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200'}
@@ -1115,9 +1115,15 @@ export default function InviteEmployeePage() {
                               `}
                             >
                               {emp.isActive ? (
-                                <>Deactivate <ToggleRight className="w-5 h-5" /></>
+                                <>
+                                  {t('employee.buttons.deactivate')}
+                                  <ToggleRight className="w-5 h-5" />
+                                </>
                               ) : (
-                                <>Activate <ToggleLeft className="w-5 h-5" /></>
+                                <>
+                                  {t('employee.buttons.activate')}
+                                  <ToggleLeft className="w-5 h-5" />
+                                </>
                               )}
                             </button>
                           </div>
@@ -1138,7 +1144,7 @@ export default function InviteEmployeePage() {
                         pendingInvitations.map(inv => (
                           <div
                             key={inv.id}
-                            className="flex flex-col sm:flex-row gap-4 p-4 sm:p-5 bg-slate-50 rounded hover:bg-slate-100 transition-all"
+                            className="flex flex-col sm:flex-row items-center gap-4 p-4 sm:p-5 bg-slate-50 rounded hover:bg-slate-100 transition-all"
                           >
                             <div className="flex items-start gap-4 flex-1">
                               <div className="bg-indigo-100 p-2 rounded shrink-0">
@@ -1178,14 +1184,14 @@ export default function InviteEmployeePage() {
                             <div className="flex gap-2 justify-end sm:justify-start">
                               <button
                                 onClick={() => resendInvite(inv.id)}
-                                className="p-2.5 text-indigo-600 hover:bg-indigo-100 rounded transition"
+                                className="p-2 text-indigo-600 hover:bg-indigo-100 rounded-full transition"
                                 title={t('employee.buttons.resend')}
                               >
                                 <RefreshCw className="w-4.5 h-4.5" />
                               </button>
                               <button
                                 onClick={() => deleteInvite(inv.id)}
-                                className="p-2.5 text-red-600 hover:bg-red-100 rounded transition"
+                                className="p-2 text-red-600 hover:bg-red-100 rounded-full transition"
                                 title={t('employee.buttons.delete')}
                               >
                                 <Trash2 className="w-4.5 h-4.5" />
