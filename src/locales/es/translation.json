@@ -1156,7 +1156,7 @@
       "dashboard": "Inicio",
       "profile": "Mi Perfil",
       "transactions": "Transacciones",
-      "visitedShops": "Tiendas Visitadas",
+      "RegisteredShops": "Tiendas Registradas",
       "contactUs": "Contáctanos"
     }
   },
@@ -1194,17 +1194,17 @@
   },
 
   "userShopList": {
-    "title": "Tus Tiendas Visitadas",
-    "searchPlaceholder": "Buscar en tus tiendas visitadas...",
+    "title": "Tus Tiendas Registradas",
+    "searchPlaceholder": "Buscar en tus tiendas registradas...",
     "loading": {
       "title": "Cargando Tiendas...",
-      "subtitle": "Por favor espera mientras cargamos los detalles de tus tiendas visitadas."
+      "subtitle": "Por favor espera mientras cargamos los detalles de tus tiendas registradas."
     },
     "noResults": {
       "oops": "¡Ups!",
-      "message": "No se encontraron tiendas visitadas que coincidan con tu búsqueda. ¡Intenta ampliar la búsqueda!"
+      "message": "No se encontraron tiendas registradas que coincidan con tu búsqueda. ¡Intenta ampliar la búsqueda!"
     },
-    "visitedBadge": "Tienda Visitada",
+    "visitedBadge": "Tienda Registrada",
     "qr": {
       "button": "Código QR",
       "generating": "Generando..."

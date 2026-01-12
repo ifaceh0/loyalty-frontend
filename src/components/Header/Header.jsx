@@ -423,13 +423,21 @@ export default function Header() {
       <div className="mt-4">
         <p className="font-medium text-gray-700 mb-1">{t('header.signUp')} as</p>
         <div className="flex flex-col gap-1">
-          <NavLink
+          {/* <NavLink
             to="/signup-shopkeeper"
+            className="px-2 py-2 text-sm text-emerald-700 hover:bg-emerald-200 rounded font-medium"
+            onClick={() => setMobileMenuOpen(false)}
+          > */}
+          <a
+            href="https://subscription-frontend-psi.vercel.app/subscription"
+            target="_blank"
+            rel="noopener noreferrer"
             className="px-2 py-2 text-sm text-emerald-700 hover:bg-emerald-200 rounded font-medium"
             onClick={() => setMobileMenuOpen(false)}
           >
             {t('header.signUpShopkeeper')}
-          </NavLink>
+          </a>
+          {/* </NavLink> */}
           <NavLink
             to="/signup-user"
             className="px-2 py-2 text-sm text-emerald-700 hover:bg-emerald-200 rounded font-medium"
@@ -537,12 +545,19 @@ export default function Header() {
                     {t('header.signUp')}
                   </div>
                   <div className="absolute right-0 mt-2 bg-white rounded shadow-xl z-10 min-w-[160px] opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-200 border border-gray-200">
-                    <NavLink
+                    {/* <NavLink
                       to="/signup-shopkeeper"
+                      className="block px-3 py-2 text-sm text-emerald-700 hover:bg-emerald-100 transition rounded-t"
+                    > */}
+                    <a 
+                      href="https://subscription-frontend-psi.vercel.app/subscription"
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="block px-3 py-2 text-sm text-emerald-700 hover:bg-emerald-100 transition rounded-t"
                     >
                       {t('header.signUpShopkeeper')}
-                    </NavLink>
+                    </a>  
+                    {/* </NavLink> */}
                     <NavLink
                       to="/signup-user"
                       className="block px-3 py-2 text-sm text-emerald-700 hover:bg-emerald-100 transition rounded-b"

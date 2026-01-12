@@ -1082,7 +1082,7 @@
       "dashboard": "Dashboard",
       "profile": "Profile",
       "transactions": "Transactions",
-      "visitedShops": "Visited Shops",
+      "RegisteredShops": "Registered Shops",
       "contactUs": "Contact Us"
     }
   },
@@ -1120,17 +1120,17 @@
   },
 
   "userShopList": {
-    "title": "Your Visited Loyalty Hubs",
-    "searchPlaceholder": "Search your visited shops...",
+    "title": "Your Registered Loyalty Hubs",
+    "searchPlaceholder": "Search your registered shops...",
     "loading": {
       "title": "Loading Shops...",
-      "subtitle": "Please wait while we fetch your visited shop details."
+      "subtitle": "Please wait while we fetch your registered shop details."
     },
     "noResults": {
       "oops": "Oops!",
-      "message": "No visited shops found matching your search. Try broadening your search!"
+      "message": "No registered shops found matching your search. Try broadening your search!"
     },
-    "visitedBadge": "Visited Shop",
+    "visitedBadge": "Registered Shop",
     "qr": {
       "button": "QR Code",
       "generating": "Generating..."

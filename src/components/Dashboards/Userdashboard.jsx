@@ -235,7 +235,7 @@ const Userdashboard = () => {
             { tab: "user-stats", icon: faHome, label: t("userDashboard.sidebar.dashboard") },
             { tab: "user_profile", icon: faUser, label: t("userDashboard.sidebar.profile") },
             { tab: "transactions", icon: faExchangeAlt, label: t("userDashboard.sidebar.transactions") },
-            { tab: "shop", icon: faStore, label: t("userDashboard.sidebar.visitedShops") },
+            { tab: "shop", icon: faStore, label: t("userDashboard.sidebar.RegisteredShops") },
           ].map(({ tab, icon: Icon, label }) => (
             <div key={tab} className="relative group">
               <button
