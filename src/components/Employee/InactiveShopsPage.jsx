@@ -9,8 +9,9 @@ import {
   Phone
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { API_BASE_URL } from '../../apiConfig';
 
-const API_BASE = 'https://loyalty-backend-java.onrender.com/api';
+const API_BASE = `${API_BASE_URL}/api`;
 
 export default function InactiveShopsPage() {
   const { t } = useTranslation();

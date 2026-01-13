@@ -100,10 +100,11 @@
 //translated version
 import React, { useState, useEffect } from "react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
-import { useTranslation } from "react-i18next"; // ← AÑADIDO
+import { useTranslation } from "react-i18next"; 
+import { API_BASE_URL } from '../../apiConfig';
 
 const UserPurchaseChart = () => {
-  const { t } = useTranslation(); // ← AÑADIDO
+  const { t } = useTranslation();
   const [chartData, setChartData] = useState([]);
 
   useEffect(() => {
@@ -113,7 +114,7 @@ const UserPurchaseChart = () => {
         const shopId = localStorage.getItem("id");
 
         const response = await fetch(
-          `https://loyalty-backend-java.onrender.com/api/dashboard/monthly?shopId=${shopId}`,
+          `${API_BASE_URL}/api/dashboard/monthly?shopId=${shopId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

@@ -740,7 +740,8 @@ import {
   faCoins,
   faIdCard,
 } from "@fortawesome/free-solid-svg-icons";
-import { useTranslation } from "react-i18next"; // ← ADDED
+import { useTranslation } from "react-i18next";
+import { API_BASE_URL } from '../../apiConfig';
 
 const PRIMARY_COLOR = "blue-600";
 const ACCENT_COLOR = "cyan-500";
@@ -833,7 +834,7 @@ const QrScanner = ({ onClose }) => {
     setError(null);
 
     try {
-      const res = await fetch("https://loyalty-backend-java.onrender.com/api/qrcode/decode", {
+      const res = await fetch(`${API_BASE_URL}/api/qrcode/decode`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(parsed),
@@ -867,7 +868,7 @@ const QrScanner = ({ onClose }) => {
     }
 
     try {
-      const url = `https://loyalty-backend-java.onrender.com/api/qrcode/check-eligible?userId=${userId}&shopId=${shopId}`;
+      const url = `${API_BASE_URL}/api/qrcode/check-eligible?userId=${userId}&shopId=${shopId}`;
       console.log("Eligibility URL:", url);
       const res = await fetch(url);
 
@@ -910,7 +911,7 @@ const QrScanner = ({ onClose }) => {
     setIsSubmitting(true);
 
     try {
-      const res = await fetch("https://loyalty-backend-java.onrender.com/api/qrcode/add-points", {
+      const res = await fetch(`${API_BASE_URL}/api/qrcode/add-points`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -953,7 +954,7 @@ const QrScanner = ({ onClose }) => {
     setIsConfirming(true);
 
     try {
-      const res = await fetch("https://loyalty-backend-java.onrender.com/api/qrcode/process-purchase", {
+      const res = await fetch(`${API_BASE_URL}/api/qrcode/process-purchase`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

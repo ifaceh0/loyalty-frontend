@@ -463,10 +463,10 @@ import {
   Zap,
   AlertCircle,
 } from "lucide-react";
-import { useTranslation } from 'react-i18next'; // ← ONLY ADDED
+import { useTranslation } from 'react-i18next';
 
 export default function ShopkeeperFullFlowDemo() {
-  const { t } = useTranslation(); // ← ONLY THIS LINE ADDED
+  const { t } = useTranslation();
   const [showFAQ, setShowFAQ] = useState([]);
 
   const SUBSCRIPTION_URL = "https://subscription-frontend-psi.vercel.app/subscription";

@@ -724,10 +724,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Search, Calendar, X, Gift, DollarSign, ArrowUpCircle, ArrowDownCircle, ShoppingBag, TrendingUp, Loader2, Clock, AlertCircle, Download, Printer } from 'lucide-react';
 import { format } from 'date-fns';
-import { useTranslation } from 'react-i18next'; // ← AÑADIDO (i18n)
+import { useTranslation } from 'react-i18next'; 
+import { API_BASE_URL } from '../../apiConfig';
 
 const DailyTransaction = () => {
-  const { t } = useTranslation(); // ← AÑADIDO
+  const { t } = useTranslation();
 
   const [popupTitle, setPopupTitle] = useState(t('daily.popup.userProfile'));
   const [showUserPopup, setShowUserPopup] = useState(false);
@@ -752,7 +753,7 @@ const DailyTransaction = () => {
 
     try {
       const response = await fetch(
-        `https://loyalty-backend-java.onrender.com/api/dashboard/transactions/${userId}/${shopId}`,
+        `${API_BASE_URL}/api/dashboard/transactions/${userId}/${shopId}`,
         { method: 'GET', credentials: 'include' }
       );
 
@@ -791,7 +792,7 @@ const DailyTransaction = () => {
 
     try {
       const response = await fetch(
-        `https://loyalty-backend-java.onrender.com/api/dashboard/date_transactions/${shopId}/${date}`,
+        `${API_BASE_URL}/api/dashboard/date_transactions/${shopId}/${date}`,
         { method: 'GET', credentials: 'include' }
       );
 

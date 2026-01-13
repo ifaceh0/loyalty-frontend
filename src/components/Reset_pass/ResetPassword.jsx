@@ -283,10 +283,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { Eye, EyeOff, RefreshCw, Lock } from "lucide-react";
-import { useTranslation } from "react-i18next"; // ← Added
+import { useTranslation } from "react-i18next";
+import { API_BASE_URL } from '../../apiConfig';
 
 const ResetPassword = () => {
-  const { t } = useTranslation(); // ← Added
+  const { t } = useTranslation();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
@@ -370,7 +371,7 @@ const ResetPassword = () => {
     setLoading(true);
 
     try {
-      const res = await fetch("https://loyalty-backend-java.onrender.com/api/auth/reset-password", {
+      const res = await fetch(`${API_BASE_URL}/api/auth/reset-password`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, newPassword, resetToken: token }),

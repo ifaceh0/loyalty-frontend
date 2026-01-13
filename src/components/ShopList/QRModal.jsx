@@ -164,11 +164,10 @@ import {
 import { useTranslation } from 'react-i18next';
 
 export default function QRModal({ shop, qrData, isOpen, onClose }) {
-  // ALL HOOKS MUST BE AT THE TOP — NEVER AFTER A RETURN!
+  
   const { t } = useTranslation();
   const [showEncouragement, setShowEncouragement] = useState(false);
 
-  // Now it's safe to early-return
   if (!isOpen || !shop || !qrData) return null;
 
   const handleDownload = () => {

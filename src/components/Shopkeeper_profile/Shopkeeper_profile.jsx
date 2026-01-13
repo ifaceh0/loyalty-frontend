@@ -526,9 +526,9 @@ import {
     FiUser,
     FiBriefcase
 } from "react-icons/fi";
-import { useTranslation } from "react-i18next"; // ← AÑADIDO
+import { useTranslation } from "react-i18next";
+import { API_BASE_URL } from '../../apiConfig';
 
-// --- Custom Components & Styles ---
 const inputStyle = (isEditing) => 
   `w-full px-3 sm:px-4 py-2.5 sm:py-3 border rounded outline-none transition duration-200 shadow-sm text-gray-800 text-sm sm:text-base ${
     isEditing ? "border-blue-400 focus:ring-2 focus:ring-blue-500/50" : "border-gray-200 bg-gray-100 cursor-default"
@@ -564,9 +564,8 @@ const InputField = ({ label, name, value, onChange, type = "text", disabled = fa
   </div>
 );
 
-// --- NEW: Phone Input with 10-digit Validation ---
 const PhoneInputField = ({ label, name, value, onChange, disabled = false, required = false }) => {
-  const { t } = useTranslation(); // ← AÑADIDO
+  const { t } = useTranslation();
   const [error, setError] = useState("");
 
   const validatePhone = (val) => {
@@ -616,9 +615,8 @@ const PhoneInputField = ({ label, name, value, onChange, disabled = false, requi
   );
 };
 
-// --- Main Component ---
 const ShopkeeperProfile = () => {
-  const { t } = useTranslation(); // ← AÑADIDO
+  const { t } = useTranslation();
 
   const [formData, setFormData] = useState({
     shopId: "",
@@ -642,7 +640,6 @@ const ShopkeeperProfile = () => {
   const [isRemoving, setIsRemoving] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // --- Data Fetching ---
   const fetchProfile = async () => {
     const storedId = localStorage.getItem("id");
     if (!storedId) {
@@ -652,7 +649,7 @@ const ShopkeeperProfile = () => {
 
     setLoading(true);
     try {
-      const res = await fetch(`https://loyalty-backend-java.onrender.com/api/shop/get-profile?shopId=${storedId}`);
+      const res = await fetch(`${API_BASE_URL}/api/shop/get-profile?shopId=${storedId}`);
       if (!res.ok) throw new Error("Failed to fetch profile");
       
       const data = await res.json();
@@ -672,7 +669,6 @@ const ShopkeeperProfile = () => {
     fetchProfile();
   }, []);
 
-  // --- Handlers ---
   const handleChange = (e) => {
     if (!isEditing) return;
     const { name, value } = e.target;
@@ -695,7 +691,7 @@ const ShopkeeperProfile = () => {
     formDataUpload.append("file", selectedFile);
 
     try {
-      const res = await fetch("https://loyalty-backend-java.onrender.com/api/shop/upload-image", {
+      const res = await fetch(`${API_BASE_URL}/api/shop/upload-image`, {
         method: "POST",
         body: formDataUpload,
       });
@@ -722,7 +718,7 @@ const ShopkeeperProfile = () => {
 
     setIsRemoving(true);
     try {
-      const res = await fetch(`https://loyalty-backend-java.onrender.com/api/shop/remove-image?shopId=${storedId}`, {
+      const res = await fetch(`${API_BASE_URL}/api/shop/remove-image?shopId=${storedId}`, {
         method: "DELETE",
       });
       const data = await res.json();
@@ -741,7 +737,6 @@ const ShopkeeperProfile = () => {
     }
   };
 
-  // --- UPDATED: handleSubmit with 10-digit phone validation ---
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -762,7 +757,7 @@ const ShopkeeperProfile = () => {
     const { logoImage, ...submitData } = formData;
     
     try {
-      const res = await fetch("https://loyalty-backend-java.onrender.com/api/shop/update-profile", {
+      const res = await fetch(`${API_BASE_URL}/api/shop/update-profile`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(submitData),
@@ -789,7 +784,6 @@ const ShopkeeperProfile = () => {
     setSelectedFile(null); 
   };
 
-  // --- Loading State ---
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center h-64 p-4">

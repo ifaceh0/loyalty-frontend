@@ -311,9 +311,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Loader2, Download, ShoppingBag, DollarSign, Target, ArrowUpCircle, ArrowDownCircle } from 'lucide-react';
 import { FiLoader } from "react-icons/fi";
 import * as XLSX from "xlsx";
-import { useTranslation } from 'react-i18next'; // ← ADDED
+import { useTranslation } from 'react-i18next';
+import { API_BASE_URL } from '../../apiConfig';
 
-const API_BASE_URL = "https://loyalty-backend-java.onrender.com/api";
+// const API_BASE_URL = "https://loyalty-backend-java.onrender.com/api";
 
 const UserTransactions = () => {
   const { t } = useTranslation(); // ← ADDED – Hook at the top
@@ -327,7 +328,7 @@ const UserTransactions = () => {
   useEffect(() => {
     const fetchTransactions = async () => {
       try {
-        const response = await fetch(`${API_BASE_URL}/userDashboard/transactions/${userId}`);
+        const response = await fetch(`${API_BASE_URL}/api/userDashboard/transactions/${userId}`);
         const data = await response.json();
 
         if (!response.ok) {

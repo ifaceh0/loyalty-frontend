@@ -464,13 +464,15 @@ import {
     faArrowRight
 } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
-import { useTranslation } from 'react-i18next'; // ← AÑADIDO
+import { useTranslation } from 'react-i18next';
 
-const API_BASE_URL = 'https://loyalty-backend-java.onrender.com/api/qrcode';
+import { API_BASE_URL } from '../../apiConfig';
+
+const API_BASE = `${API_BASE_URL}/api/qrcode`;
 const ITEMS_PER_PAGE = 10;
 
 export default function ExploreShops() {
-    const { t } = useTranslation(); // ← AÑADIDO
+    const { t } = useTranslation();
     const navigate = useNavigate();
 
     const [shops, setShops] = useState([]);
@@ -504,7 +506,7 @@ export default function ExploreShops() {
 
         const fetchShops = async () => {
             try {
-                const response = await fetch(`${API_BASE_URL}/allShopsAvailable?userId=${userId}`, {
+                const response = await fetch(`${API_BASE}/allShopsAvailable?userId=${userId}`, {
                     credentials: "include", 
                 });
 
@@ -572,7 +574,7 @@ export default function ExploreShops() {
             setError(null);
 
             const response = await fetch(
-                `${API_BASE_URL}/generate?shopId=${shop.shopId}&userId=${userId}`,
+                `${API_BASE}/generate?shopId=${shop.shopId}&userId=${userId}`,
                 {
                     credentials: "include", 
                 }

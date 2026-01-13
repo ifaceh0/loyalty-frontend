@@ -414,8 +414,9 @@ import { useState, useEffect, useRef } from 'react';
 import { Link } from "react-router-dom";
 import { ArrowLeft, CheckCircle, Send, Sparkles, Loader2, RefreshCw } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { API_BASE_URL } from '../../apiConfig';
 
-const API_BASE = 'https://loyalty-backend-java.onrender.com/api/loyalty_homePage/contact';
+const API_BASE = `${API_BASE_URL}/api/loyalty_homePage/contact`;
 
 export default function ContactUs() {
   const { t } = useTranslation();

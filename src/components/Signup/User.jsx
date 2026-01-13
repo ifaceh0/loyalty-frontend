@@ -430,7 +430,8 @@ import { useState, useEffect, useRef } from "react";
 import Confetti from "react-confetti";
 import { Eye, EyeOff, Lock, Mail, RefreshCw, User, Smartphone, Puzzle } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useTranslation } from 'react-i18next'; // ← ONLY THIS ADDED
+import { useTranslation } from 'react-i18next'; 
+import { API_BASE_URL } from '../../apiConfig';
 
 function UnderlineInput({ label, name, value, onChange, type = "text", Icon, ToggleIcon, onToggle }) {
   return (
@@ -510,7 +511,7 @@ function PhoneInputField({ label, value, onChange }) {
 }
 
 function UserSignup() {
-  const { t } = useTranslation(); // ← ONLY THIS LINE ADDED
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
   const [formData, setFormData] = useState({
@@ -608,7 +609,7 @@ function UserSignup() {
     setSuccess(false);
 
     try {
-      const response = await fetch("https://loyalty-backend-java.onrender.com/api/auth/registerUser", {
+      const response = await fetch(`${API_BASE_URL}/api/auth/registerUser`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

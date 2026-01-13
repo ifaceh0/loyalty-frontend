@@ -396,8 +396,9 @@ import {
   Square
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { API_BASE_URL } from '../../apiConfig';
 
-const API_BASE = 'https://loyalty-backend-java.onrender.com/api/loyalty_homePage';
+const API_BASE = `${API_BASE_URL}/api/loyalty_homePage`;
 
 export default function AdminSupportInbox() {
   const { t } = useTranslation();

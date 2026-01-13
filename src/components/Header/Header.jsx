@@ -283,12 +283,11 @@ import { FaUser, FaSignOutAlt } from 'react-icons/fa';
 import { Menu, X, List, PanelRightOpen, Globe } from 'lucide-react';
 import { useSidebar } from '../../context/SidebarContext';
 
-// ---- NEW: i18n ----
 import { useTranslation } from 'react-i18next';
-// ------------------
+import { API_BASE_URL } from '../../apiConfig';
 
 const LOGOUT_API =
-  'https://loyalty-backend-java.onrender.com/api/auth/logout';
+  `${API_BASE_URL}/api/auth/logout`;
 
 export default function Header() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -298,7 +297,7 @@ export default function Header() {
   const location = useLocation();
   const navigate = useNavigate();
   const { setSidebarOpen } = useSidebar();
-  const { t, i18n } = useTranslation(); // <-- i18n
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     const login = localStorage.getItem('isLoggedIn') === 'true';

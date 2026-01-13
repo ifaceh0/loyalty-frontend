@@ -163,10 +163,10 @@ import ExploreShops from "../ShopList/ExploreShops";
 import UserShopList from "../ShopList/UserShopList";
 import UserTransactions from "../bar chart/UserTransactions";
 import { useSidebar } from "../../context/SidebarContext";
-import { useTranslation } from "react-i18next"; // ← AÑADIDO
+import { useTranslation } from "react-i18next";
 
 const Userdashboard = () => {
-  const { t } = useTranslation(); // ← AÑADIDO
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { sidebarOpen, setSidebarOpen } = useSidebar();
   const [activeTab, setActiveTab] = useState("user-stats");

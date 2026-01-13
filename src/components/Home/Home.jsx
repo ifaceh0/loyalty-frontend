@@ -791,6 +791,7 @@ import {
   Calendar,
   MapPin,
 } from 'lucide-react';
+import { API_BASE_URL } from '../../apiConfig';
 
 import carousel1 from '../../assets/carousel1.jpg';
 import carousel2 from '../../assets/carousel2.jpg';
@@ -816,7 +817,7 @@ export default function Home() {
     const fetchSummary = async () => {
       try {
         const response = await fetch(
-          'https://loyalty-backend-java.onrender.com/api/loyalty_homePage/summary'
+          `${API_BASE_URL}/api/loyalty_homePage/summary`
         );
         const data = await response.json();
         setStats({

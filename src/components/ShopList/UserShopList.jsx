@@ -386,13 +386,14 @@ import {
   faCheckCircle
 } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
-import { useTranslation } from 'react-i18next'; // AÑADIDO
+import { useTranslation } from 'react-i18next';
+import { API_BASE_URL } from '../../apiConfig';
 
-const API_BASE_URL = 'https://loyalty-backend-java.onrender.com/api/qrcode';
+const API_BASE = `${API_BASE_URL}/api/qrcode`;
 const ITEMS_PER_PAGE = 8;
 
 export default function UserShopList() {
-  const { t } = useTranslation(); // AÑADIDO
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const [shops, setShops] = useState([]);
@@ -421,7 +422,7 @@ export default function UserShopList() {
 
     const fetchShops = async () => {
       try {
-        const response = await fetch(`${API_BASE_URL}/userSpecificShop?userId=${userId}`, {
+        const response = await fetch(`${API_BASE}/userSpecificShop?userId=${userId}`, {
           credentials: "include",
         });
 
@@ -466,7 +467,7 @@ export default function UserShopList() {
       setError(null);
 
       const response = await fetch(
-        `${API_BASE_URL}/generate?shopId=${shop.shopId}&userId=${userId}`,
+        `${API_BASE}/generate?shopId=${shop.shopId}&userId=${userId}`,
         {
           credentials: "include",
         }

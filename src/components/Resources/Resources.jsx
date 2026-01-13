@@ -270,9 +270,7 @@ import {
   ArrowRight,
 } from 'lucide-react';
 
-// ---- ADD THIS ----
 import { useTranslation } from 'react-i18next';
-// ----------------
 
 const resources = [
   {

@@ -1097,6 +1097,7 @@ import {
   ArrowLeft,
   LogIn,
 } from "lucide-react";
+import { API_BASE_URL } from '../../apiConfig';
 
 function FloatingInput({
   label,
@@ -1210,7 +1211,7 @@ const Signin = () => {
   const [roles, setRoles] = useState([]);
   const [employeeShops, setEmployeeShops] = useState([]);
   const [showShopSelection, setShowShopSelection] = useState(false);
-  const [selectedRoleInfo, setSelectedRoleInfo] = useState(null); // ← NEW: Selected role/shop
+  const [selectedRoleInfo, setSelectedRoleInfo] = useState(null);
   const [error, setError] = useState("");
   const [subscriptionMessage, setSubscriptionMessage] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -1291,7 +1292,7 @@ const Signin = () => {
     setLoading(true);
     try {
       const res = await fetch(
-        "https://loyalty-backend-java.onrender.com/api/auth/signIn/step1",
+        `${API_BASE_URL}/api/auth/signIn/step1`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -1391,7 +1392,7 @@ const Signin = () => {
       };
 
       const res = await fetch(
-        "https://loyalty-backend-java.onrender.com/api/auth/signIn/step2",
+        `${API_BASE_URL}/api/auth/signIn/step2`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

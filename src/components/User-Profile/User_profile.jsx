@@ -395,7 +395,8 @@
 import React, { useState, useEffect } from 'react';
 import { FiEdit3, FiSave, FiX, FiUser, FiMail, FiPhone, FiCheckCircle, FiLoader } from 'react-icons/fi';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useTranslation } from 'react-i18next'; // ← ADDED
+import { useTranslation } from 'react-i18next';
+import { API_BASE_URL } from '../../apiConfig';
 
 const ProfileInputField = ({ label, name, value, onChange, disabled, type = 'text', icon: Icon }) => (
   <div className="mb-5">
@@ -425,9 +426,8 @@ const ProfileInputField = ({ label, name, value, onChange, disabled, type = 'tex
   </div>
 );
 
-// --- Phone Input with 10-digit Validation (unchanged) ---
 const PhoneInputField = ({ label, name, value, onChange, disabled, icon: Icon = FiPhone }) => {
-  const { t } = useTranslation(); // ← ADDED
+  const { t } = useTranslation();
   const [error, setError] = useState("");
 
   const validatePhone = (val) => {
@@ -487,7 +487,7 @@ const PhoneInputField = ({ label, name, value, onChange, disabled, icon: Icon = 
 };
 
 const UserProfile = () => {
-  const { t } = useTranslation(); // ← ADDED & placed at top
+  const { t } = useTranslation();
 
   const [userData, setUserData] = useState({
     userId: null,
@@ -522,7 +522,7 @@ const UserProfile = () => {
     setIsLoading(true);
     try {
       const response = await fetch(
-        `https://loyalty-backend-java.onrender.com/api/user/get-profile?userId=${userId}`,
+        `${API_BASE_URL}/api/user/get-profile?userId=${userId}`,
         { method: 'GET', headers: { 'Content-Type': 'application/json' } }
       );
 
@@ -591,7 +591,7 @@ const UserProfile = () => {
       };
 
       const response = await fetch(
-        'https://loyalty-backend-java.onrender.com/api/user/update-profile',
+        `${API_BASE_URL}/api/user/update-profile`,
         {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },

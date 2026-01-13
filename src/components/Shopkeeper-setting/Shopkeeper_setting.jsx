@@ -562,6 +562,7 @@
 import React, { useState, useEffect } from "react";
 import { FiTrash2, FiX, FiEdit3, FiSave, FiPlus, FiLoader, FiSettings } from "react-icons/fi";
 import { useTranslation } from "react-i18next"; 
+import { API_BASE_URL } from '../../apiConfig';
 
 const inputStyle =
   "w-full px-3 sm:px-4 py-2 border border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500 transition duration-200 shadow-sm text-sm sm:text-base";
@@ -574,7 +575,7 @@ const SectionWrapper = ({ title, children, isEditMode }) => (
 );
 
 const ShopkeeperSetting = () => {
-  const { t } = useTranslation(); // ← AÑADIDO
+  const { t } = useTranslation();
 
   const [formData, setFormData] = useState({
     signUpBonusPoints: "",
@@ -617,7 +618,7 @@ const ShopkeeperSetting = () => {
       setIsLoading(true);
       try {
         const response = await fetch(
-          `https://loyalty-backend-java.onrender.com/api/shop/get-setting/${shopId}`
+          `${API_BASE_URL}/api/shop/get-setting/${shopId}`
         );
         if (response.ok) {
           const data = await response.json();
@@ -751,7 +752,7 @@ const ShopkeeperSetting = () => {
     
     try {
       const response = await fetch(
-        `https://loyalty-backend-java.onrender.com/api/shop/update-setting`,
+        `${API_BASE_URL}/api/shop/update-setting`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

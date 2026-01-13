@@ -398,9 +398,10 @@ import { FaInfoCircle } from "react-icons/fa";
 import Confetti from "react-confetti";
 import { Eye, EyeOff, Lock, Mail, RefreshCw, User, Smartphone, Puzzle } from "lucide-react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { useTranslation } from 'react-i18next'; // ← ONLY ADDED
+import { useTranslation } from 'react-i18next';
+import { API_BASE_URL } from '../../apiConfig';
 
-const API_BASE = 'https://loyalty-backend-java.onrender.com/api';
+const API_BASE = `${API_BASE_URL}/api`;
 
 function UnderlineInput({ label, name, value, onChange, type = "text", Icon, ToggleIcon, onToggle }) {
   return (
@@ -464,7 +465,7 @@ function PhoneInputField({ label, value, onChange }) {
 }
 
 export default function EmployeeSignupPage() {
-  const { t } = useTranslation(); // ← ONLY THIS LINE ADDED
+  const { t } = useTranslation(); 
   const [searchParams] = useSearchParams();
   const token = searchParams.get('token');
   const navigate = useNavigate();

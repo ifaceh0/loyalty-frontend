@@ -462,7 +462,8 @@ import {
   Mail, Lock, Eye, EyeOff, Building2, MapPin, Store,
   RefreshCw, CheckCircle, Smartphone, Globe, User, Puzzle
 } from "lucide-react";
-import { useTranslation } from 'react-i18next'; // ← ONLY THIS LINE ADDED
+import { useTranslation } from 'react-i18next';
+import { API_BASE_URL } from '../../apiConfig';
 
 function FlatInput({ label, name, value, onChange, type = "text", Icon, ToggleIcon, onToggle }) {
   return (
@@ -501,7 +502,7 @@ function FlatInput({ label, name, value, onChange, type = "text", Icon, ToggleIc
 }
 
 function Shopkeeper() {
-  const { t } = useTranslation(); // ← ONLY THIS LINE ADDED
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     shopName: "", companyName: "", companyEmail: "", companyAddress: "",
@@ -581,7 +582,7 @@ function Shopkeeper() {
     };
     try {
       const response = await fetchWithBackoff(
-        "https://loyalty-backend-java.onrender.com/api/shop/verifyShopSubscriptionEmail",
+        `${API_BASE_URL}/api/shop/verifyShopSubscriptionEmail`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -628,7 +629,7 @@ function Shopkeeper() {
 
     setLoading(true); setError(""); setSuccess(false);
     try {
-      const res = await fetch("https://loyalty-backend-java.onrender.com/api/auth/registerShopkeeper", {
+      const res = await fetch(`${API_BASE_URL}/api/auth/registerShopkeeper`, {
         method: "POST", headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData)
       });

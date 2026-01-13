@@ -454,10 +454,11 @@ import { useSidebar } from "../../context/SidebarContext";
 import { Mail, X, Menu } from "lucide-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChartBar, faUser, faCog, faUsers, faCreditCard, faUserTie, faFileInvoiceDollar, faQuestionCircle } from "@fortawesome/free-solid-svg-icons";
-import { useTranslation } from "react-i18next"; // ← AÑADIDO
+import { useTranslation } from "react-i18next";
+import { API_BASE_URL } from '../../apiConfig';
 
 const Shopdashboard = () => {
-  const { t } = useTranslation(); // ← AÑADIDO
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { sidebarOpen, setSidebarOpen } = useSidebar();
   const [activeTab, setActiveTab] = useState("user_stats");
@@ -491,7 +492,7 @@ const Shopdashboard = () => {
 
   const fetchDashboardData = async (shopId) => {
     try {
-      const res = await fetch(`https://loyalty-backend-java.onrender.com/api/dashboard/dashboardChat/${shopId}`, {
+      const res = await fetch(`${API_BASE_URL}/api/dashboard/dashboardChat/${shopId}`, {
         credentials: "include",
       });
       if (!res.ok) throw new Error("Unauthorized");
@@ -506,7 +507,7 @@ const Shopdashboard = () => {
 
   const fetchMonthlySales = async (shopId) => {
     try {
-      const res = await fetch(`https://loyalty-backend-java.onrender.com/api/dashboard/monthlySales/${shopId}`, {
+      const res = await fetch(`${API_BASE_URL}/api/dashboard/monthlySales/${shopId}`, {
         credentials: "include",
       });
       if (!res.ok) throw new Error("Unauthorized");
@@ -524,7 +525,7 @@ const Shopdashboard = () => {
 
   const fetchCustomerComparison = async (shopId) => {
     try {
-      const res = await fetch(`https://loyalty-backend-java.onrender.com/api/dashboard/customerCount/${shopId}`, {
+      const res = await fetch(`${API_BASE_URL}/api/dashboard/customerCount/${shopId}`, {
         credentials: "include",
       });
       if (!res.ok) throw new Error("Unauthorized");

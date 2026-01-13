@@ -136,10 +136,11 @@
 import React, { useState } from "react";
 import { Mail, Lock } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { useTranslation } from "react-i18next";   // Import this!
+import { useTranslation } from "react-i18next";
+import { API_BASE_URL } from '../../apiConfig';
 
 const ForgotPassword = () => {
-  const { t } = useTranslation();                     // This gives you the t() function
+  const { t } = useTranslation();                    
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
@@ -153,7 +154,7 @@ const ForgotPassword = () => {
     setLoading(true);
 
     try {
-      const res = await fetch("https://loyalty-backend-java.onrender.com/api/auth/forgot-password", {
+      const res = await fetch(`${API_BASE_URL}/api/auth/forgot-password`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),

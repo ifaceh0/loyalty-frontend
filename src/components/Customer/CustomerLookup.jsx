@@ -725,7 +725,8 @@ import {
   faCoins,
   faIdCard,
 } from "@fortawesome/free-solid-svg-icons";
-import { useTranslation } from "react-i18next"; // ← ADDED
+import { useTranslation } from "react-i18next";
+import { API_BASE_URL } from '../../apiConfig';
 
 const PRIMARY_COLOR = "blue-600";
 const ACCENT_COLOR = "cyan-500";
@@ -827,7 +828,7 @@ const CustomerLookup = () => {
       console.log("Searching with:", { type, query, shopId }); 
 
       const res = await fetch(
-        `https://loyalty-backend-java.onrender.com/api/shop/${endpoint}?shopId=${shopId}&${query}`
+        `${API_BASE_URL}/api/shop/${endpoint}?shopId=${shopId}&${query}`
       );
 
       if (!res.ok) {
@@ -868,7 +869,7 @@ const CustomerLookup = () => {
 
     setSendingInvite(true);
     try {
-      const res = await fetch("https://loyalty-backend-java.onrender.com/api/dashboard/invite", {
+      const res = await fetch(`${API_BASE_URL}/api/dashboard/invite`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: inviteEmail, shopId, shopName }),
@@ -889,7 +890,7 @@ const CustomerLookup = () => {
     setError(null);
 
     try {
-      const res = await fetch("https://loyalty-backend-java.onrender.com/api/qrcode/decode", {
+      const res = await fetch(`${API_BASE_URL}/api/qrcode/decode`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(parsed),
@@ -917,7 +918,7 @@ const CustomerLookup = () => {
 
   const checkRewardEligibility = async (userId, shopId) => {
     try {
-      const url = `https://loyalty-backend-java.onrender.com/api/qrcode/check-eligible?userId=${userId}&shopId=${shopId}`;
+      const url = `${API_BASE_URL}/api/qrcode/check-eligible?userId=${userId}&shopId=${shopId}`;
       const res = await fetch(url);
       if (!res.ok) throw new Error("Eligibility check failed");
       const data = await res.json();
@@ -948,7 +949,7 @@ const CustomerLookup = () => {
 
     setIsSubmitting(true);
     try {
-      const res = await fetch("https://loyalty-backend-java.onrender.com/api/qrcode/add-points", {
+      const res = await fetch(`${API_BASE_URL}/api/qrcode/add-points`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -977,7 +978,7 @@ const CustomerLookup = () => {
     setIsConfirming(true);
 
     try {
-      const res = await fetch("https://loyalty-backend-java.onrender.com/api/qrcode/process-purchase", {
+      const res = await fetch(`${API_BASE_URL}/api/qrcode/process-purchase`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

@@ -161,7 +161,7 @@
 //translated version
 import React from "react";
 import { Star, Package, RefreshCw, Zap, Compass, Shield, ArrowRight } from "lucide-react";
-import { useTranslation } from "react-i18next"; // ← AÑADIDO
+import { useTranslation } from "react-i18next";
 
 const FeatureCard = ({ icon, title, description, gradient }) => (
   <div className="group relative overflow-hidden rounded bg-white p-7 shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl border border-gray-100">
@@ -233,7 +233,7 @@ const SubscriptionDashboard = () => {
 
   return (
     <div className="min-h-screen max-w-6xl mx-auto bg-gradient-to-b from-gray-50 to-white">
-      {/* ==================== HERO SECTION ==================== */}
+      
       <header className="bg-gradient-to-r from-blue-600 to-violet-600 py-16 rounded-t text-center text-white">
         <div className="mx-auto max-w-5xl px-4">
           <h1 className="mb-3 text-3xl md:text-4xl font-bold">
@@ -256,7 +256,6 @@ const SubscriptionDashboard = () => {
         </div>
       </header>
 
-      {/* ==================== FEATURES GRID ==================== */}
       <section className="mx-auto max-w-5xl px-4 py-14">
         <h2 className="mb-10 text-center text-2xl md:text-3xl font-bold text-gray-800">
           {t("subscriptionDashboard.features.sectionTitle")}
