@@ -29,7 +29,7 @@ import ShopkeeperProfile from './components/Shopkeeper_profile/Shopkeeper_profil
 import { SidebarProvider } from './context/SidebarContext.jsx';
 import SubscriptionDashboard from './components/Subscription/SubscriptionDashboard.jsx';
 import UserShopList from './components/ShopList/UserShopList.jsx';
-import PlanChange from './components/Subscription/Planchange.jsx';
+// import PlanChange from './components/Subscription/Planchange.jsx';
 import EmployeeSignupPage from './components/Signup/EmployeeSignupPage.jsx';
 import InviteEmployeePage from './components/Employee/InviteEmployeePage.jsx';
 import DailyTransactionReport from './components/Customer/DailyTransaction.jsx'
