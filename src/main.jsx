@@ -118,10 +118,10 @@ const router = createBrowserRouter([
         path:"shop-list",
         element:<UserShopList/>
       },
-      {
-        path:"/shopkeeper/plan-selection",
-        element:<PlanChange/>
-      },
+      // {
+      //   path:"/shopkeeper/plan-selection",
+      //   element:<PlanChange/>
+      // },
 
       {
         path:"/employee/signup",
