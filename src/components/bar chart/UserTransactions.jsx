@@ -317,7 +317,7 @@ import { API_BASE_URL } from '../../apiConfig';
 // const API_BASE_URL = "https://loyalty-backend-java.onrender.com/api";
 
 const UserTransactions = () => {
-  const { t } = useTranslation(); // ← ADDED – Hook at the top
+  const { t } = useTranslation();
   const userId = localStorage.getItem("id");
 
   const [transactionsByShop, setTransactionsByShop] = useState({});
