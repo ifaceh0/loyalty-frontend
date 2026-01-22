@@ -405,6 +405,7 @@ export default function UserShopList() {
   const [currentPage, setCurrentPage] = useState(1);
   const [loadingShopId, setLoadingShopId] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [totalPages, setTotalPages] = useState(1);
 
   const checkAuth = () => {
     const isLoggedIn = localStorage.getItem('isLoggedIn');
@@ -416,37 +417,71 @@ export default function UserShopList() {
     return userId;
   };
 
+  // useEffect(() => {
+  //   const userId = checkAuth();
+  //   if (!userId) return;
+
+  //   const fetchShops = async () => {
+  //     try {
+  //       const response = await fetch(`${API_BASE}/userSpecificShop?userId=${userId}`, {
+  //         credentials: "include",
+  //       });
+
+  //       if (!response.ok) {
+  //         if (response.status === 401) {
+  //           localStorage.clear();
+  //           navigate('/signin');
+  //           return;
+  //         }
+  //         throw new Error('Failed to load shops');
+  //       }
+
+  //       const data = await response.json();
+  //       setShops(data);
+  //       setFilteredShops(data);
+  //     } catch (err) {
+  //       setError(err.message || 'Something went wrong');
+  //     } finally {
+  //       setIsLoading(false);
+  //     }
+  //   };
+
+  //   fetchShops();
+  // }, [navigate]);
+
   useEffect(() => {
     const userId = checkAuth();
     if (!userId) return;
 
-    const fetchShops = async () => {
-      try {
-        const response = await fetch(`${API_BASE}/userSpecificShop?userId=${userId}`, {
-          credentials: "include",
-        });
+    fetchShops(userId, currentPage);
+  }, [currentPage, navigate]);
 
-        if (!response.ok) {
-          if (response.status === 401) {
-            localStorage.clear();
-            navigate('/signin');
-            return;
-          }
-          throw new Error('Failed to load shops');
+  const fetchShops = async (userId, page = 1) => {
+    setIsLoading(true);
+    try {
+      const response = await fetch(
+        `${API_BASE}/userSpecificShop?userId=${userId}&page=${page-1}&size=${ITEMS_PER_PAGE}`,
+        { credentials: "include" }
+      );
+
+      if (!response.ok) {
+        if (response.status === 401) {
+          localStorage.clear();
+          navigate('/signin');
+          return;
         }
-
-        const data = await response.json();
-        setShops(data);
-        setFilteredShops(data);
-      } catch (err) {
-        setError(err.message || 'Something went wrong');
-      } finally {
-        setIsLoading(false);
+        throw new Error('Failed to load shops');
       }
-    };
 
-    fetchShops();
-  }, [navigate]);
+      const data = await response.json();
+      setShops(data.content || []);           
+      setTotalPages(data.totalPages || 1);   
+    } catch (err) {
+      setError(err.message || 'Something went wrong');
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
     const lower = searchTerm.toLowerCase();
@@ -505,8 +540,9 @@ export default function UserShopList() {
     if (currentPage < totalPages) setCurrentPage(currentPage + 1);
   };
 
-  const totalPages = Math.ceil(filteredShops.length / ITEMS_PER_PAGE);
-  const currentShops = filteredShops.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE);
+  // const totalPages = Math.ceil(filteredShops.length / ITEMS_PER_PAGE);
+  // const currentShops = filteredShops.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE);
+  const currentShops = shops;
 
   if (isLoading) {
     return (
@@ -530,7 +566,7 @@ export default function UserShopList() {
   return (
     <div className="min-h-screen bg-blue-50 p-4 md:p-1">
       <motion.h1
-        className="text-4xl font-extrabold text-center text-blue-800 mb-10"
+        className="text-4xl font-extrabold text-center text-blue-800 mb-20"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
@@ -538,7 +574,7 @@ export default function UserShopList() {
         {t('userShopList.title')}
       </motion.h1>
 
-      <div className="flex justify-center mb-10">
+      {/* <div className="flex justify-center mb-10">
         <input
           type="text"
           value={searchTerm}
@@ -546,7 +582,7 @@ export default function UserShopList() {
           placeholder={t('userShopList.searchPlaceholder')}
           className="w-full md:w-1/2 px-5 py-2 rounded border-2 border-blue-200 focus:outline-none focus:ring-4 focus:ring-offset-2 focus:ring-blue-400 shadow-md transition"
         />
-      </div>
+      </div> */}
 
       {error && (
         <p className="text-red-500 text-center font-semibold bg-red-100 p-3 rounded mx-auto max-w-lg mb-6">
@@ -582,11 +618,19 @@ export default function UserShopList() {
               {/* Image with Awning */}
               <div className="relative">
                 <div className="absolute top-0 left-0 right-0 h-4 bg-blue-600 clip-awning"></div>
-                {shop.logoImage ? (
+                {/* {shop.logoImage ? (
                   <img
                     src={`data:image/jpeg;base64,${shop.logoImage}`}
                     alt={shop.shopName}
                     className="w-full h-40 object-cover border-blue-800"
+                  /> */}
+
+                {shop.logoUrl ? (
+                  <img
+                    src={`${API_BASE_URL}${shop.logoUrl}`}  
+                    alt={shop.shopName}
+                    className="w-full h-40 object-cover border-blue-800"
+                    loading="lazy" 
                   />
                 ) : (
                   <div className="w-full h-40 bg-gradient-to-br from-blue-100 to-blue-200 border-blue-800 flex items-center justify-center">

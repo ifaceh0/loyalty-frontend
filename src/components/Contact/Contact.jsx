@@ -428,6 +428,7 @@ export default function ContactUs() {
     subject: '',
     message: '',
     role: '',
+    applicationName: 'Loyalty',
     captchaInput: '',
   });
   const [captchaText, setCaptchaText] = useState('');
@@ -440,7 +441,7 @@ export default function ContactUs() {
     const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
     if (isLoggedIn) {
       const name = localStorage.getItem("name") || '';
-      const email = localStorage.getItem("companyEmail") || '';
+      const email = localStorage.getItem("email") || '';
       const role = localStorage.getItem("role") || '';
 
       setFormData(prev => ({
@@ -527,12 +528,6 @@ export default function ContactUs() {
       }
 
       setSubmitted(true);
-      // setFormData(prev => ({
-      //   ...prev,
-      //   subject: '',
-      //   message: '',
-      //   captchaInput: '',
-      // }));
       if (isLoggedIn) {
         setFormData(prev => ({
           ...prev,
@@ -563,18 +558,10 @@ export default function ContactUs() {
 
   return (
     <section className="py-8 px-4 bg-gradient-to-br from-indigo-50 via-white to-teal-50 min-h-screen">
-      <div className="max-w-2xl mx-auto">
-        <div className="bg-white/90 backdrop-blur-xl rounded-lg shadow-2xl p-10 md:p-10 border border-gray-100 overflow-hidden relative">
+      <div className="max-w-xl mx-auto">
+        <div className="bg-white/90 backdrop-blur-xl rounded-lg shadow-2xl p-10 md:p-6 border border-gray-100 overflow-hidden relative">
           {/* Decorative background */}
           <div className="absolute -top-20 -right-20 w-80 h-80 bg-gradient-to-br from-emerald-300 to-teal-400 rounded-full blur-3xl opacity-30 -z-10" />
-          <div className="absolute -bottom-20 -left-20 w-80 h-80 bg-gradient-to-tr from-purple-300 to-pink-400 rounded-full blur-3xl opacity-30 -z-10" />
-          {/* {isLoggedIn && (
-            <div>
-              <Link to="/shopkeeper/dashboard" className="text-emerald-600 hover:text-emerald-800 font-medium">
-              <ArrowLeft className="w-5 h-5" />
-              </Link>
-            </div>
-          )} */}
           <div className="text-center mb-8">
             <h2 className="text-4xl font-extrabold text-emerald-600 mb-4">
               {t('contact.title')}
@@ -607,7 +594,7 @@ export default function ContactUs() {
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-4">
             {/* <div className="grid md:grid-cols-2 gap-6"> */}
               <div>
                 <label className="block text-md font-semibold text-gray-800 mb-1">
@@ -621,7 +608,7 @@ export default function ContactUs() {
                   onChange={handleChange}
                   required
                   readOnly={isLoggedIn}
-                  className={`w-full px-6 py-2.5 text-md rounded-md border-2 ${isLoggedIn ? 'bg-gray-100 cursor-not-allowed border-gray-300' : 'bg-white border-gray-300'} focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 outline-none transition-all`}
+                  className={`w-full px-6 py-2 text-md rounded-md border-2 ${isLoggedIn ? 'bg-gray-100 cursor-not-allowed border-gray-300' : 'bg-white border-gray-300'} focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 outline-none transition-all`}
                 />
               </div>
 
@@ -637,7 +624,7 @@ export default function ContactUs() {
                   onChange={handleChange}
                   required
                   readOnly={isLoggedIn}
-                  className={`w-full px-6 py-2.5 text-md rounded-md border-2 ${isLoggedIn ? 'bg-gray-100 cursor-not-allowed border-gray-300' : 'bg-white border-gray-300'} focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 outline-none transition-all`}
+                  className={`w-full px-6 py-2 text-md rounded-md border-2 ${isLoggedIn ? 'bg-gray-100 cursor-not-allowed border-gray-300' : 'bg-white border-gray-300'} focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 outline-none transition-all`}
                 />
               </div>
             {/* </div> */}
@@ -652,7 +639,7 @@ export default function ContactUs() {
                 value={formData.subject}
                 onChange={handleChange}
                 required
-                className="w-full px-6 py-2.5 text-md rounded-md border-2 border-gray-300 bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 outline-none transition-all"
+                className="w-full px-6 py-2 text-md rounded-md border-2 border-gray-300 bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 outline-none transition-all"
               />
             </div>
 
@@ -699,7 +686,7 @@ export default function ContactUs() {
                   onChange={handleChange}
                   placeholder={t('contact.captchaPlaceholder') || "Enter code above"}
                   required
-                  className="flex-1 px-5 py-2.5 rounded-md border-2 border-gray-300 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 outline-none transition-all"
+                  className="flex-1 px-5 py-2 rounded-md border-2 border-gray-300 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 outline-none transition-all"
                 />
               </div>
             </div>
@@ -708,7 +695,7 @@ export default function ContactUs() {
               <button
                 type="submit"
                 disabled={loading}
-                className="inline-flex items-center gap-4 px-12 py-2.5 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white text-xl font-bold rounded-md shadow-2xl hover:shadow-3xl disabled:opacity-60 transition-all transform hover:-translate-y-1"
+                className="inline-flex items-center gap-4 px-12 py-2 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white text-xl font-bold rounded-md shadow-2xl hover:shadow-3xl disabled:opacity-60 transition-all transform hover:-translate-y-1"
               >
                 {loading ? (
                   <Loader2 className="w-6 h-6 animate-spin" />
