@@ -225,13 +225,13 @@ export default function QRModal({ shop, qrData, isOpen, onClose }) {
                 <h3 className="text-base sm:text-lg font-bold text-blue-600">
                   {t('qrModal.accountDetails')}
                 </h3>
-                <button
+                {/* <button
                   onClick={() => setShowEncouragement(!showEncouragement)}
                   className="text-blue-600 hover:text-blue-800 transition font-semibold flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm"
                 >
                   <FontAwesomeIcon icon={faInfoCircle} className="text-lg sm:text-xl" />
                   {showEncouragement ? t('qrModal.hideTip') : t('qrModal.showTip')}
-                </button>
+                </button> */}
               </div>
 
               <div className="flex items-center gap-2 sm:gap-3 text-xs sm:text-sm">
@@ -255,7 +255,7 @@ export default function QRModal({ shop, qrData, isOpen, onClose }) {
             </div>
 
             {/* Encouragement Message */}
-            <div className={`overflow-hidden transition-all duration-500 ${showEncouragement ? 'max-h-96 opacity-100 p-4' : 'max-h-0 opacity-0 p-0'} bg-yellow-50 border-l-4 border-yellow-500 rounded-lg shadow-md`}>
+            {/* <div className={`overflow-hidden transition-all duration-500 ${showEncouragement ? 'max-h-96 opacity-100 p-4' : 'max-h-0 opacity-0 p-0'} bg-yellow-50 border-l-4 border-yellow-500 rounded-lg shadow-md`}>
               <div className="bg-gradient-to-r from-blue-50 to-cyan-50 rounded shadow-md p-3 sm:p-4">
                 <div className="flex flex-col sm:flex-row items-start gap-2 sm:gap-3">
                   <FontAwesomeIcon icon={faGift} className="text-yellow-600 text-2xl sm:text-3xl mt-0.5 animate-bounce flex-shrink-0" />
@@ -278,7 +278,7 @@ export default function QRModal({ shop, qrData, isOpen, onClose }) {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
 
           </div>
         </div>
