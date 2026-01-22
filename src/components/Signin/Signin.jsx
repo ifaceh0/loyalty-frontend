@@ -1431,6 +1431,7 @@ const Signin = () => {
     localStorage.setItem("name", loginName || "");
     localStorage.setItem("companyEmail", data.companyEmail || "");
     localStorage.setItem("role", loginRole || "");
+    localStorage.setItem("email", data.email || "");
 
     if (loginRole === "EMPLOYEE" && data.userId) {
       localStorage.setItem("employeeUserId", data.userId);

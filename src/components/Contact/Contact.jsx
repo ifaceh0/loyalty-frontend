@@ -428,6 +428,7 @@ export default function ContactUs() {
     subject: '',
     message: '',
     role: '',
+    applicationName: 'Loyalty',
     captchaInput: '',
   });
   const [captchaText, setCaptchaText] = useState('');
@@ -440,7 +441,7 @@ export default function ContactUs() {
     const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
     if (isLoggedIn) {
       const name = localStorage.getItem("name") || '';
-      const email = localStorage.getItem("companyEmail") || '';
+      const email = localStorage.getItem("email") || '';
       const role = localStorage.getItem("role") || '';
 
       setFormData(prev => ({
@@ -527,12 +528,6 @@ export default function ContactUs() {
       }
 
       setSubmitted(true);
-      // setFormData(prev => ({
-      //   ...prev,
-      //   subject: '',
-      //   message: '',
-      //   captchaInput: '',
-      // }));
       if (isLoggedIn) {
         setFormData(prev => ({
           ...prev,
@@ -563,18 +558,10 @@ export default function ContactUs() {
 
   return (
     <section className="py-8 px-4 bg-gradient-to-br from-indigo-50 via-white to-teal-50 min-h-screen">
-      <div className="max-w-2xl mx-auto">
-        <div className="bg-white/90 backdrop-blur-xl rounded-lg shadow-2xl p-10 md:p-10 border border-gray-100 overflow-hidden relative">
+      <div className="max-w-xl mx-auto">
+        <div className="bg-white/90 backdrop-blur-xl rounded-lg shadow-2xl p-10 md:p-6 border border-gray-100 overflow-hidden relative">
           {/* Decorative background */}
           <div className="absolute -top-20 -right-20 w-80 h-80 bg-gradient-to-br from-emerald-300 to-teal-400 rounded-full blur-3xl opacity-30 -z-10" />
-          {/* <div className="absolute -bottom-20 -left-20 w-80 h-80 bg-gradient-to-tr from-purple-300 to-pink-400 rounded-full blur-3xl opacity-30 -z-10" /> */}
-          {/* {isLoggedIn && (
-            <div>
-              <Link to="/shopkeeper/dashboard" className="text-emerald-600 hover:text-emerald-800 font-medium">
-              <ArrowLeft className="w-5 h-5" />
-              </Link>
-            </div>
-          )} */}
           <div className="text-center mb-8">
             <h2 className="text-4xl font-extrabold text-emerald-600 mb-4">
               {t('contact.title')}
@@ -607,7 +594,7 @@ export default function ContactUs() {
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-4">
             {/* <div className="grid md:grid-cols-2 gap-6"> */}
               <div>
                 <label className="block text-md font-semibold text-gray-800 mb-1">

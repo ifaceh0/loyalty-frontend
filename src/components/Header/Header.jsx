@@ -524,7 +524,7 @@ export default function Header() {
               </a>
               <NavLink to="/onboarding-guide" className={navLinkClasses}>{t('header.faq')}</NavLink>
               <NavLink to="/contact" className={navLinkClasses}>{t('header.contact')}</NavLink>
-              <NavLink to="/support-inbox" className={navLinkClasses}>Inbox</NavLink>
+              {/* <NavLink to="/support-inbox" className={navLinkClasses}>Inbox</NavLink> */}
             </>
           )}
         </div>
