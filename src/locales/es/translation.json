@@ -350,26 +350,34 @@
       "button": "Contactar Soporte"
     }
   },
+
   "contact": {
+    "header": "¿Cómo podemos",
+    "headerHighlight": "ayudarte?",
     "title": "Contacto con Soporte de Fidelidad",
     "subtitle": "¡Estamos aquí para ayudarte! Envíanos un mensaje y te responderemos pronto.",
-    "loggedInAs": "Sesión iniciada como:",
-    "autoFilled": "(Auto-completado)",
+    "getInTouch": "Ponte en contacto",
+    "exclusiveHelp": "Asistencia exclusiva para nuestros valiosos miembros de fidelidad.",
+    "emailUs": "Envíanos un correo",
+    "partnerships": "Alianzas",
+    "ourHub": "Nuestra sede",
+    "support": "Acceso 24/7",
+    "alwaysHere": "Siempre aquí para ayudarte",
+    "address": "123 Tech Plaza, Suite 400 San Francisco, CA 94105",
     "fullName": "Nombre Completo",
     "email": "Correo Electrónico",
     "subject": "Asunto",
     "subjectPlaceholder": "¿En qué podemos ayudarte?",
     "message": "Tu Mensaje",
-    "messagePlaceholder": "Cuéntanos más sobre tu consulta o problema...",
-    "captchaLabel": "Verificación de Seguridad",
-    "captchaPlaceholder": "Ingresa el código mostrado arriba",
+    "messagePlaceholder": "Ingresa tu mensaje",
+    "captchaPlaceholder": "Escribe el código...",
     "captchaError": "Código CAPTCHA inválido. Por favor intenta nuevamente.",
     "sendButton": "Enviar Mensaje",
     "sending": "Enviando tu mensaje...",
     "success": "¡Gracias! Tu mensaje ha sido enviado exitosamente.",
-    "error": "Error al enviar el mensaje. Por favor intenta nuevamente.",
-    "responseTime": "Normalmente respondemos en menos de 24 horas"
+    "error": "Error al enviar el mensaje. Por favor intenta nuevamente."
   },
+
   "roles": {
     "user": "Cliente",
     "shopkeeper": "Dueño de Comercio",
