@@ -1141,7 +1141,7 @@ function FloatingInput({
 }
 
 const DemoFeature = ({ icon: Icon, title, description }) => (
-  <div className="flex items-start space-x-4 p-4 rounded bg-white/10 backdrop-blur-sm border border-white/20">
+  <div className="flex items-start space-x-4 p-4 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20">
     <div className="flex-shrink-0 p-3 bg-emerald-400 rounded-full text-white shadow-lg">
       <Icon className="w-6 h-6" />
     </div>
@@ -1168,7 +1168,7 @@ const RoleCard = ({ roleInfo, onClick, disabled, isSelected }) => {
       type="button"
       onClick={onClick}
       disabled={disabled}
-      className={`w-full p-5 rounded border-2 transition-all duration-200 text-left relative
+      className={`w-full p-4 rounded-xl border-2 transition-all duration-200 text-left relative
         ${disabled
           ? "bg-gray-100 border-gray-300 cursor-not-allowed opacity-60"
           : isSelected
@@ -1177,7 +1177,7 @@ const RoleCard = ({ roleInfo, onClick, disabled, isSelected }) => {
         }`}
     >
       <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-3">
+        <div className="flex items-center space-x-4">
           <div className="p-2 bg-emerald-500 rounded-full text-white">
             <Icon className="w-5 h-5" />
           </div>
@@ -1454,9 +1454,10 @@ const Signin = () => {
 
   return (
     <div className="min-h-screen bg-gray-200 flex items-center justify-center p-4">
-      <div className="w-full max-w-5xl flex bg-white shadow-xl border border-gray-200 rounded overflow-hidden animate-fade-in-up">
+      {/* <div className="w-full max-w-5xl flex bg-white shadow-xl border border-gray-200 rounded-xl overflow-hidden animate-fade-in-up"> */}
+      <div className="mx-auto w-full max-w-md md:max-w-xl lg:max-w-5xl bg-white shadow-xl border border-gray-200 rounded-xl overflow-hidden animate-fade-in-up">
         {/* left side */}
-        <div className="hidden lg:flex w-6/12 bg-gradient-to-br from-emerald-500 to-sky-600 p-8 flex-col justify-center relative space-y-6">
+        {/* <div className="hidden lg:flex w-6/12 bg-gradient-to-br from-emerald-500 to-sky-600 p-8 flex-col justify-center relative space-y-6">
           <div className="absolute inset-0 opacity-10 bg-[linear-gradient(to_right,#fff3_1px,transparent_1px),linear-gradient(to_bottom,#fff3_1px,transparent_1px)] bg-[size:30px_30px]"></div>
 
           <h1 className="text-4xl font-extrabold text-white leading-tight">
@@ -1471,315 +1472,246 @@ const Signin = () => {
             <DemoFeature icon={Users} title={t("signin.features.engage")} description={t("signin.features.engageDesc")} />
             <DemoFeature icon={Star} title={t("signin.features.reward")} description={t("signin.features.rewardDesc")} />
           </div>
-        </div>
+        </div> */}
 
         {/* right Side - Form */}
-        <div className="w-full lg:w-6/12 p-8 md:p-12 flex flex-col justify-center">
-          <h2 className="text-3xl font-extrabold text-gray-900 mb-2">{t("signin.title")}</h2>
-          <p className="text-gray-500 mb-6">{t("signin.subtitle")}</p>
-
-          {error && (
-            <p className="text-red-600 text-sm mb-4 p-3 bg-red-50 border-l-4 border-red-500 rounded-r text-center">
-              {error}
-            </p>
-          )}
-
-          {subscriptionMessage && (
-            <div className="mb-4 p-3 bg-amber-50 border-l-4 border-amber-600 rounded-r text-center">
-              <AlertCircle className="inline w-4 h-4 mr-2 text-amber-700" />
-              <span className="text-amber-800 font-medium">{subscriptionMessage}</span>
-              <div className="mt-2 text-xs text-amber-600">
-                {t("signin.redirecting")} <span id="countdown">5</span> s…
+        {/* <div className="w-full lg:w-6/12 p-8 md:p-12 flex flex-col justify-center"> */}
+        {/* <h2 className="text-3xl font-extrabold text-gray-900 mb-2">{t("signin.title")}</h2>
+        <p className="text-gray-500 mb-6">{t("signin.subtitle")}</p> */}
+        <div className="flex flex-col lg:flex-row min-h-[80vh] lg:min-h-[620px]">
+            <div className="hidden lg:flex lg:w-5/12 xl:w-6/12 bg-gradient-to-br from-emerald-500 to-sky-600 p-6 lg:p-10 xl:p-12 flex-col justify-center relative space-y-6">
+              <h1 className="text-4xl font-extrabold text-white leading-tight">
+                {t("signin.hero.title")}
+              </h1>
+              <p className="text-emerald-100 text-lg">
+                {t("signin.hero.subtitle")}
+              </p>
+              <div className="space-y-6">
+                <DemoFeature icon={BarChart} title={t("signin.features.track")} description={t("signin.features.trackDesc")} />
+                <DemoFeature icon={Users} title={t("signin.features.engage")} description={t("signin.features.engageDesc")} />
+                <DemoFeature icon={Star} title={t("signin.features.reward")} description={t("signin.features.rewardDesc")} />
               </div>
             </div>
-          )}
 
-          {success && (
-            <div className="mb-4 text-emerald-600 text-sm p-3 bg-emerald-50 border-l-4 border-emerald-500 rounded-r text-center">
-              <CheckCircle className="inline w-4 h-4 mr-2" /> {t("signin.success")}
-              <Confetti
-                recycle={false}
-                numberOfPieces={100}
-                width={450}
-                height={500}
-                className="absolute top-0 left-1/2 transform -translate-x-1/2"
-              />
-            </div>
-          )}
+            <div className="w-full lg:w-7/12 xl:w-6/12 px-5 sm:px-8 md:px-10 lg:px-12 xl:px-16 py-10 md:py-12 lg:py-16 flex flex-col justify-center">
+            <h2 className="text-3xl font-extrabold text-gray-900 mb-2">{t("signin.title")}</h2>
+            <p className="text-gray-500 mb-6">{t("signin.subtitle")}</p>
 
-          {/* STEP 1: Password */}
-          {step === "password" && (
-            <form onSubmit={handlePasswordSubmit} className="space-y-6">
-              <FloatingInput label={t("signin.emailLabel")} name="email" value={email} onChange={(e) => setEmail(e.target.value)} type="email" Icon={Mail} />
-              <FloatingInput
-                label={t("signin.passwordLabel")}
-                name="password"
-                type={showPassword ? "text" : "password"}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                Icon={Lock}
-                ToggleIcon={showPassword ? EyeOff : Eye}
-                onToggle={() => setShowPassword(!showPassword)}
-              />
+            {error && (
+              <p className="text-red-600 text-sm mb-4 p-3 bg-red-50 border-l-4 border-red-500 rounded-r text-center">
+                {error}
+              </p>
+            )}
 
-              <div className="space-y-4 pt-3">
-                <div className="flex items-center justify-between p-1 bg-gray-200 rounded">
-                  <canvas ref={canvasRef} width={120} height={40} className="border border-emerald-300 rounded bg-white" />
-                  <button
-                    type="button"
-                    onClick={generateCaptcha}
-                    className="flex items-center gap-2 text-sm bg-blue-500 text-white px-2 py-2 rounded-full hover:bg-blue-600 transition duration-150 shadow-md"
-                    aria-label={t("signin.refreshCaptcha")}
-                  >
-                    <RefreshCw className="w-4 h-4" />
+            {subscriptionMessage && (
+              <div className="mb-4 p-3 bg-amber-50 border-l-4 border-amber-600 rounded-r text-center">
+                <AlertCircle className="inline w-4 h-4 mr-2 text-amber-700" />
+                <span className="text-amber-800 font-medium">{subscriptionMessage}</span>
+                <div className="mt-2 text-xs text-amber-600">
+                  {t("signin.redirecting")} <span id="countdown">5</span> s…
+                </div>
+              </div>
+            )}
+
+            {success && (
+              <div className="mb-4 text-emerald-600 text-sm p-3 bg-emerald-50 border-l-4 border-emerald-500 rounded-r text-center">
+                <CheckCircle className="inline w-4 h-4 mr-2" /> {t("signin.success")}
+                <Confetti
+                  recycle={false}
+                  numberOfPieces={100}
+                  width={450}
+                  height={500}
+                  className="absolute top-0 left-1/2 transform -translate-x-1/2"
+                />
+              </div>
+            )}
+
+            {/* STEP 1: Password */}
+            {step === "password" && (
+              <form onSubmit={handlePasswordSubmit} className="space-y-6">
+                <FloatingInput label={t("signin.emailLabel")} name="email" value={email} onChange={(e) => setEmail(e.target.value)} type="email" Icon={Mail} />
+                <FloatingInput
+                  label={t("signin.passwordLabel")}
+                  name="password"
+                  type={showPassword ? "text" : "password"}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  Icon={Lock}
+                  ToggleIcon={showPassword ? EyeOff : Eye}
+                  onToggle={() => setShowPassword(!showPassword)}
+                />
+
+                <div className="space-y-4 pt-3">
+                  <div className="flex items-center justify-between p-1 bg-gray-200 rounded-lg">
+                    <canvas ref={canvasRef} width={120} height={40} className="border border-emerald-300 rounded-lg bg-white" />
+                    <button
+                      type="button"
+                      onClick={generateCaptcha}
+                      className="flex items-center gap-2 text-sm bg-blue-500 text-white px-2 py-2 rounded-full hover:bg-blue-600 transition duration-150 shadow-md"
+                      aria-label={t("signin.refreshCaptcha")}
+                    >
+                      <RefreshCw className="w-4 h-4" />
+                    </button>
+                  </div>
+                  <FloatingInput label={t("signin.captchaLabel")} name="captcha" value={captchaInput} onChange={(e) => setCaptchaInput(e.target.value)} Icon={Puzzle} />
+                </div>
+
+                <div className="flex justify-end pt-2">
+                  <button type="button" onClick={() => navigate("/forgot-password")} className="text-sm font-medium text-sky-600 hover:text-sky-700 hover:underline transition">
+                    {t("signin.forgotPassword")}
                   </button>
                 </div>
-                <FloatingInput label={t("signin.captchaLabel")} name="captcha" value={captchaInput} onChange={(e) => setCaptchaInput(e.target.value)} Icon={Puzzle} />
-              </div>
 
-              <div className="flex justify-end pt-2">
-                <button type="button" onClick={() => navigate("/forgot-password")} className="text-sm font-medium text-sky-600 hover:text-sky-700 hover:underline transition">
-                  {t("signin.forgotPassword")}
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className={`w-full bg-gradient-to-r from-emerald-500 to-sky-600 text-white py-2 text-lg font-semibold rounded-full shadow-lg transition ${loading ? "opacity-70" : "hover:from-emerald-600 hover:to-sky-700"}`}
+                >
+                  {loading ? (
+                    <span className="flex items-center justify-center gap-2">
+                      <svg className="animate-spin h-4 w-4 text-white" viewBox="0 0 24 24" fill="none">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4l3.5-3.5L12 0v4a8 8 0 00-8 8z"></path>
+                      </svg>
+                      {t("signin.loggingIn")}
+                    </span>
+                  ) : (
+                    t("signin.signInButton")
+                  )}
+                </button>
+              </form>
+            )}
+
+            {/* STEP 2: Role Selection */}
+            {step === "role" && !showShopSelection && (
+              <div className="mt-6 space-y-4">
+                <h3 className="text-lg font-semibold text-center text-gray-800">
+                  {t("signin.chooseRole")}
+                </h3>
+                <div className="space-y-5">
+                  {roles.map((r, idx) => (
+                    <RoleCard
+                      key={`${r.role}-${idx}`}
+                      roleInfo={r}
+                      onClick={() => handleRoleSelect(r)}
+                      disabled={loading}
+                      isSelected={selectedRoleInfo && selectedRoleInfo.role === r.role && 
+                                  (!r._shops || selectedRoleInfo.refId === r.refId)}
+                    />
+                  ))}
+                </div>
+
+                {/* Sign In Button */}
+                <button
+                  onClick={performLogin}
+                  disabled={!selectedRoleInfo || loading}
+                  className={`w-full mt-6 flex items-center justify-center gap-2 bg-gradient-to-r from-emerald-500 to-sky-600 text-white py-2 text-lg font-semibold rounded-full shadow-lg transition
+                    ${!selectedRoleInfo || loading ? "opacity-70 cursor-not-allowed" : "hover:from-emerald-600 hover:to-sky-700"}
+                  `}
+                >
+                  <LogIn className="w-5 h-5" />
+                  {loading ? t("signin.loggingIn") : t("signin.signInButton")}
+                </button>
+
+                <button
+                  onClick={() => setStep("password")}
+                  className="w-full text-sm text-gray-600 hover:text-gray-800 underline flex items-center justify-center gap-2"
+                >
+                  <ArrowLeft className="w-4 h-4" />
+                  {t("signin.backToPassword")}
                 </button>
               </div>
+            )}
 
-              <button
-                type="submit"
-                disabled={loading}
-                className={`w-full bg-gradient-to-r from-emerald-500 to-sky-600 text-white py-2 text-lg font-semibold rounded shadow-lg transition ${loading ? "opacity-70" : "hover:from-emerald-600 hover:to-sky-700"}`}
-              >
-                {loading ? (
-                  <span className="flex items-center justify-center gap-2">
-                    <svg className="animate-spin h-4 w-4 text-white" viewBox="0 0 24 24" fill="none">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4l3.5-3.5L12 0v4a8 8 0 00-8 8z"></path>
-                    </svg>
-                    {t("signin.loggingIn")}
-                  </span>
-                ) : (
-                  t("signin.signInButton")
-                )}
-              </button>
-            </form>
-          )}
+            {showShopSelection && (
+              <div className="mt-4 space-y-6"> 
+                <h3 className="text-2xl font-bold text-center text-gray-800 mb-2">
+                  {t("signin.chooseShop") || "Select Your Shop"}
+                </h3>
 
-          {/* STEP 2: Role Selection */}
-          {step === "role" && !showShopSelection && (
-            <div className="mt-6 space-y-4">
-              <h3 className="text-lg font-semibold text-center text-gray-800">
-                {t("signin.chooseRole")}
-              </h3>
-              <div className="space-y-3">
-                {roles.map((r, idx) => (
-                  <RoleCard
-                    key={`${r.role}-${idx}`}
-                    roleInfo={r}
-                    onClick={() => handleRoleSelect(r)}
-                    disabled={loading}
-                    isSelected={selectedRoleInfo && selectedRoleInfo.role === r.role && 
-                                (!r._shops || selectedRoleInfo.refId === r.refId)}
-                  />
-                ))}
-              </div>
+                {/* Responsive Grid Layout (Max 3 columns, good width) */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 justify-center max-w-xl mx-auto">
+                  {employeeShops.map((shop) => (
+                    <div
+                      key={shop.refId}
+                      onClick={() => handleRoleSelect(shop)}
+                      className={`
+                        bg-white border border-gray-300 rounded-lg shadow-lg relative cursor-pointer
+                        overflow-hidden // Crucial for the colored top bar
+                        transition-all duration-300 ease-in-out w-full
 
-              {/* Sign In Button */}
-              <button
-                onClick={performLogin}
-                disabled={!selectedRoleInfo || loading}
-                className={`w-full mt-6 flex items-center justify-center gap-2 bg-gradient-to-r from-emerald-500 to-sky-600 text-white py-2 text-lg font-semibold rounded shadow-lg transition
-                  ${!selectedRoleInfo || loading ? "opacity-70 cursor-not-allowed" : "hover:from-emerald-600 hover:to-sky-700"}
-                `}
-              >
-                <LogIn className="w-5 h-5" />
-                {loading ? t("signin.loggingIn") : t("signin.signInButton")}
-              </button>
-
-              <button
-                onClick={() => setStep("password")}
-                className="w-full text-sm text-gray-600 hover:text-gray-800 underline flex items-center justify-center gap-2"
-              >
-                <ArrowLeft className="w-4 h-4" />
-                {t("signin.backToPassword")}
-              </button>
-            </div>
-          )}
-
-          {/* STEP 3: Shop Selection for Employee */}
-          {/* {showShopSelection && (
-            <div className="mt-6 space-y-4">
-              <h3 className="text-2xl font-bold text-center text-gray-800">
-                {t("signin.chooseShop") || "Select Your Shop"}
-              </h3>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-14">
-                {employeeShops.map((shop) => (
-                  <div
-                    key={shop.refId}
-                    onClick={() => handleRoleSelect(shop)}
-                    className={`relative cursor-pointer rounded overflow-hidden shadow-lg transition-all duration-300 transform hover:scale-105
-                      ${selectedRoleInfo && selectedRoleInfo.refId === shop.refId
-                        ? "ring-2 ring-emerald-500 scale-105"
-                        : "hover:shadow-2xl"
-                      }
-                      ${loading ? "opacity-60 cursor-not-allowed" : ""}
-                    `}
-                  >
-                    
-                    <div className="bg-white border border-gray-200 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out 
-                                flex flex-col items-center justify-center p-3 text-center relative cursor-pointer
-                                // Conditional styling for when the shop is selected
-                                ${selectedRoleInfo && selectedRoleInfo.refId === shop.refId 
-                                    ? 'ring-4 ring-emerald-500 border-emerald-500' // Stronger focus ring
-                                    : ''
-                                }"
+                        ${loading ? "opacity-60 cursor-not-allowed" : "hover:shadow-xl hover:border-emerald-500"}
+                        
+                        ${selectedRoleInfo && selectedRoleInfo.refId === shop.refId
+                          ? "ring-2 ring-emerald-500 border-emerald-500 shadow-2xl" 
+                          : ""
+                        }
+                      `}
                     >
-                        
-                        <div className="w-16 h-16 mb-3 flex items-center justify-center">
+
+                      <div className="flex flex-col items-center justify-center p-2">
+                          
+                          {/* Shop Logo Container (Large focus: w-16 h-16) */}
+                          <div className="w-20 h-16 flex items-center justify-center bg-white rounded-lg shadow-md">
                             {shop.shopLogoBase64 ? (
-                                <img
-                                    src={`data:image/png;base64,${shop.shopLogoBase64}`}
-                                    alt={`${shop.displayName} logo`}
-                                    className="w-full h-full object-contain rounded-full border border-gray-100 shadow-md"
-                                    onError={(e) => {
-                                        e.target.style.display = 'none'; // hide broken image
-                                    }}
-                                />
+                              <img
+                                src={`data:image/png;base64,${shop.shopLogoBase64}`}
+                                alt={`${shop.displayName} logo`}
+                                className="w-full h-full object-contain rounded-lg"
+                                onError={(e) => { e.target.style.display = 'none'; }}
+                              />
                             ) : (
-                                // Fallback icon with a subtle background for visibility
-                                <div className="w-16 h-16 rounded-full bg-emerald-50 flex items-center justify-center">
-                                    <Store className="w-8 h-8 text-emerald-600" />
-                                </div>
+                              <div className="w-full h-full rounded-lg bg-emerald-100 flex items-center justify-center">
+                                <Store className="w-8 h-8 text-emerald-600" />
+                              </div>
                             )}
-                        </div>
+                          </div>
 
-                        <h4 className="text-lg font-semibold text-gray-800 truncate max-w-[150px]">{shop.displayName}</h4>
-                        
-                        {selectedRoleInfo && selectedRoleInfo.refId === shop.refId && (
-                            // Checkmark position: top-right corner, fixed size, color pop
-                            <div className="absolute -top-3 -right-3 bg-emerald-600 rounded-full p-2 shadow-2xl border-4 border-white">
-                                <CheckCircle className="w-5 h-5 text-white" />
-                            </div>
-                        )}
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              <button
-                onClick={performLogin}
-                disabled={!selectedRoleInfo || loading}
-                className={`w-full mt-8 flex items-center justify-center gap-3 bg-gradient-to-r from-emerald-500 to-sky-600 text-white py-2 text-xl font-bold rounded shadow-xl transition
-                  ${!selectedRoleInfo || loading 
-                    ? "opacity-70 cursor-not-allowed" 
-                    : "hover:from-emerald-600 hover:to-sky-700 hover:shadow-2xl transform hover:-translate-y-1"
-                  }`}
-              >
-                <LogIn className="w-5 h-5" />
-                {loading ? t("signin.loggingIn") : t("signin.signInButton")}
-              </button>
-
-              <button
-                onClick={() => {
-                  setShowShopSelection(false);
-                  setEmployeeShops([]);
-                  setSelectedRoleInfo(null);
-                }}
-                className="w-full text-center text-gray-600 hover:text-gray-800 underline flex items-center justify-center gap-2 mt-4"
-              >
-                <ArrowLeft className="w-5 h-5" />
-                {t("signin.back") || "Back to Roles"}
-              </button>
-            </div>
-          )} */}
-
-          {showShopSelection && (
-            <div className="mt-4 space-y-6"> 
-              <h3 className="text-2xl font-bold text-center text-gray-800 mb-2">
-                {t("signin.chooseShop") || "Select Your Shop"}
-              </h3>
-
-              {/* Responsive Grid Layout (Max 3 columns, good width) */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 justify-center max-w-xl mx-auto">
-                {employeeShops.map((shop) => (
-                  <div
-                    key={shop.refId}
-                    onClick={() => handleRoleSelect(shop)}
-                    className={`
-                      bg-white border border-gray-300 rounded shadow-lg relative cursor-pointer
-                      overflow-hidden // Crucial for the colored top bar
-                      transition-all duration-300 ease-in-out w-full
-
-                      ${loading ? "opacity-60 cursor-not-allowed" : "hover:shadow-xl hover:border-emerald-500"}
-                      
-                      ${selectedRoleInfo && selectedRoleInfo.refId === shop.refId
-                        ? "ring-2 ring-emerald-500 border-emerald-500 shadow-2xl" 
-                        : ""
-                      }
-                    `}
-                  >
-
-                    <div className="flex flex-col items-center justify-center p-2">
-                        
-                        {/* Shop Logo Container (Large focus: w-16 h-16) */}
-                        <div className="w-20 h-16 flex items-center justify-center bg-white rounded shadow-md">
-                          {shop.shopLogoBase64 ? (
-                            <img
-                              src={`data:image/png;base64,${shop.shopLogoBase64}`}
-                              alt={`${shop.displayName} logo`}
-                              className="w-full h-full object-contain rounded"
-                              onError={(e) => { e.target.style.display = 'none'; }}
-                            />
-                          ) : (
-                            <div className="w-full h-full rounded bg-emerald-100 flex items-center justify-center">
-                              <Store className="w-8 h-8 text-emerald-600" />
-                            </div>
-                          )}
-                        </div>
-
-                        {/* Shop Name (Large, clear, and allowed to wrap) */}
-                        <h4 className="text-md font-bold text-gray-800 text-center leading-snug break-words mt-1"> 
-                            {shop.displayName}
-                        </h4>
-                    </div>
-                    
-                    {/* Selected Checkmark (Prominent on the main card body) */}
-                    {selectedRoleInfo && selectedRoleInfo.refId === shop.refId && (
-                      <div className="absolute top-1 right-1 bg-emerald-600 rounded-full p-1 shadow-xl border-1 border-white">
-                        <CheckCircle className="w-4 h-4 text-white" />
+                          {/* Shop Name (Large, clear, and allowed to wrap) */}
+                          <h4 className="text-md font-bold text-gray-800 text-center leading-snug break-words mt-1"> 
+                              {shop.displayName}
+                          </h4>
                       </div>
-                    )}
-                  </div>
-                ))}
+                      
+                      {/* Selected Checkmark (Prominent on the main card body) */}
+                      {selectedRoleInfo && selectedRoleInfo.refId === shop.refId && (
+                        <div className="absolute top-1 right-1 bg-emerald-600 rounded-full p-1 shadow-xl border-1 border-white">
+                          <CheckCircle className="w-4 h-4 text-white" />
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+
+                {/* Sign In Button */}
+                <button
+                  onClick={performLogin}
+                  disabled={!selectedRoleInfo || loading}
+                  className={`w-full max-w-sm mx-auto flex items-center justify-center gap-3 bg-gradient-to-r from-emerald-500 to-sky-600 text-white py-2 text-xl font-bold rounded-full shadow-xl transition
+                    ${!selectedRoleInfo || loading 
+                      ? "opacity-70 cursor-not-allowed" 
+                      : "hover:from-emerald-600 hover:to-sky-700 hover:shadow-2xl transform hover:-translate-y-0.5"
+                    }`}
+                >
+                  <LogIn className="w-5 h-5" />
+                  {loading ? t("signin.loggingIn") : t("signin.signInButton")}
+                </button>
+
+                {/* Back Button */}
+                <button
+                  onClick={() => {
+                    setShowShopSelection(false);
+                    setEmployeeShops([]);
+                    setSelectedRoleInfo(null);
+                  }}
+                  className="w-full max-w-sm mx-auto text-center text-gray-600 hover:text-gray-800 underline flex items-center justify-center gap-2 mt-4"
+                >
+                  <ArrowLeft className="w-5 h-5" />
+                  {t("signin.back") || "Back to Roles"}
+                </button>
               </div>
-
-              {/* Sign In Button */}
-              <button
-                onClick={performLogin}
-                disabled={!selectedRoleInfo || loading}
-                className={`w-full max-w-sm mx-auto flex items-center justify-center gap-3 bg-gradient-to-r from-emerald-500 to-sky-600 text-white py-2 text-xl font-bold rounded shadow-xl transition
-                  ${!selectedRoleInfo || loading 
-                    ? "opacity-70 cursor-not-allowed" 
-                    : "hover:from-emerald-600 hover:to-sky-700 hover:shadow-2xl transform hover:-translate-y-0.5"
-                  }`}
-              >
-                <LogIn className="w-5 h-5" />
-                {loading ? t("signin.loggingIn") : t("signin.signInButton")}
-              </button>
-
-              {/* Back Button */}
-              <button
-                onClick={() => {
-                  setShowShopSelection(false);
-                  setEmployeeShops([]);
-                  setSelectedRoleInfo(null);
-                }}
-                className="w-full max-w-sm mx-auto text-center text-gray-600 hover:text-gray-800 underline flex items-center justify-center gap-2 mt-4"
-              >
-                <ArrowLeft className="w-5 h-5" />
-                {t("signin.back") || "Back to Roles"}
-              </button>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </div>
 

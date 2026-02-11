@@ -86,7 +86,7 @@ export default function InactiveShopsPage() {
     <div className="min-h-screen">
       <div className="max-w-6xl mx-auto p-4 sm:p-6 lg:p-8">
         {/* Header */}
-        <div className="bg-white rounded shadow-sm border border-gray-200 p-6 mb-8">
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-8">
           <div className="flex items-center gap-4">
             <div className="p-3 bg-red-100 rounded-full">
               <AlertCircle className="w-8 h-8 text-red-600" />
@@ -112,7 +112,7 @@ export default function InactiveShopsPage() {
 
         {/* Error */}
         {error && (
-          <div className="bg-red-50 border border-red-200 rounded p-6 text-center">
+          <div className="bg-red-50 border border-red-200 rounded-lg p-6 text-center">
             <AlertCircle className="w-12 h-12 text-red-600 mx-auto mb-4" />
             <p className="text-red-700 font-medium">{error}</p>
           </div>
@@ -120,7 +120,7 @@ export default function InactiveShopsPage() {
 
         {/* Empty State */}
         {!loading && !error && inactiveShops.length === 0 && (
-          <div className="bg-white rounded shadow-sm border border-gray-200 p-12 text-center">
+          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-12 text-center">
             <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
               <Store className="w-10 h-10 text-green-600" />
             </div>
@@ -139,7 +139,7 @@ export default function InactiveShopsPage() {
             {inactiveShops.map((shop) => (
               <div
                 key={shop.shopId}
-                className="bg-white rounded shadow-md border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow"
+                className="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow"
               >
                 {/* Header with Logo */}
                 <div className="relative bg-gradient-to-r from-red-500 to-pink-600 flex items-center justify-center">
@@ -147,7 +147,7 @@ export default function InactiveShopsPage() {
                     <img
                       src={`data:image/png;base64,${shop.shopLogoBase64}`}
                       alt={`${shop.shopName} logo`}
-                      className="object-contain rounded shadow-lg bg-white"
+                      className="object-contain rounded-xl shadow-lg bg-white"
                       onError={(e) => {
                         e.target.src = ''; 
                         e.target.style.display = 'none';

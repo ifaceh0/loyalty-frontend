@@ -530,12 +530,12 @@ import { useTranslation } from "react-i18next";
 import { API_BASE_URL } from '../../apiConfig';
 
 const inputStyle = (isEditing) => 
-  `w-full px-3 sm:px-4 py-2.5 sm:py-3 border rounded outline-none transition duration-200 shadow-sm text-gray-800 text-sm sm:text-base ${
+  `w-full px-3 sm:px-4 py-2.5 sm:py-3 border rounded-lg outline-none transition duration-200 shadow-sm text-gray-800 text-sm sm:text-base ${
     isEditing ? "border-blue-400 focus:ring-2 focus:ring-blue-500/50" : "border-gray-200 bg-gray-100 cursor-default"
   }`;
 
 const SectionWrapper = ({ title, children, icon, className = "" }) => (
-  <div className={`bg-white p-4 sm:p-6 rounded border border-gray-200 shadow-lg ${className}`}>
+  <div className={`bg-white p-4 sm:p-6 rounded-xl border border-gray-200 shadow-lg ${className}`}>
     <h3 className="text-lg sm:text-xl font-bold text-blue-700 border-b pb-2 sm:pb-3 mb-3 sm:mb-4 flex items-center gap-2">
       {icon} {title}
     </h3>
@@ -796,7 +796,7 @@ const ShopkeeperProfile = () => {
   }
 
   return (
-    <div className="max-w-6xl mx-auto bg-gray-50 rounded shadow-2xl overflow-hidden mt-2 p-3 sm:p-0">
+    <div className="max-w-6xl mx-auto bg-gray-50 rounded-xl shadow-2xl overflow-hidden mt-2 p-3 sm:p-0">
       {/* Header/Navigation */}
       <nav className="bg-white border-b border-gray-300 text-violet-700 px-4 sm:px-8 py-3 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
         <h2 className="text-xl sm:text-2xl font-extrabold flex items-center gap-2">
@@ -807,7 +807,7 @@ const ShopkeeperProfile = () => {
             {isEditing && (
                 <button
                 type="button"
-                className="bg-red-500 hover:bg-red-600 text-white px-3 sm:px-4 py-2 rounded transition duration-200 flex items-center gap-1.5 sm:gap-2 font-semibold shadow-md text-sm"
+                className="bg-red-500 hover:bg-red-600 text-white px-3 sm:px-4 py-2 rounded-full transition duration-200 flex items-center gap-1.5 sm:gap-2 font-semibold shadow-md text-sm"
                 onClick={handleCancel}
                 disabled={isSubmitting}
                 >
@@ -820,7 +820,7 @@ const ShopkeeperProfile = () => {
                 <button
                 type="submit"
                 form="profile-form"
-                className={`text-white px-4 sm:px-5 py-2 rounded transition duration-200 flex items-center gap-1.5 sm:gap-2 font-semibold shadow-md text-sm ${
+                className={`text-white px-4 sm:px-5 py-2 rounded-full transition duration-200 flex items-center gap-1.5 sm:gap-2 font-semibold shadow-md text-sm ${
                     isSubmitting ? 'bg-green-400 cursor-not-allowed' : 'bg-green-500 hover:bg-green-600'
                 }`}
                 disabled={isSubmitting}
@@ -842,7 +842,7 @@ const ShopkeeperProfile = () => {
             {!isEditing && (
                 <button
                 type="button"
-                className="bg-violet-700 hover:bg-violet-800 text-white px-4 sm:px-5 py-2 rounded transition duration-200 flex items-center gap-1.5 sm:gap-2 font-semibold shadow-md text-sm"
+                className="bg-violet-700 hover:bg-violet-800 text-white px-4 sm:px-5 py-2 rounded-full transition duration-200 flex items-center gap-1.5 sm:gap-2 font-semibold shadow-md text-sm"
                 onClick={() => setIsEditing(true)}
                 >
                 {/* <FiEdit3 className="w-4 h-4 sm:w-5 sm:h-5" /> */}
@@ -862,7 +862,7 @@ const ShopkeeperProfile = () => {
             icon={<FiUploadCloud className="w-5 h-5 sm:w-6 sm:h-6"/>}
           >
             {/* Logo Management */}
-            <div className="mb-4 sm:mb-0 bg-gray-100 p-3 sm:p-4 rounded border-2 border-dashed border-gray-300">
+            <div className="mb-4 sm:mb-0 bg-gray-100 p-3 sm:p-4 rounded-xl border-2 border-dashed border-gray-300">
                 <label className="block text-xs sm:text-sm font-bold mb-2 sm:mb-3 text-blue-700">
                   {t("shopProfile.logo.label")}
                 </label>
@@ -872,10 +872,10 @@ const ShopkeeperProfile = () => {
                     <img
                         src={`data:image/jpeg;base64,${formData.logoImage}`}
                         alt="Shop Logo"
-                        className="w-20 h-20 sm:w-24 sm:h-24 object-contain p-1 bg-white rounded border-2 border-gray-300 shadow-md"
+                        className="w-20 h-20 sm:w-24 sm:h-24 object-contain bg-white rounded-full border-2 border-gray-300 shadow-md"
                     />
                     ) : (
-                    <div className="w-20 h-20 sm:w-24 sm:h-24 bg-gray-200 rounded flex flex-col items-center justify-center text-gray-500 text-xs border border-gray-400 p-2">
+                    <div className="w-20 h-20 sm:w-24 sm:h-24 bg-gray-200 rounded-full flex flex-col items-center justify-center text-gray-500 text-xs border border-gray-400 p-2">
                         <FiAlertCircle className="w-5 h-5 sm:w-6 sm:h-6 mb-1"/>
                         <span>{t("shopProfile.logo.noLogo")}</span>
                     </div>
@@ -888,7 +888,7 @@ const ShopkeeperProfile = () => {
                             type="file"
                             accept="image/jpeg,image/png"
                             onChange={handleFileChange}
-                            className="w-full text-xs sm:text-sm file:mr-3 sm:file:mr-4 file:py-1.5 sm:file:py-2 file:px-3 sm:file:px-4 file:rounded file:border-0 file:text-xs sm:file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                            className="w-full text-xs sm:text-sm file:mr-3 sm:file:mr-4 file:py-1.5 sm:file:py-2 file:px-3 sm:file:px-4 file:rounded-full file:border-0 file:text-xs sm:file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
                         />
                         
                         <div className="flex flex-col sm:flex-row gap-2">
@@ -897,7 +897,7 @@ const ShopkeeperProfile = () => {
                                     type="button"
                                     onClick={uploadImage}
                                     disabled={isUploading}
-                                    className={`flex-1 bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded flex items-center justify-center gap-1 text-xs sm:text-sm transition ${isUploading ? "opacity-50 cursor-not-allowed" : ""}`}
+                                    className={`flex-1 bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-full flex items-center justify-center gap-1 text-xs sm:text-sm transition ${isUploading ? "opacity-50 cursor-not-allowed" : ""}`}
                                 >
                                     {isUploading ? t("shopProfile.logo.uploading") : t("shopProfile.logo.upload")}
                                 </button>
@@ -907,7 +907,7 @@ const ShopkeeperProfile = () => {
                                     type="button"
                                     onClick={removeImage}
                                     disabled={isRemoving}
-                                    className={`bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded flex items-center justify-center gap-1 text-xs sm:text-sm transition ${isRemoving ? "opacity-50 cursor-not-allowed" : ""}`}
+                                    className={`bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-full flex items-center justify-center gap-1 text-xs sm:text-sm transition ${isRemoving ? "opacity-50 cursor-not-allowed" : ""}`}
                                 >
                                     <FiTrash2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                                     {isRemoving ? t("shopProfile.logo.removing") : t("shopProfile.logo.remove")}
@@ -988,12 +988,19 @@ const ShopkeeperProfile = () => {
                   onChange={handleChange}
                   disabled={!isEditing}
                 />
-                <InputField
+                {/* <InputField
                   label={t("shopProfile.fields.country")}
                   name="country"
                   value={formData.country}
                   onChange={handleChange}
                   disabled={!isEditing}
+                /> */}
+                <InputField
+                  label={t("shopProfile.fields.country")}
+                  name="country"
+                  value={formData.country}
+                  onChange={() => {}} 
+                  disabled
                 />
                 <div>
                     <label className="block text-xs sm:text-sm font-semibold mb-1 text-gray-700">

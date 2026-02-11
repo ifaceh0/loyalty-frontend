@@ -509,6 +509,7 @@
     "firstName": "Nombre",
     "lastName": "Apellido",
     "phoneNumber": "Número de Teléfono (10 dígitos)",
+    "selectCountry": "Seleccionar país",
     "email": "Correo Electrónico",
     "password": "Contraseña",
     "confirmPassword": "Confirmar Contraseña",
@@ -527,6 +528,7 @@
       "passwordMismatch": "¡Las contraseñas no coinciden!",
       "invalidCaptcha": "CAPTCHA inválido",
       "signupFailed": "¡Registro fallido!",
+      "selectCountry": "Por favor selecciona tu país",
       "networkError": "Algo salió mal. Intenta nuevamente."
     }
   },

@@ -682,7 +682,7 @@ const Shopdashboard = () => {
             <UserPurchaseChart />
 
             <section className="mb-4 sm:mb-6">
-              <div className="bg-white shadow-md rounded-sm p-3 border border-gray-100 hover:shadow-lg transition-shadow duration-300">
+              <div className="bg-white shadow-md rounded-xl p-3 border border-gray-100 hover:shadow-lg transition-shadow duration-300">
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-1 gap-2">
                   <h3 className="text-base sm:text-lg md:text-xl font-semibold text-gray-800">
                     {t("shopdashboard.monthlySales.title")} ({currentYear})
@@ -716,7 +716,7 @@ const Shopdashboard = () => {
             </section>
 
             <section className="mb-4 sm:mb-6">
-              <div className="bg-white shadow-md rounded-sm p-3 sm:p-4 border border-gray-100 hover:shadow-lg transition-shadow duration-300">
+              <div className="bg-white shadow-md rounded-xl p-3 sm:p-4 border border-gray-100 hover:shadow-lg transition-shadow duration-300">
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-1 gap-2">
                   <h3 className="text-base sm:text-lg md:text-xl font-semibold text-gray-800">
                     {t("shopdashboard.customerComparison.title")} ({currentYear})

@@ -452,6 +452,7 @@
     "firstName": "First Name",
     "lastName": "Last Name",
     "phoneNumber": "Phone Number (10 digits)",
+    "selectCountry": "Select Country",
     "email": "Email",
     "password": "Password",
     "confirmPassword": "Confirm Password",
@@ -470,6 +471,7 @@
       "passwordMismatch": "Passwords do not match!",
       "invalidCaptcha": "Invalid CAPTCHA",
       "signupFailed": "Signup failed!",
+      "selectCountry": "Please select your country",
       "networkError": "Something went wrong. Please try again."
     }
   },
