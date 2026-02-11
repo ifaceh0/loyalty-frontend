@@ -1454,10 +1454,10 @@ const Signin = () => {
 
   return (
     <div className="min-h-screen bg-gray-200 flex items-center justify-center p-4">
-      {/* <div className="w-full max-w-5xl flex bg-white shadow-xl border border-gray-200 rounded-xl overflow-hidden animate-fade-in-up"> */}
-      <div className="mx-auto w-full max-w-md md:max-w-xl lg:max-w-5xl bg-white shadow-xl border border-gray-200 rounded-xl overflow-hidden animate-fade-in-up">
+      <div className="w-full max-w-xl md:max-w-2xl lg:max-w-5xl flex bg-white shadow-xl border border-gray-200 rounded-xl overflow-hidden animate-fade-in-up">
+      {/* <div className="w-full max-w-md md:max-w-xl lg:max-w-5xl bg-white shadow-xl border border-gray-200 rounded-xl overflow-hidden animate-fade-in-up"> */}
         {/* left side */}
-        {/* <div className="hidden lg:flex w-6/12 bg-gradient-to-br from-emerald-500 to-sky-600 p-8 flex-col justify-center relative space-y-6">
+        <div className="hidden lg:flex w-6/12 bg-gradient-to-br from-emerald-500 to-sky-600 p-8 flex-col justify-center relative space-y-6">
           <div className="absolute inset-0 opacity-10 bg-[linear-gradient(to_right,#fff3_1px,transparent_1px),linear-gradient(to_bottom,#fff3_1px,transparent_1px)] bg-[size:30px_30px]"></div>
 
           <h1 className="text-4xl font-extrabold text-white leading-tight">
@@ -1472,14 +1472,14 @@ const Signin = () => {
             <DemoFeature icon={Users} title={t("signin.features.engage")} description={t("signin.features.engageDesc")} />
             <DemoFeature icon={Star} title={t("signin.features.reward")} description={t("signin.features.rewardDesc")} />
           </div>
-        </div> */}
+        </div>
 
         {/* right Side - Form */}
-        {/* <div className="w-full lg:w-6/12 p-8 md:p-12 flex flex-col justify-center"> */}
-        {/* <h2 className="text-3xl font-extrabold text-gray-900 mb-2">{t("signin.title")}</h2>
-        <p className="text-gray-500 mb-6">{t("signin.subtitle")}</p> */}
-        <div className="flex flex-col lg:flex-row min-h-[80vh] lg:min-h-[620px]">
-            <div className="hidden lg:flex lg:w-5/12 xl:w-6/12 bg-gradient-to-br from-emerald-500 to-sky-600 p-6 lg:p-10 xl:p-12 flex-col justify-center relative space-y-6">
+        <div className="w-full lg:w-6/12 p-8 md:p-12 flex flex-col justify-center">
+        <h2 className="text-3xl font-extrabold text-gray-900 mb-2">{t("signin.title")}</h2>
+        <p className="text-gray-500 mb-6">{t("signin.subtitle")}</p>
+        {/* <div className="flex flex-col lg:flex-row min-h-[80vh] lg:min-h-[620px]"> */}
+            {/* <div className="hidden lg:flex lg:w-5/12 xl:w-6/12 bg-gradient-to-br from-emerald-500 to-sky-600 p-6 lg:p-10 xl:p-12 flex-col justify-center relative space-y-6">
               <h1 className="text-4xl font-extrabold text-white leading-tight">
                 {t("signin.hero.title")}
               </h1>
@@ -1495,7 +1495,7 @@ const Signin = () => {
 
             <div className="w-full lg:w-7/12 xl:w-6/12 px-5 sm:px-8 md:px-10 lg:px-12 xl:px-16 py-10 md:py-12 lg:py-16 flex flex-col justify-center">
             <h2 className="text-3xl font-extrabold text-gray-900 mb-2">{t("signin.title")}</h2>
-            <p className="text-gray-500 mb-6">{t("signin.subtitle")}</p>
+            <p className="text-gray-500 mb-6">{t("signin.subtitle")}</p> */}
 
             {error && (
               <p className="text-red-600 text-sm mb-4 p-3 bg-red-50 border-l-4 border-red-500 rounded-r text-center">
@@ -1711,7 +1711,7 @@ const Signin = () => {
                 </button>
               </div>
             )}
-          </div>
+          {/* </div> */}
         </div>
       </div>
 
