@@ -831,7 +831,7 @@ export default function ContactUs() {
   };
 
   return (
-    <section className="min-h-screen py-12 px-4 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-slate-50 via-white to-emerald-50">
+    <section className="py-12 px-4 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-slate-50 via-white to-emerald-50">
       <div className="max-w-7xl mx-auto">
         
         {/* Header */}
