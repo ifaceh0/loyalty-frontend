@@ -831,12 +831,12 @@ export default function ContactUs() {
   };
 
   return (
-    <section className="min-h-screen py-10 px-4 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-slate-50 via-white to-emerald-50">
+    <section className="min-h-screen py-12 px-4 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-slate-50 via-white to-emerald-50">
       <div className="max-w-7xl mx-auto">
         
         {/* Header */}
         <div className="text-center mb-8 space-y-2">
-          <h2 className="text-4xl md:text-6xl font-black text-slate-900 tracking-tight">
+          <h2 className="text-4xl md:text-6xl font-black text-slate-900">
             {t('contact.header')} <span className="text-emerald-600">{t('contact.headerHighlight')}</span>
           </h2>
           <p className="text-xl text-gray-600">
@@ -857,12 +857,12 @@ export default function ContactUs() {
               <div className="space-y-8">
                 {[
                   { icon: <Mail className="text-emerald-400" />, title: t('contact.emailUs'), desc: "support@ifaceh.com" },
-                  { icon: <UserCheck className="text-yellow-400" />, title: t('contact.partnerships'), desc: "no-reply@ifaceh.com" },
-                  { icon: <MapPin className="text-pink-400" />, title: t('contact.ourHub'), desc: t('contact.address') },
+                  // { icon: <UserCheck className="text-yellow-400" />, title: t('contact.partnerships'), desc: "no-reply@ifaceh.com" },
+                  // { icon: <MapPin className="text-pink-400" />, title: t('contact.ourHub'), desc: t('contact.address') },
                   { icon: <Headphones className="text-blue-400" />, title: t('contact.support'), desc: t('contact.alwaysHere') }
                 ].map((item, idx) => (
                   <div key={idx} className="flex gap-4 group">
-                    <div className="w-12 h-12 rounded-lg bg-white/5 flex items-center justify-center group-hover:bg-emerald-500/20 transition-colors">
+                    <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-emerald-500/20 transition-colors">
                       {item.icon}
                     </div>
                     <div>
@@ -976,7 +976,7 @@ export default function ContactUs() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-lg shadow-lg transition-all active:scale-95 disabled:opacity-70 flex items-center justify-center gap-3"
+                className="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-full shadow-lg transition-all active:scale-95 disabled:opacity-70 flex items-center justify-center gap-3"
               >
                 {loading ? <Loader2 className="animate-spin" /> : <Send size={20} />}
                 {loading ? t('contact.sending') : t('contact.sendButton')}

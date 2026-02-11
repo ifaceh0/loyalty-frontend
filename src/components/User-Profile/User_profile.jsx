@@ -417,7 +417,7 @@ const ProfileInputField = ({ label, name, value, onChange, disabled, type = 'tex
           disabled 
             ? 'border-gray-200 bg-gray-50 text-gray-600 cursor-not-allowed' 
             : 'border-gray-300 bg-white text-gray-900 focus:ring-blue-500 focus:border-blue-500 shadow-sm'
-        } rounded py-2 px-4 pl-10 text-base transition-all duration-200 ease-in-out placeholder-gray-400 focus:outline-none focus:ring-1`}
+        } rounded-lg py-2 px-4 pl-10 text-base transition-all duration-200 ease-in-out placeholder-gray-400 focus:outline-none focus:ring-1`}
         placeholder={label}
         disabled={disabled}
         required
@@ -475,7 +475,7 @@ const PhoneInputField = ({ label, name, value, onChange, disabled, icon: Icon = 
               : error 
                 ? 'border-red-400 bg-white text-gray-900 focus:ring-red-500 focus:border-red-500' 
                 : 'border-gray-300 bg-white text-gray-900 focus:ring-blue-500 focus:border-blue-500 shadow-sm'
-          } rounded py-2 px-4 pl-10 text-base transition-all duration-200 ease-in-out placeholder-gray-400 focus:outline-none focus:ring-1`}
+          } rounded-lg py-2 px-4 pl-10 text-base transition-all duration-200 ease-in-out placeholder-gray-400 focus:outline-none focus:ring-1`}
         />
       </div>
       {error && <p className="mt-1 text-xs text-red-600">{error}</p>}
@@ -642,15 +642,15 @@ const UserProfile = () => {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-50 p-1">
+    <div className="flex items-center justify-center bg-gray-50 p-3">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, type: "spring", stiffness: 100 }}
-        className="w-full max-w-xl bg-white rounded shadow-xl border border-gray-200"
+        className="w-full max-w-xl bg-white rounded-xl shadow-xl border border-gray-200"
       >
         {/* Header */}
-        <header className="bg-white border-b border-gray-300 text-blue-700 rounded-t px-6 py-4 sm:px-8 sm:py-4">
+        <header className="bg-white border-b border-gray-300 text-blue-700 rounded-t-xl px-6 py-4 sm:px-8 sm:py-4">
           <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
            {t('profile.header.welcome', )} {userData.firstName || t('profile.header.user')}!
           </h2>
@@ -667,7 +667,7 @@ const UserProfile = () => {
             </h3>
             <button
               onClick={handleEditToggle}
-              className={`px-4 py-2 rounded font-medium transition duration-200 ease-in-out flex items-center justify-center gap-2 text-sm shadow-md w-full sm:w-auto
+              className={`px-4 py-2 rounded-full font-medium transition duration-200 ease-in-out flex items-center justify-center gap-2 text-sm shadow-md w-full sm:w-auto
                 ${isEditing 
                   ? 'bg-white text-red-600 border border-red-600 hover:bg-red-50' 
                   : 'bg-blue-600 text-white hover:bg-blue-700'
@@ -686,7 +686,7 @@ const UserProfile = () => {
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
-                className="bg-green-50 border border-green-300 text-green-700 p-4 rounded mb-5 text-sm sm:text-base"
+                className="bg-green-50 border border-green-300 text-green-700 p-4 rounded-lg mb-5 text-sm sm:text-base"
               >
                 <p className="font-semibold flex items-center gap-2">
                   <FiCheckCircle className="w-5 h-5" /> {successMessage}
@@ -698,7 +698,7 @@ const UserProfile = () => {
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: 'auto' }}
                 exit={{ opacity: 0, height: 0 }}
-                className="bg-red-50 border border-red-300 text-red-700 p-4 rounded mb-5 text-sm sm:text-base"
+                className="bg-red-50 border border-red-300 text-red-700 p-4 rounded-lg mb-5 text-sm sm:text-base"
               >
                 <p className="font-semibold">{t('profile.errors.title')}</p>
                 <p className="mt-1">{error}</p>
@@ -755,7 +755,7 @@ const UserProfile = () => {
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className={`w-full bg-gradient-to-br from-blue-600 to-blue-700 text-white py-2 rounded font-bold text-base shadow-lg hover:from-blue-700 hover:to-blue-800 transition duration-300 flex items-center justify-center gap-3 ${
+                  className={`w-full bg-gradient-to-br from-blue-600 to-blue-700 text-white py-2 rounded-full font-bold text-base shadow-lg hover:from-blue-700 hover:to-blue-800 transition duration-300 flex items-center justify-center gap-3 ${
                     isLoading ? 'opacity-70 cursor-wait' : ''
                   }`}
                 >

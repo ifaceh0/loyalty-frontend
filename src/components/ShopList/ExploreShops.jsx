@@ -932,9 +932,9 @@ export default function ExploreShops() {
     const [pendingSearchTerm, setPendingSearchTerm] = useState('');
     const [appliedSearchTerm, setAppliedSearchTerm] = useState('');
 
-    const [pendingCountry, setPendingCountry] = useState('');
+    // const [pendingCountry, setPendingCountry] = useState('');
     const [pendingCity, setPendingCity] = useState('');
-    const [appliedCountry, setAppliedCountry] = useState('');
+    // const [appliedCountry, setAppliedCountry] = useState('');
     const [appliedCity, setAppliedCity] = useState('');
 
     const [currentPage, setCurrentPage] = useState(1);
@@ -942,7 +942,7 @@ export default function ExploreShops() {
     const [loadingShopId, setLoadingShopId] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [isFilterOpen, setIsFilterOpen] = useState(false);
-    const [countries, setCountries] = useState([]);
+    // const [countries, setCountries] = useState([]);
     const [cities, setCities] = useState([]);
 
     const checkAuth = () => {
@@ -963,17 +963,19 @@ export default function ExploreShops() {
             userId,
             currentPage,
             appliedSearchTerm,
-            appliedCountry,
+            // appliedCountry,
             appliedCity
         );
-    }, [currentPage, appliedSearchTerm, appliedCountry, appliedCity, navigate]);
+    // }, [currentPage, appliedSearchTerm, appliedCountry, appliedCity, navigate]);
+    }, [currentPage, appliedSearchTerm, appliedCity, navigate]);
 
-    const fetchShops = async (userId, page, search = '', country = '', city = '') => {
+    // const fetchShops = async (userId, page, search = '', country = '', city = '') => {
+    const fetchShops = async (userId, page, search = '', city = '') => {
         setIsLoading(true);
         try {
             let url = `${API_BASE}/allShopsAvailable?userId=${userId}&page=${page - 1}&size=${ITEMS_PER_PAGE}`;
             if (search) url += `&searchTerm=${encodeURIComponent(search)}`;
-            if (country) url += `&country=${encodeURIComponent(country)}`;
+            // if (country) url += `&country=${encodeURIComponent(country)}`;
             if (city) url += `&city=${encodeURIComponent(city)}`;
 
             const response = await fetch(url, { credentials: "include" });
@@ -997,9 +999,9 @@ export default function ExploreShops() {
             setFilteredShops(normalizedData); // kept for compatibility but not really used
             setTotalPages(data.totalPages);
 
-            const uniqueCountries = [...new Set(normalizedData.map(shop => shop.country))].filter(Boolean).sort();
+            // const uniqueCountries = [...new Set(normalizedData.map(shop => shop.country))].filter(Boolean).sort();
             const uniqueCities = [...new Set(normalizedData.map(shop => shop.city))].filter(Boolean).sort();
-            setCountries(uniqueCountries);
+            // setCountries(uniqueCountries);
             setCities(uniqueCities);
         } catch (err) {
             setError(err.message || 'Something went wrong');
@@ -1051,16 +1053,16 @@ export default function ExploreShops() {
     };
 
     const handleApplyFilters = () => {
-        setAppliedCountry(pendingCountry);
+        // setAppliedCountry(pendingCountry);
         setAppliedCity(pendingCity);
         setCurrentPage(1);
         setIsFilterOpen(false);
     };
 
     const handleFilterReset = () => {
-        setPendingCountry('');
+        // setPendingCountry('');
         setPendingCity('');
-        setAppliedCountry('');
+        // setAppliedCountry('');
         setAppliedCity('');
         setCurrentPage(1);
         setIsFilterOpen(false);
@@ -1118,7 +1120,7 @@ export default function ExploreShops() {
                             }
                         }}
                         placeholder={t('explore.searchPlaceholder')}
-                        className="w-full px-5 py-2 rounded border-2 border-gray-200 focus:outline-none focus:ring-4 focus:ring-offset-2 focus:ring-blue-400 shadow-md transition pr-12"
+                        className="w-full px-5 py-2 rounded-full border-2 border-gray-200 focus:outline-none focus:ring-4 focus:ring-offset-2 focus:ring-blue-400 shadow-md transition pr-12"
                     />
                     <button
                         onClick={handleApplySearch}
@@ -1132,7 +1134,7 @@ export default function ExploreShops() {
                 <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className="px-6 py-2 rounded text-white font-semibold bg-blue-600 hover:bg-blue-700 transition flex items-center justify-center gap-2 shadow-lg"
+                    className="px-6 py-2 rounded-full text-white font-semibold bg-blue-600 hover:bg-blue-700 transition flex items-center justify-center gap-2 shadow-lg"
                     onClick={() => setIsFilterOpen(!isFilterOpen)}
                 >
                     <FontAwesomeIcon icon={faFilter} />
@@ -1141,13 +1143,13 @@ export default function ExploreShops() {
 
                 {isFilterOpen && (
                     <motion.div
-                        className="absolute top-full right-0 mt-3 bg-white p-6 rounded shadow-2xl w-full md:w-96 z-50 border-t-4 border-blue-600"
+                        className="absolute top-full right-0 mt-3 bg-white p-6 rounded-xl shadow-2xl w-full md:w-96 z-50 border-t-4 border-blue-600"
                         initial={{ opacity: 0, y: -10, scale: 0.9 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         transition={{ duration: 0.3 }}
                     >
                         <h2 className="text-xl font-bold text-blue-800 mb-4 border-b pb-2">{t('explore.filter.title')}</h2>
-                        <div className="mb-4">
+                        {/* <div className="mb-4">
                             <label className="block text-gray-600 font-medium mb-2 flex items-center gap-2">
                                 <FontAwesomeIcon icon={faGlobe} className="text-blue-600" />
                                 {t('explore.filter.country')}
@@ -1165,8 +1167,8 @@ export default function ExploreShops() {
                                     <option key={country} value={country}>{country.toUpperCase()}</option>
                                 ))}
                             </select>
-                        </div>
-                        <div className="mb-6">
+                        </div> */}
+                        {/* <div className="mb-6">
                             <label className="block text-gray-600 font-medium mb-2 flex items-center gap-2">
                                 <FontAwesomeIcon icon={faCity} className="text-blue-600" />
                                 {t('explore.filter.city')}
@@ -1187,16 +1189,35 @@ export default function ExploreShops() {
                                         <option key={city} value={city}>{city.toUpperCase()}</option>
                                     ))}
                             </select>
+                        </div> */}
+                        <div className="mb-6">
+                            <label className="block text-gray-600 font-medium mb-2 flex items-center gap-2">
+                                <FontAwesomeIcon icon={faCity} className="text-blue-600" />
+                                {t('explore.filter.city')}
+                            </label>
+
+                            <select
+                                value={pendingCity}
+                                onChange={(e) => setPendingCity(e.target.value)}
+                                className="w-full px-4 py-2 rounded-xl border-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 appearance-none bg-white"
+                            >
+                                <option value="">{t('explore.filter.allCities')}</option>
+                                {cities.map((city) => (
+                                <option key={city} value={city}>
+                                    {city.toUpperCase()}
+                                </option>
+                                ))}
+                            </select>
                         </div>
                         <div className="flex justify-end space-x-3">
                             <button
-                                className="px-4 py-2 rounded text-gray-700 font-medium bg-gray-200 hover:bg-gray-300 transition"
+                                className="px-4 py-2 rounded-full text-gray-700 font-medium bg-gray-200 hover:bg-gray-300 transition"
                                 onClick={handleFilterReset}
                             >
                                 {t('explore.filter.reset')}
                             </button>
                             <button
-                                className="px-4 py-2 rounded text-white font-medium bg-blue-600 hover:bg-blue-700 transition"
+                                className="px-4 py-2 rounded-full text-white font-medium bg-blue-600 hover:bg-blue-700 transition"
                                 onClick={handleApplyFilters}
                             >
                                 {t('explore.filter.done')}
@@ -1206,7 +1227,7 @@ export default function ExploreShops() {
                 )}
             </div>
 
-            {error && <p className="text-red-500 text-center font-semibold bg-red-100 p-3 rounded mx-auto max-w-lg mb-6">{error}</p>}
+            {error && <p className="text-red-500 text-center font-semibold bg-red-100 p-3 rounded-xl mx-auto max-w-lg mb-6">{error}</p>}
 
             {currentShops.length === 0 ? (
                 <p className="text-center text-gray-500 font-medium mt-10 p-5">
@@ -1218,7 +1239,7 @@ export default function ExploreShops() {
                     {currentShops.map((shop) => (
                         <div
                             key={shop.shopId}
-                            className="bg-white rounded shadow-lg overflow-hidden hover:shadow-xl transition transform hover:-translate-y-1 border border-blue-100"
+                            className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition transform hover:-translate-y-1 border border-blue-100"
                         >
                             {/* Gradient Header */}
                             <div className="bg-blue-700 p-3 text-white flex items-center">
@@ -1248,25 +1269,25 @@ export default function ExploreShops() {
                             <div className="p-4 bg-blue-50">
                                 {/* Shop ID Badge */}
                                 <div className="flex justify-end mb-2">
-                                    <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">
+                                    <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
                                         ID: shop{shop.shopId}
                                     </span>
                                 </div>
 
                                 {/* Country & City */}
                                 <div className="grid grid-cols-2 gap-2 text-sm mb-3">
-                                    <div className="flex items-center bg-white p-1 rounded border border-blue-200">
+                                    <div className="flex items-center bg-white p-1 rounded-full border border-blue-200">
                                         <FontAwesomeIcon icon={faGlobe} className="mr-2 text-blue-700 text-xs" />
                                         <span className="font-medium text-blue-800 truncate">{shop.country ? shop.country.toUpperCase() : 'N/A'}</span>
                                     </div>
-                                    <div className="flex items-center bg-white p-1 rounded border border-blue-200">
+                                    <div className="flex items-center bg-white p-1 rounded-full border border-blue-200">
                                         <FontAwesomeIcon icon={faCity} className="mr-2 text-blue-700 text-xs" />
                                         <span className="font-medium text-blue-800 truncate">{shop.city ? shop.city.toUpperCase() : 'N/A'}</span>
                                     </div>
                                 </div>
 
                                 {/* Phone */}
-                                <div className="flex items-center mt-2 bg-white p-1.5 rounded border border-blue-200">
+                                <div className="flex items-center mt-2 bg-white p-1.5 rounded-full border border-blue-200">
                                     <FontAwesomeIcon icon={faPhoneAlt} className="mr-2 text-blue-700" />
                                     <span className="text-sm font-medium text-blue-800">{shop.shopPhone || 'N/A'}</span>
                                 </div>
@@ -1277,7 +1298,7 @@ export default function ExploreShops() {
                                     whileTap={{ scale: 0.98 }}
                                     onClick={() => handleGenerateQR(shop)}
                                     disabled={loadingShopId === shop.shopId}
-                                    className={`w-full mt-3 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded text-sm font-medium transition flex items-center justify-center gap-2
+                                    className={`w-full mt-3 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-full text-sm font-medium transition flex items-center justify-center gap-2
                                         ${loadingShopId === shop.shopId ? 'opacity-70 cursor-not-allowed' : ''}`}
                                 >
                                     {loadingShopId === shop.shopId ? (

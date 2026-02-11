@@ -217,9 +217,8 @@
 
 
 
-//translate
+// //translate
 'use client';
-
 import React, { useState } from 'react';
 import {
   Target,
@@ -230,10 +229,30 @@ import {
   Bell,
   X,
 } from 'lucide-react';
-
-// ---- ADD THIS ----
 import { useTranslation } from 'react-i18next';
-// ----------------
+import { motion } from 'framer-motion';
+
+// Animation variants
+const container = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.2,
+    },
+  },
+};
+
+const item = {
+  hidden: { opacity: 0, y: 30, scale: 0.96 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.6, ease: 'easeOut' },
+  },
+};
 
 const features = [
   {
@@ -283,74 +302,95 @@ export default function Features() {
 
   return (
     <>
-      <section className="py-10 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-slate-50 to-white">
+      <section className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-slate-50 to-white">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h1 className="text-4xl sm:text-5xl font-extrabold text-emerald-600 mb-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-12 sm:mb-16"
+          >
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-emerald-600 mb-4 md:mb-5">
               {t('features.title')}
             </h1>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+            <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
               {t('features.subtitle')}
             </p>
-          </div>
+          </motion.div>
 
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          <motion.div
+            variants={container}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.15 }}
+            className="grid gap-6 sm:gap-8 md:gap-10 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
+          >
             {features.map((feature, idx) => {
               const Icon = feature.Icon;
               const key = `features.${feature.key}`;
-              return (
-                <button
-                  key={idx}
-                  onClick={() => openModal(feature)}
-                  className="group relative bg-white rounded p-1 shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden text-left"
-                >
-                  <div className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-20 transition-opacity duration-300`} />
 
-                  <div className="relative bg-white rounded p-6 h-full border border-gray-100">
-                    <div className="mb-5 w-14 h-14 rounded bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center text-3xl shadow-md group-hover:scale-110 transition-transform duration-300">
-                      <Icon className="w-7 h-7 text-emerald-600" />
+              return (
+                <motion.button
+                  key={idx}
+                  variants={item}
+                  whileHover={{ scale: 1.03, y: -6 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => openModal(feature)}
+                  className="group relative bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden text-left border border-gray-100/80"
+                >
+                  <div
+                    className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-500`}
+                  />
+
+                  <div className="relative p-5 sm:p-6 md:p-7 h-full">
+                    <div className="mb-5 w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center text-3xl shadow-md group-hover:scale-110 transition-transform duration-300">
+                      <Icon className="w-7 h-7 sm:w-8 sm:h-8 text-emerald-600" />
                     </div>
 
-                    <h3 className="text-xl font-bold text-gray-800 mb-2 group-hover:text-emerald-700 transition-colors">
+                    <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-800 mb-2 sm:mb-3 group-hover:text-emerald-700 transition-colors">
                       {t(`${key}.title`)}
                     </h3>
 
-                    <p className="text-gray-600 leading-relaxed">
+                    <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
                       {t(`${key}.desc`)}
                     </p>
 
-                    <div className="mt-4 flex justify-end opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <span className="text-emerald-600 text-sm font-medium">
+                    <div className="mt-4 sm:mt-5 flex justify-end opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <span className="text-emerald-600 text-sm sm:text-base font-medium">
                         {t('features.learnMore')}
                       </span>
                     </div>
                   </div>
-                </button>
+                </motion.button>
               );
             })}
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* MODAL */}
       {modalOpen && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
           onClick={closeModal}
         >
-          <div
-            className="relative max-w-2xl w-full bg-white rounded shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-300"
+          <motion.div
+            initial={{ opacity: 0, scale: 0.92, y: 40 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.92, y: 40 }}
+            transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+            className="relative max-w-lg sm:max-w-2xl md:max-w-3xl w-full bg-white rounded-xl shadow-2xl overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
             <button
               onClick={closeModal}
-              className="absolute top-4 right-4 p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition"
+              className="absolute top-4 right-4 z-10 p-2.5 rounded-full bg-white/90 hover:bg-gray-100 text-gray-700 transition shadow-sm"
             >
-              <X className="w-5 h-5 text-gray-600" />
+              <X className="w-5 h-5 sm:w-6 sm:h-6" />
             </button>
 
             {modalOpen.image && (
-              <div className="h-56 overflow-hidden">
+              <div className="h-48 sm:h-56 md:h-64 overflow-hidden">
                 <img
                   src={modalOpen.image}
                   alt={t(`features.${modalOpen.key}.title`)}
@@ -359,30 +399,30 @@ export default function Features() {
               </div>
             )}
 
-            <div className="p-6 lg:p-8">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-12 h-12 rounded bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
-                  <modalOpen.Icon className="w-7 h-7 text-emerald-600" />
+            <div className="p-6 sm:p-8 md:p-10">
+              <div className="flex items-center gap-3 sm:gap-4 mb-5 sm:mb-6">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center shadow-sm">
+                  <modalOpen.Icon className="w-7 h-7 sm:w-8 sm:h-8 text-emerald-600" />
                 </div>
-                <h2 className="text-2xl font-bold text-gray-800">
+                <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800">
                   {t(`features.${modalOpen.key}.title`)}
                 </h2>
               </div>
 
-              <p className="text-gray-600 leading-relaxed">
+              <p className="text-gray-600 leading-relaxed text-sm sm:text-base md:text-lg">
                 {t(`features.${modalOpen.key}.details`)}
               </p>
 
-              <div className="mt-6 flex justify-end">
+              <div className="mt-6 sm:mt-8 flex justify-end">
                 <button
                   onClick={closeModal}
-                  className="px-5 py-2 bg-emerald-600 text-white rounded hover:bg-emerald-700 transition"
+                  className="px-5 sm:px-6 py-2.5 sm:py-3 bg-emerald-600 text-white font-medium rounded-full hover:bg-emerald-700 transition shadow-md hover:shadow-lg text-sm sm:text-base"
                 >
                   {t('features.gotIt')}
                 </button>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       )}
     </>

@@ -256,7 +256,231 @@
 
 
 
-//translate
+// //translate
+// import React, { useState } from 'react';
+// import {
+//   BookOpen,
+//   TrendingUp,
+//   Share2,
+//   FileText,
+//   LayoutDashboard,
+//   Gift,
+//   X,
+//   CheckCircle,
+//   ArrowRight,
+// } from 'lucide-react';
+
+// import { useTranslation } from 'react-i18next';
+
+// const resources = [
+//   {
+//     key: 'howPointsWork',
+//     Icon: BookOpen,
+//     gradient: 'from-emerald-400 to-teal-500',
+//   },
+//   {
+//     key: 'businessBenefits',
+//     Icon: TrendingUp,
+//     gradient: 'from-cyan-400 to-blue-500',
+//   },
+//   {
+//     key: 'referralGuide',
+//     Icon: Share2,
+//     gradient: 'from-indigo-400 to-purple-500',
+//   },
+//   {
+//     key: 'redemptionRules',
+//     Icon: FileText,
+//     gradient: 'from-amber-400 to-orange-500',
+//   },
+//   {
+//     key: 'dashboardFeatures',
+//     Icon: LayoutDashboard,
+//     gradient: 'from-pink-400 to-rose-500',
+//   },
+//   {
+//     key: 'promotions',
+//     Icon: Gift,
+//     gradient: 'from-lime-400 to-green-500',
+//   },
+// ];
+
+// export default function Resources() {
+//   const { t } = useTranslation();
+//   const [modalOpen, setModalOpen] = useState(null);
+
+//   const openModal = (resource) => setModalOpen(resource);
+//   const closeModal = () => setModalOpen(null);
+
+//   // Helper to get dynamic content
+//   const getDetails = (key) => {
+//     const data = t(`resources.${key}`, { returnObjects: true });
+//     const steps = data.steps || [];
+//     const stats = data.stats || [];
+//     const tips = data.tips || [];
+//     const rules = data.rules || [];
+//     const features = data.features || [];
+//     const promos = data.promos || [];
+
+//     const result = [];
+
+//     steps.forEach(text => result.push({ type: 'step', text }));
+//     stats.forEach(text => result.push({ type: 'stat', text }));
+//     tips.forEach(text => result.push({ type: 'tip', text }));
+//     rules.forEach(text => result.push({ type: 'rule', text }));
+//     features.forEach(text => result.push({ type: 'feature', text }));
+//     promos.forEach(text => result.push({ type: 'promo', text }));
+
+//     return result;
+//   };
+
+//   return (
+//     <>
+//       <section className="py-10 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-slate-50 to-white">
+//         <div className="max-w-7xl mx-auto">
+//           <div className="text-center mb-16">
+//             <h1 className="text-4xl sm:text-5xl font-extrabold text-emerald-600 mb-4">
+//               {t('resources.title')}
+//             </h1>
+//             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+//               {t('resources.subtitle')}
+//             </p>
+//           </div>
+
+//           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+//             {resources.map((resource, idx) => {
+//               const Icon = resource.Icon;
+//               const key = `resources.${resource.key}`;
+//               return (
+//                 <button
+//                   key={idx}
+//                   onClick={() => openModal({ ...resource, details: getDetails(resource.key) })}
+//                   className="group block text-left"
+//                 >
+//                   <div className="relative bg-white/80 backdrop-blur-sm rounded p-1 shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100">
+//                     <div className={`absolute inset-0 bg-gradient-to-br ${resource.gradient} opacity-0 group-hover:opacity-30 transition-opacity duration-300`} />
+//                     <div className="relative bg-white rounded p-6 h-full">
+//                       <div className="mb-4 w-12 h-12 rounded bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform duration-300">
+//                         <Icon className="w-6 h-6 text-emerald-600" />
+//                       </div>
+//                       <h3 className="text-xl font-bold text-gray-800 mb-2 group-hover:text-emerald-700 transition-colors">
+//                         {t(`${key}.title`)}
+//                       </h3>
+//                       <p className="text-gray-600 text-sm leading-relaxed mb-4">
+//                         {t(`${key}.desc`)}
+//                       </p>
+//                       <div className="flex items-center justify-between">
+//                         <span className="text-emerald-600 font-medium text-sm flex items-center gap-1 group-hover:gap-2 transition-all">
+//                           {t('resources.readMore')}
+//                           <ArrowRight className="w-4 h-4" />
+//                         </span>
+//                       </div>
+//                     </div>
+//                   </div>
+//                 </button>
+//               );
+//             })}
+//           </div>
+//         </div>
+//       </section>
+
+//       {/* MODAL */}
+//       {modalOpen && (
+//         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50" onClick={closeModal}>
+//           <div
+//             className="relative max-w-2xl w-full bg-white rounded shadow-2xl overflow-hidden"
+//             onClick={(e) => e.stopPropagation()}
+//           >
+//             <button
+//               onClick={closeModal}
+//               className="absolute top-4 right-4 p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition z-10"
+//             >
+//               <X className="w-5 h-5 text-gray-600" />
+//             </button>
+
+//             <div className="p-6 lg:p-8">
+//               <div className="flex items-center gap-3 mb-6">
+//                 <div className="w-12 h-12 rounded bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
+//                   <modalOpen.Icon className="w-7 h-7 text-emerald-600" />
+//                 </div>
+//                 <h2 className="text-2xl font-bold text-gray-800">
+//                   {t(`resources.${modalOpen.key}.title`)}
+//                 </h2>
+//               </div>
+
+//               <div className="space-y-4">
+//                 {modalOpen.details.map((item, i) => {
+//                   if (item.type === 'step')
+//                     return (
+//                       <div key={i} className="flex items-start gap-3">
+//                         <CheckCircle className="w-5 h-5 text-emerald-600 mt-0.5 flex-shrink-0" />
+//                         <p className="text-gray-700">{item.text}</p>
+//                       </div>
+//                     );
+//                   if (item.type === 'stat')
+//                     return (
+//                       <div key={i} className="bg-emerald-50 text-emerald-800 px-4 py py-2 rounded font-medium">
+//                         {item.text}
+//                       </div>
+//                     );
+//                   if (item.type === 'tip')
+//                     return (
+//                       <div key={i} className="flex items-start gap-3 text-sm">
+//                         <div className="w-5 h-5 rounded-full bg-amber-100 flex items-center justify-center flex-shrink-0">
+//                           <span className="text-amber-600 text-xs font-bold">i</span>
+//                         </div>
+//                         <p className="text-gray-600 italic">{item.text}</p>
+//                       </div>
+//                     );
+//                   if (item.type === 'rule')
+//                     return (
+//                       <div key={i} className="flex items-center gap-2 text-sm">
+//                         <div className="w-1.5 h-1.5 rounded-full bg-red-500 flex-shrink-0" />
+//                         <p className="text-gray-700">{item.text}</p>
+//                       </div>
+//                     );
+//                   if (item.type === 'promo')
+//                     return (
+//                       <div key={i} className="bg-gradient-to-r from-emerald-50 to-teal-50 text-emerald-800 px-4 py-2 rounded font-medium flex items-center gap-2">
+//                         <Gift className="w-4 h-4" />
+//                         {item.text}
+//                       </div>
+//                     );
+//                   if (item.type === 'feature')
+//                     return (
+//                       <div key={i} className="flex items-center gap-2">
+//                         <CheckCircle className="w-5 h-5 text-teal-600" />
+//                         <p className="text-gray-700">{item.text}</p>
+//                       </div>
+//                     );
+//                   return null;
+//                 })}
+//               </div>
+
+//               <div className="mt-8 flex justify-end">
+//                 <button
+//                   onClick={closeModal}
+//                   className="px-5 py-2.5 bg-emerald-600 text-white font-medium rounded hover:bg-emerald-700 transition shadow-md"
+//                 >
+//                   {t('resources.gotIt')}
+//                 </button>
+//               </div>
+//             </div>
+//           </div>
+//         </div>
+//       )}
+//     </>
+//   );
+// }
+
+
+
+
+
+
+
+'use client';
+
 import React, { useState } from 'react';
 import {
   BookOpen,
@@ -271,6 +495,29 @@ import {
 } from 'lucide-react';
 
 import { useTranslation } from 'react-i18next';
+import { motion } from 'framer-motion';
+
+// Animation variants
+const container = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.15,
+    },
+  },
+};
+
+const item = {
+  hidden: { opacity: 0, y: 30, scale: 0.97 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.6, ease: 'easeOut' },
+  },
+};
 
 const resources = [
   {
@@ -336,120 +583,154 @@ export default function Resources() {
 
   return (
     <>
-      <section className="py-10 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-slate-50 to-white">
+      <section className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-slate-50 to-white">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h1 className="text-4xl sm:text-5xl font-extrabold text-emerald-600 mb-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-12 sm:mb-16 md:mb-20"
+          >
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-emerald-600 mb-4 md:mb-5">
               {t('resources.title')}
             </h1>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+            <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
               {t('resources.subtitle')}
             </p>
-          </div>
+          </motion.div>
 
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          <motion.div
+            variants={container}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.15 }}
+            className="grid gap-6 sm:gap-8 md:gap-10 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
+          >
             {resources.map((resource, idx) => {
               const Icon = resource.Icon;
               const key = `resources.${resource.key}`;
+
               return (
-                <button
+                <motion.button
                   key={idx}
+                  variants={item}
+                  whileHover={{ scale: 1.03, y: -6 }}
+                  whileTap={{ scale: 0.98 }}
                   onClick={() => openModal({ ...resource, details: getDetails(resource.key) })}
                   className="group block text-left"
                 >
-                  <div className="relative bg-white/80 backdrop-blur-sm rounded p-1 shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100">
-                    <div className={`absolute inset-0 bg-gradient-to-br ${resource.gradient} opacity-0 group-hover:opacity-30 transition-opacity duration-300`} />
-                    <div className="relative bg-white rounded p-6 h-full">
-                      <div className="mb-4 w-12 h-12 rounded bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform duration-300">
-                        <Icon className="w-6 h-6 text-emerald-600" />
+                  <div className="relative bg-white/80 backdrop-blur-sm rounded-xl p-1 shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100">
+                    <div
+                      className={`absolute inset-0 bg-gradient-to-br ${resource.gradient} opacity-0 group-hover:opacity-30 transition-opacity duration-500`}
+                    />
+
+                    <div className="relative bg-white rounded-xl p-5 sm:p-6 md:p-7 h-full">
+                      <div className="mb-4 sm:mb-5 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform duration-300">
+                        <Icon className="w-6 h-6 sm:w-7 sm:h-7 text-emerald-600" />
                       </div>
-                      <h3 className="text-xl font-bold text-gray-800 mb-2 group-hover:text-emerald-700 transition-colors">
+
+                      <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-800 mb-2 sm:mb-3 group-hover:text-emerald-700 transition-colors">
                         {t(`${key}.title`)}
                       </h3>
-                      <p className="text-gray-600 text-sm leading-relaxed mb-4">
+
+                      <p className="text-gray-600 text-sm sm:text-base leading-relaxed mb-4 sm:mb-5">
                         {t(`${key}.desc`)}
                       </p>
+
                       <div className="flex items-center justify-between">
-                        <span className="text-emerald-600 font-medium text-sm flex items-center gap-1 group-hover:gap-2 transition-all">
+                        <span className="text-emerald-600 font-medium text-sm sm:text-base flex items-center gap-1 sm:gap-2 group-hover:gap-3 transition-all">
                           {t('resources.readMore')}
-                          <ArrowRight className="w-4 h-4" />
+                          <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
                         </span>
                       </div>
                     </div>
                   </div>
-                </button>
+                </motion.button>
               );
             })}
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* MODAL */}
       {modalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50" onClick={closeModal}>
-          <div
-            className="relative max-w-2xl w-full bg-white rounded shadow-2xl overflow-hidden"
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+          onClick={closeModal}
+        >
+          <motion.div
+            initial={{ opacity: 0, scale: 0.92, y: 30 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.92, y: 30 }}
+            transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+            className="relative max-w-lg sm:max-w-xl md:max-w-2xl lg:max-w-3xl w-full bg-white rounded-xl shadow-2xl overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
             <button
               onClick={closeModal}
-              className="absolute top-4 right-4 p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition z-10"
+              className="absolute top-3 sm:top-4 right-3 sm:right-4 z-10 p-2.5 sm:p-3 rounded-full bg-white/90 hover:bg-gray-100 text-gray-700 transition shadow-sm"
             >
-              <X className="w-5 h-5 text-gray-600" />
+              <X className="w-5 h-5 sm:w-6 sm:h-6" />
             </button>
 
-            <div className="p-6 lg:p-8">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 rounded bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
-                  <modalOpen.Icon className="w-7 h-7 text-emerald-600" />
+            <div className="p-5 sm:p-6 md:p-8 lg:p-10">
+              <div className="flex items-center gap-3 sm:gap-4 mb-5 sm:mb-6 md:mb-7">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center shadow-sm">
+                  <modalOpen.Icon className="w-6 h-6 sm:w-7 sm:h-7 text-emerald-600" />
                 </div>
-                <h2 className="text-2xl font-bold text-gray-800">
+                <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800">
                   {t(`resources.${modalOpen.key}.title`)}
                 </h2>
               </div>
 
-              <div className="space-y-4">
+              <div className="space-y-4 sm:space-y-5 md:space-y-6 max-h-[60vh] overflow-y-auto pr-2">
                 {modalOpen.details.map((item, i) => {
                   if (item.type === 'step')
                     return (
-                      <div key={i} className="flex items-start gap-3">
-                        <CheckCircle className="w-5 h-5 text-emerald-600 mt-0.5 flex-shrink-0" />
-                        <p className="text-gray-700">{item.text}</p>
+                      <div key={i} className="flex items-start gap-3 sm:gap-4">
+                        <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-600 mt-0.5 flex-shrink-0" />
+                        <p className="text-gray-700 text-sm sm:text-base">{item.text}</p>
                       </div>
                     );
                   if (item.type === 'stat')
                     return (
-                      <div key={i} className="bg-emerald-50 text-emerald-800 px-4 py py-2 rounded font-medium">
+                      <div
+                        key={i}
+                        className="bg-emerald-50 text-emerald-800 px-4 py-3 sm:py-4 rounded-lg font-medium text-sm sm:text-base"
+                      >
                         {item.text}
                       </div>
                     );
                   if (item.type === 'tip')
                     return (
-                      <div key={i} className="flex items-start gap-3 text-sm">
-                        <div className="w-5 h-5 rounded-full bg-amber-100 flex items-center justify-center flex-shrink-0">
-                          <span className="text-amber-600 text-xs font-bold">i</span>
+                      <div key={i} className="flex items-start gap-3 sm:gap-4 text-sm sm:text-base">
+                        <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-amber-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+                          <span className="text-amber-600 text-xs sm:text-sm font-bold">i</span>
                         </div>
                         <p className="text-gray-600 italic">{item.text}</p>
                       </div>
                     );
                   if (item.type === 'rule')
                     return (
-                      <div key={i} className="flex items-center gap-2 text-sm">
-                        <div className="w-1.5 h-1.5 rounded-full bg-red-500 flex-shrink-0" />
+                      <div key={i} className="flex items-center gap-2 sm:gap-3 text-sm sm:text-base">
+                        <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-red-500 flex-shrink-0" />
                         <p className="text-gray-700">{item.text}</p>
                       </div>
                     );
                   if (item.type === 'promo')
                     return (
-                      <div key={i} className="bg-gradient-to-r from-emerald-50 to-teal-50 text-emerald-800 px-4 py-2 rounded font-medium flex items-center gap-2">
-                        <Gift className="w-4 h-4" />
+                      <div
+                        key={i}
+                        className="bg-gradient-to-r from-emerald-50 to-teal-50 text-emerald-800 px-4 py-3 sm:py-4 rounded-lg font-medium flex items-center gap-2 sm:gap-3 text-sm sm:text-base"
+                      >
+                        <Gift className="w-4 h-4 sm:w-5 sm:h-5" />
                         {item.text}
                       </div>
                     );
                   if (item.type === 'feature')
                     return (
-                      <div key={i} className="flex items-center gap-2">
-                        <CheckCircle className="w-5 h-5 text-teal-600" />
+                      <div key={i} className="flex items-center gap-2 sm:gap-3 text-sm sm:text-base">
+                        <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-teal-600 flex-shrink-0" />
                         <p className="text-gray-700">{item.text}</p>
                       </div>
                     );
@@ -457,16 +738,16 @@ export default function Resources() {
                 })}
               </div>
 
-              <div className="mt-8 flex justify-end">
+              <div className="mt-6 sm:mt-8 md:mt-10 flex justify-end">
                 <button
                   onClick={closeModal}
-                  className="px-5 py-2.5 bg-emerald-600 text-white font-medium rounded hover:bg-emerald-700 transition shadow-md"
+                  className="px-5 sm:px-6 md:px-7 py-2.5 sm:py-3 bg-emerald-600 text-white font-medium rounded-full hover:bg-emerald-700 transition shadow-md hover:shadow-lg text-sm sm:text-base"
                 >
                   {t('resources.gotIt')}
                 </button>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       )}
     </>

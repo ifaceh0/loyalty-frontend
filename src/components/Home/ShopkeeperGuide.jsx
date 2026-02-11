@@ -643,10 +643,10 @@ export default function ShopkeeperFullFlowDemo() {
                     initial={{ opacity: 0, scale: 0.85 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: idx * 0.25 }}
-                    className={`w-full p-5 rounded shadow-xl border-2 ${step.border} ${step.bg} flex flex-col`}
+                    className={`w-full p-5 rounded-xl shadow-xl border-2 ${step.border} ${step.bg} flex flex-col`}
                   >
                     <div className={`flex ${align === "text-right" ? "justify-end" : "justify-start"} mb-3`}>
-                      <div className="p-2.5 bg-white rounded shadow-sm">
+                      <div className="p-2.5 bg-white rounded-full shadow-sm">
                         <step.icon className="w-6 h-6 text-orange-600" />
                       </div>
                     </div>
@@ -675,13 +675,13 @@ export default function ShopkeeperFullFlowDemo() {
                     </ul>
 
                     {step.formPreview && (
-                      <div className="mt-3 p-3 bg-white rounded border border-gray-200 shadow-inner space-y-2 text-xs">
+                      <div className="mt-3 p-3 bg-white rounded-xl border border-gray-200 shadow-inner space-y-2 text-xs">
                         {step.title.includes("Password") || step.title.includes("Contraseña") ? (
                           <>
-                            <div className="h-9 bg-gray-100 rounded flex items-center px-2">
+                            <div className="h-9 bg-gray-100 rounded-lg flex items-center px-2">
                               <Lock className="w-3 h-3 mr-1" /> {t("flow.form.password")}
                             </div>
-                            <div className="h-9 bg-gray-100 rounded flex items-center px-2">
+                            <div className="h-9 bg-gray-100 rounded-lg flex items-center px-2">
                               <Lock className="w-3 h-3 mr-1" /> {t("flow.form.confirmPassword")}
                             </div>
                           </>
@@ -695,10 +695,10 @@ export default function ShopkeeperFullFlowDemo() {
                             </div>
                           </>
                         )}
-                        <div className="h-12 bg-gray-100 rounded flex items-center justify-center">
+                        <div className="h-12 bg-gray-100 rounded-lg flex items-center justify-center">
                           <Puzzle className="w-5 h-5 text-gray-500" />
                         </div>
-                        <button className="w-full h-9 bg-teal-600 text-white rounded text-xs font-medium">
+                        <button className="w-full h-9 bg-teal-600 text-white rounded-full text-xs font-medium">
                           {step.title.includes("Password") || step.title.includes("Contraseña") 
                             ? t("flow.form.setPassword") 
                             : t("flow.form.signIn")}
@@ -783,7 +783,7 @@ export default function ShopkeeperFullFlowDemo() {
                 initial={{ opacity: 0, x: -30 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: i * 0.1 }}
-                className="bg-white rounded shadow-md border border-gray-200 overflow-hidden"
+                className="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden"
               >
                 <button
                   onClick={() =>

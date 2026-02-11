@@ -164,7 +164,7 @@ import { Star, Package, RefreshCw, Zap, Compass, Shield, ArrowRight } from "luci
 import { useTranslation } from "react-i18next";
 
 const FeatureCard = ({ icon, title, description, gradient }) => (
-  <div className="group relative overflow-hidden rounded bg-white p-7 shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl border border-gray-100">
+  <div className="group relative overflow-hidden rounded-xl bg-white p-7 shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl border border-gray-100">
     <div
       className={`absolute -top-10 -right-10 h-32 w-32 rounded-full opacity-15 blur-3xl ${gradient}`}
     />
@@ -234,7 +234,7 @@ const SubscriptionDashboard = () => {
   return (
     <div className="min-h-screen max-w-6xl mx-auto bg-gradient-to-b from-gray-50 to-white">
       
-      <header className="bg-gradient-to-r from-blue-600 to-violet-600 py-16 rounded-t text-center text-white">
+      <header className="bg-gradient-to-r from-blue-600 to-violet-600 py-16 rounded-t-xl text-center text-white">
         <div className="mx-auto max-w-5xl px-4">
           <h1 className="mb-3 text-3xl md:text-4xl font-bold">
             {t("subscriptionDashboard.hero.title")}
@@ -275,7 +275,7 @@ const SubscriptionDashboard = () => {
       </section>
       
       <section className="mx-auto max-w-5xl px-4 pb-16">
-        <div className="rounded bg-gradient-to-r from-blue-50 to-violet-50 p-8 shadow-lg border border-blue-100 text-center">
+        <div className="rounded-xl bg-gradient-to-r from-blue-50 to-violet-50 p-8 shadow-lg border border-blue-100 text-center">
           <h2 className="mb-3 text-2xl font-bold text-gray-800">
             {t("subscriptionDashboard.bottom.title")}
           </h2>

@@ -181,17 +181,17 @@ export default function QRModal({ shop, qrData, isOpen, onClose }) {
 
   return (
     <div className="fixed inset-0 z-50 flex justify-center bg-black bg-opacity-60 backdrop-blur-sm px-3 py-6 sm:p-8 overflow-y-auto">
-      <div className="bg-white w-full max-w-xs sm:max-w-sm md:max-w-md rounded shadow-2xl overflow-hidden transform transition-all duration-300 scale-100 my-auto max-h-full">
+      <div className="bg-white w-full max-w-xs sm:max-w-sm md:max-w-md rounded-xl shadow-2xl overflow-hidden transform transition-all duration-300 scale-100 my-auto max-h-full">
 
         {/* Header */}
-        <nav className="bg-blue-600 text-white px-4 rounded-t-sm sm:px-6 py-3 sm:py-4 flex justify-between items-center sticky top-0 z-10">
+        <nav className="bg-blue-600 text-white px-4 rounded-t-xl sm:px-6 py-3 sm:py-4 flex justify-between items-center sticky top-0 z-10">
           <h2 className="text-lg sm:text-xl font-extrabold flex items-center gap-2 sm:gap-3">
             <FontAwesomeIcon icon={faQrcode} className="text-white text-xl sm:text-2xl" />
             {t('qrModal.title')} <span className="truncate">{shop.shopName}</span>
           </h2>
           <button
             onClick={onClose}
-            className="p-2 sm:p-2 rounded hover:bg-blue-500 text-white transition duration-200"
+            className="p-2 sm:p-2 rounded-full hover:bg-blue-500 text-white transition duration-200"
             aria-label="Close"
           >
             <FontAwesomeIcon icon={faTimes} className="text-lg sm:text-xl" />
@@ -207,11 +207,11 @@ export default function QRModal({ shop, qrData, isOpen, onClose }) {
                 <img
                   src={qrData.qrCode}
                   alt="QR Code"
-                  className="w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 border-4 sm:border-6 md:border-8 border-gray-300 rounded shadow-xl"
+                  className="w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 border-4 sm:border-6 md:border-8 border-gray-300 rounded-xl shadow-xl"
                 />
                 <button
                   onClick={handleDownload}
-                  className="mt-4 sm:mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white px-4 sm:px-6 py-2 rounded font-bold flex items-center justify-center gap-2 transition duration-300 shadow-md hover:shadow-lg transform hover:scale-[1.02] text-sm sm:text-base"
+                  className="mt-4 sm:mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white px-4 sm:px-6 py-2.5 rounded-full font-bold flex items-center justify-center gap-2 transition duration-300 shadow-md hover:shadow-lg transform hover:scale-[1.02] text-sm sm:text-base"
                 >
                   <FontAwesomeIcon icon={faDownload} className="text-base sm:text-lg" />
                   {t('qrModal.downloadButton')}
@@ -220,7 +220,7 @@ export default function QRModal({ shop, qrData, isOpen, onClose }) {
             )}
 
             {/* Account Info */}
-            <div className="bg-gray-50 p-4 sm:p-5 rounded text-gray-700 text-sm sm:text-base border border-gray-200 space-y-3">
+            <div className="bg-gray-50 p-4 sm:p-5 rounded-xl text-gray-700 text-sm sm:text-base border border-gray-200 space-y-3">
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 border-b pb-2 mb-3">
                 <h3 className="text-base sm:text-lg font-bold text-blue-600">
                   {t('qrModal.accountDetails')}
