@@ -623,11 +623,12 @@
 
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from 'framer-motion';
-import { Loader2, Download, ShoppingBag, DollarSign, Target, ArrowUpCircle, ArrowDownCircle } from 'lucide-react';
+import { Loader2, Download, ShoppingBag, Banknote, Target, ArrowUpCircle, ArrowDownCircle } from 'lucide-react';
 import { FiLoader } from "react-icons/fi";
 import * as XLSX from "xlsx";
 import { useTranslation } from 'react-i18next';
 import { API_BASE_URL } from '../../apiConfig';
+import { getCurrencySymbol } from "../../utils/currency";
 
 const UserTransactions = () => {
   const { t } = useTranslation();
@@ -642,6 +643,9 @@ const UserTransactions = () => {
   const [appliedDateRange, setAppliedDateRange] = useState({ from: "", to: "" });
   const [pendingDateRange, setPendingDateRange] = useState({ from: "", to: "" });
   const size = 20; 
+
+  const country = localStorage.getItem("country");
+  const currencySymbol = getCurrencySymbol(country);
 
   useEffect(() => {
     fetchTransactions();
@@ -855,14 +859,14 @@ const UserTransactions = () => {
                   {/* Total Amount Spent */}
                   <StatCard 
                     title={t('transactions.stats.amountSpent')}
-                    value={`$${totalAmountSpent}`}
-                    icon={<DollarSign className="w-6 h-6 text-green-500" />}
+                    value={`${currencySymbol}${totalAmountSpent}`}
+                    icon={<Banknote className="w-6 h-6 text-green-500" />}
                     color="green"
                   />
 
                   <StatCard 
                     title={t('transactions.stats.redeemAmount')}
-                    value={`$${totalRedeemedAmount}`}
+                    value={`${currencySymbol}${totalRedeemedAmount}`}
                     icon={<ArrowDownCircle className="w-6 h-6 text-red-500" />}
                     color="red"
                   />
@@ -897,9 +901,9 @@ const UserTransactions = () => {
                         <tr className="text-gray-600 uppercase text-xs sm:text-sm leading-normal">
                           <th className="py-2 sm:py-3 px-3 sm:px-6 text-left font-bold">#</th>
                           <th className="py-2 sm:py-3 px-3 sm:px-6 text-left font-bold">{t('transactions.table.date')}</th>
-                          <th className="py-2 sm:py-3 px-3 sm:px-6 text-left font-bold">{t('transactions.table.amount')}</th>
+                          <th className="py-2 sm:py-3 px-3 sm:px-6 text-left font-bold">{t('transactions.table.amount')} ({currencySymbol})</th>
                           <th className="py-2 sm:py-3 px-3 sm:px-6 text-left font-bold">{t('transactions.table.points')}</th>
-                          <th className="py-2 sm:py-3 px-3 sm:px-6 text-left font-bold">{t('transactions.table.redeemAmount')}</th>
+                          <th className="py-2 sm:py-3 px-3 sm:px-6 text-left font-bold">{t('transactions.table.redeemAmount')} ({currencySymbol})</th>
                         </tr>
                       </thead>
                       <tbody className="text-xs sm:text-sm font-light">
@@ -916,7 +920,7 @@ const UserTransactions = () => {
                               >
                                 <td className="py-2 sm:py-3 px-3 sm:px-6 whitespace-nowrap text-gray-600 font-medium">{index + 1}</td>
                                 <td className="py-2 sm:py-3 px-3 sm:px-6 text-gray-700">{new Date(txn.date).toLocaleDateString()}</td>
-                                <td className="py-2 sm:py-3 px-3 sm:px-6 text-gray-700 font-semibold">${txn.transactionAmount}</td>
+                                <td className="py-2 sm:py-3 px-3 sm:px-6 text-gray-700 font-semibold">{currencySymbol}{txn.transactionAmount}</td>
                                 
                                 {/* Points: +X / -Y style */}
                                 <td className="py-2 sm:py-3 px-3 sm:px-6">
@@ -939,7 +943,7 @@ const UserTransactions = () => {
                                       ? 'bg-blue-100 text-blue-700' 
                                       : 'bg-orange-100 text-orange-700'
                                   }`}>
-                                    ${Number(txn.redeemAmount || 0).toFixed(2)}
+                                    {currencySymbol}{Number(txn.redeemAmount || 0).toFixed(2)}
                                   </span>
                                 </td>
                               </motion.tr>

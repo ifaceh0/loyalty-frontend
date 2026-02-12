@@ -656,7 +656,7 @@
     "monthlySales": {
       "title": "Ventas Mensuales (Últimos 12 Meses)",
       "subtitle": "Resumen de Ventas",
-      "sales": "Ventas $"
+      "sales": "Ventas"
     },
     "customerComparison": {
       "title": "Comparación de Clientes",
@@ -768,13 +768,13 @@
         "desc": "Puntos que recibe un cliente al registrarse en el programa de lealtad."
       },
       "pointsPerDollar": {
-        "label": "Puntos por Dólar Gastado",
+        "label": "Puntos por Cantidad Gastado",
         "placeholder": "ej. 5 puntos",
         "points": "Puntos",
-        "desc": "Tasa base para ganar puntos (ej. 5 puntos por cada $1 gastado)."
+        "desc": "Tasa base para ganar puntos (ej. 5 puntos por cada {{currency}}1 gastado)."
       },
       "minAmount": {
-        "label": "Monto Mínimo de Compra para Recompensas ($)",
+        "label": "Monto Mínimo de Compra para Recompensas ({{currency}})",
         "prefix": "Gasto Mínimo:",
         "suffix": "para Calificar",
         "placeholder": "ej. 10.00",
@@ -785,7 +785,7 @@
       "purchase": {
         "title": "1. Puntos Extra por Compra",
         "desc": "Otorga **puntos extra** cuando un cliente gasta por encima de un monto en una **compra única**.",
-        "threshold": "Umbral de Compra ($)",
+        "threshold": "Umbral de Compra ({{currency}})",
         "thresholdPlaceholder": "Monto mínimo de compra",
         "points": "Puntos de Bono",
         "pointsPlaceholder": "Puntos de bono",
@@ -793,21 +793,21 @@
       },
       "milestone": {
         "title": "2. Recompensas por Hitos de Lealtad",
-        "desc": "Otorga un **descuento en dólares** cuando los puntos acumulados del cliente alcanzan un hito.",
+        "desc": "Otorga un **descuento en {{currency}}** cuando los puntos acumulados del cliente alcanzan un hito.",
         "threshold": "Umbral de Puntos",
         "thresholdPlaceholder": "Puntos totales mínimos",
-        "amount": "Descuento de Recompensa ($)",
-        "amountPlaceholder": "Descuento en dólares",
+        "amount": "Descuento de Recompensa ({{currency}})",
+        "amountPlaceholder": "Descuento en {{currency}}",
         "add": "Agregar Nivel de Recompensa por Hito"
       }
     },
     "campaigns": {
-      "desc": "Configura un bono **temporal** para ofrecer más puntos por dólar durante eventos o promociones especiales.",
-      "campaign": "Campaña de Bono #{number}",
+      "desc": "Configura un bono **temporal** para ofrecer más puntos por {{currency}} durante eventos o promociones especiales.",
+      "campaign": "Campaña de Bono #{{number}}",
       "name": "Nombre de la Campaña",
       "namePlaceholder": "ej. Doble Puntos Verano",
-      "points": "Puntos por Dólar",
-      "pointsPlaceholder": "ej. 10 puntos por $1",
+      "points": "Puntos por Cantidad Gastado",
+      "pointsPlaceholder": "ej. 10 puntos por {{currency}}1",
       "startDate": "Fecha de Inicio",
       "endDate": "Fecha de Fin",
       "add": "Agregar Nueva Campaña de Bono"
@@ -837,7 +837,7 @@
     "transaction": { "title": "Compra con Lealtad", "details": "Detalles de la Transacción" },
     "customer": { "info": "Información del Cliente", "name": "Nombre", "id": "ID", "shop": "Tienda", "email": "Correo", "phone": "Teléfono" },
     "points": { "title": "Puntos de Lealtad", "available": "Puntos Disponibles", "updateNote": "Los puntos se actualizan al confirmar la compra." },
-    "purchase": { "enterAmount": "Ingresa el Monto Total de la Compra ($)" },
+    "purchase": { "enterAmount": "Ingresa el Monto Total de la Compra ({{currency}})" },
     "newCustomerNote": "¡Nuevo cliente! El perfil se creará automáticamente.",
     "guidance": { "enterAmount": "¡Cliente encontrado! Ingresa el monto de la compra." },
     "buttons": {
@@ -846,23 +846,23 @@
     },
     "success": {
       "processedTitle": "¡COMPRA PROCESADA!",
-      "claimedMessage": "Descuento de ${{claimed}} aplicado. Compra neta: ${{net}}. Puntos ganados: {{points}}. Nuevo saldo: {{balance}}.",
-      "normalMessage": "Compra de ${{amount}}. Puntos Ganados: {{points}}{{signupBonusText}}. Nuevo saldo: {{balance}}.",
+      "claimedMessage": "Compra neta: {{currency}}{{net}}. \nDescuento de {{currency}}{{claimed}} aplicado. \nPuntos ganados: {{points}}. \nNuevo saldo Puntos: {{balance}}.",
+      "normalMessage": "Compra neta: {{currency}}{{amount}}. \nPuntos Ganados: {{points}}{{signupBonusText}}. \nNuevo saldo Puntos: {{balance}}.",
       "signupBonusText": "{{#if signupBonus}} + Bono de registro: {{signupBonus}}{{/if}}"
     },
     "error": { "title": "Operación Fallida", "generic": "Ocurrió un error." },
     "claim": {
       "eligibleTitle": "¡Recompensa de Hito Disponible!",
-      "eligibleText": "Reclama una recompensa de <span class=\"text-3xl font-extrabold text-green-600\">${{amount}}</span>.",
-      "minSpend": "Compra al menos <span class=\"font-bold text-blue-700\">${{amount}}</span> para calificar.",
+      "eligibleText": "Reclama una recompensa de <span class=\"text-3xl font-extrabold text-green-600\">{{currency}}{{amount}}</span>.",
+      "minSpend": "Compra al menos <span class=\"font-bold text-blue-700\">{{currency}}{{amount}}</span> para calificar.",
       "yesProceed": "Sí, Proceder a Reclamar", "noPointsOnly": "No, Solo Ganar Puntos",
-      "confirmationTitle": "¿Estás seguro?", "confirmText": "¿Reclamar la recompensa de ${{amount}}?", "yesClaim": "Sí, Reclamar", "noCancel": "No, Cancelar"
+      "confirmationTitle": "¿Estás seguro?", "confirmText": "¿Reclamar la recompensa de {{currency}}{{amount}}?", "yesClaim": "Sí, Reclamar", "noCancel": "No, Cancelar"
     },
     "preview": {
       "title": "Confirmar Compra",
-      "amount": "Monto Comprado: <span class=\"font-bold text-blue-700\">${{amount}}</span>",
+      "amount": "Monto Comprado: <span class=\"font-bold text-blue-700\">{{currency}}{{amount}}</span>",
       "points": "Puntos Ganados: <span class=\"font-bold text-cyan-600\">{{points}}</span>",
-      "claimed": "Recompensa Reclamada: <span class=\"font-bold text-green-600\">${{amount}}</span>",
+      "claimed": "Recompensa Reclamada: <span class=\"font-bold text-green-600\">{{currency}}{{amount}}</span>",
       "signupBonus": "Bono de Registro: <span class=\"font-bold text-green-600\">{{bonus}}</span>",
       "process": "Procesar Compra"
     },
@@ -879,8 +879,8 @@
       "inviteFailed": "Error al enviar invitación."
     },
     "validation": {
-      "amountPositive": "Ingresa un monto válido mayor a $0",
-      "minAmountRequired": "El monto debe ser ≥ ${{amount}} para reclamar"
+      "amountPositive": "Ingresa un monto válido mayor a {{currency}}0",
+      "minAmountRequired": "El monto debe ser ≥ {{currency}}{{amount}} para reclamar"
     },
     "notFound": {
       "title": "¡Cliente No Encontrado!",
@@ -1096,14 +1096,14 @@
       "updateNote": "Los puntos se actualizan al confirmar la compra."
     },
     "purchase": {
-      "enterAmount": "Ingresa el Monto Total de la Compra ($)"
+      "enterAmount": "Ingresa el Monto Total de la Compra ({{currency}})"
     },
     "newCustomerNote": "¡Nuevo cliente detectado! Esta compra creará automáticamente su perfil de lealtad y lo conectará a {{shopName}}.",
     "na": "N/A",
     "success": {
       "title": "¡COMPRA PROCESADA!",
-      "claimed": "Descuento de ${{claimed}} aplicado. Compra neta: ${{net}}. Puntos ganados: {{points}}. Nuevo saldo: {{balance}}.",
-      "normal": "Compra de ${{amount}}. Puntos Ganados: {{points}}{{signupBonusText}}. Nuevo saldo: {{balance}}.",
+      "claimed": "Descuento de {{currency}}{{claimed}} aplicado. Compra neta: {{currency}}{{net}}. Puntos ganados: {{points}}. Nuevo saldo: {{balance}}.",
+      "normal": "Compra de {{currency}}{{amount}}. Puntos Ganados: {{points}}{{signupBonusText}}. Nuevo saldo: {{balance}}.",
       "signupBonusText": " + Bono de registro: {{bonus}}"
     },
     "error": {
@@ -1125,25 +1125,25 @@
       "confirmFailed": "No se pudo confirmar la compra."
     },
     "validation": {
-      "amountPositive": "Por favor ingresa un monto válido (mayor a $0).",
-      "minAmount": "El monto de compra debe ser al menos ${{amount}} para reclamar la recompensa."
+      "amountPositive": "Por favor ingresa un monto válido (mayor a {{currency}}0).",
+      "minAmount": "El monto de compra debe ser al menos {{currency}}{{amount}} para reclamar la recompensa."
     },
     "claim": {
       "eligibleTitle": "¡Recompensa de Hito Disponible!",
-      "eligibleText": "Puedes reclamar una recompensa de <span class=\"text-3xl font-extrabold text-green-600\">${{amount}}</span>.",
-      "minSpend": "Compra al menos <span class=\"font-bold text-blue-700\">${{amount}}</span> para calificar.",
+      "eligibleText": "Puedes reclamar una recompensa de <span class=\"text-3xl font-extrabold text-green-600\">{{currency}}{{amount}}</span>.",
+      "minSpend": "Compra al menos <span class=\"font-bold text-blue-700\">{{currency}}{{amount}}</span> para calificar.",
       "yesProceed": "Sí, Proceder a Reclamar",
       "noPointsOnly": "No, Solo Ganar Puntos",
       "confirmTitle": "¿Estás seguro?",
-      "confirmText": "¿Deseas reclamar la recompensa de <strong>${{amount}}</strong>?",
+      "confirmText": "¿Deseas reclamar la recompensa de <strong>{{currency}}{{amount}}</strong>?",
       "yesClaim": "Sí, Reclamar",
       "noCancel": "No, Cancelar"
     },
     "preview": {
       "title": "Confirmar Compra",
-      "amount": "Monto Comprado: <span class=\"font-bold text-blue-700\">${{amount}}</span>",
+      "amount": "Monto Comprado: <span class=\"font-bold text-blue-700\">{{currency}}{{amount}}</span>",
       "points": "Puntos Ganados Después de la compra: <span class=\"font-bold text-cyan-600\">{{points}}</span>",
-      "claimed": "Recompensa Reclamada: <span class=\"font-bold text-green-600\">${{amount}}</span>",
+      "claimed": "Recompensa Reclamada: <span class=\"font-bold text-green-600\">{{currency}}{{amount}}</span>",
       "signupBonus": "Bono de Registro: <span class=\"font-bold text-green-600\">{{bonus}}</span>",
       "process": "Procesar Compra"
     },
@@ -1304,11 +1304,11 @@
     "table": {
       "title": "Transacciones para",
       "date": "Fecha",
-      "amount": "Monto ($)",
+      "amount": "Monto",
       "points": "Puntos",
       "pointsEarned": "Puntos Ganados",
       "redeemPoints": "Puntos Canjeados",
-      "redeemAmount": "Monto Canjeado ($)"
+      "redeemAmount": "Monto Canjeado"
     },
     "noTransactions": {
       "title": "No se encontraron transacciones para este comercio.",

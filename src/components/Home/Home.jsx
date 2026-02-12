@@ -791,6 +791,7 @@ import {
   UserPlus,
   Calendar,
   MapPin,
+  Banknote,
 } from 'lucide-react';
 import { API_BASE_URL } from '../../apiConfig';
 
@@ -1024,7 +1025,7 @@ export default function Home() {
             {[
               { Icon: Users, label: t('home.stats.items.0.label'), value: stats.totalUsers },
               { Icon: Store, label: t('home.stats.items.1.label'), value: stats.totalShops },
-              { Icon: DollarSign, label: t('home.stats.items.2.label'), value: stats.totalTransactionAmount, prefix: '$' },
+              { Icon: Banknote, label: t('home.stats.items.2.label'), value: stats.totalTransactionAmount, prefix: '$' },
             ].map((stat, i) => (
               <motion.div
                 key={i}
