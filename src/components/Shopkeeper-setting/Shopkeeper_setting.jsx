@@ -563,6 +563,7 @@ import React, { useState, useEffect } from "react";
 import { FiTrash2, FiX, FiEdit3, FiSave, FiPlus, FiLoader, FiSettings } from "react-icons/fi";
 import { useTranslation } from "react-i18next"; 
 import { API_BASE_URL } from '../../apiConfig';
+import { getCurrencySymbol } from "../../utils/currency";
 
 const inputStyle =
   "w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition duration-200 shadow-sm text-sm sm:text-base";
@@ -592,6 +593,8 @@ const ShopkeeperSetting = () => {
   const [isSaving, setIsSaving] = useState(false);
   const [fetchKey, setFetchKey] = useState(0);
   const shopId = localStorage.getItem("id");
+  const country = localStorage.getItem("country");
+  const currencySymbol = getCurrencySymbol(country);
 
   const parseFetchedData = (data) => ({
     signUpBonusPoints: data.sign_upBonuspoints ? Math.floor(data.sign_upBonuspoints).toString() : "",
@@ -873,7 +876,7 @@ const ShopkeeperSetting = () => {
                   {t("shopSettings.basic.pointsPerDollar.label")}
                 </label>
                 <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2">
-                  <span className="text-lg sm:text-xl font-bold text-gray-500">$1 =</span>
+                  <span className="text-lg sm:text-xl font-bold text-gray-500">{currencySymbol}1 =</span>
                   <input
                     type="number"
                     name="dollarToPointsMapping"
@@ -887,14 +890,14 @@ const ShopkeeperSetting = () => {
                   />
                   <span className="text-lg sm:text-xl font-bold text-gray-500">{t("shopSettings.basic.pointsPerDollar.points")}</span>
                 </div>
-                <p className="text-xs text-gray-500 mt-1">{t("shopSettings.basic.pointsPerDollar.desc")}</p>
+                <p className="text-xs text-gray-500 mt-1">{t("shopSettings.basic.pointsPerDollar.desc", { currency: currencySymbol })}</p>
               </div>
             </div>
 
             <div className="mt-4 sm:mt-6 border-t pt-4">
               <div className="border p-3 sm:p-4 rounded-xl bg-white shadow-inner">
                 <label className="block text-xs sm:text-sm font-semibold mb-1 text-gray-700">
-                  {t("shopSettings.basic.minAmount.label")}
+                  {t("shopSettings.basic.minAmount.label", { currency: currencySymbol })}
                 </label>
                 <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2">
                   <span className="text-lg sm:text-xl font-bold text-gray-500">{t("shopSettings.basic.minAmount.prefix")}</span>
@@ -930,7 +933,7 @@ const ShopkeeperSetting = () => {
                         <span className="font-medium text-base sm:text-lg text-yellow-700 w-6 flex-shrink-0">{i + 1}.</span>
                         
                         <div className="flex-1 w-full">
-                            <label className="block text-xs font-medium mb-1 text-gray-600">{t("shopSettings.advanced.purchase.threshold")}</label>
+                            <label className="block text-xs font-medium mb-1 text-gray-600">{t("shopSettings.advanced.purchase.threshold", { currency: currencySymbol })}</label>
                             <input
                                 type="number"
                                 value={r.threshold}
@@ -979,7 +982,7 @@ const ShopkeeperSetting = () => {
                     <h4 className="font-semibold text-base sm:text-lg mb-2 sm:mb-3 text-gray-800">
                       {t("shopSettings.advanced.milestone.title")}
                     </h4>
-                    <p className="text-xs sm:text-sm text-gray-500 mb-3 sm:mb-4">{t("shopSettings.advanced.milestone.desc")}</p>
+                    <p className="text-xs sm:text-sm text-gray-500 mb-3 sm:mb-4">{t("shopSettings.advanced.milestone.desc", { currency: currencySymbol })}</p>
                     {formData.milestoneRewards.map((m, i) => (
                     <div key={i} className="flex flex-col sm:flex-row items-start sm:items-end gap-2 sm:gap-3 p-3 border-l-4 border-green-500 bg-white shadow-md mb-3 rounded-xl">
                         <span className="font-medium text-base sm:text-lg text-green-700 w-6 flex-shrink-0">{i + 1}.</span>
@@ -998,7 +1001,7 @@ const ShopkeeperSetting = () => {
                             />
                         </div>
                         <div className="flex-1 w-full">
-                            <label className="block text-xs font-medium mb-1 text-gray-600">{t("shopSettings.advanced.milestone.amount")}</label>
+                            <label className="block text-xs font-medium mb-1 text-gray-600">{t("shopSettings.advanced.milestone.amount", { currency: currencySymbol })}</label>
                             <input
                                 type="number"
                                 value={m.amount}
@@ -1007,7 +1010,7 @@ const ShopkeeperSetting = () => {
                                 className={inputStyle + (isEditMode ? '' : ' bg-gray-100/70')}
                                 min="0"
                                 step="1"
-                                placeholder={t("shopSettings.advanced.milestone.amountPlaceholder")}
+                                placeholder={t("shopSettings.advanced.milestone.amountPlaceholder", { currency: currencySymbol })}
                             />
                         </div>
                         {isEditMode && (
@@ -1033,7 +1036,7 @@ const ShopkeeperSetting = () => {
 
           {/* Section 3: Special Bonuses */}
           <SectionWrapper title={t("shopSettings.sections.campaigns")} isEditMode={isEditMode}>
-            <p className="text-xs sm:text-sm text-gray-500 mb-3 sm:mb-4">{t("shopSettings.campaigns.desc")}</p>
+            <p className="text-xs sm:text-sm text-gray-500 mb-3 sm:mb-4">{t("shopSettings.campaigns.desc", { currency: currencySymbol })}</p>
             <div className="space-y-4 sm:space-y-6">
                 {formData.specialBonuses.map((b, i) => (
                 <div key={i} className="p-3 sm:p-4 border-l-4 border-purple-500 bg-white shadow-lg rounded-xl space-y-3">
@@ -1072,7 +1075,7 @@ const ShopkeeperSetting = () => {
                                 className={inputStyle + (isEditMode ? '' : ' bg-gray-100/70')}
                                 min="0"
                                 step="1"
-                                placeholder={t("shopSettings.campaigns.pointsPlaceholder")}
+                                placeholder={t("shopSettings.campaigns.pointsPlaceholder", { currency: currencySymbol })}
                             />
                         </div>
                         {/* Start Date */}

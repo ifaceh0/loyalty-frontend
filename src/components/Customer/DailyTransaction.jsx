@@ -722,10 +722,11 @@
 
 //translated code
 import React, { useState, useEffect, useRef } from 'react';
-import { Search, Calendar, X, Gift, DollarSign, ArrowUpCircle, ArrowDownCircle, ShoppingBag, TrendingUp, Loader2, Clock, AlertCircle, Download, Printer } from 'lucide-react';
+import { Search, Calendar, X, Gift, Banknote, ArrowUpCircle, ArrowDownCircle, ShoppingBag, TrendingUp, Loader2, Clock, AlertCircle, Download, Printer } from 'lucide-react';
 import { format } from 'date-fns';
 import { useTranslation } from 'react-i18next'; 
 import { API_BASE_URL } from '../../apiConfig';
+import { getCurrencySymbol } from "../../utils/currency";
 
 const DailyTransaction = () => {
   const { t } = useTranslation();
@@ -741,6 +742,9 @@ const DailyTransaction = () => {
   const [isLoadingDaily, setIsLoadingDaily] = useState(false);
   const [userError, setUserError] = useState('');
   const [dailyError, setDailyError] = useState('');
+
+  const country = localStorage.getItem("country");
+  const currencySymbol = getCurrencySymbol(country);
 
   const shopId = localStorage.getItem('id');
   const printRef = useRef();
@@ -904,7 +908,7 @@ const DailyTransaction = () => {
                   type="date"
                   value={selectedDate}
                   onChange={(e) => setSelectedDate(e.target.value)}
-                  className="w-full pl-12 pr-4 py-2 bg-slate-50 border-2 border-blue-300 rounded-lg text-slate-800 focus:border-orange-500 focus:ring-4 focus:ring-orange-100 focus:outline-none transition-all text-lg font-medium"
+                  className="w-full pl-12 pr-4 py-2 bg-slate-50 border-2 border-blue-300 rounded-full text-slate-800 focus:border-orange-500 focus:ring-4 focus:ring-orange-100 focus:outline-none transition-all text-lg font-medium"
                 />
               </div>
 
@@ -969,7 +973,7 @@ const DailyTransaction = () => {
                       placeholder={t('daily.search.placeholder')}
                       value={userId}
                       onChange={(e) => setUserId(e.target.value)}
-                      className="w-full pl-12 pr-4 py-2 bg-white border-2 border-blue-300 rounded-lg text-slate-800 focus:border-violet-500 focus:ring-4 focus:ring-violet-100 focus:outline-none transition-all font-medium"
+                      className="w-full pl-12 pr-4 py-2 bg-white border-2 border-blue-300 rounded-full text-slate-800 focus:border-violet-500 focus:ring-4 focus:ring-violet-100 focus:outline-none transition-all font-medium"
                     />
                   </div>
                   <button
@@ -1032,14 +1036,14 @@ const DailyTransaction = () => {
                     {/* SUMMARY CARDS */}
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
                       <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-6 text-center border-2 border-blue-200 shadow-md">
-                        <DollarSign className="w-12 h-12 text-blue-600 mx-auto mb-3" />
+                        <Banknote className="w-12 h-12 text-blue-600 mx-auto mb-3" />
                         <p className="text-sm font-bold text-blue-700 uppercase tracking-wider">{t('daily.summary.totalSales')}</p>
-                        <p className="text-4xl font-black text-blue-800 mt-2">${dailyData.totalSales?.toFixed(2)}</p>
+                        <p className="text-4xl font-black text-blue-800 mt-2">{currencySymbol}{dailyData.totalSales?.toFixed(2)}</p>
                       </div>
                       <div className="bg-gradient-to-br from-violet-50 to-violet-100 rounded-xl p-6 text-center border-2 border-violet-200 shadow-md">
                         <Gift className="w-12 h-12 text-violet-600 mx-auto mb-3" />
                         <p className="text-sm font-bold text-violet-700 uppercase tracking-wider">{t('daily.summary.totalRedeemed')}</p>
-                        <p className="text-4xl font-black text-violet-800 mt-2">${dailyData.totalRedeemed?.toFixed(2)}</p>
+                        <p className="text-4xl font-black text-violet-800 mt-2">{currencySymbol}{dailyData.totalRedeemed?.toFixed(2)}</p>
                       </div>
                       <div className="bg-gradient-to-br from-indigo-50 to-indigo-100 rounded-xl p-6 text-center border-2 border-indigo-200 shadow-md">
                         <ShoppingBag className="w-12 h-12 text-indigo-600 mx-auto mb-3" />
@@ -1079,7 +1083,7 @@ const DailyTransaction = () => {
                               <span className="font-mono text-slate-600">{idx + 1}</span>
                               <span className="font-mono text-blue-700">{tx.userId}</span>
                               <span className="font-semibold text-slate-800 truncate">{tx.name}</span>
-                              <span className="font-bold text-violet-700">${tx.transactionAmount.toFixed(2)}</span>
+                              <span className="font-bold text-violet-700">{currencySymbol}{tx.transactionAmount.toFixed(2)}</span>
 
                               {/* Points Column */}
                               <span className="flex items-center gap-2 font-semibold">
@@ -1101,7 +1105,7 @@ const DailyTransaction = () => {
                                     : "bg-teal-100 text-teal-700"
                                 }`}
                               >
-                                ${(tx.redeemAmount ?? 0).toFixed(2)}
+                                {currencySymbol}{(tx.redeemAmount ?? 0).toFixed(2)}
                               </span>
 
                               {/* Time */}
@@ -1136,7 +1140,7 @@ const DailyTransaction = () => {
                             <div className="flex justify-between items-center mb-2">
                               <span className="text-slate-600 font-semibold">{t('daily.table.amount')}:</span>
                               <span className="font-bold text-violet-700">
-                                ${tx.transactionAmount.toFixed(2)}
+                                {currencySymbol}{tx.transactionAmount.toFixed(2)}
                               </span>
                             </div>
 
@@ -1165,7 +1169,7 @@ const DailyTransaction = () => {
                                     : "bg-teal-100 text-teal-700"
                                 }`}
                               >
-                                ${(tx.redeemAmount ?? 0).toFixed(2)}
+                                {currencySymbol}{(tx.redeemAmount ?? 0).toFixed(2)}
                               </span>
                             </div>
 
@@ -1186,7 +1190,7 @@ const DailyTransaction = () => {
                         <h3 className="text-2xl md:text-3xl font-black text-white">
                           {t('daily.summary.totalSalesToday')}:
                           <span className="ml-3 font-extrabold">
-                            ${dailyData.totalSales?.toFixed(2)}
+                            {currencySymbol}{dailyData.totalSales?.toFixed(2)}
                           </span>
                         </h3>
                       </div>
@@ -1256,11 +1260,11 @@ const DailyTransaction = () => {
                             unit="pts" 
                           />
                           <Card 
-                            icon={DollarSign} 
+                            icon={Banknote} 
                             color="text-orange-600" 
                             bg="from-orange-50 to-orange-100"
                             title={t('daily.user.totalSpend')} 
-                            value={`$${userData.totalSpend?.toFixed(2) || 0}`} 
+                            value={`${currencySymbol}${userData.totalSpend?.toFixed(2) || 0}`} 
                           />
                           <Card 
                             icon={ShoppingBag} 
@@ -1274,7 +1278,7 @@ const DailyTransaction = () => {
                             color="text-amber-600" 
                             bg="from-amber-50 to-amber-100"
                             title={t('daily.user.totalRedeemed')} 
-                            value={`$${userData.totalRedeemedAmount?.toFixed(2) || 0}`} 
+                            value={`${currencySymbol}${userData.totalRedeemedAmount?.toFixed(2) || 0}`} 
                           />
                         </div>
 
@@ -1302,7 +1306,7 @@ const DailyTransaction = () => {
                                   <span className="text-slate-700 font-medium">{index + 1}</span>
                                   <span className="text-blue-700">{formatDateTime(tx.purchaseDate)}</span>
                                   <span className="font-bold text-orange-700">
-                                    ${(tx.transactionAmount ?? 0).toFixed(2)}
+                                    {currencySymbol}{(tx.transactionAmount ?? 0).toFixed(2)}
                                   </span>
                                   <span className="flex items-center gap-2 font-semibold">
                                     <span className="flex items-center gap-1 text-emerald-600">
@@ -1321,7 +1325,7 @@ const DailyTransaction = () => {
                                         : "bg-orange-100 text-orange-700"
                                     }`}
                                   >
-                                    ${(tx.redeemAmount ?? 0).toFixed(2)}
+                                    {currencySymbol}{(tx.redeemAmount ?? 0).toFixed(2)}
                                   </span>
                                 </div>
                               ))}
@@ -1344,7 +1348,7 @@ const DailyTransaction = () => {
                                   <div className="flex justify-between items-center mb-2">
                                     <span className="text-slate-600 font-semibold">{t('daily.table.amount')}:</span>
                                     <span className="text-orange-700 font-bold">
-                                      ${(tx.transactionAmount ?? 0).toFixed(2)}
+                                      {currencySymbol}{(tx.transactionAmount ?? 0).toFixed(2)}
                                     </span>
                                   </div>
 
@@ -1371,7 +1375,7 @@ const DailyTransaction = () => {
                                           : "bg-orange-100 text-orange-700"
                                       }`}
                                     >
-                                      ${(tx.redeemAmount ?? 0).toFixed(2)}
+                                      {currencySymbol}{(tx.redeemAmount ?? 0).toFixed(2)}
                                     </span>
                                   </div>
                                 </div>

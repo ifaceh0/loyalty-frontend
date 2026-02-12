@@ -456,6 +456,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChartBar, faUser, faCog, faUsers, faCreditCard, faUserTie, faFileInvoiceDollar, faQuestionCircle } from "@fortawesome/free-solid-svg-icons";
 import { useTranslation } from "react-i18next";
 import { API_BASE_URL } from '../../apiConfig';
+import { getCurrencySymbol } from "../../utils/currency";
 
 const Shopdashboard = () => {
   const { t } = useTranslation();
@@ -469,6 +470,9 @@ const Shopdashboard = () => {
   const [topSpendingUsers, setTopSpendingUsers] = useState([]);
   const [monthlySalesData, setMonthlySalesData] = useState([]);
   const [customerComparisonData, setCustomerComparisonData] = useState([]);
+
+  const country = localStorage.getItem("country");
+  const currencySymbol = getCurrencySymbol(country);
 
   useEffect(() => {
     const shopId = localStorage.getItem("id");
@@ -568,7 +572,7 @@ const Shopdashboard = () => {
       title: t("shopdashboard.table.revenue"),
       dataIndex: "totalSpent",
       key: "revenue",
-      render: (amount) => `$${amount}`,
+      render: (amount) => `${currencySymbol}${amount}`,
     },
   ];
 
@@ -697,8 +701,8 @@ const Shopdashboard = () => {
                       margin={{ top: 30, right: 20, left: 0, bottom: 0 }}
                     >
                       <XAxis dataKey="month" tick={{ fill: "#6b7280", fontSize: 11 }} />
-                      <YAxis tickFormatter={(val) => `$${val}`} tick={{ fill: "#6b7280", fontSize: 11 }} />
-                      <Tooltip formatter={(value) => [`$${value}`, t("shopdashboard.monthlySales.sales")]} contentStyle={{ backgroundColor: "white", borderRadius: "10px", border: "1px solid #e5e7eb" }} />
+                      <YAxis tickFormatter={(val) => `${currencySymbol}${val}`} tick={{ fill: "#6b7280", fontSize: 11 }} />
+                      <Tooltip formatter={(value) => [`${currencySymbol}${value}`, `${t("shopdashboard.monthlySales.sales")} ${currencySymbol}`]} contentStyle={{ backgroundColor: "white", borderRadius: "10px", border: "1px solid #e5e7eb" }} />
                       <Legend />
                       <Line
                         type="monotone"
@@ -707,7 +711,7 @@ const Shopdashboard = () => {
                         strokeWidth={2}
                         // dot={{ r: 4, fill: "#ffffffff" }}
                         activeDot={{ r: 6, fill: "#F97316" }}
-                        name={t("shopdashboard.monthlySales.sales")}
+                        name={`${t("shopdashboard.monthlySales.sales")} ${currencySymbol}`}
                       />
                     </LineChart>
                   </ResponsiveContainer>

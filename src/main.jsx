@@ -6,9 +6,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import Layout from './Layout.jsx'
 import Features from './components/Features/Features.jsx'
 import Home from './components/Home/Home.jsx'
-//import Subscription from './components/Subscription/Subscription.jsx'
-// ✅ CORRECT
-import {Subscription} from "global-subscription"; // ✅ Correct
+import {Subscription} from "global-subscription";
 
 
 
@@ -29,7 +27,6 @@ import ShopkeeperProfile from './components/Shopkeeper_profile/Shopkeeper_profil
 import { SidebarProvider } from './context/SidebarContext.jsx';
 import SubscriptionDashboard from './components/Subscription/SubscriptionDashboard.jsx';
 import UserShopList from './components/ShopList/UserShopList.jsx';
-// import PlanChange from './components/Subscription/Planchange.jsx';
 import EmployeeSignupPage from './components/Signup/EmployeeSignupPage.jsx';
 import InviteEmployeePage from './components/Employee/InviteEmployeePage.jsx';
 import DailyTransactionReport from './components/Customer/DailyTransaction.jsx'

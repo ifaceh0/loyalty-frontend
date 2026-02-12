@@ -1453,6 +1453,7 @@ import {
   faXmark,
   faArrowRotateLeft,
   faDollarSign,
+  faMoneyBillWave,
   faQrcode,
   faUser,
   faCoins,
@@ -1461,6 +1462,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useTranslation } from "react-i18next";
 import { API_BASE_URL } from '../../apiConfig';
+import { getCurrencySymbol } from "../../utils/currency";
 
 const PRIMARY_COLOR = "blue-600";
 const ACCENT_COLOR = "cyan-500";
@@ -1497,6 +1499,8 @@ const QrScanner = ({ onClose }) => {
   const [videoDevices, setVideoDevices] = useState([]);
   const [currentDeviceId, setCurrentDeviceId] = useState(null);
   const [showSwitchButton, setShowSwitchButton] = useState(false);
+  const country = localStorage.getItem("country");
+  const currencySymbol = getCurrencySymbol(country);
 
   const [claimedUsers, setClaimedUsers] = useState(() => {
     const saved = localStorage.getItem("claimedUsers");
@@ -1508,6 +1512,8 @@ const QrScanner = ({ onClose }) => {
 
   const [isCheckingEligibility, setIsCheckingEligibility] = useState(false);
   const [showConfirmClaimPopup, setShowConfirmClaimPopup] = useState(false);
+
+  const isPopupOpen = showErrorPopup || showSuccessPopup || showClaimIntentPopup || showPreviewPopup || showConfirmClaimPopup || isCheckingEligibility;
 
   useEffect(() => {
     localStorage.setItem("claimedUsers", JSON.stringify(claimedUsers));
@@ -1619,13 +1625,13 @@ const QrScanner = ({ onClose }) => {
 
     const original = parseFloat(purchaseAmount);
     if (isNaN(original) || original <= 0) {
-      setError(t("qrScanner.validation.amountPositive"));
+      setError(t("qrScanner.validation.amountPositive", { currency: currencySymbol }));
       setShowErrorPopup(true);
       return;
     }
 
     if (intentToClaim && original < minRewardAmount) {
-      setError(t("qrScanner.validation.minAmount", { amount: minRewardAmount.toFixed(2) }));
+      setError(t("qrScanner.validation.minAmount", { currency: currencySymbol, amount: minRewardAmount.toFixed(2) }));
       setShowErrorPopup(true);
       return;
     }
@@ -1704,12 +1710,14 @@ const QrScanner = ({ onClose }) => {
       setSuccessMessage(
         result.claimed
           ? t("qrScanner.success.claimed", {
+              currency: currencySymbol,
               claimed: result.claimedAmount.toFixed(2),
               net: result.adjustedDollarAmount,
               points: result.adjustedPoints,
               balance: result.newBalance,
             })
           : t("qrScanner.success.normal", {
+              currency: currencySymbol,
               amount: (result.adjustedDollarAmount || previewData.originalDollarAmount).toFixed(2),
               points: result.adjustedPoints || result.earnedPoints,
               balance: result.newBalance,
@@ -1733,6 +1741,21 @@ const QrScanner = ({ onClose }) => {
     }
   };
 
+  // const stopCamera = () => {
+  //   if (codeReader.current) {
+  //     codeReader.current.reset();
+  //   }
+  //   if (videoRef.current && videoRef.current.srcObject) {
+  //     const stream = videoRef.current.srcObject;
+  //     stream.getTracks().forEach((track) => {
+  //       if (track.kind === "video") {
+  //         track.applyConstraints({ advanced: [{ torch: false }] }).catch(() => {});
+  //         track.stop();
+  //       }
+  //     });
+  //     videoRef.current.srcObject = null;
+  //   }
+  // };
   const stopCamera = () => {
     if (codeReader.current) {
       codeReader.current.reset();
@@ -1740,12 +1763,11 @@ const QrScanner = ({ onClose }) => {
     if (videoRef.current && videoRef.current.srcObject) {
       const stream = videoRef.current.srcObject;
       stream.getTracks().forEach((track) => {
-        if (track.kind === "video") {
-          track.applyConstraints({ advanced: [{ torch: false }] }).catch(() => {});
-          track.stop();
-        }
+        track.stop();
+        track.enabled = false;
       });
       videoRef.current.srcObject = null;
+      videoRef.current.pause();
     }
   };
 
@@ -1763,7 +1785,7 @@ const QrScanner = ({ onClose }) => {
 
       if (videoDevices.length === 0) {
         setVideoDevices(devices);
-        setShowSwitchButton(devices.length > 1);
+        // setShowSwitchButton(devices.length > 1);
       }
 
       // const preferredDevice =
@@ -1845,9 +1867,14 @@ const QrScanner = ({ onClose }) => {
     setCurrentDeviceId(nextDevice.deviceId);
 
     try {
+      stopCamera();
+
+      await new Promise(resolve => setTimeout(resolve, 300));
+
       const stream = await navigator.mediaDevices.getUserMedia({
-        video: { deviceId: { exact: nextDevice.deviceId } },
+        video: { deviceId: { exact: nextDevice.deviceId } }
       });
+
       videoRef.current.srcObject = stream;
 
       await new Promise((resolve) => {
@@ -1870,14 +1897,14 @@ const QrScanner = ({ onClose }) => {
               stopCamera();
             } catch (e) {
               hasScannedRef.current = true;
-              setError(t("Invalid QR code format"));
+              setError(t("qrScanner.errors.invalidFormat"));
               setShowErrorPopup(true);
               stopCamera();
             }
           }
           if (err && !(err instanceof NotFoundException)) {
             console.error("Error during scanning:", err);
-            setError(t("Scanning error occurred"));
+            setError(t("qrScanner.errors.scanError"));
             setShowErrorPopup(true);
             stopCamera();
           }
@@ -1885,8 +1912,16 @@ const QrScanner = ({ onClose }) => {
       );
     } catch (err) {
       console.error("Switch camera failed:", err);
-      setError("Failed to switch camera. Please try again.");
+      let msg = "Failed to switch camera. Please try again.";
+      if (err.name === "OverconstrainedError" || err.name === "NotReadableError") {
+        msg = "Cannot access this camera. It may be in use or permission denied.";
+      } else if (err.name === "NotAllowedError") {
+        msg = "Camera permission denied. Please enable it in browser settings.";
+      }
+
+      setError(msg);
       setShowErrorPopup(true);
+      startCamera();
     }
   };
 
@@ -1901,6 +1936,16 @@ const QrScanner = ({ onClose }) => {
       stopCamera();
     };
   }, [showErrorPopup, scannedData, showSuccessPopup, showClaimIntentPopup, showPreviewPopup]);
+
+  useEffect(() => {
+    if (!scannedData && !isPopupOpen) {
+      codeReader.current?.listVideoInputDevices()
+        .then(devices => {
+          setVideoDevices(devices);
+        })
+        .catch(() => {});
+    }
+  }, [scannedData, isPopupOpen]);
 
   const handleScanAgain = () => {
     setScannedData(null);
@@ -1940,7 +1985,7 @@ const QrScanner = ({ onClose }) => {
     onClose();
   };
 
-  const isPopupOpen = showErrorPopup || showSuccessPopup || showClaimIntentPopup || showPreviewPopup || showConfirmClaimPopup || isCheckingEligibility;
+  // const isPopupOpen = showErrorPopup || showSuccessPopup || showClaimIntentPopup || showPreviewPopup || showConfirmClaimPopup || isCheckingEligibility;
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-gray-900/70 z-50">
@@ -1981,7 +2026,7 @@ const QrScanner = ({ onClose }) => {
                     {t("qrScanner.scanningInstruction")}
                   </p>
 
-                  <p className="text-sm text-gray-500 text-center">{guidance}</p>
+                  {/* <p className="text-sm text-gray-500 text-center">{guidance}</p>
                   {showSwitchButton && (
                    <button
                      onClick={switchCamera}
@@ -1990,6 +2035,17 @@ const QrScanner = ({ onClose }) => {
                      <FontAwesomeIcon icon={faCameraRotate} className="text-lg" />
                      Switch Camera
                    </button>
+                  )} */}
+                  <p className="text-sm text-gray-500 text-center">{guidance}</p>
+                  {videoDevices.length > 1 && (
+                    <button
+                      onClick={switchCamera}
+                      className="mt-5 px-6 py-3 bg-gray-800 hover:bg-gray-700 text-white rounded-full font-medium flex items-center gap-3 shadow-lg transition-all disabled:opacity-50"
+                      disabled={isCheckingEligibility || isSubmitting || isConfirming} 
+                    >
+                      <FontAwesomeIcon icon={faCameraRotate} className="text-lg" />
+                      Switch Camera
+                    </button>
                   )}
                 </>
               ) : (
@@ -2041,9 +2097,9 @@ const QrScanner = ({ onClose }) => {
                   </div>
 
                   <form onSubmit={handleSubmit} className="mt-6 flex flex-col gap-4 pt-4 border-t border-gray-100">
-                    <label className="text-base font-semibold text-gray-700">{t("qrScanner.purchase.enterAmount")}</label>
+                    <label className="text-base font-semibold text-gray-700">{t("qrScanner.purchase.enterAmount", { currency: currencySymbol })}</label>
                     <div className="relative">
-                      <span className={`absolute left-4 top-1/2 transform -translate-y-1/2 text-${PRIMARY_COLOR} font-bold text-lg`}>$</span>
+                      <span className={`absolute left-4 top-1/2 transform -translate-y-1/2 text-${PRIMARY_COLOR} font-bold text-lg`}>{currencySymbol}</span>
                       <input
                         type="number"
                         min="0.01"
@@ -2140,10 +2196,10 @@ const QrScanner = ({ onClose }) => {
         {showClaimIntentPopup && (
           <div className="absolute inset-0 flex items-center justify-center z-50">
             <div className={`bg-white p-8 rounded-xl shadow-2xl text-center w-full max-w-sm border-t-8 border-t-${ACCENT_COLOR} animate-fade-in`}>
-              <FontAwesomeIcon icon={faDollarSign} className={`text-${ACCENT_COLOR} text-5xl mb-4`} />
+              <FontAwesomeIcon icon={faMoneyBillWave} className={`text-${ACCENT_COLOR} text-5xl mb-4`} />
               <h3 className="text-2xl font-bold text-gray-800 mb-2">{t("qrScanner.claim.eligibleTitle")}</h3>
-              <p className="text-md text-gray-700 mb-3" dangerouslySetInnerHTML={{ __html: t("qrScanner.claim.eligibleText", { amount: eligibleReward.toFixed(2) }) }} />
-              <p className="text-sm text-gray-600 mb-4" dangerouslySetInnerHTML={{ __html: t("qrScanner.claim.minSpend", { amount: minRewardAmount.toFixed(2) }) }} />
+              <p className="text-md text-gray-700 mb-3" dangerouslySetInnerHTML={{ __html: t("qrScanner.claim.eligibleText", { currency: currencySymbol, amount: eligibleReward.toFixed(2) }) }} />
+              <p className="text-sm text-gray-600 mb-4" dangerouslySetInnerHTML={{ __html: t("qrScanner.claim.minSpend", { currency: currencySymbol, amount: minRewardAmount.toFixed(2) }) }} />
               <button
                 onClick={() => {
                   setShowClaimIntentPopup(false);
@@ -2170,9 +2226,9 @@ const QrScanner = ({ onClose }) => {
         {showConfirmClaimPopup && (
           <div className="absolute inset-0 flex items-center justify-center z-50">
             <div className={`bg-white p-8 rounded-xl shadow-2xl text-center w-full max-w-sm border-t-8 border-t-${ACCENT_COLOR} animate-fade-in`}>
-              <FontAwesomeIcon icon={faDollarSign} className={`text-${ACCENT_COLOR} text-5xl mb-4`} />
+              <FontAwesomeIcon icon={faMoneyBillWave} className={`text-${ACCENT_COLOR} text-5xl mb-4`} />
               <h3 className="text-2xl font-bold text-gray-800 mb-2">{t("qrScanner.claim.confirmTitle")}</h3>
-              <p className="text-md text-gray-700 mb-4" dangerouslySetInnerHTML={{ __html: t("qrScanner.claim.confirmText", { amount: eligibleReward.toFixed(2) }) }} />
+              <p className="text-md text-gray-700 mb-4" dangerouslySetInnerHTML={{ __html: t("qrScanner.claim.confirmText",  { currency: currencySymbol, amount: eligibleReward.toFixed(2) }) }} />
               <button
                 onClick={() => {
                   setIntentToClaim(true);
@@ -2187,7 +2243,7 @@ const QrScanner = ({ onClose }) => {
                   setIntentToClaim(false);
                   setShowConfirmClaimPopup(false);
                 }}
-                className={`w-full bg-gray-500 hover:bg-gray-600 text-white font-semibold px-5 py-2 rounded transition duration-200`}
+                className={`w-full bg-gray-500 hover:bg-gray-600 text-white font-semibold px-5 py-2 rounded-full transition duration-200`}
               >
                 {t("qrScanner.claim.noCancel")}
               </button>
@@ -2199,12 +2255,12 @@ const QrScanner = ({ onClose }) => {
         {showPreviewPopup && previewData && (
           <div className="absolute inset-0 flex items-center justify-center z-50">
             <div className={`bg-white p-8 rounded-xl shadow-2xl text-center w-full max-w-sm border-t-8 border-t-${INFO_COLOR} animate-fade-in`}>
-              <FontAwesomeIcon icon={faDollarSign} className={`text-${INFO_COLOR} text-5xl mb-4`} />
+              <FontAwesomeIcon icon={faMoneyBillWave} className={`text-${INFO_COLOR} text-5xl mb-4`} />
               <h3 className="text-2xl font-bold text-gray-800 mb-2">{t("qrScanner.preview.title")}</h3>
-              <p className="text-md text-gray-700 mb-3" dangerouslySetInnerHTML={{ __html: t("qrScanner.preview.amount", { amount: previewData.originalDollarAmount }) }} />
+              <p className="text-md text-gray-700 mb-3" dangerouslySetInnerHTML={{ __html: t("qrScanner.preview.amount", {currency: currencySymbol, amount: previewData.originalDollarAmount }) }} />
               <p className="text-md text-gray-700 mb-3" dangerouslySetInnerHTML={{ __html: t("qrScanner.preview.points", { points: previewData.claimed ? previewData.adjustedPoints : previewData.earnedPoints }) }} />
               {previewData.claimed && (
-                <p className="text-md text-gray-700 mb-3" dangerouslySetInnerHTML={{ __html: t("qrScanner.preview.claimed", { amount: previewData.claimedAmount.toFixed(2) }) }} />
+                <p className="text-md text-gray-700 mb-3" dangerouslySetInnerHTML={{ __html: t("qrScanner.preview.claimed", {currency: currencySymbol, amount: previewData.claimedAmount.toFixed(2) }) }} />
               )}
               {previewData.signupBonus > 0 && (
                 <p className="text-md text-gray-700 mb-4" dangerouslySetInnerHTML={{ __html: t("qrScanner.preview.signupBonus", { bonus: previewData.signupBonus }) }} />

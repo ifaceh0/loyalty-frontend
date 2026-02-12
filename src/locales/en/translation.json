@@ -120,7 +120,7 @@
     "targetedRewards": {
       "title": "Targeted Rewards",
       "desc": "Reward customers based on their purchase behavior to increase loyalty and repeat visits.",
-      "details": "Our AI‑driven engine analyses every transaction and automatically suggests the best reward for each shopper. You can set rules like “spend $50 → 10 pts” or “buy 3 coffees → free drink”."
+      "details": "Our AI‑driven engine analyses every transaction and automatically suggests the best reward for each shopper. You can set rules like for example “spend $50 → 10 pts” or “buy 3 coffees → free drink”."
     },
     "mobileFirst": {
       "title": "Mobile‑First Experience",
@@ -599,7 +599,7 @@
     "monthlySales": {
       "title": "Monthly Sales (Last 12 Months)",
       "subtitle": "Sales Overview",
-      "sales": "Sales $"
+      "sales": "Sales"
     },
     "customerComparison": {
       "title": "Customer Count Comparison",
@@ -711,13 +711,13 @@
         "desc": "Points a customer receives immediately upon signing up for the loyalty program."
       },
       "pointsPerDollar": {
-        "label": "Points per Dollar Spent",
+        "label": "Points per Amount Spent",
         "placeholder": "e.g., 5 points",
         "points": "Points",
-        "desc": "The base rate for earning points (e.g., 5 points for every $1 spent)."
+        "desc": "The base rate for earning points (e.g., 5 points for every {{currency}}1 spent)."
       },
       "minAmount": {
-        "label": "Minimum Purchase Amount for Rewards ($)",
+        "label": "Minimum Purchase Amount for Rewards ({{currency}})",
         "prefix": "Min. Spend:",
         "suffix": "to Qualify",
         "placeholder": "e.g., 10.00",
@@ -728,7 +728,7 @@
       "purchase": {
         "title": "1. Purchase-Based Bonus Points",
         "desc": "Award **extra points** when a customer spends above a certain amount in a **single purchase**.",
-        "threshold": "Purchase Threshold ($)",
+        "threshold": "Purchase Threshold ({{currency}})",
         "thresholdPlaceholder": "Min. purchase amount",
         "points": "Bonus Points Awarded",
         "pointsPlaceholder": "Bonus points",
@@ -736,21 +736,21 @@
       },
       "milestone": {
         "title": "2. Loyalty Milestone Rewards",
-        "desc": "Award a **$ discount** when a customer's **total accumulated points** hits a milestone.",
+        "desc": "Award a **{{currency}} discount** when a customer's **total accumulated points** hits a milestone.",
         "threshold": "Point Threshold",
         "thresholdPlaceholder": "Min. total points",
-        "amount": "Reward Discount ($)",
-        "amountPlaceholder": "Discount in dollars",
+        "amount": "Reward Discount ({{currency}})",
+        "amountPlaceholder": "Discount in {{currency}}",
         "add": "Add Milestone Reward Level"
       }
     },
     "campaigns": {
-      "desc": "Set up a **limited-time** bonus to offer more points per dollar during a special event or promotion.",
-      "campaign": "Bonus Campaign #{number}",
+      "desc": "Set up a **limited-time** bonus to offer more points per {{currency}} during a special event or promotion.",
+      "campaign": "Bonus Campaign #{{number}}",
       "name": "Campaign Name",
       "namePlaceholder": "e.g., Summer Sale Double Points",
-      "points": "Points per Dollar",
-      "pointsPlaceholder": "e.g., 10 points per $1",
+      "points": "Points per Amount Spent",
+      "pointsPlaceholder": "e.g., 10 points per {{currency}}1",
       "startDate": "Start Date",
       "endDate": "End Date",
       "add": "Add New Bonus Campaign"
@@ -780,7 +780,7 @@
     "transaction": { "title": "Loyalty Purchase", "details": "Transaction Details" },
     "customer": { "info": "Customer Info", "name": "Name", "id": "ID", "shop": "Shop", "email": "Email", "phone": "Phone" },
     "points": { "title": "Loyalty Points", "available": "Available Points", "updateNote": "Points update after confirming the purchase." },
-    "purchase": { "enterAmount": "Enter Total Purchase Amount ($)" },
+    "purchase": { "enterAmount": "Enter Total Purchase Amount ({{currency}})" },
     "newCustomerNote": "New customer! Profile will be created automatically.",
     "guidance": { "enterAmount": "Customer found! Enter purchase amount." },
     "buttons": {
@@ -789,23 +789,23 @@
     },
     "success": {
       "processedTitle": "PURCHASE PROCESSED",
-      "claimedMessage": "Discount of ${{claimed}} applied. Net purchase: ${{net}}. Points earned: {{points}}. New balance: {{balance}}.",
-      "normalMessage": "{{amount}} purchased. Points Earned: {{points}}{{signupBonusText}}. New balance: {{balance}}.",
+      "claimedMessage": "Net purchase: {{currency}}{{net}}. \nDiscount of {{currency}}{{claimed}} applied. \nPoints earned: {{points}}. \nNew balance points: {{balance}}.",
+      "normalMessage": "Net purchase: {{currency}}{{amount}}. \nPoints Earned: {{points}}{{signupBonusText}}. \nNew balance points: {{balance}}.",
       "signupBonusText": "{{#if signupBonus}} + Signup Bonus: {{signupBonus}}{{/if}}"
     },
     "error": { "title": "Operation Failed", "generic": "An error occurred." },
     "claim": {
       "eligibleTitle": "Milestone Reward Eligible!",
-      "eligibleText": "Claim a <span class=\"text-3xl font-extrabold text-green-600\">${{amount}}</span> reward.",
-      "minSpend": "Purchase at least <span class=\"font-bold text-blue-700\">${{amount}}</span> to qualify.",
+      "eligibleText": "Claim a <span class=\"text-3xl font-extrabold text-green-600\">{{currency}}{{amount}}</span> reward.",
+      "minSpend": "Purchase at least <span class=\"font-bold text-blue-700\">{{currency}}{{amount}}</span> to qualify.",
       "yesProceed": "Yes, Proceed to Claim", "noPointsOnly": "No, Just Earn Points",
-      "confirmationTitle": "Are you sure?", "confirmText": "Claim the ${{amount}} reward?", "yesClaim": "Yes, Claim", "noCancel": "No, Cancel"
+      "confirmationTitle": "Are you sure?", "confirmText": "Claim the {{currency}}{{amount}} reward?", "yesClaim": "Yes, Claim", "noCancel": "No, Cancel"
     },
     "preview": {
       "title": "Confirm Purchase",
-      "amount": "Amount Purchased: <span class=\"font-bold text-blue-700\">${{amount}}</span>",
+      "amount": "Amount Purchased: <span class=\"font-bold text-blue-700\">{{currency}}{{amount}}</span>",
       "points": "Points Earned After purchase: <span class=\"font-bold text-cyan-600\">{{points}}</span>",
-      "claimed": "Reward Claimed: <span class=\"font-bold text-green-600\">${{amount}}</span>",
+      "claimed": "Reward Claimed: <span class=\"font-bold text-green-600\">{{currency}}{{amount}}</span>",
       "signupBonus": "Signup Bonus Points: <span class=\"font-bold text-green-600\">{{bonus}}</span>",
       "process": "Process Purchase"
     },
@@ -822,8 +822,8 @@
       "inviteFailed": "Error sending invite."
     },
     "validation": {
-      "amountPositive": "Enter a valid amount > $0",
-      "minAmountRequired": "Amount must be ≥ ${{amount}} to claim"
+      "amountPositive": "Enter a valid amount > {{currency}}0",
+      "minAmountRequired": "Amount must be ≥ {{currency}}{{amount}} to claim"
     },
     "notFound": {
       "title": "Customer Not Found!",
@@ -1025,13 +1025,13 @@
     "transaction": { "details": "Transaction Details" },
     "customer": { "info": "Customer Info", "name": "Name", "id": "ID", "shop": "Shop", "email": "Email", "phone": "Phone" },
     "points": { "title": "Loyalty Points", "available": "Earned Points", "updateNote": "Points update after confirming the purchase." },
-    "purchase": { "enterAmount": "Enter Total Purchase Amount ($)" },
+    "purchase": { "enterAmount": "Enter Total Purchase Amount ({{currency}})" },
     "newCustomerNote": "New customer detected! This purchase will automatically create their loyalty profile and connect them to {{shopName}}.",
     "na": "N/A",
     "success": {
       "title": "PURCHASE PROCESSED",
-      "claimed": "Discount of ${{claimed}} applied. Net purchase: ${{net}}. Points earned: {{points}}. New balance: {{balance}}.",
-      "normal": "${{amount}} purchased. Points Earned: {{points}}{{signupBonusText}}. New balance: {{balance}}.",
+      "claimed": "Discount of {{currency}}{{claimed}} applied. Net purchase: {{currency}}{{net}}. Points earned: {{points}}. New balance: {{balance}}.",
+      "normal": "{{currency}}{{amount}} purchased. Points Earned: {{points}}{{signupBonusText}}. New balance: {{balance}}.",
       "signupBonusText": " + Signup Bonus: {{bonus}}"
     },
     "error": { "title": "Operation Failed", "generic": "An error occurred. Please check the QR code and try again." },
@@ -1050,25 +1050,25 @@
       "confirmFailed": "Failed to confirm purchase."
     },
     "validation": {
-      "amountPositive": "Please enter a valid amount (must be greater than $0).",
-      "minAmount": "Purchase amount must be at least ${{amount}} to claim the reward."
+      "amountPositive": "Please enter a valid amount (must be greater than {{currency}}0).",
+      "minAmount": "Purchase amount must be at least {{currency}}{{amount}} to claim the reward."
     },
     "claim": {
       "eligibleTitle": "Milestone Reward Eligible!",
-      "eligibleText": "You can claim a <span class=\"text-3xl font-extrabold text-green-600\">${{amount}}</span> reward.",
-      "minSpend": "Purchase at least <span class=\"font-bold text-blue-700\">${{amount}}</span> to qualify.",
+      "eligibleText": "You can claim a <span class=\"text-3xl font-extrabold text-green-600\">{{currency}}{{amount}}</span> reward.",
+      "minSpend": "Purchase at least <span class=\"font-bold text-blue-700\">{{currency}}{{amount}}</span> to qualify.",
       "yesProceed": "Yes, Proceed to Claim",
       "noPointsOnly": "No, Just Earn Points",
       "confirmTitle": "Are you sure?",
-      "confirmText": "Do you want to claim the <strong>${{amount}}</strong> reward?",
+      "confirmText": "Do you want to claim the <strong>{{currency}}{{amount}}</strong> reward?",
       "yesClaim": "Yes, Claim",
       "noCancel": "No, Cancel"
     },
     "preview": {
       "title": "Confirm Purchase",
-      "amount": "Amount Purchase: <span class=\"font-bold text-blue-700\">${{amount}}</span>",
+      "amount": "Amount Purchase: <span class=\"font-bold text-blue-700\">{{currency}}{{amount}}</span>",
       "points": "Points Earned After purchase: <span class=\"font-bold text-cyan-600\">{{points}}</span>",
-      "claimed": "Reward Claimed: <span class=\"font-bold text-green-600\">${{amount}}</span>",
+      "claimed": "Reward Claimed: <span class=\"font-bold text-green-600\">{{currency}}{{amount}}</span>",
       "signupBonus": "Signup Bonus Points: <span class=\"font-bold text-green-600\">{{bonus}}</span>",
       "process": "Process Purchase"
     },
@@ -1229,11 +1229,11 @@
     "table": {
       "title": "Transactions for",
       "date": "Date",
-      "amount": "Amount ($)",
+      "amount": "Amount",
       "points": "Points",
       "pointsEarned": "Points Earned",
       "redeemPoints": "Redeem Points",
-      "redeemAmount": "Redeem Amount ($)"
+      "redeemAmount": "Redeem Amount"
     },
     "noTransactions": {
       "title": "No transactions found for this merchant.",

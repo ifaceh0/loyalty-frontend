@@ -721,12 +721,14 @@ import {
   faXmark,
   faArrowRotateLeft,
   faDollarSign,
+  faMoneyBillWave,
   faUser,
   faCoins,
   faIdCard,
 } from "@fortawesome/free-solid-svg-icons";
 import { useTranslation } from "react-i18next";
 import { API_BASE_URL } from '../../apiConfig';
+import { getCurrencySymbol } from "../../utils/currency";
 
 const PRIMARY_COLOR = "blue-600";
 const ACCENT_COLOR = "cyan-500";
@@ -769,6 +771,8 @@ const CustomerLookup = () => {
   const [previewData, setPreviewData] = useState(null);
   const [isCheckingEligibility, setIsCheckingEligibility] = useState(false);
   const [showConfirmClaimPopup, setShowConfirmClaimPopup] = useState(false);
+  const country = localStorage.getItem("country");
+  const currencySymbol = getCurrencySymbol(country);
 
   useEffect(() => {
     const id = localStorage.getItem("id");
@@ -937,12 +941,12 @@ const CustomerLookup = () => {
     setError(null);
     const amt = parseFloat(purchaseAmount);
     if (isNaN(amt) || amt <= 0) {
-      setError(t("customerLookup.validation.amountPositive"));
+      setError(t("customerLookup.validation.amountPositive", { currency : currencySymbol }));
       setShowErrorPopup(true);
       return;
     }
     if (intentToClaim && amt < minRewardAmount) {
-      setError(t("customerLookup.validation.minAmountRequired", { amount: minRewardAmount.toFixed(2) }));
+      setError(t("customerLookup.validation.minAmountRequired", { currency: currencySymbol, amount: minRewardAmount.toFixed(2) }));
       setShowErrorPopup(true);
       return;
     }
@@ -997,19 +1001,21 @@ const CustomerLookup = () => {
       setSuccessMessage(
         result.claimed
           ? t("customerLookup.success.claimedMessage", {
+              currency: currencySymbol,
               claimed: result.claimedAmount.toFixed(2),
               net: result.adjustedDollarAmount,
               points: result.adjustedPoints,
               balance: result.newBalance,
             })
           : t("customerLookup.success.normalMessage", {
+              currency: currencySymbol,
               amount: (result.adjustedDollarAmount || previewData.originalDollarAmount).toFixed(2),
               points: result.adjustedPoints || result.earnedPoints,
               balance: result.newBalance,
-              // This is the magic line:
+
               signupBonusText: result.signupBonusAdded > 0 
                 ? t("customerLookup.success.signupBonusText", { signupBonus: result.signupBonusAdded })
-                : "",   // ← empty when no bonus
+                : "",  
             })
       );
       setSuccessIconColor(SUCCESS_COLOR);
@@ -1112,9 +1118,9 @@ const CustomerLookup = () => {
                   </div>
 
                   <form onSubmit={handleSubmit} className="mt-6 flex flex-col gap-4 pt-4 border-t border-gray-100">
-                    <label className="text-base font-semibold text-gray-700">{t("customerLookup.purchase.enterAmount")}</label>
+                    <label className="text-base font-semibold text-gray-700">{t("customerLookup.purchase.enterAmount", { currency: currencySymbol })}</label>
                     <div className="relative">
-                      <span className={`absolute left-4 top-1/2 transform -translate-y-1/2 text-${PRIMARY_COLOR} font-bold text-lg`}>$</span>
+                      <span className={`absolute left-4 top-1/2 transform -translate-y-1/2 text-${PRIMARY_COLOR} font-bold text-lg`}>{currencySymbol}</span>
                       <input
                         type="number"
                         min="0.01"
@@ -1127,7 +1133,7 @@ const CustomerLookup = () => {
                           else setPurchaseAmount(v);
                         }}
                         required
-                        className={`w-full pl-10 pr-4 py-2 bg-white border-2 border-gray-300 rounded-lg text-2xl font-bold text-gray-700 placeholder-gray-400 focus:ring-2 focus:ring-${ACCENT_COLOR} focus:border-${ACCENT_COLOR} outline-none transition duration-150 shadow-inner`}
+                        className={`w-full pl-10 pr-4 py-2 bg-white border-2 border-gray-300 rounded-full text-2xl font-bold text-gray-700 placeholder-gray-400 focus:ring-2 focus:ring-${ACCENT_COLOR} focus:border-${ACCENT_COLOR} outline-none transition duration-150 shadow-inner`}
                       />
                     </div>
 
@@ -1195,10 +1201,10 @@ const CustomerLookup = () => {
           {showClaimIntentPopup && (
             <div className="absolute inset-0 flex items-center justify-center z-50">
               <div className={`bg-white p-8 rounded-xl shadow-2xl text-center w-full max-w-sm border-t-8 border-t-${ACCENT_COLOR} animate-fade-in`}>
-                <FontAwesomeIcon icon={faDollarSign} className={`text-${ACCENT_COLOR} text-5xl mb-4`} />
+                <FontAwesomeIcon icon={faMoneyBillWave} className={`text-${ACCENT_COLOR} text-5xl mb-4`} />
                 <h3 className="text-2xl font-bold text-gray-800 mb-2">{t("customerLookup.claim.eligibleTitle")}</h3>
-                <p className="text-md text-gray-700 mb-3" dangerouslySetInnerHTML={{ __html: t("customerLookup.claim.eligibleText", { amount: eligibleReward.toFixed(2) }) }} />
-                <p className="text-sm text-gray-600 mb-4" dangerouslySetInnerHTML={{ __html: t("customerLookup.claim.minSpend", { amount: minRewardAmount.toFixed(2) }) }} />
+                <p className="text-md text-gray-700 mb-3" dangerouslySetInnerHTML={{ __html: t("customerLookup.claim.eligibleText", { currency: currencySymbol, amount: eligibleReward.toFixed(2) }) }} />
+                <p className="text-sm text-gray-600 mb-4" dangerouslySetInnerHTML={{ __html: t("customerLookup.claim.minSpend", { currency: currencySymbol, amount: minRewardAmount.toFixed(2) }) }} />
                 <button
                   onClick={() => { setShowClaimIntentPopup(false); setShowConfirmClaimPopup(true); }}
                   className={`w-full bg-${SUCCESS_COLOR} hover:bg-green-700 text-white font-bold px-5 py-2 rounded-full shadow-md transition duration-200 mb-3`}
@@ -1218,9 +1224,9 @@ const CustomerLookup = () => {
           {showConfirmClaimPopup && (
             <div className="absolute inset-0 flex items-center justify-center z-50">
               <div className={`bg-white p-8 rounded-xl shadow-2xl text-center w-full max-w-sm border-t-8 border-t-${ACCENT_COLOR} animate-fade-in`}>
-                <FontAwesomeIcon icon={faDollarSign} className={`text-${ACCENT_COLOR} text-5xl mb-4`} />
+                <FontAwesomeIcon icon={faMoneyBillWave} className={`text-${ACCENT_COLOR} text-5xl mb-4`} />
                 <h3 className="text-2xl font-bold text-gray-800 mb-2">{t("customerLookup.claim.confirmationTitle")}</h3>
-                <p className="text-md text-gray-700 mb-4">{t("customerLookup.claim.confirmText", { amount: eligibleReward.toFixed(2) })}</p>
+                <p className="text-md text-gray-700 mb-4">{t("customerLookup.claim.confirmText",  { currency: currencySymbol, amount: eligibleReward.toFixed(2) })}</p>
                 <button
                   onClick={() => { setIntentToClaim(true); setShowConfirmClaimPopup(false); }}
                   className={`w-full bg-${SUCCESS_COLOR} hover:bg-green-700 text-white font-bold px-5 py-2 rounded-full shadow-md transition duration-200 mb-3`}
@@ -1240,12 +1246,12 @@ const CustomerLookup = () => {
           {showPreviewPopup && previewData && (
             <div className="absolute inset-0 flex items-center justify-center z-50">
               <div className={`bg-white p-8 rounded-xl shadow-2xl text-center w-full max-w-sm border-t-8 border-t-${INFO_COLOR} animate-fade-in`}>
-                <FontAwesomeIcon icon={faDollarSign} className={`text-${INFO_COLOR} text-5xl mb-4`} />
+                <FontAwesomeIcon icon={faMoneyBillWave} className={`text-${INFO_COLOR} text-5xl mb-4`} />
                 <h3 className="text-2xl font-bold text-gray-800 mb-2">{t("customerLookup.preview.title")}</h3>
-                <p className="text-md text-gray-700 mb-3" dangerouslySetInnerHTML={{ __html: t("customerLookup.preview.amount", { amount: previewData.originalDollarAmount }) }} />
+                <p className="text-md text-gray-700 mb-3" dangerouslySetInnerHTML={{ __html: t("customerLookup.preview.amount",  { currency: currencySymbol, amount: previewData.originalDollarAmount }) }} />
                 <p className="text-md text-gray-700 mb-3" dangerouslySetInnerHTML={{ __html: t("customerLookup.preview.points", { points: previewData.claimed ? previewData.adjustedPoints : previewData.earnedPoints }) }} />
                 {previewData.claimed && (
-                  <p className="text-md text-gray-700 mb-3" dangerouslySetInnerHTML={{ __html: t("customerLookup.preview.claimed", { amount: previewData.claimedAmount.toFixed(2) }) }} />
+                  <p className="text-md text-gray-700 mb-3" dangerouslySetInnerHTML={{ __html: t("customerLookup.preview.claimed", { currency: currencySymbol, amount: previewData.claimedAmount.toFixed(2) }) }} />
                 )}
                 {previewData.signupBonus > 0 && (
                   <p className="text-md text-gray-700 mb-4" dangerouslySetInnerHTML={{ __html: t("customerLookup.preview.signupBonus", { bonus: previewData.signupBonus }) }} />
