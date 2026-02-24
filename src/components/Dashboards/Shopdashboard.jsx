@@ -453,10 +453,11 @@ import UserPurchaseChart from "../bar chart/UserPurchaseChart";
 import { useSidebar } from "../../context/SidebarContext";
 import { Mail, X, Menu } from "lucide-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChartBar, faUser, faCog, faUsers, faCreditCard, faUserTie, faFileInvoiceDollar, faQuestionCircle } from "@fortawesome/free-solid-svg-icons";
+import { faChartBar, faUser, faCog, faUsers, faEnvelope, faCreditCard, faUserTie, faFileInvoiceDollar, faQuestionCircle } from "@fortawesome/free-solid-svg-icons";
 import { useTranslation } from "react-i18next";
 import { API_BASE_URL } from '../../apiConfig';
 import { getCurrencySymbol } from "../../utils/currency";
+import ContactUs from "../Contact/Contact";
 
 const Shopdashboard = () => {
   const { t } = useTranslation();
@@ -585,7 +586,7 @@ const Shopdashboard = () => {
   return (
     <div className="flex h-[calc(100vh-64px)] bg-gray-100">
       {/* Sidebar */}
-      <aside
+      {/* <aside
         className={`fixed h-screen top-0 bg-gradient-to-b from-[#dbeafe] to-[#bfdbfe] text-slate-800 p-3 sm:p-4 shadow-lg z-50 transform transition-all duration-300 ease-in-out ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         } ${isSidebarExpanded ? "w-56 sm:w-64" : "w-14 sm:w-16"} rounded-r-lg`}
@@ -673,6 +674,82 @@ const Shopdashboard = () => {
             {!isSidebarExpanded && <Mail className="w-5 h-5 text-blue-600" />}
           </Link>
         </div>
+      </aside> */}
+      <aside
+        className={`fixed h-screen top-0 bg-gradient-to-b from-[#dbeafe] to-[#bfdbfe] text-slate-800 p-3 sm:p-4 shadow-lg z-50 transform transition-all duration-300 ease-in-out ${
+          sidebarOpen ? "translate-x-0" : "-translate-x-full"
+        } ${isSidebarExpanded ? "w-64 sm:w-72" : "w-16 sm:w-20"} rounded-r-xl`}
+      >
+        <div className="flex justify-between items-center mb-5 sm:mb-6">
+          {isSidebarExpanded && (
+            <h2 className="text-xl sm:text-2xl font-bold text-blue-700 truncate pr-2">
+              {t("shopdashboard.sidebar.title")}
+            </h2>
+          )}
+          <div className="flex items-center">
+            {!sidebarOpen && (
+              <button
+                onClick={() => setSidebarOpen(true)}
+                className="p-2 sm:p-3 rounded-full bg-blue-600 hover:bg-blue-700 text-white transition flex items-center justify-center absolute left-2 sm:left-4 top-3 sm:top-4"
+                aria-label="Open sidebar"
+              >
+                <Menu className="w-6 h-6 sm:w-7 sm:h-7" />
+              </button>
+            )}
+            {sidebarOpen && (
+              <button
+                onClick={() => {
+                  setSidebarOpen(false);
+                  setIsSidebarExpanded(false);
+                }}
+                className="p-2 sm:p-3 rounded-full bg-blue-600 hover:bg-blue-700 text-white transition flex items-center justify-center"
+                aria-label="Close sidebar"
+              >
+                <X className="w-6 h-6 sm:w-5 sm:h-5" />
+              </button>
+            )}
+          </div>
+        </div>
+
+        <nav className="space-y-5 sm:space-y-3 mt-10">
+          {[
+            { tab: "user_stats", icon: faChartBar, label: t("shopdashboard.sidebar.dashboard") },
+            { tab: "shopkeeper", icon: faUser, label: t("shopdashboard.sidebar.profile") },
+            { tab: "shopkeeper_setting", icon: faCog, label: t("shopdashboard.sidebar.settings") },
+            { tab: "interactions", icon: faUsers, label: t("shopdashboard.sidebar.interactions") },
+            { tab: "subscription", icon: faCreditCard, label: t("shopdashboard.sidebar.subscription") },
+            { tab: "employee_management", icon: faUserTie, label: t("shopdashboard.sidebar.employees") },
+            { tab: "daily_transaction_report", icon: faFileInvoiceDollar, label: t("shopdashboard.sidebar.transactions") },
+            { tab: "contact_support", icon: faEnvelope, label: t("shopdashboard.sidebar.contactUs") },
+          ].map(({ tab, icon, label }) => (
+            <div key={tab} className="relative group">
+              <button
+                onClick={() => {
+                  setActiveTab(tab);
+                  if (!isSidebarExpanded) toggleSidebarExpansion();
+                }}
+                className={`flex items-center w-full text-left px-3 sm:px-4 py-3 sm:py-2.5 rounded-full transition text-base sm:text-lg ${
+                  activeTab === tab
+                    ? "bg-blue-600 text-white font-semibold shadow-md"
+                    : "hover:bg-blue-200 hover:text-blue-800 text-slate-700"
+                } ${isSidebarExpanded ? "justify-start" : "justify-center"}`}
+              >
+                <FontAwesomeIcon
+                  icon={icon}
+                  className={`${isSidebarExpanded ? "mr-3 sm:mr-4" : ""} ${
+                    activeTab === tab ? "text-white" : "text-blue-600"
+                  } text-lg sm:text-xl`}
+                />
+                {isSidebarExpanded && <span className="truncate">{label}</span>}
+              </button>
+              {!isSidebarExpanded && (
+                <span className="absolute left-full ml-3 top-1/2 -translate-y-1/2 bg-blue-900 text-white text-sm rounded py-2 px-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-50 shadow-md">
+                  {label}
+                </span>
+              )}
+            </div>
+          ))}
+        </nav>
       </aside>
 
       {/* Main Content */}
@@ -784,6 +861,7 @@ const Shopdashboard = () => {
         {activeTab === "subscription" && <SubscriptionDashboard />}
         {activeTab === "employee_management" && <InviteEmployeePage />}
         {activeTab === "daily_transaction_report" && <DailyTransactionReport />}
+        {activeTab === "contact_support" && <ContactUs />}
       </main>
     </div>
   );

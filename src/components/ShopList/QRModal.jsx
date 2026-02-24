@@ -181,7 +181,7 @@ export default function QRModal({ shop, qrData, isOpen, onClose }) {
 
   return (
     <div className="fixed inset-0 z-50 flex justify-center bg-black bg-opacity-60 backdrop-blur-sm px-3 py-6 sm:p-8 overflow-y-auto">
-      <div className="bg-white w-full max-w-xs sm:max-w-sm md:max-w-md rounded-xl shadow-2xl overflow-hidden transform transition-all duration-300 scale-100 my-auto max-h-full">
+      <div className="bg-white w-full max-w-sm sm:max-w-sm md:max-w-md rounded-xl shadow-2xl overflow-hidden transform transition-all duration-300 scale-100 my-auto max-h-full">
 
         {/* Header */}
         <nav className="bg-blue-600 text-white px-4 rounded-t-xl sm:px-6 py-3 sm:py-4 flex justify-between items-center sticky top-0 z-10">

@@ -815,7 +815,7 @@ const Modal = ({ isOpen, onClose, children, title }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-8">
       <div className="bg-white rounded-lg shadow-xl w-full max-w-md">
         <div className="flex justify-between items-center p-4 border-b border-gray-200">
           <h3 className="text-xl font-semibold text-gray-900">{title}</h3>
@@ -971,8 +971,8 @@ export default function InviteEmployeePage() {
 
   return (
     <>
-      <div className="min-h-screen">
-        <div className="max-w-6xl mx-auto p-2 space-y-6">
+      <div className="min-h-screen p-4 sm:p-6 md:p-8">
+        <div className="max-w-6xl mx-auto p-2 space-y-8">
 
           {/* Header */}
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">

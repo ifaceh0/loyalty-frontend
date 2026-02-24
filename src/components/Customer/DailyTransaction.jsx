@@ -879,11 +879,11 @@ const DailyTransaction = () => {
   return (
     <>
       {/* MAIN PAGE */}
-      <div className="min-h-screen md:p-14 p-14">
-        <header className="mb-6">
+      <div className="min-h-screen bg-gray-50/40 py-6 px-4 sm:px-6 lg:px-8">
+        <header className="mb-6 sm:mb-8">
           <div className="flex justify-center">
-            <h1 className="text-4xl font-black text-slate-900 tracking-tight flex items-center">
-              <Calendar className="w-10 h-10 mr-3 text-orange-600" />
+            <h1 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight flex items-center gap-3">
+              <Calendar className="w-9 h-9 sm:w-10 sm:h-10 text-orange-600" />
               {t('daily.page.title')}
             </h1>
           </div>
@@ -944,10 +944,10 @@ const DailyTransaction = () => {
               {/* HEADER */}
               <div className="bg-gradient-to-r from-blue-600 to-violet-600 p-6 md:p-2 rounded-t-xl flex justify-between items-center shrink-0">
                 <div>
-                  <h2 className="text-2xl md:text-3xl font-black text-white">
+                  <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-white">
                     {t('daily.popup.dailyTitle', { date: format(new Date(selectedDate), 'MMMM d, yyyy') })}
                   </h2>
-                  <p className="text-blue-100 text-md mt-1">{t('daily.popup.dailySubtitle')}</p>
+                  <p className="text-blue-100 text-sm sm:text-base mt-1">{t('daily.popup.dailySubtitle')}</p>
                 </div>
                 <button
                   onClick={() => {
@@ -1214,7 +1214,7 @@ const DailyTransaction = () => {
             <div className="bg-white rounded-xl shadow-2xl w-full max-w-6xl h-[92vh] flex flex-col overflow-hidden border-2 border-orange-200">
               <div className="bg-gradient-to-r from-blue-600 to-orange-600 p-6 md:p-2 rounded-t-xl flex justify-between items-center">
                 <div>
-                  <h2 className="text-2xl md:text-3xl font-black text-white">
+                  <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-white truncate">
                     {popupTitle === t('daily.popup.error') 
                       ? t('daily.popup.error') 
                       : userData 
@@ -1223,7 +1223,9 @@ const DailyTransaction = () => {
                     }
                   </h2>
                   {userData && (
-                    <p className="text-blue-100 text-md mt-1">{t('daily.popup.profileId')}: {userData.userId || userId}</p>
+                    <p className="text-blue-100 text-sm sm:text-base mt-1">
+                      {t('daily.popup.profileId')}: {userData.userId || userId}
+                    </p>
                   )}
                 </div>
                 <button
