@@ -761,6 +761,536 @@
 
 
 // //translate
+// import React, { useState, useEffect } from 'react';
+// import { useNavigate } from 'react-router-dom';
+// import CountUp from 'react-countup';
+// import { useTranslation } from 'react-i18next';
+// import { motion } from 'framer-motion';
+// import {
+//   ChevronLeft,
+//   ChevronRight,
+//   Users,
+//   Store,
+//   DollarSign,
+//   Gift,
+//   Star,
+//   ArrowRight,
+//   CheckCircle,
+//   Crown,
+//   Zap,
+//   Heart,
+//   Coffee,
+//   ShoppingBag,
+//   Utensils,
+//   Car,
+//   Gamepad2,
+//   Smartphone,
+//   Bell,
+//   TrendingUp,
+//   Award,
+//   UserPlus,
+//   Calendar,
+//   MapPin,
+//   Banknote,
+// } from 'lucide-react';
+// import { API_BASE_URL } from '../../apiConfig';
+
+// import carousel1 from '../../assets/carousel1.jpg';
+// import carousel2 from '../../assets/carousel2.jpg';
+// import carousel3 from '../../assets/carousel3.jpg';
+// import carousel4 from '../../assets/carousel4.jpg';
+// import carousel5 from '../../assets/carousel5.jpg';
+
+// const heroImages = [carousel1, carousel2, carousel3, carousel4, carousel5];
+
+// // Animation variants
+// const fadeInUp = {
+//   hidden: { opacity: 0, y: 30 },
+//   visible: { opacity: 1, y: 0, transition: { duration: 0.7 } }
+// };
+
+// const staggerContainer = {
+//   hidden: { opacity: 0 },
+//   visible: {
+//     opacity: 1,
+//     transition: { staggerChildren: 0.12 }
+//   }
+// };
+
+// const cardVariants = {
+//   hidden: { opacity: 0, y: 20, scale: 0.96 },
+//   visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.6 } }
+// };
+
+// export default function Home() {
+//   const { t } = useTranslation();
+//   const navigate = useNavigate();
+
+//   const [currentIndex, setCurrentIndex] = useState(0);
+//   const [stats, setStats] = useState({
+//     totalUsers: 0,
+//     totalShops: 0,
+//     totalUsaTransactionAmount: 0,
+//     totalIndiaTransactionAmount: 0,
+//   });
+//   const [loading, setLoading] = useState(true);
+
+//   useEffect(() => {
+//     const fetchSummary = async () => {
+//       try {
+//         const response = await fetch(`${API_BASE_URL}/api/loyalty_homePage/summary`);
+//         const data = await response.json();
+//         setStats({
+//           totalUsers: data.totalUsers || 0,
+//           totalShops: data.totalShops || 0,
+//           totalUsaTransactionAmount: data.totalUsaTransactionAmount || 0,
+//           totalIndiaTransactionAmount: data.totalIndiaTransactionAmount || 0,
+//         });
+//       } catch (error) {
+//         console.error('Failed to fetch summary:', error);
+//       } finally {
+//         setLoading(false);
+//       }
+//     };
+//     fetchSummary();
+//   }, []);
+
+//   useEffect(() => {
+//     const timer = setInterval(() => {
+//       setCurrentIndex((prev) => (prev + 1) % heroImages.length);
+//     }, 5000);
+//     return () => clearInterval(timer);
+//   }, []);
+
+//   const prevSlide = () => setCurrentIndex((prev) => (prev === 0 ? heroImages.length - 1 : prev - 1));
+//   const nextSlide = () => setCurrentIndex((prev) => (prev + 1) % heroImages.length);
+
+//   return (
+//     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
+
+//       {/* HERO CAROUSEL - FIXED FOR MOBILE */}
+//       <section className="relative h-[70vh] min-h-[380px] sm:h-[75vh] md:h-[80vh] lg:h-[85vh] overflow-hidden">
+//         <div className="relative w-full h-full">
+//           {heroImages.map((img, idx) => (
+//             <motion.div
+//               key={idx}
+//               initial={{ opacity: 0 }}
+//               animate={{ opacity: idx === currentIndex ? 1 : 0 }}
+//               transition={{ duration: 1.2 }}
+//               className="absolute inset-0"
+//             >
+//               <img
+//                 src={img}
+//                 alt={t(`home.hero.slides.${idx}`) || `Slide ${idx + 1}`}
+//                 className="w-full h-full object-cover"
+//               />
+//               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/45 to-black/25" />
+//             </motion.div>
+//           ))}
+
+//           <div className="absolute inset-0 flex items-center justify-center text-center px-5 sm:px-8">
+//             <motion.div
+//               initial={{ opacity: 0, y: 30 }}
+//               animate={{ opacity: 1, y: 0 }}
+//               transition={{ delay: 0.4, duration: 1 }}
+//               className="max-w-4xl w-full"
+//             >
+//               <h1 className="text-4xl xs:text-5xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-white mb-4 md:mb-6 drop-shadow-2xl leading-tight">
+//                 {t('home.hero.title')}
+//               </h1>
+//               <p className="text-lg xs:text-xl sm:text-xl md:text-2xl text-white/90 mb-6 md:mb-10 drop-shadow-lg max-w-3xl mx-auto">
+//                 {t('home.hero.subtitle')}
+//               </p>
+//             </motion.div>
+//           </div>
+
+//           <button
+//             onClick={(e) => { e.stopPropagation(); prevSlide(); }}
+//             className="absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 bg-black/40 backdrop-blur-md text-white p-4 sm:p-5 rounded-full hover:bg-black/60 transition z-10"
+//           >
+//             <ChevronLeft className="w-7 h-7 sm:w-8 sm:h-8" />
+//           </button>
+//           <button
+//             onClick={(e) => { e.stopPropagation(); nextSlide(); }}
+//             className="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 bg-black/40 backdrop-blur-md text-white p-4 sm:p-5 rounded-full hover:bg-black/60 transition z-10"
+//           >
+//             <ChevronRight className="w-7 h-7 sm:w-8 sm:h-8" />
+//           </button>
+
+//           <div className="absolute bottom-6 sm:bottom-10 left-1/2 -translate-x-1/2 flex gap-3 sm:gap-4 z-10">
+//             {heroImages.map((_, idx) => (
+//               <button
+//                 key={idx}
+//                 onClick={(e) => { e.stopPropagation(); setCurrentIndex(idx); }}
+//                 className={`w-3 h-3 sm:w-3.5 sm:h-3.5 rounded-full transition-all ${
+//                   idx === currentIndex
+//                     ? 'bg-emerald-500 scale-125'
+//                     : 'bg-white/70 hover:bg-white hover:scale-125'
+//                 }`}
+//               />
+//             ))}
+//           </div>
+//         </div>
+//       </section>
+
+//       {/* HOW IT WORKS */}
+//       <motion.section
+//         initial="hidden"
+//         whileInView="visible"
+//         viewport={{ once: true, amount: 0.2 }}
+//         variants={staggerContainer}
+//         className="py-16 md:py-20 px-5 sm:px-6 lg:px-8"
+//       >
+//         <div className="max-w-6xl mx-auto text-center">
+//           <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-emerald-600 to-teal-700 bg-clip-text text-transparent mb-10 md:mb-14">
+//             {t('home.howItWorks.title')}
+//           </h2>
+//           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 lg:gap-10">
+//             {[
+//               { icon: <CheckCircle className="w-14 h-14 text-emerald-600" />, title: t('home.howItWorks.steps.0.title'), desc: t('home.howItWorks.steps.0.desc') },
+//               { icon: <Store className="w-14 h-14 text-teal-600" />, title: t('home.howItWorks.steps.1.title'), desc: t('home.howItWorks.steps.1.desc') },
+//               { icon: <Gift className="w-14 h-14 text-indigo-600" />, title: t('home.howItWorks.steps.2.title'), desc: t('home.howItWorks.steps.2.desc') },
+//             ].map((step, i) => (
+//               <motion.div
+//                 key={i}
+//                 variants={cardVariants}
+//                 className="group bg-white rounded-xl p-7 sm:p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100"
+//               >
+//                 <div className="mb-6 flex justify-center transform group-hover:scale-110 transition-transform">
+//                   {step.icon}
+//                 </div>
+//                 <h3 className="text-xl sm:text-2xl font-bold text-gray-800 mb-4 group-hover:text-emerald-700 transition">
+//                   {step.title}
+//                 </h3>
+//                 <p className="text-gray-600 text-base">{step.desc}</p>
+//               </motion.div>
+//             ))}
+//           </div>
+//         </div>
+//       </motion.section>
+
+//       {/* PARTNER STORE CATEGORIES */}
+//       <motion.section
+//         initial="hidden"
+//         whileInView="visible"
+//         viewport={{ once: true, amount: 0.15 }}
+//         variants={staggerContainer}
+//         className="py-16 md:py-20 px-5 sm:px-6 lg:px-8 bg-white"
+//       >
+//         <div className="max-w-6xl mx-auto text-center">
+//           <h2 className="text-3xl sm:text-4xl font-extrabold bg-gradient-to-r from-emerald-600 to-teal-700 bg-clip-text text-transparent mb-6">
+//             {t('home.categories.title')}
+//           </h2>
+//           <p className="text-gray-600 mb-10 md:mb-12 max-w-3xl mx-auto text-base">
+//             {t('home.categories.subtitle')}
+//           </p>
+//           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-5 sm:gap-6">
+//             {[
+//               { icon: <Coffee className="w-10 h-10 sm:w-12 sm:h-12" />, name: t('home.categories.items.0.name'), count: t('home.categories.items.0.count') },
+//               { icon: <Utensils className="w-10 h-10 sm:w-12 sm:h-12" />, name: t('home.categories.items.1.name'), count: t('home.categories.items.1.count') },
+//               { icon: <ShoppingBag className="w-10 h-10 sm:w-12 sm:h-12" />, name: t('home.categories.items.2.name'), count: t('home.categories.items.2.count') },
+//               { icon: <Car className="w-10 h-10 sm:w-12 sm:h-12" />, name: t('home.categories.items.3.name'), count: t('home.categories.items.3.count') },
+//               { icon: <Heart className="w-10 h-10 sm:w-12 sm:h-12" />, name: t('home.categories.items.4.name'), count: t('home.categories.items.4.count') },
+//               { icon: <Gamepad2 className="w-10 h-10 sm:w-12 sm:h-12" />, name: t('home.categories.items.5.name'), count: t('home.categories.items.5.count') },
+//             ].map((category, i) => (
+//               <motion.div
+//                 key={i}
+//                 variants={cardVariants}
+//                 className="group bg-gradient-to-br from-emerald-50 to-teal-50 p-6 rounded-xl border-2 border-emerald-100 hover:border-emerald-300 hover:shadow-lg transition-all duration-300 cursor-pointer"
+//               >
+//                 <div className="text-emerald-600 flex justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+//                   {category.icon}
+//                 </div>
+//                 <h4 className="font-bold text-emerald-900 mb-1 text-base sm:text-lg">{category.name}</h4>
+//                 <p className="text-sm text-emerald-700">
+//                   {category.count} {t('home.categories.stores')}
+//                 </p>
+//               </motion.div>
+//             ))}
+//           </div>
+//         </div>
+//       </motion.section>
+
+//       {/* LIVE STATS */}
+//       <motion.section
+//         initial="hidden"
+//         whileInView="visible"
+//         viewport={{ once: true }}
+//         variants={staggerContainer}
+//         className="py-16 md:py-20 bg-gradient-to-r from-emerald-50 to-teal-50 px-5 sm:px-6 lg:px-8"
+//       >
+//         <div className="max-w-6xl mx-auto text-center">
+//           <h2 className="text-3xl sm:text-4xl font-extrabold text-emerald-800 mb-10 md:mb-12">
+//             {t('home.stats.title')}
+//           </h2>
+//           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 md:gap-8">
+//             <motion.div
+//               variants={cardVariants}
+//               className="bg-white rounded-xl p-7 sm:p-8 shadow-xl border border-emerald-100 text-center"
+//             >
+//               <Users className="w-12 h-12 text-emerald-600 mx-auto mb-5" />
+//               <div className="text-3xl sm:text-4xl font-extrabold text-emerald-700">
+//                 {loading ? '.....' : <CountUp end={stats.totalUsers} duration={2.5} separator="," />}
+//               </div>
+//               <p className="text-gray-600 mt-3 text-base">
+//                 {t('home.stats.items.0.label')}
+//               </p>
+//             </motion.div>
+
+//             <motion.div
+//               variants={cardVariants}
+//               className="bg-white rounded-xl p-7 sm:p-8 shadow-xl border border-emerald-100 text-center"
+//             >
+//               <Store className="w-12 h-12 text-emerald-600 mx-auto mb-5" />
+//               <div className="text-3xl sm:text-4xl font-extrabold text-emerald-700">
+//                 {loading ? '.....' : <CountUp end={stats.totalShops} duration={2.5} separator="," />}
+//               </div>
+//               <p className="text-gray-600 mt-3 text-base">
+//                 {t('home.stats.items.1.label')}
+//               </p>
+//             </motion.div>
+
+//             <motion.div
+//               variants={cardVariants}
+//               className="bg-white rounded-xl p-7 sm:p-8 shadow-xl border border-emerald-100 text-center"
+//             >
+//               <Banknote className="w-12 h-12 text-emerald-600 mx-auto mb-5" />
+
+//               {loading ? (
+//                 "....."
+//               ) : (
+//                 <div className="space-y-3 text-xl sm:text-2xl font-bold text-emerald-700">
+//                   <div>🇺🇸 USA : ${new Intl.NumberFormat().format(stats.totalUsaTransactionAmount)}</div>
+//                   <div>🇮🇳 India : ₹{new Intl.NumberFormat().format(stats.totalIndiaTransactionAmount)}</div>
+//                 </div>
+//               )}
+
+//               <p className="text-gray-600 mt-4 text-base">
+//                 {t('home.stats.items.2.label')}
+//               </p>
+//             </motion.div>
+//           </div>
+//         </div>
+//       </motion.section>
+
+//       {/* MOBILE APP FEATURES */}
+//       <motion.section
+//         initial="hidden"
+//         whileInView="visible"
+//         viewport={{ once: true, amount: 0.15 }}
+//         variants={staggerContainer}
+//         className="py-16 md:py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-blue-50 to-indigo-50"
+//       >
+//         <div className="max-w-6xl mx-auto">
+//           <div className="text-center mb-10 md:mb-12">
+//             <h2 className="text-3xl sm:text-4xl font-extrabold bg-gradient-to-r from-blue-600 to-indigo-700 bg-clip-text text-transparent mb-4">
+//               {t('home.mobile.title')}
+//             </h2>
+//             <p className="text-gray-600 max-w-2xl mx-auto text-sm sm:text-base">
+//               {t('home.mobile.subtitle')}
+//             </p>
+//           </div>
+//           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+//             {[
+//               { icon: <Smartphone className="w-8 h-8 sm:w-10 sm:h-10" />, title: t('home.mobile.features.0.title'), desc: t('home.mobile.features.0.desc') },
+//               { icon: <Bell className="w-8 h-8 sm:w-10 sm:h-10" />, title: t('home.mobile.features.1.title'), desc: t('home.mobile.features.1.desc') },
+//               { icon: <MapPin className="w-8 h-8 sm:w-10 sm:h-10" />, title: t('home.mobile.features.2.title'), desc: t('home.mobile.features.2.desc') },
+//               { icon: <TrendingUp className="w-8 h-8 sm:w-10 sm:h-10" />, title: t('home.mobile.features.3.title'), desc: t('home.mobile.features.3.desc') },
+//             ].map((feature, i) => (
+//               <motion.div
+//                 key={i}
+//                 variants={cardVariants}
+//                 className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-blue-100"
+//               >
+//                 <div className="text-blue-600 mb-4 flex justify-center">{feature.icon}</div>
+//                 <h4 className="font-bold text-blue-900 mb-2 text-base sm:text-lg">{feature.title}</h4>
+//                 <p className="text-sm text-gray-600">{feature.desc}</p>
+//               </motion.div>
+//             ))}
+//           </div>
+//         </div>
+//       </motion.section>
+
+//       {/* BENEFITS */}
+//       <motion.section
+//         initial="hidden"
+//         whileInView="visible"
+//         viewport={{ once: true, amount: 0.15 }}
+//         variants={staggerContainer}
+//         className="py-16 md:py-20 px-4 sm:px-6 lg:px-8 bg-white"
+//       >
+//         <div className="max-w-6xl mx-auto text-center">
+//           <h2 className="text-3xl sm:text-4xl font-extrabold bg-gradient-to-r from-emerald-600 to-teal-700 bg-clip-text text-transparent mb-10 md:mb-12">
+//             {t('home.benefits.title')}
+//           </h2>
+//           <div className="grid grid-cols-2 md:grid-cols-4 gap-5 sm:gap-6">
+//             {t('home.benefits.items', { returnObjects: true }).map((benefit, i) => (
+//               <motion.div
+//                 key={i}
+//                 variants={cardVariants}
+//                 className="bg-gradient-to-br from-emerald-50 to-teal-50 p-5 sm:p-6 rounded-xl text-center border border-emerald-200 hover:shadow-lg transition"
+//               >
+//                 <Star className="w-8 h-8 sm:w-9 sm:h-9 text-emerald-600 mx-auto mb-3" />
+//                 <p className="font-semibold text-emerald-900 text-sm sm:text-base">{benefit}</p>
+//               </motion.div>
+//             ))}
+//           </div>
+//         </div>
+//       </motion.section>
+
+//       {/* CUSTOMER TESTIMONIALS */}
+//       <motion.section
+//         initial="hidden"
+//         whileInView="visible"
+//         viewport={{ once: true, amount: 0.15 }}
+//         variants={staggerContainer}
+//         className="py-16 md:py-20 px-4 sm:px-6 lg:px-8 bg-gray-50"
+//       >
+//         <div className="max-w-6xl mx-auto text-center">
+//           <h2 className="text-3xl sm:text-4xl font-extrabold text-emerald-800 mb-10 md:mb-12">
+//             {t('home.testimonials.title')}
+//           </h2>
+//           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+//             {t('home.testimonials.items', { returnObjects: true }).map((testimonial, i) => (
+//               <motion.div
+//                 key={i}
+//                 variants={cardVariants}
+//                 className="bg-white rounded-xl p-6 shadow-lg border border-gray-200"
+//               >
+//                 <div className="flex justify-center mb-4">
+//                   {[...Array(testimonial.rating)].map((_, j) => (
+//                     <Star key={j} className="w-5 h-5 text-yellow-400 fill-current" />
+//                   ))}
+//                 </div>
+//                 <p className="text-gray-700 italic mb-4 text-sm sm:text-base">"{testimonial.review}"</p>
+//                 <div className="border-t pt-4">
+//                   <h5 className="font-bold text-emerald-900">{testimonial.name}</h5>
+//                   <p className="text-sm text-gray-600">{testimonial.location}</p>
+//                   <p className="text-sm text-emerald-600 font-semibold mt-1">{testimonial.points}</p>
+//                 </div>
+//               </motion.div>
+//             ))}
+//           </div>
+//         </div>
+//       </motion.section>
+
+//       {/* LEADERBOARD */}
+//       <motion.section
+//         initial="hidden"
+//         whileInView="visible"
+//         viewport={{ once: true, amount: 0.15 }}
+//         variants={staggerContainer}
+//         className="py-16 md:py-20 bg-gray-50 px-4 sm:px-6 lg:px-8"
+//       >
+//         <div className="max-w-4xl mx-auto text-center">
+//           <h2 className="text-3xl sm:text-4xl font-extrabold text-emerald-800 mb-10 md:mb-12">
+//             {t('home.leaderboard.title')}
+//           </h2>
+//           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+//             {t('home.leaderboard.items', { returnObjects: true }).map((user) => (
+//               <motion.div
+//                 key={user.rank}
+//                 variants={cardVariants}
+//                 className={`relative bg-white rounded-xl p-6 shadow-lg border-2 ${
+//                   user.rank === 1 ? 'border-yellow-400' : 'border-emerald-200'
+//                 }`}
+//               >
+//                 {user.rank === 1 && (
+//                   <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-yellow-400 text-white text-xs font-bold px-3 py-1 rounded-full">
+//                     #1
+//                   </div>
+//                 )}
+//                 <h3 className="text-xl font-bold text-emerald-700">{user.name}</h3>
+//                 <p className="text-3xl font-extrabold text-emerald-600 mt-2">{user.points}</p>
+//                 <p className="text-sm text-gray-600">{t('home.leaderboard.points')}</p>
+//               </motion.div>
+//             ))}
+//           </div>
+//         </div>
+//       </motion.section>
+
+//       {/* FAQ ACCORDION */}
+//       <motion.section
+//         initial="hidden"
+//         whileInView="visible"
+//         viewport={{ once: true, amount: 0.15 }}
+//         variants={staggerContainer}
+//         className="py-16 md:py-20 px-4 sm:px-6 lg:px-8 bg-white"
+//       >
+//         <div className="max-w-5xl mx-auto">
+//           <h2 className="text-3xl sm:text-4xl font-extrabold text-center text-emerald-800 mb-10 md:mb-12">
+//             {t('home.faq.title')}
+//           </h2>
+//           <div className="space-y-3">
+//             {t('home.faq.items', { returnObjects: true }).map((faq, i) => (
+//               <motion.details
+//                 key={i}
+//                 variants={cardVariants}
+//                 className="group bg-gray-50 rounded-xl overflow-hidden border border-gray-200 shadow-sm"
+//               >
+//                 <summary className="flex justify-between items-center p-5 font-semibold text-emerald-800 cursor-pointer hover:bg-emerald-50 transition">
+//                   {faq.q}
+//                   <ChevronRight className="w-5 h-5 text-emerald-600 group-open:rotate-90 transition-transform" />
+//                 </summary>
+//                 <div className="px-5 pb-5 text-gray-700 leading-relaxed text-sm sm:text-base">
+//                   {faq.a}
+//                 </div>
+//               </motion.details>
+//             ))}
+//           </div>
+//         </div>
+//       </motion.section>
+
+//       {/* FINAL CTA */}
+//       <motion.section
+//         initial={{ opacity: 0, y: 40 }}
+//         whileInView={{ opacity: 1, y: 0 }}
+//         viewport={{ once: true }}
+//         transition={{ duration: 0.9 }}
+//         className="py-16 md:py-20 bg-gradient-to-r from-emerald-500 to-teal-600 text-white text-center px-5 sm:px-8"
+//       >
+//         <div className="max-w-4xl mx-auto">
+//           <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-5 md:mb-6">
+//             {t('home.finalCTA.title')}
+//           </h2>
+//           <p className="text-lg sm:text-xl mb-8 md:mb-10 opacity-90 max-w-3xl mx-auto">
+//             {t('home.finalCTA.subtitle')}
+//           </p>
+//           <div className="flex flex-col sm:flex-row justify-center items-center gap-4 md:gap-6">
+//             <motion.button
+//               whileHover={{ scale: 1.05, y: -3 }}
+//               whileTap={{ scale: 0.97 }}
+//               onClick={() => navigate('/signup-user')}
+//               className="inline-flex items-center gap-3 px-7 sm:px-8 py-4 bg-white text-emerald-700 font-bold text-base sm:text-lg rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 w-full sm:w-auto justify-center"
+//             >
+//               {t('home.finalCTA.userCTA')}
+//               <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6" />
+//             </motion.button>
+//             <motion.a
+//               href="https://subscription-frontend-psi.vercel.app/subscription"
+//               target="_blank"
+//               rel="noopener noreferrer"
+//               whileHover={{ scale: 1.05, y: -3 }}
+//               whileTap={{ scale: 0.97 }}
+//               className="inline-flex items-center gap-3 px-7 sm:px-8 py-4 bg-transparent border-2 border-white text-white font-bold text-base sm:text-lg rounded-full shadow-xl hover:bg-white/10 transition-all duration-300 w-full sm:w-auto justify-center"
+//             >
+//               {t('home.finalCTA.businessCTA')}
+//               <Store className="w-5 h-5 sm:w-6 sm:h-6" />
+//             </motion.a>
+//           </div>
+//         </div>
+//       </motion.section>
+//     </div>
+//   );
+// }
+
+
+
+
+
+
+
+// mobile view
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import CountUp from 'react-countup';
@@ -803,7 +1333,7 @@ import carousel5 from '../../assets/carousel5.jpg';
 
 const heroImages = [carousel1, carousel2, carousel3, carousel4, carousel5];
 
-// Animation variants
+// Animation variants (unchanged)
 const fadeInUp = {
   hidden: { opacity: 0, y: 30 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.7 } }
@@ -868,8 +1398,8 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
 
-      {/* HERO CAROUSEL - FIXED FOR MOBILE */}
-      <section className="relative h-[70vh] min-h-[380px] sm:h-[75vh] md:h-[80vh] lg:h-[85vh] overflow-hidden">
+      {/* HERO CAROUSEL - improved mobile scaling */}
+      <section className="relative h-[65vh] min-h-[360px] xs:h-[70vh] sm:h-[75vh] md:h-[80vh] lg:h-[85vh] overflow-hidden">
         <div className="relative w-full h-full">
           {heroImages.map((img, idx) => (
             <motion.div
@@ -888,17 +1418,17 @@ export default function Home() {
             </motion.div>
           ))}
 
-          <div className="absolute inset-0 flex items-center justify-center text-center px-5 sm:px-8">
+          <div className="absolute inset-0 flex items-center justify-center text-center px-4 xs:px-5 sm:px-8">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 1 }}
               className="max-w-4xl w-full"
             >
-              <h1 className="text-4xl xs:text-5xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-white mb-4 md:mb-6 drop-shadow-2xl leading-tight">
+              <h1 className="text-4xl xs:text-5xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-white mb-3 xs:mb-4 md:mb-6 drop-shadow-2xl leading-tight">
                 {t('home.hero.title')}
               </h1>
-              <p className="text-lg xs:text-xl sm:text-xl md:text-2xl text-white/90 mb-6 md:mb-10 drop-shadow-lg max-w-3xl mx-auto">
+              <p className="text-base xs:text-lg sm:text-xl md:text-2xl text-white/90 mb-5 xs:mb-6 md:mb-10 drop-shadow-lg max-w-3xl mx-auto">
                 {t('home.hero.subtitle')}
               </p>
             </motion.div>
@@ -906,23 +1436,23 @@ export default function Home() {
 
           <button
             onClick={(e) => { e.stopPropagation(); prevSlide(); }}
-            className="absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 bg-black/40 backdrop-blur-md text-white p-4 sm:p-5 rounded-full hover:bg-black/60 transition z-10"
+            className="absolute left-3 xs:left-4 sm:left-8 top-1/2 -translate-y-1/2 bg-black/40 backdrop-blur-md text-white p-3 xs:p-4 sm:p-5 rounded-full hover:bg-black/60 transition z-10"
           >
-            <ChevronLeft className="w-7 h-7 sm:w-8 sm:h-8" />
+            <ChevronLeft className="w-6 h-6 xs:w-7 xs:h-7 sm:w-8 sm:h-8" />
           </button>
           <button
             onClick={(e) => { e.stopPropagation(); nextSlide(); }}
-            className="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 bg-black/40 backdrop-blur-md text-white p-4 sm:p-5 rounded-full hover:bg-black/60 transition z-10"
+            className="absolute right-3 xs:right-4 sm:right-8 top-1/2 -translate-y-1/2 bg-black/40 backdrop-blur-md text-white p-3 xs:p-4 sm:p-5 rounded-full hover:bg-black/60 transition z-10"
           >
-            <ChevronRight className="w-7 h-7 sm:w-8 sm:h-8" />
+            <ChevronRight className="w-6 h-6 xs:w-7 xs:h-7 sm:w-8 sm:h-8" />
           </button>
 
-          <div className="absolute bottom-6 sm:bottom-10 left-1/2 -translate-x-1/2 flex gap-3 sm:gap-4 z-10">
+          <div className="absolute bottom-4 xs:bottom-6 sm:bottom-10 left-1/2 -translate-x-1/2 flex gap-2.5 xs:gap-3 sm:gap-4 z-10">
             {heroImages.map((_, idx) => (
               <button
                 key={idx}
                 onClick={(e) => { e.stopPropagation(); setCurrentIndex(idx); }}
-                className={`w-3 h-3 sm:w-3.5 sm:h-3.5 rounded-full transition-all ${
+                className={`w-2.5 h-2.5 xs:w-3 xs:h-3 sm:w-3.5 sm:h-3.5 rounded-full transition-all ${
                   idx === currentIndex
                     ? 'bg-emerald-500 scale-125'
                     : 'bg-white/70 hover:bg-white hover:scale-125'
@@ -939,30 +1469,30 @@ export default function Home() {
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
         variants={staggerContainer}
-        className="py-16 md:py-20 px-5 sm:px-6 lg:px-8"
+        className="py-14 xs:py-16 md:py-20 px-4 xs:px-5 sm:px-6 lg:px-8"
       >
         <div className="max-w-6xl mx-auto text-center">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-emerald-600 to-teal-700 bg-clip-text text-transparent mb-10 md:mb-14">
+          <h2 className="text-3xl xs:text-4xl sm:text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-emerald-600 to-teal-700 bg-clip-text text-transparent mb-8 md:mb-14">
             {t('home.howItWorks.title')}
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 lg:gap-10">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 xs:gap-6 md:gap-8 lg:gap-10">
             {[
-              { icon: <CheckCircle className="w-14 h-14 text-emerald-600" />, title: t('home.howItWorks.steps.0.title'), desc: t('home.howItWorks.steps.0.desc') },
-              { icon: <Store className="w-14 h-14 text-teal-600" />, title: t('home.howItWorks.steps.1.title'), desc: t('home.howItWorks.steps.1.desc') },
-              { icon: <Gift className="w-14 h-14 text-indigo-600" />, title: t('home.howItWorks.steps.2.title'), desc: t('home.howItWorks.steps.2.desc') },
+              { icon: <CheckCircle className="w-12 h-12 xs:w-14 xs:h-14 text-emerald-600" />, title: t('home.howItWorks.steps.0.title'), desc: t('home.howItWorks.steps.0.desc') },
+              { icon: <Store className="w-12 h-12 xs:w-14 xs:h-14 text-teal-600" />, title: t('home.howItWorks.steps.1.title'), desc: t('home.howItWorks.steps.1.desc') },
+              { icon: <Gift className="w-12 h-12 xs:w-14 xs:h-14 text-indigo-600" />, title: t('home.howItWorks.steps.2.title'), desc: t('home.howItWorks.steps.2.desc') },
             ].map((step, i) => (
               <motion.div
                 key={i}
                 variants={cardVariants}
-                className="group bg-white rounded-xl p-7 sm:p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100"
+                className="group bg-white rounded-xl p-6 xs:p-7 sm:p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 min-h-[220px] flex flex-col"
               >
-                <div className="mb-6 flex justify-center transform group-hover:scale-110 transition-transform">
+                <div className="mb-5 xs:mb-6 flex justify-center transform group-hover:scale-110 transition-transform">
                   {step.icon}
                 </div>
-                <h3 className="text-xl sm:text-2xl font-bold text-gray-800 mb-4 group-hover:text-emerald-700 transition">
+                <h3 className="text-lg xs:text-xl sm:text-2xl font-bold text-gray-800 mb-3 xs:mb-4 group-hover:text-emerald-700 transition">
                   {step.title}
                 </h3>
-                <p className="text-gray-600 text-base">{step.desc}</p>
+                <p className="text-gray-600 text-[15px] xs:text-base mt-auto">{step.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -975,34 +1505,34 @@ export default function Home() {
         whileInView="visible"
         viewport={{ once: true, amount: 0.15 }}
         variants={staggerContainer}
-        className="py-16 md:py-20 px-5 sm:px-6 lg:px-8 bg-white"
+        className="py-14 xs:py-16 md:py-20 px-4 xs:px-5 sm:px-6 lg:px-8 bg-white"
       >
         <div className="max-w-6xl mx-auto text-center">
-          <h2 className="text-3xl sm:text-4xl font-extrabold bg-gradient-to-r from-emerald-600 to-teal-700 bg-clip-text text-transparent mb-6">
+          <h2 className="text-3xl xs:text-4xl font-extrabold bg-gradient-to-r from-emerald-600 to-teal-700 bg-clip-text text-transparent mb-5 xs:mb-6">
             {t('home.categories.title')}
           </h2>
-          <p className="text-gray-600 mb-10 md:mb-12 max-w-3xl mx-auto text-base">
+          <p className="text-gray-600 mb-8 xs:mb-10 max-w-3xl mx-auto text-[15px] xs:text-base">
             {t('home.categories.subtitle')}
           </p>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-5 sm:gap-6">
+          <div className="grid grid-cols-2 xs:grid-cols-3 lg:grid-cols-6 gap-4 xs:gap-5 sm:gap-6">
             {[
-              { icon: <Coffee className="w-10 h-10 sm:w-12 sm:h-12" />, name: t('home.categories.items.0.name'), count: t('home.categories.items.0.count') },
-              { icon: <Utensils className="w-10 h-10 sm:w-12 sm:h-12" />, name: t('home.categories.items.1.name'), count: t('home.categories.items.1.count') },
-              { icon: <ShoppingBag className="w-10 h-10 sm:w-12 sm:h-12" />, name: t('home.categories.items.2.name'), count: t('home.categories.items.2.count') },
-              { icon: <Car className="w-10 h-10 sm:w-12 sm:h-12" />, name: t('home.categories.items.3.name'), count: t('home.categories.items.3.count') },
-              { icon: <Heart className="w-10 h-10 sm:w-12 sm:h-12" />, name: t('home.categories.items.4.name'), count: t('home.categories.items.4.count') },
-              { icon: <Gamepad2 className="w-10 h-10 sm:w-12 sm:h-12" />, name: t('home.categories.items.5.name'), count: t('home.categories.items.5.count') },
+              { icon: <Coffee className="w-9 h-9 xs:w-10 xs:h-10 sm:w-12 sm:h-12" />, name: t('home.categories.items.0.name'), count: t('home.categories.items.0.count') },
+              { icon: <Utensils className="w-9 h-9 xs:w-10 xs:h-10 sm:w-12 sm:h-12" />, name: t('home.categories.items.1.name'), count: t('home.categories.items.1.count') },
+              { icon: <ShoppingBag className="w-9 h-9 xs:w-10 xs:h-10 sm:w-12 sm:h-12" />, name: t('home.categories.items.2.name'), count: t('home.categories.items.2.count') },
+              { icon: <Car className="w-9 h-9 xs:w-10 xs:h-10 sm:w-12 sm:h-12" />, name: t('home.categories.items.3.name'), count: t('home.categories.items.3.count') },
+              { icon: <Heart className="w-9 h-9 xs:w-10 xs:h-10 sm:w-12 sm:h-12" />, name: t('home.categories.items.4.name'), count: t('home.categories.items.4.count') },
+              { icon: <Gamepad2 className="w-9 h-9 xs:w-10 xs:h-10 sm:w-12 sm:h-12" />, name: t('home.categories.items.5.name'), count: t('home.categories.items.5.count') },
             ].map((category, i) => (
               <motion.div
                 key={i}
                 variants={cardVariants}
-                className="group bg-gradient-to-br from-emerald-50 to-teal-50 p-6 rounded-xl border-2 border-emerald-100 hover:border-emerald-300 hover:shadow-lg transition-all duration-300 cursor-pointer"
+                className="group bg-gradient-to-br from-emerald-50 to-teal-50 p-5 xs:p-6 rounded-xl border-2 border-emerald-100 hover:border-emerald-300 hover:shadow-lg transition-all duration-300 cursor-pointer min-h-[140px] flex flex-col justify-center items-center"
               >
-                <div className="text-emerald-600 flex justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                <div className="text-emerald-600 flex justify-center mb-3 xs:mb-4 group-hover:scale-110 transition-transform duration-300">
                   {category.icon}
                 </div>
-                <h4 className="font-bold text-emerald-900 mb-1 text-base sm:text-lg">{category.name}</h4>
-                <p className="text-sm text-emerald-700">
+                <h4 className="font-bold text-emerald-900 mb-1 text-[15px] xs:text-base sm:text-lg">{category.name}</h4>
+                <p className="text-[13px] xs:text-sm text-emerald-700">
                   {category.count} {t('home.categories.stores')}
                 </p>
               </motion.div>
@@ -1017,55 +1547,55 @@ export default function Home() {
         whileInView="visible"
         viewport={{ once: true }}
         variants={staggerContainer}
-        className="py-16 md:py-20 bg-gradient-to-r from-emerald-50 to-teal-50 px-5 sm:px-6 lg:px-8"
+        className="py-14 xs:py-16 md:py-20 bg-gradient-to-r from-emerald-50 to-teal-50 px-4 xs:px-5 sm:px-6 lg:px-8"
       >
         <div className="max-w-6xl mx-auto text-center">
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-emerald-800 mb-10 md:mb-12">
+          <h2 className="text-3xl xs:text-4xl font-extrabold text-emerald-800 mb-8 xs:mb-10 md:mb-12">
             {t('home.stats.title')}
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 md:gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 xs:gap-6 md:gap-8">
             <motion.div
               variants={cardVariants}
-              className="bg-white rounded-xl p-7 sm:p-8 shadow-xl border border-emerald-100 text-center"
+              className="bg-white rounded-xl p-6 xs:p-7 sm:p-8 shadow-xl border border-emerald-100 text-center min-h-[180px] flex flex-col justify-center"
             >
-              <Users className="w-12 h-12 text-emerald-600 mx-auto mb-5" />
-              <div className="text-3xl sm:text-4xl font-extrabold text-emerald-700">
+              <Users className="w-10 h-10 xs:w-12 xs:h-12 text-emerald-600 mx-auto mb-4 xs:mb-5" />
+              <div className="text-3xl xs:text-4xl font-extrabold text-emerald-700">
                 {loading ? '.....' : <CountUp end={stats.totalUsers} duration={2.5} separator="," />}
               </div>
-              <p className="text-gray-600 mt-3 text-base">
+              <p className="text-gray-600 mt-2 xs:mt-3 text-[15px] xs:text-base">
                 {t('home.stats.items.0.label')}
               </p>
             </motion.div>
 
             <motion.div
               variants={cardVariants}
-              className="bg-white rounded-xl p-7 sm:p-8 shadow-xl border border-emerald-100 text-center"
+              className="bg-white rounded-xl p-6 xs:p-7 sm:p-8 shadow-xl border border-emerald-100 text-center min-h-[180px] flex flex-col justify-center"
             >
-              <Store className="w-12 h-12 text-emerald-600 mx-auto mb-5" />
-              <div className="text-3xl sm:text-4xl font-extrabold text-emerald-700">
+              <Store className="w-10 h-10 xs:w-12 xs:h-12 text-emerald-600 mx-auto mb-4 xs:mb-5" />
+              <div className="text-3xl xs:text-4xl font-extrabold text-emerald-700">
                 {loading ? '.....' : <CountUp end={stats.totalShops} duration={2.5} separator="," />}
               </div>
-              <p className="text-gray-600 mt-3 text-base">
+              <p className="text-gray-600 mt-2 xs:mt-3 text-[15px] xs:text-base">
                 {t('home.stats.items.1.label')}
               </p>
             </motion.div>
 
             <motion.div
               variants={cardVariants}
-              className="bg-white rounded-xl p-7 sm:p-8 shadow-xl border border-emerald-100 text-center"
+              className="bg-white rounded-xl p-6 xs:p-7 sm:p-8 shadow-xl border border-emerald-100 text-center min-h-[180px] flex flex-col justify-center"
             >
-              <Banknote className="w-12 h-12 text-emerald-600 mx-auto mb-5" />
+              <Banknote className="w-10 h-10 xs:w-12 xs:h-12 text-emerald-600 mx-auto mb-4 xs:mb-5" />
 
               {loading ? (
                 "....."
               ) : (
-                <div className="space-y-3 text-xl sm:text-2xl font-bold text-emerald-700">
+                <div className="space-y-2 xs:space-y-3 text-lg xs:text-xl sm:text-2xl font-bold text-emerald-700">
                   <div>🇺🇸 USA : ${new Intl.NumberFormat().format(stats.totalUsaTransactionAmount)}</div>
                   <div>🇮🇳 India : ₹{new Intl.NumberFormat().format(stats.totalIndiaTransactionAmount)}</div>
                 </div>
               )}
 
-              <p className="text-gray-600 mt-4 text-base">
+              <p className="text-gray-600 mt-3 xs:mt-4 text-[15px] xs:text-base">
                 {t('home.stats.items.2.label')}
               </p>
             </motion.div>
@@ -1079,59 +1609,59 @@ export default function Home() {
         whileInView="visible"
         viewport={{ once: true, amount: 0.15 }}
         variants={staggerContainer}
-        className="py-16 md:py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-blue-50 to-indigo-50"
+        className="py-14 xs:py-16 md:py-20 px-4 xs:px-5 sm:px-6 lg:px-8 bg-gradient-to-br from-blue-50 to-indigo-50"
       >
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-10 md:mb-12">
-            <h2 className="text-3xl sm:text-4xl font-extrabold bg-gradient-to-r from-blue-600 to-indigo-700 bg-clip-text text-transparent mb-4">
+          <div className="text-center mb-8 xs:mb-10 md:mb-12">
+            <h2 className="text-3xl xs:text-4xl font-extrabold bg-gradient-to-r from-blue-600 to-indigo-700 bg-clip-text text-transparent mb-3 xs:mb-4">
               {t('home.mobile.title')}
             </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto text-sm sm:text-base">
+            <p className="text-gray-600 max-w-2xl mx-auto text-[15px] xs:text-base">
               {t('home.mobile.subtitle')}
             </p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 xs:gap-6">
             {[
-              { icon: <Smartphone className="w-8 h-8 sm:w-10 sm:h-10" />, title: t('home.mobile.features.0.title'), desc: t('home.mobile.features.0.desc') },
-              { icon: <Bell className="w-8 h-8 sm:w-10 sm:h-10" />, title: t('home.mobile.features.1.title'), desc: t('home.mobile.features.1.desc') },
-              { icon: <MapPin className="w-8 h-8 sm:w-10 sm:h-10" />, title: t('home.mobile.features.2.title'), desc: t('home.mobile.features.2.desc') },
-              { icon: <TrendingUp className="w-8 h-8 sm:w-10 sm:h-10" />, title: t('home.mobile.features.3.title'), desc: t('home.mobile.features.3.desc') },
+              { icon: <Smartphone className="w-8 h-8 xs:w-9 xs:h-9 sm:w-10 sm:h-10" />, title: t('home.mobile.features.0.title'), desc: t('home.mobile.features.0.desc') },
+              { icon: <Bell className="w-8 h-8 xs:w-9 xs:h-9 sm:w-10 sm:h-10" />, title: t('home.mobile.features.1.title'), desc: t('home.mobile.features.1.desc') },
+              { icon: <MapPin className="w-8 h-8 xs:w-9 xs:h-9 sm:w-10 sm:h-10" />, title: t('home.mobile.features.2.title'), desc: t('home.mobile.features.2.desc') },
+              { icon: <TrendingUp className="w-8 h-8 xs:w-9 xs:h-9 sm:w-10 sm:h-10" />, title: t('home.mobile.features.3.title'), desc: t('home.mobile.features.3.desc') },
             ].map((feature, i) => (
               <motion.div
                 key={i}
                 variants={cardVariants}
-                className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-blue-100"
+                className="bg-white p-5 xs:p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-blue-100 min-h-[160px] flex flex-col justify-between"
               >
-                <div className="text-blue-600 mb-4 flex justify-center">{feature.icon}</div>
-                <h4 className="font-bold text-blue-900 mb-2 text-base sm:text-lg">{feature.title}</h4>
-                <p className="text-sm text-gray-600">{feature.desc}</p>
+                <div className="text-blue-600 mb-3 xs:mb-4 flex justify-center">{feature.icon}</div>
+                <h4 className="font-bold text-blue-900 mb-2 text-[15px] xs:text-base sm:text-lg">{feature.title}</h4>
+                <p className="text-[14px] xs:text-sm text-gray-600">{feature.desc}</p>
               </motion.div>
             ))}
           </div>
         </div>
       </motion.section>
 
-      {/* BENEFITS */}
+      {/* BENEFITS - increased readability */}
       <motion.section
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.15 }}
         variants={staggerContainer}
-        className="py-16 md:py-20 px-4 sm:px-6 lg:px-8 bg-white"
+        className="py-14 xs:py-16 md:py-20 px-4 xs:px-5 sm:px-6 lg:px-8 bg-white"
       >
         <div className="max-w-6xl mx-auto text-center">
-          <h2 className="text-3xl sm:text-4xl font-extrabold bg-gradient-to-r from-emerald-600 to-teal-700 bg-clip-text text-transparent mb-10 md:mb-12">
+          <h2 className="text-3xl xs:text-4xl font-extrabold bg-gradient-to-r from-emerald-600 to-teal-700 bg-clip-text text-transparent mb-8 xs:mb-10 md:mb-12">
             {t('home.benefits.title')}
           </h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-5 sm:gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 xs:gap-5 sm:gap-6">
             {t('home.benefits.items', { returnObjects: true }).map((benefit, i) => (
               <motion.div
                 key={i}
                 variants={cardVariants}
-                className="bg-gradient-to-br from-emerald-50 to-teal-50 p-5 sm:p-6 rounded-xl text-center border border-emerald-200 hover:shadow-lg transition"
+                className="bg-gradient-to-br from-emerald-50 to-teal-50 p-4 xs:p-5 sm:p-6 rounded-xl text-center border border-emerald-200 hover:shadow-lg transition min-h-[110px] flex flex-col justify-center items-center"
               >
-                <Star className="w-8 h-8 sm:w-9 sm:h-9 text-emerald-600 mx-auto mb-3" />
-                <p className="font-semibold text-emerald-900 text-sm sm:text-base">{benefit}</p>
+                <Star className="w-7 h-7 xs:w-8 xs:h-8 sm:w-9 sm:h-9 text-emerald-600 mx-auto mb-2 xs:mb-3" />
+                <p className="font-semibold text-emerald-900 text-[14px] xs:text-[15px] sm:text-base">{benefit}</p>
               </motion.div>
             ))}
           </div>
@@ -1144,29 +1674,29 @@ export default function Home() {
         whileInView="visible"
         viewport={{ once: true, amount: 0.15 }}
         variants={staggerContainer}
-        className="py-16 md:py-20 px-4 sm:px-6 lg:px-8 bg-gray-50"
+        className="py-14 xs:py-16 md:py-20 px-4 xs:px-5 sm:px-6 lg:px-8 bg-gray-50"
       >
         <div className="max-w-6xl mx-auto text-center">
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-emerald-800 mb-10 md:mb-12">
+          <h2 className="text-3xl xs:text-4xl font-extrabold text-emerald-800 mb-8 xs:mb-10 md:mb-12">
             {t('home.testimonials.title')}
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 xs:gap-6 md:gap-8">
             {t('home.testimonials.items', { returnObjects: true }).map((testimonial, i) => (
               <motion.div
                 key={i}
                 variants={cardVariants}
-                className="bg-white rounded-xl p-6 shadow-lg border border-gray-200"
+                className="bg-white rounded-xl p-5 xs:p-6 shadow-lg border border-gray-200 min-h-[220px] flex flex-col"
               >
-                <div className="flex justify-center mb-4">
+                <div className="flex justify-center mb-3 xs:mb-4">
                   {[...Array(testimonial.rating)].map((_, j) => (
                     <Star key={j} className="w-5 h-5 text-yellow-400 fill-current" />
                   ))}
                 </div>
-                <p className="text-gray-700 italic mb-4 text-sm sm:text-base">"{testimonial.review}"</p>
-                <div className="border-t pt-4">
-                  <h5 className="font-bold text-emerald-900">{testimonial.name}</h5>
-                  <p className="text-sm text-gray-600">{testimonial.location}</p>
-                  <p className="text-sm text-emerald-600 font-semibold mt-1">{testimonial.points}</p>
+                <p className="text-gray-700 italic mb-3 xs:mb-4 text-[14px] xs:text-[15px] sm:text-base flex-grow">"{testimonial.review}"</p>
+                <div className="border-t pt-3 xs:pt-4 mt-auto">
+                  <h5 className="font-bold text-emerald-900 text-[15px] xs:text-base">{testimonial.name}</h5>
+                  <p className="text-[13px] xs:text-sm text-gray-600">{testimonial.location}</p>
+                  <p className="text-[13px] xs:text-sm text-emerald-600 font-semibold mt-1">{testimonial.points}</p>
                 </div>
               </motion.div>
             ))}
@@ -1180,29 +1710,29 @@ export default function Home() {
         whileInView="visible"
         viewport={{ once: true, amount: 0.15 }}
         variants={staggerContainer}
-        className="py-16 md:py-20 bg-gray-50 px-4 sm:px-6 lg:px-8"
+        className="py-14 xs:py-16 md:py-20 bg-gray-50 px-4 xs:px-5 sm:px-6 lg:px-8"
       >
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-emerald-800 mb-10 md:mb-12">
+          <h2 className="text-3xl xs:text-4xl font-extrabold text-emerald-800 mb-8 xs:mb-10 md:mb-12">
             {t('home.leaderboard.title')}
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 xs:gap-6">
             {t('home.leaderboard.items', { returnObjects: true }).map((user) => (
               <motion.div
                 key={user.rank}
                 variants={cardVariants}
-                className={`relative bg-white rounded-xl p-6 shadow-lg border-2 ${
+                className={`relative bg-white rounded-xl p-5 xs:p-6 shadow-lg border-2 ${
                   user.rank === 1 ? 'border-yellow-400' : 'border-emerald-200'
-                }`}
+                } min-h-[160px] flex flex-col justify-center items-center`}
               >
                 {user.rank === 1 && (
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-yellow-400 text-white text-xs font-bold px-3 py-1 rounded-full">
+                  <div className="absolute -top-3 xs:-top-4 left-1/2 -translate-x-1/2 bg-yellow-400 text-white text-xs font-bold px-3 py-1 rounded-full">
                     #1
                   </div>
                 )}
-                <h3 className="text-xl font-bold text-emerald-700">{user.name}</h3>
-                <p className="text-3xl font-extrabold text-emerald-600 mt-2">{user.points}</p>
-                <p className="text-sm text-gray-600">{t('home.leaderboard.points')}</p>
+                <h3 className="text-lg xs:text-xl font-bold text-emerald-700">{user.name}</h3>
+                <p className="text-3xl xs:text-4xl font-extrabold text-emerald-600 mt-2">{user.points}</p>
+                <p className="text-[14px] xs:text-sm text-gray-600">{t('home.leaderboard.points')}</p>
               </motion.div>
             ))}
           </div>
@@ -1215,24 +1745,24 @@ export default function Home() {
         whileInView="visible"
         viewport={{ once: true, amount: 0.15 }}
         variants={staggerContainer}
-        className="py-16 md:py-20 px-4 sm:px-6 lg:px-8 bg-white"
+        className="py-14 xs:py-16 md:py-20 px-4 xs:px-5 sm:px-6 lg:px-8 bg-white"
       >
         <div className="max-w-5xl mx-auto">
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-center text-emerald-800 mb-10 md:mb-12">
+          <h2 className="text-3xl xs:text-4xl font-extrabold text-center text-emerald-800 mb-8 xs:mb-10 md:mb-12">
             {t('home.faq.title')}
           </h2>
-          <div className="space-y-3">
+          <div className="space-y-3 xs:space-y-4">
             {t('home.faq.items', { returnObjects: true }).map((faq, i) => (
               <motion.details
                 key={i}
                 variants={cardVariants}
                 className="group bg-gray-50 rounded-xl overflow-hidden border border-gray-200 shadow-sm"
               >
-                <summary className="flex justify-between items-center p-5 font-semibold text-emerald-800 cursor-pointer hover:bg-emerald-50 transition">
+                <summary className="flex justify-between items-center p-4 xs:p-5 font-semibold text-emerald-800 cursor-pointer hover:bg-emerald-50 transition text-[15px] xs:text-base">
                   {faq.q}
                   <ChevronRight className="w-5 h-5 text-emerald-600 group-open:rotate-90 transition-transform" />
                 </summary>
-                <div className="px-5 pb-5 text-gray-700 leading-relaxed text-sm sm:text-base">
+                <div className="px-4 xs:px-5 pb-4 xs:pb-5 text-gray-700 leading-relaxed text-[14px] xs:text-[15px] sm:text-base">
                   {faq.a}
                 </div>
               </motion.details>
@@ -1247,24 +1777,24 @@ export default function Home() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.9 }}
-        className="py-16 md:py-20 bg-gradient-to-r from-emerald-500 to-teal-600 text-white text-center px-5 sm:px-8"
+        className="py-14 xs:py-16 md:py-20 bg-gradient-to-r from-emerald-500 to-teal-600 text-white text-center px-4 xs:px-5 sm:px-8"
       >
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-5 md:mb-6">
+          <h2 className="text-3xl xs:text-4xl md:text-5xl font-extrabold mb-4 xs:mb-5 md:mb-6">
             {t('home.finalCTA.title')}
           </h2>
-          <p className="text-lg sm:text-xl mb-8 md:mb-10 opacity-90 max-w-3xl mx-auto">
+          <p className="text-base xs:text-lg sm:text-xl mb-6 xs:mb-8 md:mb-10 opacity-90 max-w-3xl mx-auto">
             {t('home.finalCTA.subtitle')}
           </p>
-          <div className="flex flex-col sm:flex-row justify-center items-center gap-4 md:gap-6">
+          <div className="flex flex-col xs:flex-row justify-center items-center gap-4 xs:gap-5 md:gap-6">
             <motion.button
               whileHover={{ scale: 1.05, y: -3 }}
               whileTap={{ scale: 0.97 }}
               onClick={() => navigate('/signup-user')}
-              className="inline-flex items-center gap-3 px-7 sm:px-8 py-4 bg-white text-emerald-700 font-bold text-base sm:text-lg rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 w-full sm:w-auto justify-center"
+              className="inline-flex items-center gap-2.5 xs:gap-3 px-6 xs:px-7 sm:px-8 py-3.5 xs:py-4 bg-white text-emerald-700 font-bold text-[15px] xs:text-base sm:text-lg rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 w-full xs:w-auto justify-center min-h-[52px]"
             >
               {t('home.finalCTA.userCTA')}
-              <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6" />
+              <ArrowRight className="w-5 h-5 xs:w-5 xs:h-5 sm:w-6 sm:h-6" />
             </motion.button>
             <motion.a
               href="https://subscription-frontend-psi.vercel.app/subscription"
@@ -1272,10 +1802,10 @@ export default function Home() {
               rel="noopener noreferrer"
               whileHover={{ scale: 1.05, y: -3 }}
               whileTap={{ scale: 0.97 }}
-              className="inline-flex items-center gap-3 px-7 sm:px-8 py-4 bg-transparent border-2 border-white text-white font-bold text-base sm:text-lg rounded-full shadow-xl hover:bg-white/10 transition-all duration-300 w-full sm:w-auto justify-center"
+              className="inline-flex items-center gap-2.5 xs:gap-3 px-6 xs:px-7 sm:px-8 py-3.5 xs:py-4 bg-transparent border-2 border-white text-white font-bold text-[15px] xs:text-base sm:text-lg rounded-full shadow-xl hover:bg-white/10 transition-all duration-300 w-full xs:w-auto justify-center min-h-[52px]"
             >
               {t('home.finalCTA.businessCTA')}
-              <Store className="w-5 h-5 sm:w-6 sm:h-6" />
+              <Store className="w-5 h-5 xs:w-5 xs:h-5 sm:w-6 sm:h-6" />
             </motion.a>
           </div>
         </div>
