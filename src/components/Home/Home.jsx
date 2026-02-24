@@ -830,7 +830,8 @@ export default function Home() {
   const [stats, setStats] = useState({
     totalUsers: 0,
     totalShops: 0,
-    totalTransactionAmount: 0,
+    totalUsaTransactionAmount: 0,
+    totalIndiaTransactionAmount: 0,
   });
   const [loading, setLoading] = useState(true);
 
@@ -842,7 +843,8 @@ export default function Home() {
         setStats({
           totalUsers: data.totalUsers || 0,
           totalShops: data.totalShops || 0,
-          totalTransactionAmount: data.totalTransactionAmount || 0,
+          totalUsaTransactionAmount: data.totalUsaTransactionAmount || 0,
+          totalIndiaTransactionAmount: data.totalIndiaTransactionAmount || 0,
         });
       } catch (error) {
         console.error('Failed to fetch summary:', error);
@@ -866,8 +868,8 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
 
-      {/* HERO CAROUSEL */}
-      <section className="relative h-[420px] sm:h-[500px] md:h-[580px] lg:h-[640px] overflow-hidden">
+      {/* HERO CAROUSEL - FIXED FOR MOBILE */}
+      <section className="relative h-[70vh] min-h-[380px] sm:h-[75vh] md:h-[80vh] lg:h-[85vh] overflow-hidden">
         <div className="relative w-full h-full">
           {heroImages.map((img, idx) => (
             <motion.div
@@ -893,10 +895,10 @@ export default function Home() {
               transition={{ delay: 0.4, duration: 1 }}
               className="max-w-4xl w-full"
             >
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-4 md:mb-6 drop-shadow-2xl leading-tight">
+              <h1 className="text-4xl xs:text-5xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-white mb-4 md:mb-6 drop-shadow-2xl leading-tight">
                 {t('home.hero.title')}
               </h1>
-              <p className="text-base sm:text-lg md:text-xl text-white/90 mb-6 md:mb-10 drop-shadow-lg max-w-3xl mx-auto">
+              <p className="text-lg xs:text-xl sm:text-xl md:text-2xl text-white/90 mb-6 md:mb-10 drop-shadow-lg max-w-3xl mx-auto">
                 {t('home.hero.subtitle')}
               </p>
             </motion.div>
@@ -904,26 +906,26 @@ export default function Home() {
 
           <button
             onClick={(e) => { e.stopPropagation(); prevSlide(); }}
-            className="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 bg-black/30 backdrop-blur-md text-white p-3 rounded-full hover:bg-black/50 transition z-10"
+            className="absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 bg-black/40 backdrop-blur-md text-white p-4 sm:p-5 rounded-full hover:bg-black/60 transition z-10"
           >
-            <ChevronLeft className="w-6 h-6 sm:w-7 sm:h-7" />
+            <ChevronLeft className="w-7 h-7 sm:w-8 sm:h-8" />
           </button>
           <button
             onClick={(e) => { e.stopPropagation(); nextSlide(); }}
-            className="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 bg-black/30 backdrop-blur-md text-white p-3 rounded-full hover:bg-black/50 transition z-10"
+            className="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 bg-black/40 backdrop-blur-md text-white p-4 sm:p-5 rounded-full hover:bg-black/60 transition z-10"
           >
-            <ChevronRight className="w-6 h-6 sm:w-7 sm:h-7" />
+            <ChevronRight className="w-7 h-7 sm:w-8 sm:h-8" />
           </button>
 
-          <div className="absolute bottom-4 sm:bottom-8 left-1/2 -translate-x-1/2 flex gap-2.5 sm:gap-3 z-10">
+          <div className="absolute bottom-6 sm:bottom-10 left-1/2 -translate-x-1/2 flex gap-3 sm:gap-4 z-10">
             {heroImages.map((_, idx) => (
               <button
                 key={idx}
                 onClick={(e) => { e.stopPropagation(); setCurrentIndex(idx); }}
-                className={`w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full transition-all ${
+                className={`w-3 h-3 sm:w-3.5 sm:h-3.5 rounded-full transition-all ${
                   idx === currentIndex
                     ? 'bg-emerald-500 scale-125'
-                    : 'bg-white/60 hover:bg-white hover:scale-110'
+                    : 'bg-white/70 hover:bg-white hover:scale-125'
                 }`}
               />
             ))}
@@ -937,7 +939,7 @@ export default function Home() {
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
         variants={staggerContainer}
-        className="py-16 md:py-20 px-4 sm:px-6 lg:px-8"
+        className="py-16 md:py-20 px-5 sm:px-6 lg:px-8"
       >
         <div className="max-w-6xl mx-auto text-center">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-emerald-600 to-teal-700 bg-clip-text text-transparent mb-10 md:mb-14">
@@ -945,22 +947,22 @@ export default function Home() {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 lg:gap-10">
             {[
-              { icon: <CheckCircle className="w-12 h-12 text-emerald-600" />, title: t('home.howItWorks.steps.0.title'), desc: t('home.howItWorks.steps.0.desc') },
-              { icon: <Store className="w-12 h-12 text-teal-600" />, title: t('home.howItWorks.steps.1.title'), desc: t('home.howItWorks.steps.1.desc') },
-              { icon: <Gift className="w-12 h-12 text-indigo-600" />, title: t('home.howItWorks.steps.2.title'), desc: t('home.howItWorks.steps.2.desc') },
+              { icon: <CheckCircle className="w-14 h-14 text-emerald-600" />, title: t('home.howItWorks.steps.0.title'), desc: t('home.howItWorks.steps.0.desc') },
+              { icon: <Store className="w-14 h-14 text-teal-600" />, title: t('home.howItWorks.steps.1.title'), desc: t('home.howItWorks.steps.1.desc') },
+              { icon: <Gift className="w-14 h-14 text-indigo-600" />, title: t('home.howItWorks.steps.2.title'), desc: t('home.howItWorks.steps.2.desc') },
             ].map((step, i) => (
               <motion.div
                 key={i}
                 variants={cardVariants}
-                className="group bg-white rounded-xl p-6 sm:p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100"
+                className="group bg-white rounded-xl p-7 sm:p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100"
               >
                 <div className="mb-6 flex justify-center transform group-hover:scale-110 transition-transform">
                   {step.icon}
                 </div>
-                <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-3 group-hover:text-emerald-700 transition">
+                <h3 className="text-xl sm:text-2xl font-bold text-gray-800 mb-4 group-hover:text-emerald-700 transition">
                   {step.title}
                 </h3>
-                <p className="text-gray-600 text-sm sm:text-base">{step.desc}</p>
+                <p className="text-gray-600 text-base">{step.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -973,34 +975,34 @@ export default function Home() {
         whileInView="visible"
         viewport={{ once: true, amount: 0.15 }}
         variants={staggerContainer}
-        className="py-16 md:py-20 px-4 sm:px-6 lg:px-8 bg-white"
+        className="py-16 md:py-20 px-5 sm:px-6 lg:px-8 bg-white"
       >
         <div className="max-w-6xl mx-auto text-center">
           <h2 className="text-3xl sm:text-4xl font-extrabold bg-gradient-to-r from-emerald-600 to-teal-700 bg-clip-text text-transparent mb-6">
             {t('home.categories.title')}
           </h2>
-          <p className="text-gray-600 mb-10 md:mb-12 max-w-3xl mx-auto text-sm sm:text-base">
+          <p className="text-gray-600 mb-10 md:mb-12 max-w-3xl mx-auto text-base">
             {t('home.categories.subtitle')}
           </p>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-5 sm:gap-6">
             {[
-              { icon: <Coffee className="w-9 h-9 sm:w-10 sm:h-10" />, name: t('home.categories.items.0.name'), count: t('home.categories.items.0.count') },
-              { icon: <Utensils className="w-9 h-9 sm:w-10 sm:h-10" />, name: t('home.categories.items.1.name'), count: t('home.categories.items.1.count') },
-              { icon: <ShoppingBag className="w-9 h-9 sm:w-10 sm:h-10" />, name: t('home.categories.items.2.name'), count: t('home.categories.items.2.count') },
-              { icon: <Car className="w-9 h-9 sm:w-10 sm:h-10" />, name: t('home.categories.items.3.name'), count: t('home.categories.items.3.count') },
-              { icon: <Heart className="w-9 h-9 sm:w-10 sm:h-10" />, name: t('home.categories.items.4.name'), count: t('home.categories.items.4.count') },
-              { icon: <Gamepad2 className="w-9 h-9 sm:w-10 sm:h-10" />, name: t('home.categories.items.5.name'), count: t('home.categories.items.5.count') },
+              { icon: <Coffee className="w-10 h-10 sm:w-12 sm:h-12" />, name: t('home.categories.items.0.name'), count: t('home.categories.items.0.count') },
+              { icon: <Utensils className="w-10 h-10 sm:w-12 sm:h-12" />, name: t('home.categories.items.1.name'), count: t('home.categories.items.1.count') },
+              { icon: <ShoppingBag className="w-10 h-10 sm:w-12 sm:h-12" />, name: t('home.categories.items.2.name'), count: t('home.categories.items.2.count') },
+              { icon: <Car className="w-10 h-10 sm:w-12 sm:h-12" />, name: t('home.categories.items.3.name'), count: t('home.categories.items.3.count') },
+              { icon: <Heart className="w-10 h-10 sm:w-12 sm:h-12" />, name: t('home.categories.items.4.name'), count: t('home.categories.items.4.count') },
+              { icon: <Gamepad2 className="w-10 h-10 sm:w-12 sm:h-12" />, name: t('home.categories.items.5.name'), count: t('home.categories.items.5.count') },
             ].map((category, i) => (
               <motion.div
                 key={i}
                 variants={cardVariants}
-                className="group bg-gradient-to-br from-emerald-50 to-teal-50 p-5 sm:p-6 rounded-xl border-2 border-emerald-100 hover:border-emerald-300 hover:shadow-lg transition-all duration-300 cursor-pointer"
+                className="group bg-gradient-to-br from-emerald-50 to-teal-50 p-6 rounded-xl border-2 border-emerald-100 hover:border-emerald-300 hover:shadow-lg transition-all duration-300 cursor-pointer"
               >
-                <div className="text-emerald-600 flex justify-center mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300">
+                <div className="text-emerald-600 flex justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
                   {category.icon}
                 </div>
-                <h4 className="font-bold text-emerald-900 mb-1 text-sm sm:text-base">{category.name}</h4>
-                <p className="text-xs sm:text-sm text-emerald-700">
+                <h4 className="font-bold text-emerald-900 mb-1 text-base sm:text-lg">{category.name}</h4>
+                <p className="text-sm text-emerald-700">
                   {category.count} {t('home.categories.stores')}
                 </p>
               </motion.div>
@@ -1015,30 +1017,58 @@ export default function Home() {
         whileInView="visible"
         viewport={{ once: true }}
         variants={staggerContainer}
-        className="py-16 md:py-20 bg-gradient-to-r from-emerald-50 to-teal-50 px-4 sm:px-6 lg:px-8"
+        className="py-16 md:py-20 bg-gradient-to-r from-emerald-50 to-teal-50 px-5 sm:px-6 lg:px-8"
       >
         <div className="max-w-6xl mx-auto text-center">
           <h2 className="text-3xl sm:text-4xl font-extrabold text-emerald-800 mb-10 md:mb-12">
             {t('home.stats.title')}
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 md:gap-8">
-            {[
-              { Icon: Users, label: t('home.stats.items.0.label'), value: stats.totalUsers },
-              { Icon: Store, label: t('home.stats.items.1.label'), value: stats.totalShops },
-              { Icon: Banknote, label: t('home.stats.items.2.label'), value: stats.totalTransactionAmount, prefix: '$' },
-            ].map((stat, i) => (
-              <motion.div
-                key={i}
-                variants={cardVariants}
-                className="bg-white rounded-xl p-6 sm:p-8 shadow-xl border border-emerald-100"
-              >
-                <stat.Icon className="w-10 h-10 sm:w-12 sm:h-12 text-emerald-600 mx-auto mb-4" />
-                <div className="text-2xl sm:text-3xl font-extrabold text-emerald-700">
-                  {loading ? '.....' : <CountUp end={stat.value} duration={2.5} separator="," prefix={stat.prefix || ''} />}
+            <motion.div
+              variants={cardVariants}
+              className="bg-white rounded-xl p-7 sm:p-8 shadow-xl border border-emerald-100 text-center"
+            >
+              <Users className="w-12 h-12 text-emerald-600 mx-auto mb-5" />
+              <div className="text-3xl sm:text-4xl font-extrabold text-emerald-700">
+                {loading ? '.....' : <CountUp end={stats.totalUsers} duration={2.5} separator="," />}
+              </div>
+              <p className="text-gray-600 mt-3 text-base">
+                {t('home.stats.items.0.label')}
+              </p>
+            </motion.div>
+
+            <motion.div
+              variants={cardVariants}
+              className="bg-white rounded-xl p-7 sm:p-8 shadow-xl border border-emerald-100 text-center"
+            >
+              <Store className="w-12 h-12 text-emerald-600 mx-auto mb-5" />
+              <div className="text-3xl sm:text-4xl font-extrabold text-emerald-700">
+                {loading ? '.....' : <CountUp end={stats.totalShops} duration={2.5} separator="," />}
+              </div>
+              <p className="text-gray-600 mt-3 text-base">
+                {t('home.stats.items.1.label')}
+              </p>
+            </motion.div>
+
+            <motion.div
+              variants={cardVariants}
+              className="bg-white rounded-xl p-7 sm:p-8 shadow-xl border border-emerald-100 text-center"
+            >
+              <Banknote className="w-12 h-12 text-emerald-600 mx-auto mb-5" />
+
+              {loading ? (
+                "....."
+              ) : (
+                <div className="space-y-3 text-xl sm:text-2xl font-bold text-emerald-700">
+                  <div>🇺🇸 USA : ${new Intl.NumberFormat().format(stats.totalUsaTransactionAmount)}</div>
+                  <div>🇮🇳 India : ₹{new Intl.NumberFormat().format(stats.totalIndiaTransactionAmount)}</div>
                 </div>
-                <p className="text-gray-600 mt-2 text-sm sm:text-base">{stat.label}</p>
-              </motion.div>
-            ))}
+              )}
+
+              <p className="text-gray-600 mt-4 text-base">
+                {t('home.stats.items.2.label')}
+              </p>
+            </motion.div>
           </div>
         </div>
       </motion.section>
