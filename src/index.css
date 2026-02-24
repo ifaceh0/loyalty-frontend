@@ -1,14 +1,61 @@
-@tailwind base;
+/* @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Card glow animation */
 .card-glow:hover {
   box-shadow: 0 0 18px 4px rgba(128, 0, 128, 0.45);
   transition: box-shadow 0.3s ease-in-out;
 }
 
-/* Button glow animation */
+.button-glow:hover {
+  box-shadow: 0 0 16px 4px rgba(255, 193, 7, 0.6);
+  transition: box-shadow 0.3s ease-in-out;
+} */
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ──────────────────────────────────────────────── */
+/*           Better mobile + desktop typography      */
+/* ──────────────────────────────────────────────── */
+
+html {
+  font-size: 16px;           /* safe default — most phones respect it */
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply min-h-screen bg-gray-50 text-gray-900 antialiased;
+  font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Slightly larger base text on phones — feels more comfortable */
+@media (max-width: 640px) {
+  html {
+    font-size: 15.5px;       /* or 15px if you prefer even more compact */
+  }
+  
+  body {
+    line-height: 1.55;
+  }
+}
+
+/* Optional: force minimum readable text size in very small elements */
+small, .text-xs, .text-sm {
+  font-size: max(0.875rem, 14px) !important;   /* prevents going below ~14px */
+}
+
+/* Your existing glow effects */
+.card-glow:hover {
+  box-shadow: 0 0 18px 4px rgba(128, 0, 128, 0.45);
+  transition: box-shadow 0.3s ease-in-out;
+}
+
 .button-glow:hover {
   box-shadow: 0 0 16px 4px rgba(255, 193, 7, 0.6);
   transition: box-shadow 0.3s ease-in-out;

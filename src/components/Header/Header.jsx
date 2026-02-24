@@ -611,6 +611,361 @@
 
 
 
+// import { useState, useEffect } from 'react';
+// import Flag from "react-flagkit";
+// import {
+//   Link,
+//   NavLink,
+//   useLocation,
+//   useNavigate,
+// } from 'react-router-dom';
+// import { FaUser, FaSignOutAlt } from 'react-icons/fa';
+// import { Menu, X, List, PanelRightOpen, Globe } from 'lucide-react';
+// import { useSidebar } from '../../context/SidebarContext';
+// import { useTranslation } from 'react-i18next';
+// import { motion, AnimatePresence } from 'framer-motion';
+// import { API_BASE_URL } from '../../apiConfig';
+
+// const LOGOUT_API = `${API_BASE_URL}/api/auth/logout`;
+
+// export default function Header() {
+//   const [isLoggedIn, setIsLoggedIn] = useState(false);
+//   const [userName, setUserName] = useState('');
+//   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+//   const location = useLocation();
+//   const navigate = useNavigate();
+//   const { setSidebarOpen } = useSidebar();
+//   const { t, i18n } = useTranslation();
+
+//   useEffect(() => {
+//     const login = localStorage.getItem('isLoggedIn') === 'true';
+//     setIsLoggedIn(login);
+//     const name = localStorage.getItem('name');
+//     if (name) setUserName(name);
+//     setMobileMenuOpen(false);
+//   }, [location]);
+
+//   const handleLogout = async () => {
+//     localStorage.clear();
+//     document.cookie = "jwt=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+
+//     navigate('/signin');
+//     setMobileMenuOpen(false);
+
+//     fetch(LOGOUT_API, {
+//       method: 'POST',
+//       credentials: 'include',
+//     }).catch(err => {
+//       console.log("Backend logout failed (server asleep?), but client session cleared");
+//     });
+//   };
+
+//   const navLinkClasses = ({ isActive }) =>
+//     `relative px-3 py-1.5 rounded-full transition-all duration-200
+//      ${isActive
+//        ? 'text-white bg-emerald-500'
+//        : 'text-black hover:text-emerald-600'
+//      }`;
+
+//   const LanguageSelector = () => {
+//     const [open, setOpen] = useState(false);
+
+//     const changeLang = (lang) => {
+//       i18n.changeLanguage(lang);
+//       setOpen(false);
+//     };
+
+//     return (
+//       <div className="relative">
+//         <button
+//           onClick={() => setOpen(!open)}
+//           className="p-2 rounded-full hover:bg-gray-100 transition"
+//         >
+//           <Globe className="w-4 h-4 text-gray-700" />
+//         </button>
+
+//         {open && (
+//           <div className="absolute right-0 mt-2 w-32 bg-white border border-gray-200 shadow-lg rounded-xl py-1 z-50">
+//             <p className='w-full text-left px-4 py-2 text-sm flex items-center gap-2'>Language</p>
+//             <button
+//               onClick={() => changeLang("en")}
+//               className={`w-full text-left px-4 py-2 text-sm flex items-center gap-2 hover:bg-gray-100 ${
+//                 i18n.language === "en" ? "font-semibold text-emerald-600" : ""
+//               }`}
+//             >
+//               <Flag country="US" size={18} /> English
+//             </button>
+//             <button
+//               onClick={() => changeLang("es")}
+//               className={`w-full text-left px-4 py-2 text-sm flex items-center gap-2 hover:bg-gray-100 ${
+//                 i18n.language === "es" ? "font-semibold text-emerald-600" : ""
+//               }`}
+//             >
+//               <Flag country="ES" size={18} /> Español
+//             </button>
+//           </div>
+//         )}
+//       </div>
+//     );
+//   };
+
+//   const GuestMobileDrawer = () => (
+//     <div className="flex flex-col gap-4 p-6">
+//       <NavLink to="/" className={navLinkClasses} onClick={() => setMobileMenuOpen(false)}>
+//         {t('header.home')}
+//       </NavLink>
+//       <NavLink to="/features" className={navLinkClasses} onClick={() => setMobileMenuOpen(false)}>
+//         {t('header.features')}
+//       </NavLink>
+//       <NavLink to="/resources" className={navLinkClasses} onClick={() => setMobileMenuOpen(false)}>
+//         {t('header.resources')}
+//       </NavLink>
+//       <a
+//         href="https://subscription-frontend-psi.vercel.app/subscription"
+//         target="_blank"
+//         rel="noopener noreferrer"
+//         className="text-black hover:text-emerald-600 px-3 py-1.5"
+//         onClick={() => setMobileMenuOpen(false)}
+//       >
+//         {t('header.subscription')}
+//       </a>
+//       <NavLink to="/onboarding-guide" className={navLinkClasses} onClick={() => setMobileMenuOpen(false)}>
+//         {t('header.faq')}
+//       </NavLink>
+//       <NavLink to="/contact" className={navLinkClasses} onClick={() => setMobileMenuOpen(false)}>
+//         {t('header.contact')}
+//       </NavLink>
+
+//       <div className="mt-6">
+//         <p className="font-medium text-gray-700 mb-3">{t('header.signUp')} as</p>
+//         <div className="flex flex-col gap-3">
+//           <a
+//             href="https://subscription-frontend-psi.vercel.app/subscription"
+//             target="_blank"
+//             rel="noopener noreferrer"
+//             className="px-4 py-3 text-sm text-emerald-700 hover:bg-emerald-50 rounded-full font-medium border border-emerald-200"
+//             onClick={() => setMobileMenuOpen(false)}
+//           >
+//             {t('header.signUpShopkeeper')}
+//           </a>
+//           <NavLink
+//             to="/signup-user"
+//             className="px-4 py-3 text-sm text-emerald-700 hover:bg-emerald-50 rounded-full font-medium border border-emerald-200"
+//             onClick={() => setMobileMenuOpen(false)}
+//           >
+//             {t('header.signUpUser')}
+//           </NavLink>
+//         </div>
+//       </div>
+
+//       <NavLink
+//         to="/signin"
+//         className="mt-4 bg-emerald-500 hover:bg-emerald-600 text-white font-medium rounded-full text-base px-6 py-3 transition shadow-md text-center"
+//         onClick={() => setMobileMenuOpen(false)}
+//       >
+//         {t('header.signIn')}
+//       </NavLink>
+//     </div>
+//   );
+
+//   const LoggedInMobileDrawer = () => (
+//     <div className="flex flex-col gap-3 p-6">
+//       <div className="flex items-center gap-4 p-3 bg-gray-50 rounded-lg">
+//         <FaUser className="w-7 h-7 text-emerald-600" />
+//         <div>
+//           <p className="font-semibold text-gray-800">{userName || 'User'}</p>
+//           <p className="text-xs text-gray-500">Welcome back!</p>
+//         </div>
+//       </div>
+
+//       <button
+//         onClick={() => {
+//           setSidebarOpen(true);
+//           setMobileMenuOpen(false);
+//         }}
+//         className="text-left px-4 py-3 text-emerald-700 hover:bg-emerald-50 rounded-full font-medium"
+//       >
+//         {t('header.openDashboard')}
+//       </button>
+
+//       <button
+//         onClick={handleLogout}
+//         className="flex items-center gap-3 px-4 py-3 text-red-600 hover:bg-red-50 rounded-full font-medium"
+//       >
+//         <FaSignOutAlt className="w-5 h-5" />
+//         {t('header.logout')}
+//       </button>
+//     </div>
+//   );
+
+//   // Slide-in animation variants
+//   const sidebarVariants = {
+//     hidden: { x: "100%" },
+//     visible: { x: 0, transition: { type: "spring", stiffness: 300, damping: 30 } },
+//     exit: { x: "100%", transition: { duration: 0.3 } }
+//   };
+
+//   return (
+//     <header className="sticky top-0 z-50 bg-white shadow-lg border-b border-gray-200">
+//       <nav className="px-4 lg:px-8 py-3 flex items-center justify-between">
+//         <div className="flex items-center">
+//           {isLoggedIn ? (
+//             <button
+//               onClick={() => setSidebarOpen(true)}
+//               className="text-blue-600 hover:text-blue-700 transition"
+//             >
+//               <List size={24} />
+//             </button>
+//           ) : (
+//             <Link
+//               to="/"
+//               className="text-xl font-bold bg-gradient-to-r from-emerald-500 to-teal-600 bg-clip-text text-transparent drop-shadow-sm"
+//             >
+//               LoyaltyHub
+//             </Link>
+//           )}
+//         </div>
+
+//         <div className="hidden lg:flex items-center gap-6">
+//           {!isLoggedIn && (
+//             <>
+//               <NavLink to="/" className={navLinkClasses}>{t('header.home')}</NavLink>
+//               <NavLink to="/features" className={navLinkClasses}>{t('header.features')}</NavLink>
+//               <NavLink to="/resources" className={navLinkClasses}>{t('header.resources')}</NavLink>
+//               <a
+//                 href="https://subscription-frontend-psi.vercel.app/subscription"
+//                 target="_blank"
+//                 rel="noopener noreferrer"
+//                 className="text-black hover:text-emerald-600 px-3 py-1.5"
+//               >
+//                 {t('header.subscription')}
+//               </a>
+//               <NavLink to="/onboarding-guide" className={navLinkClasses}>{t('header.faq')}</NavLink>
+//               <NavLink to="/contact" className={navLinkClasses}>{t('header.contact')}</NavLink>
+//             </>
+//           )}
+//         </div>
+
+//         <div className="flex items-center gap-4">
+//           {/* Desktop Language */}
+//           <div className="hidden lg:block">
+//             <LanguageSelector />
+//           </div>
+
+//           {/* Desktop Auth */}
+//           <div className="hidden lg:flex items-center gap-4">
+//             {!isLoggedIn ? (
+//               <>
+//                 <div className="relative group">
+//                   <button className="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-medium rounded-full text-sm px-4 py-2 transition shadow-md">
+//                     {t('header.signUp')}
+//                   </button>
+//                   <div className="absolute right-0 mt-2 bg-white rounded-xl shadow-xl z-10 min-w-[180px] opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-200 border border-gray-200">
+//                     <a
+//                       href="https://subscription-frontend-psi.vercel.app/subscription"
+//                       target="_blank"
+//                       rel="noopener noreferrer"
+//                       className="block px-4 py-3 text-sm text-emerald-700 hover:bg-emerald-50 transition rounded-t-xl"
+//                     >
+//                       {t('header.signUpShopkeeper')}
+//                     </a>
+//                     <NavLink
+//                       to="/signup-user"
+//                       className="block px-4 py-3 text-sm text-emerald-700 hover:bg-emerald-50 transition rounded-b-xl"
+//                     >
+//                       {t('header.signUpUser')}
+//                     </NavLink>
+//                   </div>
+//                 </div>
+
+//                 <NavLink
+//                   to="/signin"
+//                   className="text-black border border-gray-300 hover:bg-gray-100 font-medium rounded-full text-sm px-4 py-2 transition"
+//                 >
+//                   {t('header.signIn')}
+//                 </NavLink>
+//               </>
+//             ) : (
+//               <div className="relative group">
+//                 <button className="flex items-center space-x-2 focus:outline-none">
+//                   <FaUser className="text-blue-600" />
+//                   <span className="text-blue-600 font-medium">{userName || 'User'}</span>
+//                 </button>
+//                 <div className="hidden group-hover:block absolute top-full right-0 w-48 bg-white shadow-xl border rounded-xl p-2 z-10">
+//                   <button
+//                     onClick={handleLogout}
+//                     className="flex w-full items-center py-3 px-4 text-sm hover:bg-gray-100 text-left text-red-600 rounded-lg"
+//                   >
+//                     <FaSignOutAlt className="mr-3" />
+//                     {t('header.logout')}
+//                   </button>
+//                 </div>
+//               </div>
+//             )}
+//           </div>
+
+//           {/* Mobile Toggle */}
+//           <button
+//             onClick={() => setMobileMenuOpen(v => !v)}
+//             className="lg:hidden text-emerald-600 hover:text-emerald-700 transition"
+//           >
+//             {mobileMenuOpen ? <X size={26} /> : <PanelRightOpen size={26} />}
+//           </button>
+//         </div>
+//       </nav>
+
+//       {/* Right-side Mobile Sidebar */}
+//       <AnimatePresence>
+//         {mobileMenuOpen && (
+//           <>
+//             {/* Overlay */}
+//             <motion.div
+//               initial={{ opacity: 0 }}
+//               animate={{ opacity: 0.5 }}
+//               exit={{ opacity: 0 }}
+//               transition={{ duration: 0.3 }}
+//               className="fixed inset-0 bg-black z-40 lg:hidden"
+//               onClick={() => setMobileMenuOpen(false)}
+//             />
+
+//             {/* Sidebar */}
+//             <motion.div
+//               variants={sidebarVariants}
+//               initial="hidden"
+//               animate="visible"
+//               exit="exit"
+//               className="fixed top-0 right-0 h-full w-4/5 max-w-sm bg-white shadow-2xl z-50 lg:hidden overflow-y-auto"
+//             >
+//               <div className="flex items-center justify-between p-5 border-b border-gray-200">
+//                 <p className="text-xl font-bold bg-gradient-to-r from-emerald-500 to-teal-600 bg-clip-text text-transparent">
+//                   LoyaltyHub
+//                 </p>
+//                 <div className="flex items-center gap-3">
+//                   <LanguageSelector />
+//                   <button onClick={() => setMobileMenuOpen(false)}>
+//                     <X size={26} className="text-gray-700" />
+//                   </button>
+//                 </div>
+//               </div>
+
+//               {isLoggedIn ? <LoggedInMobileDrawer /> : <GuestMobileDrawer />}
+//             </motion.div>
+//           </>
+//         )}
+//       </AnimatePresence>
+//     </header>
+//   );
+// }
+
+
+
+
+
+
+
+
+// mobile view 
 import { useState, useEffect } from 'react';
 import Flag from "react-flagkit";
 import {
@@ -620,7 +975,7 @@ import {
   useNavigate,
 } from 'react-router-dom';
 import { FaUser, FaSignOutAlt } from 'react-icons/fa';
-import { Menu, X, List, PanelRightOpen, Globe } from 'lucide-react';
+import { X, List, PanelRightOpen, Globe } from 'lucide-react';
 import { useSidebar } from '../../context/SidebarContext';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -662,11 +1017,11 @@ export default function Header() {
   };
 
   const navLinkClasses = ({ isActive }) =>
-    `relative px-3 py-1.5 rounded-full transition-all duration-200
+    `relative px-4 py-2.5 rounded-full transition-all duration-200 text-[15px] sm:text-base
      ${isActive
-       ? 'text-white bg-emerald-500'
-       : 'text-black hover:text-emerald-600'
-     }`;
+        ? 'text-white bg-emerald-500 shadow-sm'
+        : 'text-gray-800 hover:text-emerald-600 active:bg-emerald-50'
+      } min-h-[44px] flex items-center justify-center`;
 
   const LanguageSelector = () => {
     const [open, setOpen] = useState(false);
@@ -680,29 +1035,27 @@ export default function Header() {
       <div className="relative">
         <button
           onClick={() => setOpen(!open)}
-          className="p-2 rounded-full hover:bg-gray-100 transition"
+          className="p-3 rounded-full hover:bg-gray-100 transition"
         >
-          <Globe className="w-4 h-4 text-gray-700" />
+          <Globe className="w-5 h-5 text-gray-700" />
         </button>
 
         {open && (
-          <div className="absolute right-0 mt-2 w-32 bg-white border border-gray-200 shadow-lg rounded-xl py-1 z-50">
-            <p className='w-full text-left px-4 py-2 text-sm flex items-center gap-2'>Language</p>
+          <div className="absolute right-0 mt-2 w-40 bg-white border border-gray-200 shadow-xl rounded-xl py-2 z-50">
+            <p className="w-full text-left px-5 py-2.5 text-sm font-medium text-gray-700">Language</p>
             <button
               onClick={() => changeLang("en")}
-              className={`w-full text-left px-4 py-2 text-sm flex items-center gap-2 hover:bg-gray-100 ${
-                i18n.language === "en" ? "font-semibold text-emerald-600" : ""
-              }`}
+              className={`w-full text-left px-5 py-3 text-[15px] sm:text-base flex items-center gap-3 hover:bg-gray-50 transition
+                ${i18n.language === "en" ? "font-semibold text-emerald-600" : "text-gray-800"}`}
             >
-              <Flag country="US" size={18} /> English
+              <Flag country="US" size={20} /> English
             </button>
             <button
               onClick={() => changeLang("es")}
-              className={`w-full text-left px-4 py-2 text-sm flex items-center gap-2 hover:bg-gray-100 ${
-                i18n.language === "es" ? "font-semibold text-emerald-600" : ""
-              }`}
+              className={`w-full text-left px-5 py-3 text-[15px] sm:text-base flex items-center gap-3 hover:bg-gray-50 transition
+                ${i18n.language === "es" ? "font-semibold text-emerald-600" : "text-gray-800"}`}
             >
-              <Flag country="ES" size={18} /> Español
+              <Flag country="ES" size={20} /> Español
             </button>
           </div>
         )}
@@ -711,7 +1064,7 @@ export default function Header() {
   };
 
   const GuestMobileDrawer = () => (
-    <div className="flex flex-col gap-4 p-6">
+    <div className="flex flex-col gap-5 p-6 pb-10">
       <NavLink to="/" className={navLinkClasses} onClick={() => setMobileMenuOpen(false)}>
         {t('header.home')}
       </NavLink>
@@ -725,7 +1078,7 @@ export default function Header() {
         href="https://subscription-frontend-psi.vercel.app/subscription"
         target="_blank"
         rel="noopener noreferrer"
-        className="text-black hover:text-emerald-600 px-3 py-1.5"
+        className="px-5 py-3.5 text-[15px] sm:text-base text-gray-800 hover:text-emerald-600 hover:bg-gray-50 rounded-xl transition min-h-[52px] flex items-center justify-center"
         onClick={() => setMobileMenuOpen(false)}
       >
         {t('header.subscription')}
@@ -737,21 +1090,21 @@ export default function Header() {
         {t('header.contact')}
       </NavLink>
 
-      <div className="mt-6">
-        <p className="font-medium text-gray-700 mb-3">{t('header.signUp')} as</p>
-        <div className="flex flex-col gap-3">
+      <div className="mt-8">
+        <p className="font-medium text-gray-700 mb-4 text-[17px]">{t('header.signUp')} as</p>
+        <div className="flex flex-col gap-4">
           <a
             href="https://subscription-frontend-psi.vercel.app/subscription"
             target="_blank"
             rel="noopener noreferrer"
-            className="px-4 py-3 text-sm text-emerald-700 hover:bg-emerald-50 rounded-full font-medium border border-emerald-200"
+            className="px-6 py-4 text-[15px] sm:text-base font-medium text-emerald-700 hover:bg-emerald-50 rounded-full border border-emerald-200 transition min-h-[56px] flex items-center justify-center shadow-sm"
             onClick={() => setMobileMenuOpen(false)}
           >
             {t('header.signUpShopkeeper')}
           </a>
           <NavLink
             to="/signup-user"
-            className="px-4 py-3 text-sm text-emerald-700 hover:bg-emerald-50 rounded-full font-medium border border-emerald-200"
+            className="px-6 py-4 text-[15px] sm:text-base font-medium text-emerald-700 hover:bg-emerald-50 rounded-full border border-emerald-200 transition min-h-[56px] flex items-center justify-center shadow-sm"
             onClick={() => setMobileMenuOpen(false)}
           >
             {t('header.signUpUser')}
@@ -761,7 +1114,7 @@ export default function Header() {
 
       <NavLink
         to="/signin"
-        className="mt-4 bg-emerald-500 hover:bg-emerald-600 text-white font-medium rounded-full text-base px-6 py-3 transition shadow-md text-center"
+        className="mt-8 bg-emerald-500 hover:bg-emerald-600 active:bg-emerald-700 text-white font-medium rounded-full text-[17px] sm:text-lg px-8 py-5 transition shadow-md text-center min-h-[60px] flex items-center justify-center"
         onClick={() => setMobileMenuOpen(false)}
       >
         {t('header.signIn')}
@@ -770,12 +1123,12 @@ export default function Header() {
   );
 
   const LoggedInMobileDrawer = () => (
-    <div className="flex flex-col gap-3 p-6">
-      <div className="flex items-center gap-4 p-3 bg-gray-50 rounded-lg">
-        <FaUser className="w-7 h-7 text-emerald-600" />
+    <div className="flex flex-col gap-5 p-6">
+      <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-xl">
+        <FaUser className="w-9 h-9 text-emerald-600" />
         <div>
-          <p className="font-semibold text-gray-800">{userName || 'User'}</p>
-          <p className="text-xs text-gray-500">Welcome back!</p>
+          <p className="font-semibold text-gray-800 text-[17px]">{userName || 'User'}</p>
+          <p className="text-sm text-gray-600">Welcome back!</p>
         </div>
       </div>
 
@@ -784,22 +1137,21 @@ export default function Header() {
           setSidebarOpen(true);
           setMobileMenuOpen(false);
         }}
-        className="text-left px-4 py-3 text-emerald-700 hover:bg-emerald-50 rounded-full font-medium"
+        className="text-left px-5 py-4 text-[17px] text-emerald-700 hover:bg-emerald-50 rounded-xl font-medium transition min-h-[56px] flex items-center"
       >
         {t('header.openDashboard')}
       </button>
 
       <button
         onClick={handleLogout}
-        className="flex items-center gap-3 px-4 py-3 text-red-600 hover:bg-red-50 rounded-full font-medium"
+        className="flex items-center gap-3 px-5 py-4 text-[17px] text-red-600 hover:bg-red-50 rounded-xl font-medium transition min-h-[56px]"
       >
-        <FaSignOutAlt className="w-5 h-5" />
+        <FaSignOutAlt className="w-6 h-6" />
         {t('header.logout')}
       </button>
     </div>
   );
 
-  // Slide-in animation variants
   const sidebarVariants = {
     hidden: { x: "100%" },
     visible: { x: 0, transition: { type: "spring", stiffness: 300, damping: 30 } },
@@ -808,26 +1160,26 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 bg-white shadow-lg border-b border-gray-200">
-      <nav className="px-4 lg:px-8 py-3 flex items-center justify-between">
+      <nav className="px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
         <div className="flex items-center">
           {isLoggedIn ? (
             <button
               onClick={() => setSidebarOpen(true)}
-              className="text-blue-600 hover:text-blue-700 transition"
+              className="text-emerald-600 hover:text-emerald-700 transition p-2 -ml-2"
             >
-              <List size={24} />
+              <List size={28} strokeWidth={2.2} />
             </button>
           ) : (
             <Link
               to="/"
-              className="text-xl font-bold bg-gradient-to-r from-emerald-500 to-teal-600 bg-clip-text text-transparent drop-shadow-sm"
+              className="text-2xl sm:text-2xl lg:text-3xl font-bold bg-gradient-to-r from-emerald-500 to-teal-600 bg-clip-text text-transparent drop-shadow-sm"
             >
               LoyaltyHub
             </Link>
           )}
         </div>
 
-        <div className="hidden lg:flex items-center gap-6">
+        <div className="hidden lg:flex items-center gap-7">
           {!isLoggedIn && (
             <>
               <NavLink to="/" className={navLinkClasses}>{t('header.home')}</NavLink>
@@ -837,7 +1189,7 @@ export default function Header() {
                 href="https://subscription-frontend-psi.vercel.app/subscription"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-black hover:text-emerald-600 px-3 py-1.5"
+                className="text-gray-800 hover:text-emerald-600 px-4 py-2.5 text-base transition min-h-[44px] flex items-center"
               >
                 {t('header.subscription')}
               </a>
@@ -854,25 +1206,25 @@ export default function Header() {
           </div>
 
           {/* Desktop Auth */}
-          <div className="hidden lg:flex items-center gap-4">
+          <div className="hidden lg:flex items-center gap-5">
             {!isLoggedIn ? (
               <>
                 <div className="relative group">
-                  <button className="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-medium rounded-full text-sm px-4 py-2 transition shadow-md">
+                  <button className="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-medium rounded-full text-base px-6 py-2.5 transition shadow-md min-w-[120px]">
                     {t('header.signUp')}
                   </button>
-                  <div className="absolute right-0 mt-2 bg-white rounded-xl shadow-xl z-10 min-w-[180px] opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-200 border border-gray-200">
+                  <div className="absolute right-0 mt-2 bg-white rounded-xl shadow-xl z-10 min-w-[200px] opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-200 border border-gray-200">
                     <a
                       href="https://subscription-frontend-psi.vercel.app/subscription"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="block px-4 py-3 text-sm text-emerald-700 hover:bg-emerald-50 transition rounded-t-xl"
+                      className="block px-5 py-3.5 text-base text-emerald-700 hover:bg-emerald-50 transition rounded-t-xl"
                     >
                       {t('header.signUpShopkeeper')}
                     </a>
                     <NavLink
                       to="/signup-user"
-                      className="block px-4 py-3 text-sm text-emerald-700 hover:bg-emerald-50 transition rounded-b-xl"
+                      className="block px-5 py-3.5 text-base text-emerald-700 hover:bg-emerald-50 transition rounded-b-xl"
                     >
                       {t('header.signUpUser')}
                     </NavLink>
@@ -881,23 +1233,23 @@ export default function Header() {
 
                 <NavLink
                   to="/signin"
-                  className="text-black border border-gray-300 hover:bg-gray-100 font-medium rounded-full text-sm px-4 py-2 transition"
+                  className="text-gray-800 border border-gray-300 hover:bg-gray-100 font-medium rounded-full text-base px-6 py-2.5 transition min-w-[110px] text-center"
                 >
                   {t('header.signIn')}
                 </NavLink>
               </>
             ) : (
               <div className="relative group">
-                <button className="flex items-center space-x-2 focus:outline-none">
-                  <FaUser className="text-blue-600" />
-                  <span className="text-blue-600 font-medium">{userName || 'User'}</span>
+                <button className="flex items-center space-x-3 focus:outline-none">
+                  <FaUser className="text-emerald-600 w-6 h-6" />
+                  <span className="text-emerald-600 font-medium text-base">{userName || 'User'}</span>
                 </button>
-                <div className="hidden group-hover:block absolute top-full right-0 w-48 bg-white shadow-xl border rounded-xl p-2 z-10">
+                <div className="hidden group-hover:block absolute top-full right-0 w-56 bg-white shadow-xl border rounded-xl p-2 z-10 mt-1">
                   <button
                     onClick={handleLogout}
-                    className="flex w-full items-center py-3 px-4 text-sm hover:bg-gray-100 text-left text-red-600 rounded-lg"
+                    className="flex w-full items-center py-3.5 px-5 text-base hover:bg-gray-50 text-left text-red-600 rounded-lg transition"
                   >
-                    <FaSignOutAlt className="mr-3" />
+                    <FaSignOutAlt className="mr-3 w-5 h-5" />
                     {t('header.logout')}
                   </button>
                 </div>
@@ -908,9 +1260,9 @@ export default function Header() {
           {/* Mobile Toggle */}
           <button
             onClick={() => setMobileMenuOpen(v => !v)}
-            className="lg:hidden text-emerald-600 hover:text-emerald-700 transition"
+            className="lg:hidden text-emerald-600 hover:text-emerald-700 transition p-2 -mr-2"
           >
-            {mobileMenuOpen ? <X size={26} /> : <PanelRightOpen size={26} />}
+            {mobileMenuOpen ? <X size={32} strokeWidth={2.4} /> : <PanelRightOpen size={32} strokeWidth={2.4} />}
           </button>
         </div>
       </nav>
@@ -919,17 +1271,15 @@ export default function Header() {
       <AnimatePresence>
         {mobileMenuOpen && (
           <>
-            {/* Overlay */}
             <motion.div
               initial={{ opacity: 0 }}
-              animate={{ opacity: 0.5 }}
+              animate={{ opacity: 0.4 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
               className="fixed inset-0 bg-black z-40 lg:hidden"
               onClick={() => setMobileMenuOpen(false)}
             />
 
-            {/* Sidebar */}
             <motion.div
               variants={sidebarVariants}
               initial="hidden"
@@ -937,14 +1287,14 @@ export default function Header() {
               exit="exit"
               className="fixed top-0 right-0 h-full w-4/5 max-w-sm bg-white shadow-2xl z-50 lg:hidden overflow-y-auto"
             >
-              <div className="flex items-center justify-between p-5 border-b border-gray-200">
-                <p className="text-xl font-bold bg-gradient-to-r from-emerald-500 to-teal-600 bg-clip-text text-transparent">
+              <div className="flex items-center justify-between p-6 border-b border-gray-200">
+                <p className="text-2xl font-bold bg-gradient-to-r from-emerald-500 to-teal-600 bg-clip-text text-transparent">
                   LoyaltyHub
                 </p>
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-4">
                   <LanguageSelector />
                   <button onClick={() => setMobileMenuOpen(false)}>
-                    <X size={26} className="text-gray-700" />
+                    <X size={32} className="text-gray-700" strokeWidth={2.2} />
                   </button>
                 </div>
               </div>
