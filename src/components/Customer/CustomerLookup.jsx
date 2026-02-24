@@ -1285,8 +1285,8 @@ const CustomerLookup = () => {
   }
 
   return (
-    <div>
-      <div className="flex justify-center mt-14 px-4 p-4">
+    <div className="min-h-screen p-4 sm:p-6 md:p-8">
+      <div className="flex justify-center mt-14 px-4">
         <div className="text-black border-2 border-gray-300 rounded-xl p-2 md:p-3 mb-12 max-w-6xl mx-auto w-full">
           <h1 className="text-2xl md:text-4xl text-center font-black mb-2">
             {t("customerLookup.shopName")}: <span className="text-blue-600">{shopName || t("customerLookup.defaultShopName")}</span>
