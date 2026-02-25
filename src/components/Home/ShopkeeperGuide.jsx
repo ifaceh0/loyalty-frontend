@@ -556,12 +556,12 @@ export default function ShopkeeperFullFlowDemo() {
   return (
     <>
       {/* Background */}
-      <div className="fixed inset-0 -z-10">
+      {/* <div className="fixed inset-0 -z-10">
         <div className="absolute inset-0 bg-gradient-to-br from-orange-50 via-purple-50 to-teal-50" />
         <div className="absolute inset-0 bg-grid opacity-5" />
-      </div>
+      </div> */}
 
-      <div className="min-h-screen flex flex-col items-center pt-6 px-4 pb-32">
+      <div className="min-h-screen flex flex-col items-center pt-10 px-4 pb-10">
 
         {/* Hero */}
         <motion.div
@@ -765,7 +765,7 @@ export default function ShopkeeperFullFlowDemo() {
           </p>
           <button
             onClick={() => handleExternalRedirect(SUBSCRIPTION_URL)}
-            className="inline-flex items-center gap-3 px-10 py-5 bg-gradient-to-r from-emerald-500 to-teal-600 text-white text-xl font-bold rounded-full shadow-2xl hover:shadow-emerald-500/50 transform hover:scale-105 transition-all duration-300"
+            className="inline-flex items-center gap-3 px-10 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white text-xl font-bold rounded-full shadow-2xl hover:shadow-emerald-500/50 transform hover:scale-105 transition-all duration-300"
           >
             {t("flow.finalCTA.button")} <ArrowRight className="w-6 h-6" />
           </button>
@@ -809,7 +809,7 @@ export default function ShopkeeperFullFlowDemo() {
             ))}
           </div>
         </div>
-        <div className="mt-12 text-center">
+        <div className="mt-10 text-center">
             <p className="text-gray-600 mb-4">{t("flow.support.text")}</p>
             <a
                 href="/contact"

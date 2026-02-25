@@ -150,7 +150,7 @@ const UserPurchaseChart = () => {
 
   return (
     <section className="mb-4 sm:mb-6">
-      <div className="bg-white shadow-md rounded-xl p-3 sm:p-3 border border-gray-100 hover:shadow-lg transition-shadow duration-300">
+      <div className="bg-white shadow-md rounded-xl p-2 sm:p-3 border border-gray-100 hover:shadow-lg transition-shadow duration-300">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-1 gap-2">
           <h3 className="text-base sm:text-lg md:text-xl font-semibold text-gray-800">
             {t("userPurchaseChart.title")}
@@ -187,14 +187,14 @@ const UserPurchaseChart = () => {
                 dataKey="registeredUsers"
                 fill="#2563eb"
                 name={t("userPurchaseChart.registeredUsers")}
-                radius={[6, 6, 0, 0]}
+                radius={[4, 0, 0, 0]}
                 barSize={30}
               />
               <Bar
                 dataKey="visitedUsers"
                 fill="#f97316"
                 name={t("userPurchaseChart.purchaseUsers")}
-                radius={[6, 6, 0, 0]}
+                radius={[0, 4, 0, 0]}
                 barSize={30}
               />
             </BarChart>

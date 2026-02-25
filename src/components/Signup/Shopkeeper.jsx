@@ -1246,7 +1246,7 @@ function Shopkeeper() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-8 bg-gray-200">
+    <div className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-8">
       {success && <Confetti recycle={false} numberOfPieces={300} />}
 
       <motion.div

@@ -1399,8 +1399,11 @@ export default function Home() {
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
 
       {/* HERO CAROUSEL - improved mobile scaling */}
-      <section className="relative h-[65vh] min-h-[360px] xs:h-[70vh] sm:h-[75vh] md:h-[80vh] lg:h-[85vh] overflow-hidden">
-        <div className="relative w-full h-full">
+      {/* <section className="relative h-[65vh] min-h-[360px] xs:h-[70vh] sm:h-[75vh] md:h-[80vh] lg:h-[85vh] overflow-hidden"> */}
+      {/* <section className="relative h-[40vh] min-h-[300px] sm:h-[75vh] md:h-[80vh] lg:h-[85vh] overflow-hidden">
+        <div className="relative w-full h-full"> */}
+      <section className="relative px-2 sm:px-4 lg:px-4">
+        <div className="relative h-[40vh] min-h-[300px] sm:h-[75vh] md:h-[80vh] lg:h-[85vh] max-w-full mx-auto rounded-md sm:rounded-lg overflow-hidden">
           {heroImages.map((img, idx) => (
             <motion.div
               key={idx}
@@ -1436,13 +1439,13 @@ export default function Home() {
 
           <button
             onClick={(e) => { e.stopPropagation(); prevSlide(); }}
-            className="absolute left-3 xs:left-4 sm:left-8 top-1/2 -translate-y-1/2 bg-black/40 backdrop-blur-md text-white p-3 xs:p-4 sm:p-5 rounded-full hover:bg-black/60 transition z-10"
+            className="absolute left-3 xs:left-4 sm:left-8 top-1/2 -translate-y-1/2 bg-black/40 backdrop-blur-md text-white p-3 xs:p-3 sm:p-3 rounded-full hover:bg-black/60 transition z-10"
           >
             <ChevronLeft className="w-6 h-6 xs:w-7 xs:h-7 sm:w-8 sm:h-8" />
           </button>
           <button
             onClick={(e) => { e.stopPropagation(); nextSlide(); }}
-            className="absolute right-3 xs:right-4 sm:right-8 top-1/2 -translate-y-1/2 bg-black/40 backdrop-blur-md text-white p-3 xs:p-4 sm:p-5 rounded-full hover:bg-black/60 transition z-10"
+            className="absolute right-3 xs:right-4 sm:right-8 top-1/2 -translate-y-1/2 bg-black/40 backdrop-blur-md text-white p-3 xs:p-3 sm:p-3 rounded-full hover:bg-black/60 transition z-10"
           >
             <ChevronRight className="w-6 h-6 xs:w-7 xs:h-7 sm:w-8 sm:h-8" />
           </button>
@@ -1469,13 +1472,13 @@ export default function Home() {
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
         variants={staggerContainer}
-        className="py-14 xs:py-16 md:py-20 px-4 xs:px-5 sm:px-6 lg:px-8"
+        className="py-10 xs:py-12 md:py-14 px-4 xs:px-5 sm:px-6 lg:px-8"
       >
-        <div className="max-w-6xl mx-auto text-center">
+        <div className="max-w-5xl mx-auto text-center">
           <h2 className="text-3xl xs:text-4xl sm:text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-emerald-600 to-teal-700 bg-clip-text text-transparent mb-8 md:mb-14">
             {t('home.howItWorks.title')}
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 xs:gap-6 md:gap-8 lg:gap-10">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 xs:gap-6 md:gap-8 lg:gap-10">
             {[
               { icon: <CheckCircle className="w-12 h-12 xs:w-14 xs:h-14 text-emerald-600" />, title: t('home.howItWorks.steps.0.title'), desc: t('home.howItWorks.steps.0.desc') },
               { icon: <Store className="w-12 h-12 xs:w-14 xs:h-14 text-teal-600" />, title: t('home.howItWorks.steps.1.title'), desc: t('home.howItWorks.steps.1.desc') },
@@ -1484,15 +1487,15 @@ export default function Home() {
               <motion.div
                 key={i}
                 variants={cardVariants}
-                className="group bg-white rounded-xl p-6 xs:p-7 sm:p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 min-h-[220px] flex flex-col"
+                className="group bg-white rounded-xl p-8 xs:p-7 sm:p-6 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 min-h-[200px] flex flex-col"
               >
-                <div className="mb-5 xs:mb-6 flex justify-center transform group-hover:scale-110 transition-transform">
+                <div className="mb-3 xs:mb-6 flex justify-center transform group-hover:scale-110 transition-transform">
                   {step.icon}
                 </div>
                 <h3 className="text-lg xs:text-xl sm:text-2xl font-bold text-gray-800 mb-3 xs:mb-4 group-hover:text-emerald-700 transition">
                   {step.title}
                 </h3>
-                <p className="text-gray-600 text-[15px] xs:text-base mt-auto">{step.desc}</p>
+                <p className="text-gray-600 text-[15px] xs:text-base">{step.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -1505,7 +1508,7 @@ export default function Home() {
         whileInView="visible"
         viewport={{ once: true, amount: 0.15 }}
         variants={staggerContainer}
-        className="py-14 xs:py-16 md:py-20 px-4 xs:px-5 sm:px-6 lg:px-8 bg-white"
+        className="py-10 xs:py-12 md:py-14 px-4 xs:px-5 sm:px-6 lg:px-8 bg-white"
       >
         <div className="max-w-6xl mx-auto text-center">
           <h2 className="text-3xl xs:text-4xl font-extrabold bg-gradient-to-r from-emerald-600 to-teal-700 bg-clip-text text-transparent mb-5 xs:mb-6">
@@ -1514,7 +1517,7 @@ export default function Home() {
           <p className="text-gray-600 mb-8 xs:mb-10 max-w-3xl mx-auto text-[15px] xs:text-base">
             {t('home.categories.subtitle')}
           </p>
-          <div className="grid grid-cols-2 xs:grid-cols-3 lg:grid-cols-6 gap-4 xs:gap-5 sm:gap-6">
+          <div className="grid grid-cols-3 xs:grid-cols-3 lg:grid-cols-6 gap-3 xs:gap-5 sm:gap-6">
             {[
               { icon: <Coffee className="w-9 h-9 xs:w-10 xs:h-10 sm:w-12 sm:h-12" />, name: t('home.categories.items.0.name'), count: t('home.categories.items.0.count') },
               { icon: <Utensils className="w-9 h-9 xs:w-10 xs:h-10 sm:w-12 sm:h-12" />, name: t('home.categories.items.1.name'), count: t('home.categories.items.1.count') },
@@ -1547,13 +1550,13 @@ export default function Home() {
         whileInView="visible"
         viewport={{ once: true }}
         variants={staggerContainer}
-        className="py-14 xs:py-16 md:py-20 bg-gradient-to-r from-emerald-50 to-teal-50 px-4 xs:px-5 sm:px-6 lg:px-8"
+        className="py-10 xs:py-12 md:py-14 bg-gradient-to-r from-emerald-50 to-teal-50 px-4 xs:px-5 sm:px-6 lg:px-8"
       >
         <div className="max-w-6xl mx-auto text-center">
           <h2 className="text-3xl xs:text-4xl font-extrabold text-emerald-800 mb-8 xs:mb-10 md:mb-12">
             {t('home.stats.title')}
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 xs:gap-6 md:gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 xs:gap-6 md:gap-8">
             <motion.div
               variants={cardVariants}
               className="bg-white rounded-xl p-6 xs:p-7 sm:p-8 shadow-xl border border-emerald-100 text-center min-h-[180px] flex flex-col justify-center"
@@ -1609,7 +1612,7 @@ export default function Home() {
         whileInView="visible"
         viewport={{ once: true, amount: 0.15 }}
         variants={staggerContainer}
-        className="py-14 xs:py-16 md:py-20 px-4 xs:px-5 sm:px-6 lg:px-8 bg-gradient-to-br from-blue-50 to-indigo-50"
+        className="py-10 xs:py-12 md:py-14 px-4 xs:px-5 sm:px-6 lg:px-8 bg-gradient-to-br from-blue-50 to-indigo-50"
       >
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-8 xs:mb-10 md:mb-12">
@@ -1620,7 +1623,7 @@ export default function Home() {
               {t('home.mobile.subtitle')}
             </p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 xs:gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 xs:gap-6">
             {[
               { icon: <Smartphone className="w-8 h-8 xs:w-9 xs:h-9 sm:w-10 sm:h-10" />, title: t('home.mobile.features.0.title'), desc: t('home.mobile.features.0.desc') },
               { icon: <Bell className="w-8 h-8 xs:w-9 xs:h-9 sm:w-10 sm:h-10" />, title: t('home.mobile.features.1.title'), desc: t('home.mobile.features.1.desc') },
@@ -1647,13 +1650,13 @@ export default function Home() {
         whileInView="visible"
         viewport={{ once: true, amount: 0.15 }}
         variants={staggerContainer}
-        className="py-14 xs:py-16 md:py-20 px-4 xs:px-5 sm:px-6 lg:px-8 bg-white"
+        className="py-10 xs:py-12 md:py-14 px-4 xs:px-5 sm:px-6 lg:px-8 bg-white"
       >
         <div className="max-w-6xl mx-auto text-center">
           <h2 className="text-3xl xs:text-4xl font-extrabold bg-gradient-to-r from-emerald-600 to-teal-700 bg-clip-text text-transparent mb-8 xs:mb-10 md:mb-12">
             {t('home.benefits.title')}
           </h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 xs:gap-5 sm:gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 xs:gap-5 sm:gap-6">
             {t('home.benefits.items', { returnObjects: true }).map((benefit, i) => (
               <motion.div
                 key={i}
@@ -1674,13 +1677,13 @@ export default function Home() {
         whileInView="visible"
         viewport={{ once: true, amount: 0.15 }}
         variants={staggerContainer}
-        className="py-14 xs:py-16 md:py-20 px-4 xs:px-5 sm:px-6 lg:px-8 bg-gray-50"
+        className="py-10 xs:py-12 md:py-14 px-4 xs:px-5 sm:px-6 lg:px-8 bg-gray-50"
       >
         <div className="max-w-6xl mx-auto text-center">
           <h2 className="text-3xl xs:text-4xl font-extrabold text-emerald-800 mb-8 xs:mb-10 md:mb-12">
             {t('home.testimonials.title')}
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 xs:gap-6 md:gap-8">
+          <div className="grid grid-cols-3 md:grid-cols-3 gap-2 xs:gap-6 md:gap-8">
             {t('home.testimonials.items', { returnObjects: true }).map((testimonial, i) => (
               <motion.div
                 key={i}
@@ -1710,13 +1713,13 @@ export default function Home() {
         whileInView="visible"
         viewport={{ once: true, amount: 0.15 }}
         variants={staggerContainer}
-        className="py-14 xs:py-16 md:py-20 bg-gray-50 px-4 xs:px-5 sm:px-6 lg:px-8"
+        className="py-10 xs:py-12 md:py-14 bg-gray-50 px-4 xs:px-5 sm:px-6 lg:px-8"
       >
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl xs:text-4xl font-extrabold text-emerald-800 mb-8 xs:mb-10 md:mb-12">
             {t('home.leaderboard.title')}
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 xs:gap-6">
+          <div className="grid grid-cols-3 sm:grid-cols-3 gap-2 xs:gap-6">
             {t('home.leaderboard.items', { returnObjects: true }).map((user) => (
               <motion.div
                 key={user.rank}
@@ -1745,7 +1748,7 @@ export default function Home() {
         whileInView="visible"
         viewport={{ once: true, amount: 0.15 }}
         variants={staggerContainer}
-        className="py-14 xs:py-16 md:py-20 px-4 xs:px-5 sm:px-6 lg:px-8 bg-white"
+        className="py-10 xs:py-12 md:py-14 px-4 xs:px-5 sm:px-6 lg:px-8 bg-white"
       >
         <div className="max-w-5xl mx-auto">
           <h2 className="text-3xl xs:text-4xl font-extrabold text-center text-emerald-800 mb-8 xs:mb-10 md:mb-12">
@@ -1777,7 +1780,7 @@ export default function Home() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.9 }}
-        className="py-14 xs:py-16 md:py-20 bg-gradient-to-r from-emerald-500 to-teal-600 text-white text-center px-4 xs:px-5 sm:px-8"
+        className="py-10 xs:py-12 md:py-14 bg-gradient-to-r from-emerald-500 to-teal-600 text-white text-center px-4 xs:px-5 sm:px-8"
       >
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl xs:text-4xl md:text-5xl font-extrabold mb-4 xs:mb-5 md:mb-6">
@@ -1786,7 +1789,7 @@ export default function Home() {
           <p className="text-base xs:text-lg sm:text-xl mb-6 xs:mb-8 md:mb-10 opacity-90 max-w-3xl mx-auto">
             {t('home.finalCTA.subtitle')}
           </p>
-          <div className="flex flex-col xs:flex-row justify-center items-center gap-4 xs:gap-5 md:gap-6">
+          <div className="flex flex-row xs:flex-row justify-center items-center gap-2 xs:gap-5 md:gap-6">
             <motion.button
               whileHover={{ scale: 1.05, y: -3 }}
               whileTap={{ scale: 0.97 }}

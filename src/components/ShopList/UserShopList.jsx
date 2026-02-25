@@ -564,9 +564,9 @@ export default function UserShopList() {
   }
 
   return (
-    <div className="bg-blue-50 p-4 md:p-4">
+    <div className="p-6 md:p-4">
       <motion.h1
-        className="text-4xl font-extrabold text-center text-blue-800 mb-20"
+        className="text-4xl font-extrabold text-center text-blue-800 mb-16"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}

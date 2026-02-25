@@ -1097,7 +1097,7 @@ export default function ExploreShops() {
     }
 
     return (
-        <div className="min-h-screen bg-blue-50 p-4 md:p-1">
+        <div className="min-h-screen p-6 md:p-6">
             <motion.h1
                 className="text-4xl font-extrabold text-center text-blue-800 mb-10"
                 initial={{ opacity: 0, y: -20 }}
@@ -1108,7 +1108,7 @@ export default function ExploreShops() {
             </motion.h1>
 
             {/* Search + Filter */}
-            <div className="flex flex-col md:flex-row justify-center items-stretch md:items-start mb-10 space-y-4 md:space-y-0 md:space-x-4 relative">
+            <div className="flex flex-row md:flex-row justify-center items-start md:items-start mb-10 space-y-0 md:space-y-0 space-x-2 md:space-x-4 relative">
                 <div className="relative flex-1 max-w-xl">
                     <input
                         type="text"

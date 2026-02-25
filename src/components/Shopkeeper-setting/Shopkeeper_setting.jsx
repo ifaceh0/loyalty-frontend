@@ -796,9 +796,9 @@ const ShopkeeperSetting = () => {
   }
 
   return (
-    <div className="max-w-6xl mx-auto bg-white rounded-xl shadow-2xl overflow-hidden my-2 p-3 sm:p-0">
+    <div className="max-w-6xl mx-auto rounded-xl shadow-2xl overflow-hidden my-2 p-3 sm:p-0">
       {/* Header */}
-      <nav className="bg-white text-violet-700 border-b border-gray-300 px-4 sm:px-6 py-3 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+      <nav className="bg-white text-violet-700 rounded-t-xl border-2 border-gray-300 px-4 sm:px-6 py-3 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
         <h2 className="text-xl sm:text-2xl font-extrabold flex items-center gap-2">
           {/* <FiSettings className="w-5 h-5 sm:w-6 sm:h-6"/> */}
           {t("shopSettings.header.title")}
@@ -960,7 +960,7 @@ const ShopkeeperSetting = () => {
                         </div>
                         {isEditMode && (
                             <FiTrash2
-                                className="text-red-500 hover:text-red-600 cursor-pointer w-5 h-5 sm:w-6 sm:h-6 p-1 flex-shrink-0"
+                                className="text-red-500 hover:text-red-600 cursor-pointer w-6 h-6 sm:w-7 sm:h-7 p-1 flex-shrink-0"
                                 onClick={() => removeField("purchaseRewards", i)}
                             />
                         )}
@@ -1015,7 +1015,7 @@ const ShopkeeperSetting = () => {
                         </div>
                         {isEditMode && (
                             <FiTrash2
-                                className="text-red-500 hover:text-red-600 cursor-pointer w-5 h-5 sm:w-6 sm:h-6 p-1 flex-shrink-0"
+                                className="text-red-500 hover:text-red-600 cursor-pointer w-6 h-6 sm:w-7 sm:h-7 p-1 flex-shrink-0"
                                 onClick={() => removeField("milestoneRewards", i)}
                             />
                         )}
@@ -1051,7 +1051,7 @@ const ShopkeeperSetting = () => {
                             />
                         )}
                     </div>
-                    <div className="grid grid-cols-1 gap-3 sm:gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                         {/* Name */}
                         <div>
                             <label className="block text-xs font-medium mb-1 text-gray-600">{t("shopSettings.campaigns.name")}</label>

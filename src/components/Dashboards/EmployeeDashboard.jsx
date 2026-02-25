@@ -217,7 +217,7 @@ const EmployeeDashboard = () => {
   };
 
   return (
-    <div className="flex h-[calc(100vh-64px)] bg-slate-100 overflow-hidden">
+    <div className="flex h-[calc(100vh-64px)] overflow-hidden">
       {/* <aside
         className={`fixed inset-y-0 left-0 h-full bg-gradient-to-b from-[#dbeafe] to-[#bfdbfe] text-slate-800 p-3 sm:p-4 shadow-lg z-50 transform transition-all duration-300 ease-in-out ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"

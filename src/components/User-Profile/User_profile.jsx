@@ -1044,12 +1044,12 @@ const UserProfile = () => {
   }
 
   return (
-    <div className="flex items-center justify-center bg-gray-50 min-h-screen py-6 px-4 sm:px-6 lg:px-8">
+    <div className="flex items-center justify-center min-h-screen py-6 px-4 sm:px-6 lg:px-8">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, type: "spring", stiffness: 100 }}
-        className="w-full max-w-2xl bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden"
+        className="w-full max-w-2xl bg-white rounded-xl shadow-xl border border-gray-200 overflow-hidden"
       >
         {/* Header */}
         <header className="bg-gradient-to-r from-blue-50 to-blue-100 border-b border-gray-200 px-6 py-6 sm:px-8 sm:py-8">
@@ -1069,7 +1069,7 @@ const UserProfile = () => {
             </h3>
             <button
               onClick={handleEditToggle}
-              className={`px-6 py-3 rounded-full font-medium transition duration-200 ease-in-out flex items-center justify-center gap-2 text-base shadow-md w-full sm:w-auto
+              className={`px-4 py-2.5 rounded-full font-medium transition duration-200 ease-in-out flex items-center justify-center gap-2 text-base shadow-md w-full sm:w-auto
                 ${isEditing
                   ? 'bg-white text-red-600 border-2 border-red-500 hover:bg-red-50'
                   : 'bg-blue-600 text-white hover:bg-blue-700'
@@ -1086,7 +1086,7 @@ const UserProfile = () => {
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
-                className="bg-green-50 border border-green-300 text-green-700 p-4 rounded-xl mb-6 text-base flex items-center gap-3"
+                className="bg-green-50 border border-green-300 text-green-700 p-3 rounded-xl mb-6 text-base flex items-center gap-3"
               >
                 <FiCheckCircle className="w-6 h-6 flex-shrink-0" />
                 <p className="font-semibold">{successMessage}</p>
@@ -1097,7 +1097,7 @@ const UserProfile = () => {
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: 'auto' }}
                 exit={{ opacity: 0, height: 0 }}
-                className="bg-red-50 border border-red-300 text-red-700 p-4 rounded-xl mb-6 text-base"
+                className="bg-red-50 border border-red-300 text-red-700 p-3 rounded-xl mb-6 text-base"
               >
                 <p className="font-semibold">{t('profile.errors.title')}</p>
                 <p className="mt-1">{error}</p>
@@ -1154,7 +1154,7 @@ const UserProfile = () => {
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className={`w-full bg-gradient-to-br from-blue-600 to-blue-700 text-white py-3 rounded-full font-bold text-base shadow-xl hover:from-blue-700 hover:to-blue-800 transition duration-300 flex items-center justify-center gap-3
+                  className={`w-full bg-gradient-to-br from-blue-600 to-blue-700 text-white py-2.5 rounded-full font-bold text-base shadow-xl hover:from-blue-700 hover:to-blue-800 transition duration-300 flex items-center justify-center gap-3
                     ${isLoading ? 'opacity-70 cursor-wait' : ''}`}
                 >
                   {isLoading ? (
