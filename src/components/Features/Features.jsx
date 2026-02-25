@@ -302,7 +302,7 @@ export default function Features() {
 
   return (
     <>
-      <section className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-slate-50 to-white">
+      <section className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -323,7 +323,7 @@ export default function Features() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.15 }}
-            className="grid gap-6 sm:gap-8 md:gap-10 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
+            className="grid gap-3 sm:gap-8 md:gap-10 grid-cols-2 sm:grid-cols-2 lg:grid-cols-3"
           >
             {features.map((feature, idx) => {
               const Icon = feature.Icon;

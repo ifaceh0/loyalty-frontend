@@ -584,7 +584,7 @@ const Shopdashboard = () => {
   };
 
   return (
-    <div className="flex h-[calc(100vh-64px)] bg-gray-100">
+    <div className="flex h-[calc(100vh-64px)]">
       {/* Sidebar */}
       {/* <aside
         className={`fixed h-screen top-0 bg-gradient-to-b from-[#dbeafe] to-[#bfdbfe] text-slate-800 p-3 sm:p-4 shadow-lg z-50 transform transition-all duration-300 ease-in-out ${
@@ -797,7 +797,7 @@ const Shopdashboard = () => {
             </section>
 
             <section className="mb-4 sm:mb-6">
-              <div className="bg-white shadow-md rounded-xl p-3 sm:p-4 border border-gray-100 hover:shadow-lg transition-shadow duration-300">
+              <div className="bg-white shadow-md rounded-xl p-3 sm:p-3 border border-gray-100 hover:shadow-lg transition-shadow duration-300">
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-1 gap-2">
                   <h3 className="text-base sm:text-lg md:text-xl font-semibold text-gray-800">
                     {t("shopdashboard.customerComparison.title")} ({currentYear})
@@ -812,7 +812,7 @@ const Shopdashboard = () => {
                       <YAxis tick={{ fill: "#6b7280", fontSize: 11 }} allowDecimals={false} />
                       <Tooltip contentStyle={{ backgroundColor: "white", borderRadius: "10px", border: "1px solid #e5e7eb", fontSize: "12px" }} />
                       <Legend wrapperStyle={{ fontSize: "11px" }} verticalAlign="top" height={36} />
-                      <Bar dataKey="customers" name={t("shopdashboard.customerComparison.customers")} fill="#2563eb" barSize={30} radius={[6, 6, 0, 0]}>
+                      <Bar dataKey="customers" name={t("shopdashboard.customerComparison.customers")} fill="#2563eb" barSize={30} radius={[0, 4, 0, 0]}>
                         <LabelList
                           dataKey="growth"
                           position="top"

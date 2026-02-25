@@ -796,9 +796,9 @@ const ShopkeeperProfile = () => {
   }
 
   return (
-    <div className="max-w-6xl mx-auto bg-gray-50 rounded-xl shadow-2xl overflow-hidden mt-2 p-3 sm:p-0">
+    <div className="max-w-6xl mx-auto rounded-xl shadow-2xl overflow-hidden mt-2 p-3 sm:p-0">
       {/* Header/Navigation */}
-      <nav className="bg-white border-b border-gray-300 text-violet-700 px-4 sm:px-8 py-3 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+      <nav className="bg-white border-2 rounded-t-xl border-gray-300 text-violet-700 px-4 sm:px-8 py-3 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
         <h2 className="text-xl sm:text-2xl font-extrabold flex items-center gap-2">
           {/* <FiUser className="w-5 h-5 sm:w-6 sm:h-6"/> */}
            {t("shopProfile.header.title")}
@@ -920,7 +920,7 @@ const ShopkeeperProfile = () => {
             </div>
 
             {/* Shop Details */}
-            <div className="grid grid-cols-1 gap-3 sm:gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                 <InputField
                   label={t("shopProfile.fields.shopName")}
                   name="shopName"
@@ -956,7 +956,7 @@ const ShopkeeperProfile = () => {
             title={t("shopProfile.sections.business")} 
             icon={<FiBriefcase className="w-5 h-5 sm:w-6 sm:h-6"/>}
           >
-            <div className="grid grid-cols-1 gap-3 sm:gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                 <InputField
                   label={t("shopProfile.fields.companyName")}
                   name="companyName"

@@ -348,7 +348,7 @@ const Userdashboard = () => {
   };
 
   return (
-    <div className="flex min-h-screen bg-slate-100 overflow-hidden">
+    <div className="flex min-h-screen overflow-hidden">
       {/* Sidebar */}
       <aside
               className={`fixed h-screen top-0 bg-gradient-to-b from-[#dbeafe] to-[#bfdbfe] text-slate-800 p-3 sm:p-4 shadow-lg z-50 transform transition-all duration-300 ease-in-out ${

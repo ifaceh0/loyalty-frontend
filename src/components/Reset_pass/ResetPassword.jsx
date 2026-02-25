@@ -401,14 +401,14 @@ const ResetPassword = () => {
   return (
     // Background: Off-white/light gray texture
     <div 
-      className="min-h-screen flex items-center p-6 justify-center px-4 bg-gray-50"
-      style={{
-        backgroundImage: 'linear-gradient(0deg, rgba(0,0,0,.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,.03) 1px, transparent 1px)',
-        backgroundSize: '20px 20px',
-      }}
+      className="min-h-screen flex items-center p-6 justify-center px-4"
+      // style={{
+      //   backgroundImage: 'linear-gradient(0deg, rgba(0,0,0,.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,.03) 1px, transparent 1px)',
+      //   backgroundSize: '20px 20px',
+      // }}
     >
       {/* Card: Clean white, sharply rounded, strong shadow */}
-      <div className="w-full max-w-lg bg-white rounded p-6 shadow-2xl border border-gray-200">
+      <div className="w-full max-w-md sm:max-w-lg bg-white rounded-xl p-6 shadow-2xl border border-gray-200">
         
         <div className="text-center mb-8">
             <Lock className="h-10 w-10 text-purple-700 mx-auto mb-2" />
@@ -427,13 +427,13 @@ const ResetPassword = () => {
 
         {/* Status Messages - Clean, bordered alerts */}
         {error && (
-          <div className="bg-red-50 border-l-4 border-red-500 text-red-700 p-3 rounded text-sm mb-6 font-medium shadow-sm">
+          <div className="bg-red-50 border-l-4 border-red-500 text-red-700 p-3 rounded-lg text-sm mb-6 font-medium shadow-sm">
             {error}
           </div>
         )}
         
         {message && (
-          <div className="bg-green-50 border-l-4 border-green-500 text-green-700 p-3 rounded text-sm mb-6 font-medium shadow-sm">
+          <div className="bg-green-50 border-l-4 border-green-500 text-green-700 p-3 rounded-lg text-sm mb-6 font-medium shadow-sm">
             {message}
           </div>
         )}
@@ -447,7 +447,7 @@ const ResetPassword = () => {
                 placeholder={t("resetPassword.placeholder.newPassword")}
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
-                className="w-full h-12 px-4 py-2 text-base text-gray-900 bg-gray-100 border border-gray-300 rounded outline-none focus:ring-2 focus:ring-purple-600 transition duration-200 placeholder:text-gray-500"
+                className="w-full h-12 px-4 py-2 text-base text-gray-900 bg-gray-100 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-purple-600 transition duration-200 placeholder:text-gray-500"
                 required
                 disabled={loading}
             />
@@ -468,7 +468,7 @@ const ResetPassword = () => {
                 placeholder={t("resetPassword.placeholder.confirmPassword")}
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                className="w-full h-12 px-4 py-2 text-base text-gray-900 bg-gray-100 border border-gray-300 rounded outline-none focus:ring-2 focus:ring-purple-600 transition duration-200 placeholder:text-gray-500"
+                className="w-full h-12 px-4 py-2 text-base text-gray-900 bg-gray-100 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-purple-600 transition duration-200 placeholder:text-gray-500"
                 required
                 disabled={loading}
             />
@@ -490,7 +490,7 @@ const ResetPassword = () => {
                     ref={canvasRef} 
                     width={140} 
                     height={40} 
-                    className="select-none rounded border border-gray-300 shadow-inner bg-gray-50" 
+                    className="select-none rounded-lg border border-gray-300 shadow-inner bg-gray-50" 
                 />
                 <button
                     type="button"
@@ -510,7 +510,7 @@ const ResetPassword = () => {
                 placeholder={t("resetPassword.placeholder.captcha")}
                 value={captchaInput}
                 onChange={(e) => setCaptchaInput(e.target.value)}
-                className="w-full h-12 px-4 py-2 text-base text-gray-900 bg-gray-100 border border-gray-300 rounded outline-none focus:ring-2 focus:ring-purple-600 transition duration-200 placeholder:text-gray-500"
+                className="w-full h-12 px-4 py-2 text-base text-gray-900 bg-gray-100 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-purple-600 transition duration-200 placeholder:text-gray-500"
                 required
                 disabled={loading}
             />
@@ -520,7 +520,7 @@ const ResetPassword = () => {
           <button
             type="submit"
             disabled={loading || !!message}
-            className={`w-full flex justify-center items-center gap-3 py-2 text-lg rounded font-bold text-white transition-all duration-300 shadow-md ${
+            className={`w-full flex justify-center items-center gap-3 py-2 text-lg rounded-full font-bold text-white transition-all duration-300 shadow-md ${
               loading || !!message
                 ? "bg-purple-400 cursor-not-allowed opacity-80"
                 : "bg-purple-700 hover:bg-purple-800 shadow-purple-500/50 active:scale-[0.99] transform"

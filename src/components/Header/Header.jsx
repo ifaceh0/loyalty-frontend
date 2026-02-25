@@ -980,6 +980,7 @@ import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import { API_BASE_URL } from '../../apiConfig';
 import LanguageSelector from './LanguageSelector';
+import logo from '../../assets/logo.png';
 
 const LOGOUT_API = `${API_BASE_URL}/api/auth/logout`;
 
@@ -1057,14 +1058,14 @@ export default function Header() {
             href="https://subscription-frontend-psi.vercel.app/subscription"
             target="_blank"
             rel="noopener noreferrer"
-            className="px-6 py-3 text-[15px] sm:text-base font-medium text-emerald-700 hover:bg-emerald-50 rounded-full border border-emerald-200 transition flex items-center justify-center shadow-sm"
+            className="px-6 py-2 text-[15px] sm:text-base font-medium text-emerald-700 hover:bg-emerald-50 rounded-full border border-emerald-200 transition flex items-center justify-center shadow-sm"
             onClick={() => setMobileMenuOpen(false)}
           >
             {t('header.signUpShopkeeper')}
           </a>
           <NavLink
             to="/signup-user"
-            className="px-6 py-3 text-[15px] sm:text-base font-medium text-emerald-700 hover:bg-emerald-50 rounded-full border border-emerald-200 transition flex items-center justify-center shadow-sm"
+            className="px-6 py-2 text-[15px] sm:text-base font-medium text-emerald-700 hover:bg-emerald-50 rounded-full border border-emerald-200 transition flex items-center justify-center shadow-sm"
             onClick={() => setMobileMenuOpen(false)}
           >
             {t('header.signUpUser')}
@@ -1074,7 +1075,7 @@ export default function Header() {
 
       <NavLink
         to="/signin"
-        className="mt-4 bg-emerald-500 hover:bg-emerald-600 active:bg-emerald-700 text-white font-medium rounded-full text-[17px] sm:text-lg px-8 py-3 transition shadow-md text-center flex items-center justify-center"
+        className="mt-4 bg-emerald-500 hover:bg-emerald-600 active:bg-emerald-700 text-white font-medium rounded-full text-[17px] sm:text-lg px-8 py-2 transition shadow-md text-center flex items-center justify-center"
         onClick={() => setMobileMenuOpen(false)}
       >
         {t('header.signIn')}
@@ -1119,23 +1120,24 @@ export default function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-white shadow-lg border-b border-gray-200">
-      <nav className="px-4 sm:px-6 lg:px-8 py-2 flex items-center justify-between">
+    <header className="sticky top-0 z-50 bg-white">
+      <nav className="px-4 sm:px-6 lg:px-8 py-2.5 flex items-center justify-between">
         <div className="flex items-center">
           {isLoggedIn ? (
             <button
               onClick={() => setSidebarOpen(true)}
-              className="text-blue-600 hover:text-blue-700 transition p-2 -ml-2"
+              className="text-white transition p-1 -ml-2 bg-blue-600 rounded"
             >
-              <List size={28} strokeWidth={2.2} />
+              <Menu size={28} strokeWidth={2.2} />
             </button>
           ) : (
-            <Link
-              to="/"
-              className="text-2xl sm:text-2xl lg:text-2xl font-bold bg-gradient-to-r from-emerald-500 to-teal-600 bg-clip-text text-transparent drop-shadow-sm"
-            >
-              LoyaltyHub
-            </Link>
+           <Link to="/" className="flex items-center">
+              <img
+                src={logo}
+                alt="Loyalty Rewards"
+                className="h-12 sm:h-14 w-auto object-contain"
+              />
+           </Link>
           )}
         </div>
 
@@ -1220,9 +1222,9 @@ export default function Header() {
           {/* Mobile Toggle */}
           <button
             onClick={() => setMobileMenuOpen(v => !v)}
-            className="lg:hidden text-emerald-600 hover:text-emerald-700 transition p-1 -mr-2 rounded-lg border border-emerald-300 hover:bg-emerald-100"
+            className="lg:hidden text-emerald-600 hover:text-emerald-700 transition"
           >
-            {mobileMenuOpen ? <X size={28} strokeWidth={2.2} /> : <Menu size={28} strokeWidth={2.2} />}
+            {mobileMenuOpen ? <X size={28} strokeWidth={2.2} /> : <List size={28} strokeWidth={2.2} />}
           </button>
         </div>
       </nav>
@@ -1245,7 +1247,7 @@ export default function Header() {
               initial="hidden"
               animate="visible"
               exit="exit"
-              className="fixed top-0 right-0 h-full w-4/5 max-w-sm bg-white shadow-2xl z-50 lg:hidden overflow-y-auto"
+              className="fixed top-0 right-0 h-full w-2/3 max-w-sm bg-white shadow-2xl z-50 lg:hidden overflow-y-auto"
             >
               <div className="flex items-center justify-between p-4 border-b border-gray-200">
                 {/* <div className="lg:block"> */}

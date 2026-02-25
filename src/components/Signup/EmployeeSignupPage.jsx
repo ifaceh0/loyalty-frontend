@@ -1053,14 +1053,14 @@ export default function EmployeeSignupPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-6 sm:py-8 bg-gray-200">
+    <div className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
       {success && <Confetti recycle={false} numberOfPieces={300} />}
 
       <motion.div
         variants={formVariants}
         initial="hidden"
         animate="visible"
-        className="w-full max-w-sm sm:max-w-lg md:max-w-lg bg-white rounded-xl sm:rounded-xl p-6 sm:p-8 md:p-10 shadow-2xl border border-gray-200"
+        className="w-full max-w-md sm:max-w-lg md:max-w-lg bg-white rounded-xl sm:rounded-xl p-6 sm:p-8 md:p-10 shadow-2xl border border-gray-200"
       >
         <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-emerald-600 text-center mb-2 sm:mb-3">
           {t("employeeSignup.title")}

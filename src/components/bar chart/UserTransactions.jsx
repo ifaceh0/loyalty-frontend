@@ -723,7 +723,7 @@ const UserTransactions = () => {
   const shopNames = Object.keys(transactionsByShop).sort();
 
   return (
-    <div className="min-h-screen bg-gray-50/50">
+    <div className="min-h-screen">
       <div className="p-3 sm:p-4 md:p-2 max-w-8xl mx-auto">
         <AnimatePresence mode="wait">
           {loading ? (
@@ -776,7 +776,7 @@ const UserTransactions = () => {
 
               {/* Date Range Picker */}
               <div className="mb-6 bg-white rounded-xl shadow border border-gray-200 p-4 sm:p-6">
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 items-end">
+                <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-3 items-end">
                   <div>
                     <label className="block text-xs font-bold text-gray-500 uppercase mb-2">
                       From Date
@@ -825,7 +825,7 @@ const UserTransactions = () => {
 
               {/* Controls and Stats Panel */}
               <div className="bg-white rounded-xl shadow-xl p-4 sm:p-6 mb-6 border border-gray-100">
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 sm:gap-6 items-start">
+                <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-6 items-start">
                   
                   {/* Shop Selection */}
                   <div className="sm:col-span-1">

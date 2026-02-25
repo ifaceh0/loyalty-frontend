@@ -1294,7 +1294,7 @@ const CustomerLookup = () => {
         </div>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4 max-w-6xl mx-auto">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4 max-w-6xl mx-auto">
         {/* QR Scanner */}
         <div className="rounded-xl border border-blue-100 bg-blue-50 p-6 shadow-lg text-center">
           <QrCode className="text-blue-600 mx-auto mb-3" size={36} />
