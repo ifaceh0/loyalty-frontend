@@ -974,7 +974,7 @@ import {
   useNavigate,
 } from 'react-router-dom';
 import { FaUser, FaSignOutAlt } from 'react-icons/fa';
-import { X, List, Menu, Globe } from 'lucide-react';
+import { X, List, Menu, Globe, LayoutDashboard  } from 'lucide-react';
 import { useSidebar } from '../../context/SidebarContext';
 import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -1016,6 +1016,13 @@ export default function Header() {
       console.log("Backend logout failed (server asleep?), but client session cleared");
     });
   };
+
+  const UserOnlineIcon = () => (
+    <div className="relative">
+      <FaUser className="w-6 h-6 text-gray-600" />
+      <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-green-500 rounded-full border-2 border-white animate-pulse"></span>
+    </div>
+  );
 
   const navLinkClasses = ({ isActive }) =>
     `relative px-4 py-2 rounded-full transition-all duration-200 text-[15px] sm:text-base
@@ -1084,9 +1091,9 @@ export default function Header() {
   );
 
   const LoggedInMobileDrawer = () => (
-    <div className="flex flex-col gap-5 p-6">
-      <div className="flex items-center gap-4 p-4 bg-gray-50 rounded">
-        <FaUser className="w-8 h-8 text-emerald-600" />
+    <div className="flex flex-col gap-3 p-6">
+      <div className="flex items-center gap-4 p-2 rounded">
+        <FaUser className="w-7 h-7 text-gray-600" />
         <div>
           <p className="font-semibold text-gray-800 text-[17px]">{userName || 'User'}</p>
           <p className="text-sm text-gray-600">Welcome back!</p>
@@ -1098,16 +1105,17 @@ export default function Header() {
           setSidebarOpen(true);
           setMobileMenuOpen(false);
         }}
-        className="text-left px-5 py-4 text-[17px] text-emerald-700 hover:bg-emerald-50 rounded font-medium transition min-h-[56px] flex items-center"
+        className="text-left gap-3 px-5 py-3 text-[17px] text-blue-600 hover:bg-blue-50 rounded-full font-medium transition flex items-center"
       >
+        <LayoutDashboard className="w-5 h-5" />
         {t('header.openDashboard')}
       </button>
 
       <button
         onClick={handleLogout}
-        className="flex items-center gap-3 px-5 py-4 text-[17px] text-red-600 hover:bg-red-50 rounded font-medium transition min-h-[56px]"
+        className="flex items-center gap-3 px-5 py-3 text-[17px] text-red-600 hover:bg-red-50 rounded-full font-medium transition"
       >
-        <FaSignOutAlt className="w-6 h-6" />
+        <FaSignOutAlt className="w-5 h-5" />
         {t('header.logout')}
       </button>
     </div>
@@ -1121,12 +1129,12 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 bg-white">
-      <nav className="px-4 sm:px-6 lg:px-8 py-2.5 flex items-center justify-between">
+      <nav className="px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
         <div className="flex items-center">
           {isLoggedIn ? (
             <button
               onClick={() => setSidebarOpen(true)}
-              className="text-white transition p-1 -ml-2 bg-blue-600 rounded"
+              className="text-white transition p-1 -ml-1 bg-blue-600 rounded"
             >
               <Menu size={28} strokeWidth={2.2} />
             </button>
@@ -1202,14 +1210,14 @@ export default function Header() {
               </>
             ) : (
               <div className="relative group">
-                <button className="flex items-center space-x-3 focus:outline-none">
-                  <FaUser className="text-emerald-600 w-6 h-6" />
-                  <span className="text-emerald-600 font-medium text-base">{userName || 'User'}</span>
+                <button className="flex items-center space-x-2 focus:outline-none">
+                  <FaUser className="text-gray-600 w-5 h-5" />
+                  <span className="text-blue-600 font-medium text-base">{userName || 'User'}</span>
                 </button>
-                <div className="hidden group-hover:block absolute top-full right-0 w-56 bg-white shadow-xl border rounded z-10 mt-1">
+                <div className="hidden group-hover:block absolute top-full right-0 bg-white shadow-xl border rounded z-10 mt-1">
                   <button
                     onClick={handleLogout}
-                    className="flex w-full items-center py-3 px-6 text-base hover:bg-gray-100 text-left text-red-600 rounded-lg transition"
+                    className="flex items-center p-1.5 px-8 text-base hover:bg-gray-300 text-left text-red-600 rounded transition"
                   >
                     <FaSignOutAlt className="mr-3 w-4 h-4" />
                     {t('header.logout')}
@@ -1222,9 +1230,15 @@ export default function Header() {
           {/* Mobile Toggle */}
           <button
             onClick={() => setMobileMenuOpen(v => !v)}
-            className="lg:hidden text-emerald-600 hover:text-emerald-700 transition"
+            className="lg:hidden transition flex items-center"
           >
-            {mobileMenuOpen ? <X size={28} strokeWidth={2.2} /> : <List size={28} strokeWidth={2.2} />}
+            {mobileMenuOpen ? (
+              <X size={28} strokeWidth={2.2} />
+            ) : isLoggedIn ? (
+              <UserOnlineIcon />
+            ) : (
+              <List className="text-emerald-600" size={28} strokeWidth={2.2} />
+            )}
           </button>
         </div>
       </nav>
@@ -1249,16 +1263,11 @@ export default function Header() {
               exit="exit"
               className="fixed top-0 right-0 h-full w-2/3 max-w-sm bg-white shadow-2xl z-50 lg:hidden overflow-y-auto"
             >
-              <div className="flex items-center justify-between p-4 border-b border-gray-200">
-                {/* <div className="lg:block"> */}
+              <div className="flex items-center justify-between p-4">
                   <LanguageSelector />
-                {/* </div> */}
-                {/* <div className="flex items-center gap-4"> */}
-                  
                   <button onClick={() => setMobileMenuOpen(false)}>
-                    <X size={32} className="text-gray-700" strokeWidth={2.2} />
+                    <X size={22} className="text-gray-700" strokeWidth={2.2} />
                   </button>
-                {/* </div> */}
               </div>
 
               {isLoggedIn ? <LoggedInMobileDrawer /> : <GuestMobileDrawer />}

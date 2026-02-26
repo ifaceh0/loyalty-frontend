@@ -634,7 +634,7 @@
     "buttons": {
       "edit": "Edit",
       "cancel": "Cancel",
-      "save": "Save Profile",
+      "save": "Save",
       "saving": "Saving..."
     },
     "sections": {
@@ -696,7 +696,7 @@
     "buttons": {
       "edit": "Edit",
       "cancel": "Cancel",
-      "save": "Save Changes",
+      "save": "Save",
       "saving": "Saving..."
     },
     "sections": {

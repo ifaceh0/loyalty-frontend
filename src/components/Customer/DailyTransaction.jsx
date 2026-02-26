@@ -879,19 +879,19 @@ const DailyTransaction = () => {
   return (
     <>
       {/* MAIN PAGE */}
-      <div className="min-h-screen bg-gray-50/40 py-6 px-4 sm:px-6 lg:px-8">
+      <div className="min-h-screen py-20 sm:py-12 px-4 sm:px-6 lg:px-8">
         <header className="mb-6 sm:mb-8">
           <div className="flex justify-center">
             <h1 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight flex items-center gap-3">
-              <Calendar className="w-9 h-9 sm:w-10 sm:h-10 text-orange-600" />
+              <Calendar className="w-9 h-9 sm:w-10 sm:h-10 text-blue-600" />
               {t('daily.page.title')}
             </h1>
           </div>
         </header>
 
         <main className="flex justify-center">
-          <div className="bg-white rounded-xl shadow-xl p-8 md:p-12 w-full max-w-5xl border border-blue-200">
-            <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center text-blue-800">
+          <div className="bg-white rounded-xl p-8 md:p-12 w-full max-w-5xl border border-blue-200">
+            <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center text-blue-700">
               {t('daily.page.subtitle')}
             </h2>
             <p className="text-slate-600 text-center mb-4">
@@ -908,7 +908,7 @@ const DailyTransaction = () => {
                   type="date"
                   value={selectedDate}
                   onChange={(e) => setSelectedDate(e.target.value)}
-                  className="w-full pl-12 pr-4 py-2 bg-slate-50 border-2 border-blue-300 rounded-full text-slate-800 focus:border-orange-500 focus:ring-4 focus:ring-orange-100 focus:outline-none transition-all text-lg font-medium"
+                  className="w-full pl-12 pr-4 py-2 bg-slate-50 border-2 border-blue-300 rounded-full text-slate-800 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 focus:outline-none transition-all text-lg font-medium"
                 />
               </div>
 
@@ -918,7 +918,7 @@ const DailyTransaction = () => {
                 className={`w-full max-w-xs px-12 py-2 rounded-full font-bold text-lg text-white shadow-lg transform hover:scale-105 transition-all flex items-center justify-center
                   ${isLoadingDaily 
                     ? 'bg-slate-400 cursor-wait' 
-                    : 'bg-gradient-to-r from-blue-500 to-blue-600 hover:shadow-orange-500/50'
+                    : 'bg-gradient-to-r from-blue-500 to-blue-600 hover:shadow-blue-500/50'
                   }`}
               >
                 {isLoadingDaily ? (
@@ -942,7 +942,7 @@ const DailyTransaction = () => {
           <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 md:p-8 print:hidden">
             <div className="bg-white rounded-xl shadow-2xl w-full max-w-6xl h-[92vh] flex flex-col overflow-hidden border border-blue-200">
               {/* HEADER */}
-              <div className="bg-gradient-to-r from-blue-600 to-violet-600 p-6 md:p-2 rounded-t-xl flex justify-between items-center shrink-0">
+              <div className="bg-blue-600 p-6 md:p-2 rounded-t-xl flex justify-between items-center shrink-0">
                 <div>
                   <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-white">
                     {t('daily.popup.dailyTitle', { date: format(new Date(selectedDate), 'MMMM d, yyyy') })}
@@ -973,16 +973,16 @@ const DailyTransaction = () => {
                       placeholder={t('daily.search.placeholder')}
                       value={userId}
                       onChange={(e) => setUserId(e.target.value)}
-                      className="w-full pl-12 pr-4 py-2 bg-white border-2 border-blue-300 rounded-full text-slate-800 focus:border-violet-500 focus:ring-4 focus:ring-violet-100 focus:outline-none transition-all font-medium"
+                      className="w-full pl-12 pr-4 py-1.5 bg-white border-2 border-blue-300 rounded-full text-slate-800 focus:border-violet-500 focus:ring-4 focus:ring-violet-100 focus:outline-none transition-all font-medium"
                     />
                   </div>
                   <button
                     onClick={searchUser}
                     disabled={isLoadingUser}
-                    className={`px-4 py-2 rounded-full font-bold text-white shadow-md transition-all flex items-center
+                    className={`px-4 py-1.5 rounded-full font-bold text-white shadow-md transition-all flex items-center
                       ${isLoadingUser
                         ? 'bg-slate-400 cursor-wait'
-                        : 'bg-gradient-to-r from-blue-600 to-violet-600 hover:shadow-violet-500/50'
+                        : 'bg-blue-600 hover:shadow-violet-500/50'
                       }`}
                   >
                     {isLoadingUser ? (
@@ -1004,14 +1004,14 @@ const DailyTransaction = () => {
               <div className="flex justify-end gap-3 p-2 bg-blue-50 border-b-2 border-blue-200 print:hidden">
                 <button
                   onClick={exportToCSV}
-                  className="flex items-center gap-2 px-5 py-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-full hover:from-blue-700 hover:to-blue-800 transition-all shadow-lg font-semibold"
+                  className="flex items-center gap-2 px-5 py-2 bg-blue-600 text-white rounded-full hover:from-blue-700 hover:to-blue-800 transition-all shadow-lg font-semibold"
                 >
                   <Download className="w-5 h-5" />
                   {t('daily.buttons.exportCSV')}
                 </button>
                 <button
                   onClick={handlePrint}
-                  className="flex items-center gap-2 px-5 py-2 bg-gradient-to-r from-violet-600 to-violet-700 text-white rounded-full hover:from-violet-700 hover:to-violet-800 transition-all shadow-lg font-semibold"
+                  className="flex items-center gap-2 px-5 py-2 bg-violet-600 text-white rounded-full hover:from-violet-700 hover:to-violet-800 transition-all shadow-lg font-semibold"
                 >
                   <Printer className="w-5 h-5" />
                   {t('daily.buttons.print')}
@@ -1034,7 +1034,7 @@ const DailyTransaction = () => {
                 ) : dailyData && dailyData.transactions?.length > 0 ? (
                   <>
                     {/* SUMMARY CARDS */}
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-6 mb-10">
                       <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-6 text-center border-2 border-blue-200 shadow-md">
                         <Banknote className="w-12 h-12 text-blue-600 mx-auto mb-3" />
                         <p className="text-sm font-bold text-blue-700 uppercase tracking-wider">{t('daily.summary.totalSales')}</p>
@@ -1061,7 +1061,7 @@ const DailyTransaction = () => {
                       {/* ---------- Desktop / Laptop View ---------- */}
                       <div className="hidden md:block bg-white rounded-xl shadow-xl border border-blue-200 overflow-hidden">
                         {/* Table Header */}
-                        <div className="bg-gradient-to-r from-blue-600 to-violet-600 p-4">
+                        <div className="bg-blue-600 p-4">
                           <div className="grid grid-cols-[60px_1fr_1fr_1fr_1.5fr_1fr_1fr] gap-4 text-white font-semibold text-sm uppercase tracking-wide">
                             <span>{t('daily.table.sno')}</span>
                             <span>{t('daily.table.userId')}</span>
@@ -1123,7 +1123,7 @@ const DailyTransaction = () => {
                         {dailyData.transactions.map((tx, idx) => (
                           <div
                             key={idx}
-                            className="p-4 bg-white rounded-xl shadow-md border border-blue-100 hover:bg-blue-50 transition-all"
+                            className="p-4 bg-white rounded-xl border border-blue-100 hover:bg-blue-50 transition-all"
                           >
                             {/* Top Row */}
                             <div className="flex justify-between items-center mb-2">
@@ -1132,8 +1132,11 @@ const DailyTransaction = () => {
                             </div>
 
                             {/* Name */}
-                            <div className="mb-1">
-                              <span className="font-bold text-slate-800">{t('daily.table.name')}: {tx.name}</span>
+                            <div className="flex justify-between items-center mb-1">
+                              <span className="font-bold text-slate-800">{t('daily.table.name')}:</span>
+                              <span className="font-bold">
+                                 {tx.name}
+                              </span>
                             </div>
 
                             {/* Amount */}
@@ -1186,7 +1189,7 @@ const DailyTransaction = () => {
                       </div>
 
                       {/* ---------- Footer ---------- */}
-                      <div className="mt-10 bg-gradient-to-r from-blue-700 to-violet-700 rounded-xl p-4 text-center shadow-xl">
+                      <div className="mt-10 bg-blue-600 rounded-xl p-4 text-center shadow-xl">
                         <h3 className="text-2xl md:text-3xl font-black text-white">
                           {t('daily.summary.totalSalesToday')}:
                           <span className="ml-3 font-extrabold">
@@ -1212,7 +1215,7 @@ const DailyTransaction = () => {
         {showUserPopup && (
           <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 md:p-8 print:hidden">
             <div className="bg-white rounded-xl shadow-2xl w-full max-w-6xl h-[92vh] flex flex-col overflow-hidden border-2 border-orange-200">
-              <div className="bg-gradient-to-r from-blue-600 to-orange-600 p-6 md:p-2 rounded-t-xl flex justify-between items-center">
+              <div className="bg-blue-600 p-6 md:p-2 rounded-t-xl flex justify-between items-center">
                 <div>
                   <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-white truncate">
                     {popupTitle === t('daily.popup.error') 

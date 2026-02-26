@@ -566,10 +566,10 @@ import { API_BASE_URL } from '../../apiConfig';
 import { getCurrencySymbol } from "../../utils/currency";
 
 const inputStyle =
-  "w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition duration-200 shadow-sm text-sm sm:text-base";
+  "w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition duration-200 text-sm sm:text-base";
 
 const SectionWrapper = ({ title, children, isEditMode }) => (
-  <div className={`p-4 sm:p-6 rounded-xl border-2 ${isEditMode ? 'border-blue-200 bg-white shadow-lg' : 'border-gray-100 bg-gray-50 shadow-inner'} space-y-3 sm:space-y-4 transition-colors duration-300`}>
+  <div className={`p-4 sm:p-6 rounded-xl border-2 ${isEditMode ? 'border-blue-200 bg-white' : 'border-gray-100 bg-gray-50 shadow-inner'} space-y-3 sm:space-y-4 transition-colors duration-300`}>
     <h3 className="text-lg sm:text-xl font-bold text-blue-700 border-b pb-2">{title}</h3>
     {children}
   </div>
@@ -796,19 +796,19 @@ const ShopkeeperSetting = () => {
   }
 
   return (
-    <div className="max-w-6xl mx-auto rounded-xl shadow-2xl overflow-hidden my-2 p-3 sm:p-0">
+    <div className="max-w-6xl mx-auto rounded-xl border border-gray-200 overflow-hidden my-2 p-3 sm:p-0">
       {/* Header */}
-      <nav className="bg-white text-violet-700 rounded-t-xl border-2 border-gray-300 px-4 sm:px-6 py-3 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+      <nav className="bg-white text-blue-600 rounded-t-xl px-4 sm:px-6 py-3 flex flex-row sm:flex-row justify-between items-start sm:items-center gap-3">
         <h2 className="text-xl sm:text-2xl font-extrabold flex items-center gap-2">
           {/* <FiSettings className="w-5 h-5 sm:w-6 sm:h-6"/> */}
           {t("shopSettings.header.title")}
         </h2>
         
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-row items-center gap-2">
           {isEditMode && (
              <button
                 onClick={handleCancelEdit}
-                className="bg-red-500 hover:bg-red-600 text-white px-3 sm:px-4 py-2 rounded-full transition duration-200 flex items-center gap-1 font-medium sm:font-semibold shadow-md text-sm"
+                className="bg-red-500 hover:bg-red-600 text-white px-3 sm:px-4 py-2 rounded-full transition duration-200 flex items-center gap-1 font-medium sm:font-semibold text-sm"
                 disabled={isSaving}
             >
                 {/* <FiX className="w-4 h-4 sm:w-5 sm:h-5" /> */}
@@ -819,10 +819,10 @@ const ShopkeeperSetting = () => {
           <button
             onClick={handleSubmit}
             disabled={isSaving}
-            className={`text-white px-4 sm:px-5 py-2 rounded-full transition duration-200 flex items-center gap-1.5 sm:gap-2 font-medium sm:font-semibold shadow-md text-sm ${
+            className={`text-white px-4 sm:px-5 py-2 rounded-full transition duration-200 flex items-center gap-1.5 sm:gap-2 font-medium sm:font-semibold text-sm ${
               isEditMode
                 ? (isSaving ? 'bg-green-400 cursor-not-allowed' : 'bg-green-500 hover:bg-green-600')
-                : 'bg-violet-700 hover:bg-violet-800'
+                : 'bg-blue-600 hover:bg-blue-700'
             }`}
           >
             {isSaving ? (

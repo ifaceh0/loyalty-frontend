@@ -564,7 +564,7 @@ export default function UserShopList() {
   }
 
   return (
-    <div className="p-6 md:p-4">
+    <div className="p-6 md:p-4 min-h-screen">
       <motion.h1
         className="text-4xl font-extrabold text-center text-blue-800 mb-16"
         initial={{ opacity: 0, y: -20 }}
@@ -600,7 +600,7 @@ export default function UserShopList() {
           {currentShops.map((shop) => (
             <div
               key={shop.shopId}
-              className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition transform hover:-translate-y-1 border border-blue-100"
+              className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition transform hover:-translate-y-1 border border-blue-100"
             >
               {/* Gradient Header with Check */}
               <div className="bg-blue-700 p-3 text-white flex items-center justify-between">
@@ -645,20 +645,20 @@ export default function UserShopList() {
               <div className="p-4 bg-blue-50">
                 {/* Shop ID Badge */}
                 <div className="flex justify-end mb-2">
-                  <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
+                  <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">
                     ID: shop{shop.shopId}
                   </span>
                 </div>
 
                 {/* Country & City */}
                 <div className="grid grid-cols-2 gap-2 text-sm mb-3">
-                  <div className="flex items-center bg-white p-1 rounded-full border border-blue-200">
+                  <div className="flex items-center bg-white p-1 rounded border border-blue-200">
                     <FontAwesomeIcon icon={faGlobe} className="mr-2 text-blue-700 text-xs" />
                     <span className="font-medium text-blue-800 truncate">
                       {shop.country ? shop.country.toUpperCase() : 'N/A'}
                     </span>
                   </div>
-                  <div className="flex items-center bg-white p-1 rounded-full border border-blue-200">
+                  <div className="flex items-center bg-white p-1 rounded border border-blue-200">
                     <FontAwesomeIcon icon={faCity} className="mr-2 text-blue-700 text-xs" />
                     <span className="font-medium text-blue-800 truncate">
                       {shop.city ? shop.city.toUpperCase() : 'N/A'}
@@ -667,7 +667,7 @@ export default function UserShopList() {
                 </div>
 
                 {/* Phone */}
-                <div className="flex items-center mt-2 bg-white p-1.5 rounded-full border border-blue-200">
+                <div className="flex items-center mt-2 bg-white p-1.5 rounded border border-blue-200">
                   <FontAwesomeIcon icon={faPhoneAlt} className="mr-2 text-blue-700" />
                   <span className="text-sm font-medium text-blue-800">
                     {shop.shopPhone || 'N/A'}

@@ -762,10 +762,10 @@ const UserTransactions = () => {
               transition={{ duration: 0.4 }}
             >
               {/* Header */}
-              <header className="bg-white rounded-xl mb-6 shadow-lg border border-gray-100">
+              <header className="bg-white rounded-xl mb-6 border border-gray-200">
                 <div className="px-4 sm:px-6 py-4 sm:py-5">
                   <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight flex items-center gap-2 sm:gap-3">
-                    <Target className="w-6 h-6 sm:w-8 sm:h-8 text-indigo-600" />
+                    <Target className="w-6 h-6 sm:w-8 sm:h-8 text-blue-600" />
                     {t('transactions.title')}
                   </h1>
                   <p className="text-sm sm:text-base text-gray-500 mt-1">
@@ -775,7 +775,7 @@ const UserTransactions = () => {
               </header>
 
               {/* Date Range Picker */}
-              <div className="mb-6 bg-white rounded-xl shadow border border-gray-200 p-4 sm:p-6">
+              <div className="mb-6 bg-white rounded-xl border border-gray-200 p-4 sm:p-6">
                 <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-3 items-end">
                   <div>
                     <label className="block text-xs font-bold text-gray-500 uppercase mb-2">
@@ -809,7 +809,7 @@ const UserTransactions = () => {
                   <div className="flex items-end">
                     <button
                       onClick={handleApplyFilter}
-                      className="w-full sm:w-auto px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-full shadow transition duration-200"
+                      className="sm:w-auto px-4 sm:px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-full shadow transition duration-200"
                     >
                       {/* {t('common.apply') || 'Apply Filter'} */}
                       Apply Filter
@@ -824,7 +824,7 @@ const UserTransactions = () => {
               </div>
 
               {/* Controls and Stats Panel */}
-              <div className="bg-white rounded-xl shadow-xl p-4 sm:p-6 mb-6 border border-gray-100">
+              <div className="bg-white rounded-xl p-4 sm:p-6 mb-6 border border-gray-200">
                 <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-6 items-start">
                   
                   {/* Shop Selection */}
@@ -833,11 +833,11 @@ const UserTransactions = () => {
                       {t('transactions.selectMerchant')}
                     </label>
                     <div className="relative">
-                      <ShoppingBag className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-indigo-400 pointer-events-none" />
+                      <ShoppingBag className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-blue-400 pointer-events-none" />
                       <select
                         value={selectedShop}
                         onChange={handleShopChange}
-                        className="w-full pl-10 pr-8 py-2.5 bg-gray-50 border border-indigo-200 rounded-full text-gray-800 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-200 appearance-none"
+                        className="w-full pl-10 pr-8 py-2.5 bg-gray-50 border border-blue-200 rounded-full text-gray-800 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200 appearance-none"
                       >
                         {shopNames.map((shop) => (
                           <option key={shop} value={shop}>
@@ -852,8 +852,8 @@ const UserTransactions = () => {
                   <StatCard 
                     title={t('transactions.stats.availablePoints')}
                     value={`${currentShopData.availablePoints || 0} pts`}
-                    icon={<Target className="w-5 h-5 sm:w-6 sm:h-6 text-indigo-500" />}
-                    color="indigo"
+                    icon={<Target className="w-5 h-5 sm:w-6 sm:h-6 text-blue-500" />}
+                    color="blue"
                   />
                   
                   {/* Total Amount Spent */}
@@ -876,7 +876,7 @@ const UserTransactions = () => {
                     <button
                       onClick={downloadExcel}
                       disabled={!currentShopData.transactions?.length}
-                      className="flex items-center justify-center w-full sm:w-auto gap-2 px-4 sm:px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-full font-medium sm:font-semibold text-sm shadow-md transition duration-300 transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="flex items-center justify-center sm:w-auto gap-2 px-4 sm:px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-full font-medium sm:font-semibold text-sm shadow-md transition duration-300 transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       <Download className="w-4 h-4 sm:w-5 sm:h-5" />
                       {t('transactions.exportButton')}
@@ -886,19 +886,19 @@ const UserTransactions = () => {
               </div>
 
               {/* Transactions Table */}
-              <div className="bg-white rounded-xl shadow-2xl overflow-hidden border border-gray-100">
-                <div className="p-3 sm:p-4 bg-gray-50 border-b border-gray-100">
-                  <h3 className="text-lg sm:text-xl font-semibold text-gray-700">
-                    {t('transactions.table.title')} <span className="text-indigo-600">{selectedShop}</span>
+              <div className="bg-white rounded-xl overflow-hidden border border-gray-200">
+                <div className="p-3 sm:p-3 bg-blue-600">
+                  <h3 className="text-lg sm:text-xl font-semibold text-black">
+                    {t('transactions.table.title')} <span className="text-white">{selectedShop}</span>
                   </h3>
                 </div>
 
                 {/* Scrollable Table */}
                 <div className="overflow-x-auto">
-                  <div className="max-h-[400px] sm:max-h-[500px] overflow-y-auto scrollbar-thin scrollbar-thumb-indigo-300 scrollbar-track-gray-100">
+                  <div className="max-h-[400px] sm:max-h-[500px] overflow-y-auto scrollbar-thin scrollbar-thumb-blue-300 scrollbar-track-gray-100">
                     <table className="w-full min-w-[700px] table-auto text-gray-800">
-                      <thead className="bg-indigo-200/100 sticky top-0 z-10">
-                        <tr className="text-gray-600 uppercase text-xs sm:text-sm leading-normal">
+                      <thead className="bg-blue-600 sticky top-0 z-10">
+                        <tr className="text-black uppercase text-xs sm:text-sm leading-normal">
                           <th className="py-2 sm:py-3 px-3 sm:px-6 text-left font-bold">#</th>
                           <th className="py-2 sm:py-3 px-3 sm:px-6 text-left font-bold">{t('transactions.table.date')}</th>
                           <th className="py-2 sm:py-3 px-3 sm:px-6 text-left font-bold">{t('transactions.table.amount')} ({currencySymbol})</th>
@@ -916,7 +916,7 @@ const UserTransactions = () => {
                                 animate={{ opacity: 1, y: 0 }}
                                 exit={{ opacity: 0, y: -10 }}
                                 transition={{ duration: 0.3 }}
-                                className="border-b border-gray-100 hover:bg-indigo-50 transition duration-200"
+                                className="border-b border-gray-100 hover:bg-blue-50 transition duration-200"
                               >
                                 <td className="py-2 sm:py-3 px-3 sm:px-6 whitespace-nowrap text-gray-600 font-medium">{index + 1}</td>
                                 <td className="py-2 sm:py-3 px-3 sm:px-6 text-gray-700">{new Date(txn.date).toLocaleDateString()}</td>
@@ -968,7 +968,7 @@ const UserTransactions = () => {
                 <button 
                   disabled={page === 0}
                   onClick={() => setPage(p => Math.max(0, p - 1))}
-                  className="px-4 py-2 bg-indigo-600 text-white rounded-full disabled:opacity-50"
+                  className="px-4 py-2 bg-blue-600 text-white rounded-full disabled:opacity-50"
                 >
                   Previous
                 </button>
@@ -978,7 +978,7 @@ const UserTransactions = () => {
                 <button 
                   disabled={page >= totalPages - 1}
                   onClick={() => setPage(p => p + 1)}
-                  className="px-4 py-2 bg-indigo-600 text-white rounded-full disabled:opacity-50"
+                  className="px-4 py-2 bg-blue-600 text-white rounded-full disabled:opacity-50"
                 >
                   Next
                 </button>

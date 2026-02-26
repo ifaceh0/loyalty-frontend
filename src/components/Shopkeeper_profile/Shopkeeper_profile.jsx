@@ -535,7 +535,7 @@ const inputStyle = (isEditing) =>
   }`;
 
 const SectionWrapper = ({ title, children, icon, className = "" }) => (
-  <div className={`bg-white p-4 sm:p-6 rounded-xl border border-gray-200 shadow-lg ${className}`}>
+  <div className={`bg-white p-4 sm:p-6 rounded-xl border border-gray-200 ${className}`}>
     <h3 className="text-lg sm:text-xl font-bold text-blue-700 border-b pb-2 sm:pb-3 mb-3 sm:mb-4 flex items-center gap-2">
       {icon} {title}
     </h3>
@@ -796,18 +796,18 @@ const ShopkeeperProfile = () => {
   }
 
   return (
-    <div className="max-w-6xl mx-auto rounded-xl shadow-2xl overflow-hidden mt-2 p-3 sm:p-0">
+    <div className="max-w-6xl mx-auto rounded-xl border border-gray-200 overflow-hidden mt-2 p-3 sm:p-0">
       {/* Header/Navigation */}
-      <nav className="bg-white border-2 rounded-t-xl border-gray-300 text-violet-700 px-4 sm:px-8 py-3 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+      <nav className="bg-white rounded-t-xl text-blue-600 px-4 sm:px-8 py-3 flex flex-row sm:flex-row justify-between items-start sm:items-center gap-3">
         <h2 className="text-xl sm:text-2xl font-extrabold flex items-center gap-2">
           {/* <FiUser className="w-5 h-5 sm:w-6 sm:h-6"/> */}
            {t("shopProfile.header.title")}
         </h2>
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-row items-center gap-2">
             {isEditing && (
                 <button
                 type="button"
-                className="bg-red-500 hover:bg-red-600 text-white px-3 sm:px-4 py-2 rounded-full transition duration-200 flex items-center gap-1.5 sm:gap-2 font-semibold shadow-md text-sm"
+                className="bg-red-500 hover:bg-red-600 text-white px-3 sm:px-4 py-2 rounded-full transition duration-200 flex items-center gap-1.5 sm:gap-2 font-semibold text-sm"
                 onClick={handleCancel}
                 disabled={isSubmitting}
                 >
@@ -820,7 +820,7 @@ const ShopkeeperProfile = () => {
                 <button
                 type="submit"
                 form="profile-form"
-                className={`text-white px-4 sm:px-5 py-2 rounded-full transition duration-200 flex items-center gap-1.5 sm:gap-2 font-semibold shadow-md text-sm ${
+                className={`text-white px-4 sm:px-5 py-2 rounded-full transition duration-200 flex items-center gap-1.5 sm:gap-2 font-semibold text-sm ${
                     isSubmitting ? 'bg-green-400 cursor-not-allowed' : 'bg-green-500 hover:bg-green-600'
                 }`}
                 disabled={isSubmitting}
@@ -842,7 +842,7 @@ const ShopkeeperProfile = () => {
             {!isEditing && (
                 <button
                 type="button"
-                className="bg-violet-700 hover:bg-violet-800 text-white px-4 sm:px-5 py-2 rounded-full transition duration-200 flex items-center gap-1.5 sm:gap-2 font-semibold shadow-md text-sm"
+                className="bg-blue-600 hover:bg-blue-700 text-white px-4 sm:px-5 py-2 rounded-full transition duration-200 flex items-center gap-1.5 sm:gap-2 font-semibold text-sm"
                 onClick={() => setIsEditing(true)}
                 >
                 {/* <FiEdit3 className="w-4 h-4 sm:w-5 sm:h-5" /> */}
@@ -872,7 +872,7 @@ const ShopkeeperProfile = () => {
                     <img
                         src={`data:image/jpeg;base64,${formData.logoImage}`}
                         alt="Shop Logo"
-                        className="w-20 h-20 sm:w-24 sm:h-24 object-contain bg-white rounded-full border-2 border-gray-300 shadow-md"
+                        className="w-20 h-20 sm:w-24 sm:h-24 object-contain bg-white rounded-full border-2 border-gray-300"
                     />
                     ) : (
                     <div className="w-20 h-20 sm:w-24 sm:h-24 bg-gray-200 rounded-full flex flex-col items-center justify-center text-gray-500 text-xs border border-gray-400 p-2">

@@ -1033,9 +1033,9 @@ const UserProfile = () => {
         className="flex flex-col items-center justify-center min-h-[60vh]"
       >
         <div className="flex flex-col items-center gap-4">
-          <FiLoader className="w-12 h-12 sm:w-14 sm:h-14 text-blue-600 animate-spin" />
-          <span className="text-xl sm:text-2xl font-bold text-blue-600">{t('profile.loading.title')}</span>
-          <p className="text-base sm:text-lg text-blue-600 font-medium text-center max-w-xs">
+          <FiLoader className="w-10 h-10 sm:w-12 sm:h-12 text-blue-600 animate-spin" />
+          <span className="text-lg sm:text-lg font-bold text-blue-600">{t('profile.loading.title')}</span>
+          <p className="text-base sm:text-base text-blue-600 font-medium text-center max-w-xs">
             {t('profile.loading.message')}
           </p>
         </div>
@@ -1049,7 +1049,7 @@ const UserProfile = () => {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, type: "spring", stiffness: 100 }}
-        className="w-full max-w-2xl bg-white rounded-xl shadow-xl border border-gray-200 overflow-hidden"
+        className="w-full max-w-2xl rounded-xl border-2 border-gray-200 overflow-hidden"
       >
         {/* Header */}
         <header className="bg-gradient-to-r from-blue-50 to-blue-100 border-b border-gray-200 px-6 py-6 sm:px-8 sm:py-8">
@@ -1063,13 +1063,13 @@ const UserProfile = () => {
 
         <div className="p-6 sm:p-8 lg:p-10">
           {/* Section Title + Edit Button */}
-          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-6 sm:mb-8 gap-4">
+          <div className="flex flex-row sm:flex-row justify-between items-center mb-6 sm:mb-8 gap-4">
             <h3 className="text-xl sm:text-2xl font-semibold text-gray-800">
               {t('profile.section.title')}
             </h3>
             <button
               onClick={handleEditToggle}
-              className={`px-4 py-2.5 rounded-full font-medium transition duration-200 ease-in-out flex items-center justify-center gap-2 text-base shadow-md w-full sm:w-auto
+              className={`px-4 sm:px-8 py-2 rounded-full font-medium transition duration-200 ease-in-out flex items-center justify-center gap-2 text-base sm:w-auto
                 ${isEditing
                   ? 'bg-white text-red-600 border-2 border-red-500 hover:bg-red-50'
                   : 'bg-blue-600 text-white hover:bg-blue-700'
@@ -1107,7 +1107,7 @@ const UserProfile = () => {
 
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-2 gap-3">
               <ProfileInputField
                 label={t('profile.fields.firstName')}
                 name="firstName"
@@ -1154,7 +1154,7 @@ const UserProfile = () => {
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className={`w-full bg-gradient-to-br from-blue-600 to-blue-700 text-white py-2.5 rounded-full font-bold text-base shadow-xl hover:from-blue-700 hover:to-blue-800 transition duration-300 flex items-center justify-center gap-3
+                  className={`px-8 bg-green-500 text-white py-2 rounded-full font-bold text-base hover:bg-green-600 transition duration-300 flex items-center justify-center gap-3
                     ${isLoading ? 'opacity-70 cursor-wait' : ''}`}
                 >
                   {isLoading ? (

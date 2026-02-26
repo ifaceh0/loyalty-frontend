@@ -1294,12 +1294,21 @@ const CustomerLookup = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4 max-w-6xl mx-auto">
+      <div className="grid grid-cols-2 gap-2 sm:gap-4 md:grid-cols-2 xl:grid-cols-4 max-w-6xl mx-auto">
         {/* QR Scanner */}
-        <div className="rounded-xl border border-blue-100 bg-blue-50 p-6 shadow-lg text-center">
+        <div className="relative rounded-xl border-2 border-blue-400 p-6 px-4 shadow-lg text-center">
+          {/* Badge */}
+          <span className="absolute top-1 right-1 sm:top-2 sm:right-2 text-xs bg-blue-600 text-white px-2 py-0.5 rounded-full">
+            Recommended
+          </span>
+
           <QrCode className="text-blue-600 mx-auto mb-3" size={36} />
-          <h2 className="text-lg font-semibold mb-3 text-black-500">⚡ {t("customerLookup.cards.quickScan.title")}</h2>
-          <p className="text-sm text-gray-600 mb-6">{t("customerLookup.cards.quickScan.desc")}</p>
+          <h2 className="text-lg font-semibold mb-3 text-black-500">
+            ⚡ {t("customerLookup.cards.quickScan.title")}
+          </h2>
+          <p className="text-sm text-gray-600 mb-6">
+            {t("customerLookup.cards.quickScan.desc")}
+          </p>
           <button
             className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-full font-medium"
             onClick={() => setShowScanner(true)}
@@ -1309,8 +1318,8 @@ const CustomerLookup = () => {
         </div>
      
         {/* Phone */}
-        <div className="rounded-xl border border-indigo-100 bg-indigo-50 p-6 shadow-lg">
-          <h2 className="text-lg font-semibold text-black-500 mb-5">📞 {t("customerLookup.cards.phone.title")}</h2>
+        <div className="rounded-xl border border-gray-200 p-6 px-4 shadow-lg">
+          <h2 className="text-lg font-semibold text-black-500 mb-4">📞 {t("customerLookup.cards.phone.title")}</h2>
           <input
             type="text"
             inputMode="numeric"
@@ -1322,68 +1331,74 @@ const CustomerLookup = () => {
             }}
             placeholder={t("customerLookup.cards.phone.placeholder")}
             maxLength={10}
-            className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 mb-6 ${
+            className={`w-full px-4 py-2 border rounded-full focus:outline-none focus:ring-2 mb-4 ${
               phone && phone.length !== 10 ? "border-red-400 focus:ring-red-400" : "border-indigo-300 focus:ring-indigo-400"
             }`}
           />
           {phone && phone.length !== 10 && (
             <p className="text-xs text-red-600 mt-1">{t("customerLookup.cards.phone.error")}</p>
           )}
-          <button
-            onClick={() => handleSearch("phone")}
-            disabled={!phone.trim() || loading.phone}
-            className={`w-full py-2 rounded-full text-white font-medium ${
-              loading.phone ? "bg-indigo-300" : "bg-indigo-600 hover:bg-indigo-700"
-            }`}
-          >
-            {loading.phone ? t("customerLookup.buttons.searching") : t("customerLookup.buttons.search")}
-          </button>
+          <div className="flex justify-center">
+            <button
+              onClick={() => handleSearch("phone")}
+              disabled={!phone.trim() || loading.phone}
+              className={`px-6 sm:w-full py-2 rounded-full text-white font-medium ${
+                loading.phone ? "bg-indigo-300" : "bg-indigo-600 hover:bg-indigo-700"
+              }`}
+            >
+              {loading.phone ? t("customerLookup.buttons.searching") : t("customerLookup.buttons.search")}
+            </button>
+          </div>  
           <p className="text-xs text-gray-500 mt-3">
             {t("customerLookup.cards.phone.note")}
           </p>
         </div>
 
         {/* Email */}
-        <div className="rounded-xl border border-sky-100 bg-sky-50 p-6 shadow-lg">
-          <h2 className="text-lg font-semibold text-black-500 mb-5">📧 {t("customerLookup.cards.email.title")}</h2>
+        <div className="rounded-xl border border-gray-200 p-6 px-4 shadow-lg">
+          <h2 className="text-lg font-semibold text-black-500 mb-4">📧 {t("customerLookup.cards.email.title")}</h2>
           <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder={t("customerLookup.cards.email.placeholder")}
-            className="w-full px-4 py-2 border border-sky-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-400 mb-6"
+            className="w-full px-4 py-2 border border-sky-300 rounded-full focus:outline-none focus:ring-2 focus:ring-sky-400 mb-4"
           />
-          <button
-            onClick={() => handleSearch("email")}
-            disabled={!email.trim() || loading.email}
-            className={`w-full py-2 rounded-full text-white font-medium ${
-              loading.email ? "bg-sky-300" : "bg-sky-600 hover:bg-sky-700"
-            }`}
-          >
-            {loading.email ? t("customerLookup.buttons.searching") : t("customerLookup.buttons.search")}
-          </button>
+          <div className="flex justify-center">
+            <button
+              onClick={() => handleSearch("email")}
+              disabled={!email.trim() || loading.email}
+              className={`px-6 sm:w-full py-2 rounded-full text-white font-medium ${
+                loading.email ? "bg-sky-300" : "bg-sky-600 hover:bg-sky-700"
+              }`}
+            >
+              {loading.email ? t("customerLookup.buttons.searching") : t("customerLookup.buttons.search")}
+            </button>
+          </div>  
           <p className="text-xs text-gray-500 mt-3">{t("customerLookup.cards.email.note")}</p>
         </div>
 
         {/* Invite */}
-        <div className="rounded-xl border border-violet-100 bg-violet-50 p-6 shadow-lg">
-          <h2 className="text-lg font-semibold text-black-500 mb-5">✉️ {t("customerLookup.cards.invite.title")}</h2>
+        <div className="rounded-xl border border-gray-200 p-6 px-4 shadow-lg">
+          <h2 className="text-lg font-semibold text-black-500 mb-4">✉️ {t("customerLookup.cards.invite.title")}</h2>
           <input
             type="email"
             value={inviteEmail}
             onChange={(e) => setInviteEmail(e.target.value)}
             placeholder={t("customerLookup.cards.invite.placeholder")}
-            className="w-full px-4 py-2 border border-violet-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-400 mb-6"
+            className="w-full px-4 py-2 border border-violet-300 rounded-full focus:outline-none focus:ring-2 focus:ring-violet-400 mb-4"
           />
-          <button
-            onClick={handleSendInvite}
-            disabled={!inviteEmail.trim() || sendingInvite}
-            className={`w-full py-2 rounded-full text-white font-medium ${
-              sendingInvite ? "bg-violet-300" : "bg-violet-600 hover:bg-violet-700"
-            }`}
-          >
-            {sendingInvite ? t("customerLookup.buttons.sending") : t("customerLookup.cards.invite.button")}
-          </button>
+          <div className="flex justify-center">
+            <button
+              onClick={handleSendInvite}
+              disabled={!inviteEmail.trim() || sendingInvite}
+              className={`px-6 sm:w-full py-2 rounded-full text-white font-medium ${
+                sendingInvite ? "bg-violet-300" : "bg-violet-600 hover:bg-violet-700"
+              }`}
+            >
+              {sendingInvite ? t("customerLookup.buttons.sending") : t("customerLookup.cards.invite.button")}
+            </button>
+          </div>  
           <p className="text-xs text-gray-500 mt-3">{t("customerLookup.cards.invite.note")}</p>
         </div>
       </div>

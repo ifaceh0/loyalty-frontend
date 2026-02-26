@@ -971,21 +971,21 @@ export default function InviteEmployeePage() {
 
   return (
     <>
-      <div className="min-h-screen p-4 sm:p-6 md:p-8">
+      <div className="min-h-screen p-3 sm:p-6 md:p-8">
         <div className="max-w-6xl mx-auto p-2 space-y-8">
 
           {/* Header */}
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+          <div className="flex flex-col sm:flex-row justify-between items-center sm:items-center gap-4">
             <div>
-              <h1 className="text-3xl font-bold text-slate-900 flex items-center gap-3">
-                <Users className="w-8 h-8 text-indigo-600" />
+              <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 flex items-center gap-3">
+                <Users className="w-8 h-8 text-blue-600" />
                 {t('employee.page.title')}
               </h1>
               <p className="text-slate-600 mt-1">{t('employee.page.subtitle')}</p>
             </div>
             <button
               onClick={() => setIsModalOpen(true)}
-              className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-5 py-2 rounded-full shadow-lg hover:shadow-xl transition-all"
+              className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-medium px-5 sm:px-3 py-2 rounded-full shadow-lg hover:shadow-xl transition-all"
             >
               <Plus className="w-5 h-5" />
               {t('employee.buttons.invite')}
@@ -997,35 +997,35 @@ export default function InviteEmployeePage() {
               <Loader2 className="w-8 h-8 animate-spin text-indigo-600" />
             </div>
           ) : (
-            <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+            <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
               {/* Tabs - Fully Responsive */}
-              <div className="border-b border-slate-200">
-                <div className="flex flex-col sm:flex-row">
+              <div className="border-b border-gray-200">
+                <div className="flex flex-row sm:flex-row">
                   <button
                     onClick={() => setActiveTab('employees')}
-                    className={`flex-1 px-4 py-4 sm:px-6 text-sm font-semibold transition-all flex items-center justify-center sm:justify-start gap-2 
+                    className={`flex-1 px-4 py-4 sm:px-6 text-sm font-semibold transition-all flex items-center justify-center sm:justify-center gap-2 
                       ${activeTab === 'employees'
-                        ? 'text-indigo-600 border-b-2 sm:border-b-4 border-indigo-600 bg-indigo-50'
+                        ? 'text-blue-600 border-b-2 sm:border-b-4 border-blue-600 bg-blue-50'
                         : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
                       }`}
                   >
                     <UserCheck className="w-5 h-5" />
                     {t('employee.sections.employees.title')}
-                    <span className="ml-2 bg-white px-2.5 py-0.5 rounded-full text-xs font-medium">
+                    <span className="ml-2 bg-white px-2 p-0.5 rounded-full text-xs font-medium">
                       {employees.length}
                     </span>
                   </button>
                   <button
                     onClick={() => setActiveTab('invitations')}
-                    className={`flex-1 px-4 py-4 sm:px-6 text-sm font-semibold transition-all flex items-center justify-center sm:justify-start gap-2 
+                    className={`flex-1 px-4 py-4 sm:px-6 text-sm font-semibold transition-all flex items-center justify-center sm:justify-center gap-2 
                       ${activeTab === 'invitations'
-                        ? 'text-teal-600 border-b-2 sm:border-b-4 border-teal-600 bg-teal-50'
+                        ? 'text-violet-600 border-b-2 sm:border-b-4 border-violet-600 bg-violet-50'
                         : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
                       }`}
                   >
                     <Mail className="w-5 h-5" />
                     {t('employee.sections.invitations.title')}
-                    <span className="ml-2 bg-white px-2.5 py-0.5 rounded-full text-xs font-medium">
+                    <span className="ml-2 bg-white px-2 p-0.5 rounded-full text-xs font-medium">
                       {pendingInvitations.length}
                     </span>
                   </button>
@@ -1055,10 +1055,10 @@ export default function InviteEmployeePage() {
                         employees.map(emp => (
                           <div
                             key={emp.userId}
-                            className="flex flex-col sm:flex-row items-center gap-4 p-4 sm:p-5 bg-slate-50 rounded-xl hover:bg-slate-100 transition-all"
+                            className="flex flex-row sm:flex-row items-center gap-4 p-2 sm:p-5 rounded-xl border border-gray-200 hover:border-gray-300 transition-all"
                           >
                             <div className="flex items-start gap-4 flex-1">
-                              <div className="w-11 h-11 sm:w-12 sm:h-12 bg-gradient-to-br from-indigo-600 to-indigo-700 rounded-full flex items-center justify-center text-white font-bold text-base sm:text-lg shrink-0">
+                              <div className="w-11 h-11 sm:w-12 sm:h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center text-white font-bold text-base sm:text-lg shrink-0">
                                 {emp.firstName[0]}{emp.lastName[0]}
                               </div>
 
@@ -1108,7 +1108,7 @@ export default function InviteEmployeePage() {
                             <button
                               onClick={() => toggleStatus(emp.userId, emp.isActive, shopId)}
                               disabled={loading}
-                              className={`px-3 py-2 rounded-full font-medium text-sm transition-all mt-2 sm:mt-0 w-full sm:w-auto flex items-center justify-center gap-2 shadow-sm
+                              className={`px-3 py-2 rounded-full font-medium text-sm transition-all mt-2 sm:mt-0 sm:w-auto flex items-center justify-center gap-2
                                 ${emp.isActive 
                                   ? 'bg-red-50 text-red-700 hover:bg-red-100 border border-red-200' 
                                   : 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200'}
@@ -1145,11 +1145,11 @@ export default function InviteEmployeePage() {
                         pendingInvitations.map(inv => (
                           <div
                             key={inv.id}
-                            className="flex flex-col sm:flex-row items-center gap-4 p-4 sm:p-5 bg-slate-50 rounded-xl hover:bg-slate-100 transition-all"
+                            className="flex flex-col sm:flex-row items-center gap-4 p-3 sm:p-5 rounded-xl border border-gray-200 transition-all"
                           >
                             <div className="flex items-start gap-4 flex-1">
-                              <div className="bg-indigo-100 p-2 rounded shrink-0">
-                                {inv.email ? <Mail className="w-5 h-5 text-indigo-600" /> : <Phone className="w-5 h-5 text-indigo-600" />}
+                              <div className="bg-violet-100 p-2 rounded-full shrink-0">
+                                {inv.email ? <Mail className="w-5 h-5 text-violet-600" /> : <Phone className="w-5 h-5 text-violet-600" />}
                               </div>
 
                               <div className="space-y-2 flex-1 min-w-0">
@@ -1185,17 +1185,19 @@ export default function InviteEmployeePage() {
                             <div className="flex gap-2 justify-end sm:justify-start">
                               <button
                                 onClick={() => resendInvite(inv.id)}
-                                className="p-2 text-indigo-600 hover:bg-indigo-100 rounded-full transition"
+                                className="p-2 px-3 bg-violet-600 hover:bg-violet-700 text-white rounded-full transition"
                                 title={t('employee.buttons.resend')}
                               >
-                                <RefreshCw className="w-4.5 h-4.5" />
+                                {/* <RefreshCw className="w-4.5 h-4.5" /> */}
+                                <p className="text-xs">{t('employee.buttons.resend')}</p>
                               </button>
                               <button
                                 onClick={() => deleteInvite(inv.id)}
-                                className="p-2 text-red-600 hover:bg-red-100 rounded-full transition"
+                                className="p-2 px-3 bg-red-600 hover:bg-red-700 text-white rounded-full transition"
                                 title={t('employee.buttons.delete')}
                               >
-                                <Trash2 className="w-4.5 h-4.5" />
+                                {/* <Trash2 className="w-4.5 h-4.5" /> */}
+                                <p className="text-xs">{t('employee.buttons.delete')}</p>
                               </button>
                             </div>
                           </div>

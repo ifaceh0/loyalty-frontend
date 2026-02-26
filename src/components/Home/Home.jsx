@@ -1402,7 +1402,7 @@ export default function Home() {
       {/* <section className="relative h-[65vh] min-h-[360px] xs:h-[70vh] sm:h-[75vh] md:h-[80vh] lg:h-[85vh] overflow-hidden"> */}
       {/* <section className="relative h-[40vh] min-h-[300px] sm:h-[75vh] md:h-[80vh] lg:h-[85vh] overflow-hidden">
         <div className="relative w-full h-full"> */}
-      <section className="relative px-2 sm:px-4 lg:px-4">
+      <section className="relative px-2 sm:px-4 lg:px-4 pt-2">
         <div className="relative h-[40vh] min-h-[300px] sm:h-[75vh] md:h-[80vh] lg:h-[85vh] max-w-full mx-auto rounded-md sm:rounded-lg overflow-hidden">
           {heroImages.map((img, idx) => (
             <motion.div

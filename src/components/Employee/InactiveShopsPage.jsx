@@ -86,7 +86,7 @@ export default function InactiveShopsPage() {
     <div className="min-h-screen">
       <div className="max-w-6xl mx-auto p-6 sm:p-6 lg:p-8">
         {/* Header */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-8">
+        <div className="bg-white rounded-xl border border-gray-200 p-6 mb-8">
           <div className="flex items-center gap-4">
             <div className="p-3 bg-red-100 rounded-full">
               <AlertCircle className="w-8 h-8 text-red-600" />
