@@ -1253,7 +1253,7 @@ function Shopkeeper() {
         variants={formVariants}
         initial="hidden"
         animate="visible"
-        className="w-full max-w-md sm:max-w-lg md:max-w-xl bg-white border border-gray-200 rounded-xl sm:rounded-xl p-6 sm:p-8 md:p-10 shadow-2xl"
+        className="w-full max-w-md sm:max-w-lg md:max-w-xl bg-white shadow-lg border border-gray-200 rounded-xl sm:rounded-xl p-6 sm:p-8 md:p-10"
       >
         <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-teal-700 text-center mb-1 sm:mb-2">
           {t("shopkeeper.title")}
@@ -1470,7 +1470,7 @@ function Shopkeeper() {
               type="button"
               onClick={nextStep}
               disabled={step === 2 && !isEmailVerified}
-              className={`w-full py-3 sm:py-3.5 bg-teal-500 text-white font-semibold rounded-full shadow-lg transition-all duration-300 text-base sm:text-lg
+              className={`w-full py-2.5 bg-teal-500 text-white font-semibold rounded-full shadow-lg transition-all duration-300 text-base sm:text-lg
               ${(step === 2 && !isEmailVerified) ? "opacity-60 cursor-not-allowed" : "hover:bg-teal-600 active:scale-[0.99]"}
               `}
             >
@@ -1482,7 +1482,7 @@ function Shopkeeper() {
             <button
               type="button"
               onClick={() => { setStep((p) => p - 1); if (step === 2) setIsEmailVerified(false); }}
-              className="w-full py-3 bg-gray-200 hover:bg-gray-300 active:scale-[0.99] text-gray-700 font-semibold rounded-full transition-all duration-300 text-base sm:text-lg"
+              className="w-full py-2.5 bg-gray-200 hover:bg-gray-300 active:scale-[0.99] text-gray-700 font-semibold rounded-full transition-all duration-300 text-base sm:text-lg"
             >
               {t("shopkeeper.back")}
             </button>

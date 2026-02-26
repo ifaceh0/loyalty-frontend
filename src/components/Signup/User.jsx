@@ -1206,7 +1206,7 @@ function UserSignup() {
         variants={formVariants}
         initial="hidden"
         animate="visible"
-        className="w-full max-w-md sm:max-w-lg md:max-w-lg bg-white rounded-xl sm:rounded-xl p-6 sm:p-8 md:p-10 shadow-2xl border border-gray-200"
+        className="w-full max-w-md sm:max-w-lg md:max-w-lg bg-white rounded-xl sm:rounded-xl p-6 sm:p-8 md:p-10 shadow-lg border border-gray-200"
       >
         <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-emerald-600 text-center mb-2 sm:mb-3">
           {t("userSignup.title")}
@@ -1335,7 +1335,7 @@ function UserSignup() {
             <button
               type="button"
               onClick={() => setStep((prev) => prev - 1)}
-              className="w-full py-3 bg-gray-200 hover:bg-gray-300 active:scale-[0.99] text-gray-700 font-semibold rounded-full transition-all duration-300 text-base sm:text-lg"
+              className="w-full py-2.5 bg-gray-200 hover:bg-gray-300 active:scale-[0.99] text-gray-700 font-semibold rounded-full transition-all duration-300 text-base sm:text-lg"
             >
               {t("userSignup.back")}
             </button>
@@ -1367,8 +1367,8 @@ function NextButton({ onClick }) {
       whileTap="tap"
       type="button"
       onClick={onClick}
-      className="w-full py-3 font-bold rounded-full shadow-lg transition-all duration-300 text-base sm:text-lg
-        bg-gradient-to-r from-emerald-500 to-blue-600 text-white hover:from-emerald-600 hover:to-blue-700"
+      className="w-full py-2.5 font-bold rounded-full shadow-lg transition-all duration-300 text-base sm:text-lg
+        bg-gradient-to-r from-emerald-500 to-emerald-600 text-white hover:from-emerald-600 hover:to-emerald-700"
     >
       {t("userSignup.next")}
     </motion.button>

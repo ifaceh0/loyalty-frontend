@@ -188,7 +188,7 @@ const ForgotPassword = () => {
       // }}
     >
       {/* Card: Clean white, sharply rounded, strong shadow */}
-      <div className="w-full max-w-md sm:max-w-lg bg-white rounded-xl p-6 shadow-2xl border border-gray-200">
+      <div className="w-full max-w-md sm:max-w-md bg-white rounded-xl p-6 shadow-lg border border-gray-200">
         <div className="text-center mb-8">
           <Lock className="h-10 w-10 text-purple-700 mx-auto mb-2 transform rotate-45" />
           <h2 className="text-3xl font-extrabold text-gray-800">

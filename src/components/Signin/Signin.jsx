@@ -1141,7 +1141,7 @@ function FloatingInput({
 }
 
 const DemoFeature = ({ icon: Icon, title, description }) => (
-  <div className="flex items-start space-x-4 p-4 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20">
+  <div className="flex items-start space-x-4 p-4 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20">
     <div className="flex-shrink-0 p-3 bg-emerald-400 rounded-full text-white shadow-lg">
       <Icon className="w-6 h-6" />
     </div>
@@ -1168,7 +1168,7 @@ const RoleCard = ({ roleInfo, onClick, disabled, isSelected }) => {
       type="button"
       onClick={onClick}
       disabled={disabled}
-      className={`w-full p-4 rounded-xl border-2 transition-all duration-200 text-left relative
+      className={`w-full p-4 rounded-lg border-2 transition-all duration-200 text-left relative
         ${disabled
           ? "bg-gray-100 border-gray-300 cursor-not-allowed opacity-60"
           : isSelected
@@ -1455,7 +1455,7 @@ const Signin = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center p-6">
-      <div className="w-full max-w-md md:max-w-xl lg:max-w-5xl flex bg-white shadow-xl border border-gray-200 rounded-xl overflow-hidden animate-fade-in-up">
+      <div className="w-full max-w-md md:max-w-xl lg:max-w-5xl flex bg-white shadow-lg border border-gray-200 rounded-xl overflow-hidden animate-fade-in-up">
       {/* <div className="w-full max-w-md md:max-w-xl lg:max-w-5xl bg-white shadow-xl border border-gray-200 rounded-xl overflow-hidden animate-fade-in-up"> */}
         {/* left side */}
         <div className="hidden lg:flex w-6/12 bg-gradient-to-br from-emerald-500 to-sky-600 p-8 flex-col justify-center relative space-y-6">
@@ -1589,7 +1589,7 @@ const Signin = () => {
                 <h3 className="text-lg font-semibold text-center text-gray-800">
                   {t("signin.chooseRole")}
                 </h3>
-                <div className="space-y-5">
+                <div className="space-y-4">
                   {roles.map((r, idx) => (
                     <RoleCard
                       key={`${r.role}-${idx}`}
@@ -1631,7 +1631,7 @@ const Signin = () => {
                 </h3>
 
                 {/* Responsive Grid Layout (Max 3 columns, good width) */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 justify-center max-w-xl mx-auto">
+                <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-4 justify-center max-w-xl mx-auto">
                   {employeeShops.map((shop) => (
                     <div
                       key={shop.refId}

@@ -377,7 +377,7 @@ const Userdashboard = () => {
                         setSidebarOpen(false);
                         setIsSidebarExpanded(false);
                       }}
-                      className="p-2 sm:p-3 rounded-full bg-blue-600 hover:bg-blue-700 text-white transition flex items-center justify-center"
+                      className="p-2 sm:p-2 rounded-full bg-blue-600 hover:bg-blue-700 text-white transition flex items-center justify-center"
                       aria-label="Close sidebar"
                     >
                       <X className="w-6 h-6 sm:w-5 sm:h-5" />
@@ -386,7 +386,7 @@ const Userdashboard = () => {
                 </div>
               </div>
       
-              <nav className="space-y-5 sm:space-y-3 mt-10">
+              <nav className="space-y-5 sm:space-y-2 mt-10">
                 {[
                   { tab: "user-stats", icon: faHome, label: t("userDashboard.sidebar.dashboard") },
                   { tab: "user_profile", icon: faUser, label: t("userDashboard.sidebar.profile") },
@@ -400,7 +400,7 @@ const Userdashboard = () => {
                         setActiveTab(tab);
                         if (!isSidebarExpanded) toggleSidebarExpansion();
                       }}
-                      className={`flex items-center w-full text-left px-3 sm:px-4 py-3 sm:py-2.5 rounded-full transition text-base sm:text-lg ${
+                      className={`flex items-center w-full text-left px-3 sm:px-4 py-3 sm:py-2 rounded-full transition text-base sm:text-lg ${
                         activeTab === tab
                           ? "bg-blue-600 text-white font-semibold shadow-md"
                           : "hover:bg-blue-200 hover:text-blue-800 text-slate-700"
