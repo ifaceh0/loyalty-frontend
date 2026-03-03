@@ -188,15 +188,15 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="bg-gradient-to-b from-slate-900 to-slate-950 text-white pt-12 pb-8 px-6">
-      <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+    <footer className="bg-gradient-to-b from-slate-900 to-slate-950 text-white pt-6 pb-6 px-6">
+      <div className="max-w-8xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
           {/* Brand */}
-          <div className="space-y-4">
+          <div className="space-y-3">
             <h3 className="text-2xl font-extrabold bg-gradient-to-r from-emerald-400 to-teal-500 bg-clip-text text-transparent">
               {t('footer.brandTitle')}
             </h3>
-            <p className="text-sm text-gray-400 leading-relaxed max-w-xs">
+            <p className="text-sm text-gray-400 leading-relaxed max-w-md">
               {t('footer.brandDesc')}
             </p>
             <div className="flex items-center gap-2 text-xs text-emerald-400">
@@ -210,7 +210,7 @@ export default function Footer() {
             <h3 className="text-lg font-bold mb-4 text-emerald-400">
               {t('footer.quickLinksTitle')}
             </h3>
-            <ul className="space-y-2 text-sm text-gray-400">
+            <ul className="space-y-1 text-sm text-gray-400">
               {quickLinks.map((link) => (
                 <li key={link.to}>
                   <a
@@ -257,7 +257,7 @@ export default function Footer() {
               {t('footer.newsletterDesc')}
             </p>
 
-            <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-2">
+            <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-col gap-2">
               <input
                 type="email"
                 value={email}
@@ -268,7 +268,7 @@ export default function Footer() {
               />
               <button
                 type="submit"
-                className="px-5 py-2.5 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-full font-medium text-white shadow-lg hover:shadow-emerald-500/50 hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2"
+                className="px-5 py-2 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-full font-medium text-white shadow-lg hover:shadow-emerald-500/50 hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2"
               >
                 {subscribed ? (
                   <>

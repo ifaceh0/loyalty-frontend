@@ -336,7 +336,7 @@ export default function Features() {
                   whileHover={{ scale: 1.03, y: -6 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => openModal(feature)}
-                  className="group relative bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden text-left border border-gray-100/80"
+                  className="group relative bg-white rounded-xl shadow-md hover:shadow-2xl transition-all duration-300 overflow-hidden text-left border border-gray-100/80"
                 >
                   <div
                     className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-500`}
@@ -355,7 +355,7 @@ export default function Features() {
                       {t(`${key}.desc`)}
                     </p>
 
-                    <div className="mt-4 sm:mt-5 flex justify-end opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div className="mt-4 sm:mt-5 flex justify-end group-hover:opacity-100 transition-opacity duration-300">
                       <span className="text-emerald-600 text-sm sm:text-base font-medium">
                         {t('features.learnMore')}
                       </span>

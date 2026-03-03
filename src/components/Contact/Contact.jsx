@@ -844,7 +844,7 @@ export default function ContactUs() {
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-12 gap-0 overflow-hidden rounded-xl shadow-2xl bg-white border border-slate-100">
+        <div className="grid lg:grid-cols-12 gap-0 overflow-hidden rounded-xl shadow-md bg-white border border-slate-100">
           
           {/* Sidebar */}
           <div className="lg:col-span-4 bg-slate-900 p-10 text-white flex flex-col justify-between relative overflow-hidden">
@@ -976,7 +976,7 @@ export default function ContactUs() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-full shadow-lg transition-all active:scale-95 disabled:opacity-70 flex items-center justify-center gap-3"
+                className="px-6 sm:w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-full shadow-lg transition-all active:scale-95 disabled:opacity-70 flex items-center justify-center gap-3"
               >
                 {loading ? <Loader2 className="animate-spin" /> : <Send size={20} />}
                 {loading ? t('contact.sending') : t('contact.sendButton')}

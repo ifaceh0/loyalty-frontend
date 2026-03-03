@@ -1455,7 +1455,7 @@ const Signin = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center p-6">
-      <div className="w-full max-w-md md:max-w-xl lg:max-w-5xl flex bg-white shadow-lg border border-gray-200 rounded-xl overflow-hidden animate-fade-in-up">
+      <div className="w-full max-w-md md:max-w-xl lg:max-w-5xl flex bg-white shadow-md border border-gray-200 rounded-xl overflow-hidden animate-fade-in-up">
       {/* <div className="w-full max-w-md md:max-w-xl lg:max-w-5xl bg-white shadow-xl border border-gray-200 rounded-xl overflow-hidden animate-fade-in-up"> */}
         {/* left side */}
         <div className="hidden lg:flex w-6/12 bg-gradient-to-br from-emerald-500 to-sky-600 p-8 flex-col justify-center relative space-y-6">
