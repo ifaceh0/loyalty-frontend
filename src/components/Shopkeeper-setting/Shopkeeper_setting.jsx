@@ -796,7 +796,7 @@ const ShopkeeperSetting = () => {
   }
 
   return (
-    <div className="max-w-6xl mx-auto rounded-xl border border-gray-200 overflow-hidden my-2 p-3 sm:p-0">
+    <div className="max-w-6xl mx-auto rounded-xl shadow-md border border-gray-200 overflow-hidden my-2 p-3 sm:p-0">
       {/* Header */}
       <nav className="bg-white text-blue-600 rounded-t-xl px-4 sm:px-6 py-3 flex flex-row sm:flex-row justify-between items-start sm:items-center gap-3">
         <h2 className="text-xl sm:text-2xl font-extrabold flex items-center gap-2">

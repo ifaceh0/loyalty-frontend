@@ -921,8 +921,8 @@ const buttonVariants = {
 function UnderlineInput({ label, name, value, onChange, type = "text", Icon, ToggleIcon, onToggle }) {
   return (
     <div className="relative flex items-center w-full">
-      <div className="flex items-center w-full h-11 sm:h-12 border-b-2 border-gray-300 transition-all duration-300 focus-within:border-blue-600">
-        {Icon && <Icon className="flex-shrink-0 ml-1 mr-2.5 sm:mr-3 h-5 w-5 text-gray-500 transition-colors duration-300 focus-within:text-blue-600" />}
+      <div className="flex items-center w-full p-1.5 border-2 rounded-lg border-gray-300 transition-all duration-300 focus-within:border-blue-600">
+        {Icon && <Icon className="flex-shrink-0 ml-3 mr-2.5 sm:mr-3 h-5 w-5 text-gray-500 transition-colors duration-300 focus-within:text-blue-600" />}
         
         <input
           type={type}
@@ -968,10 +968,10 @@ function PhoneInputField({ label, value, onChange }) {
 
   return (
     <div className="relative flex items-center w-full">
-      <div className={`flex items-center w-full h-11 sm:h-12 border-b-2 transition-all duration-300 ${
+      <div className={`flex items-center w-full p-1.5 border-2 rounded-lg border-gray-300 transition-all duration-300 ${
         error ? "border-red-500" : "border-gray-300 focus-within:border-blue-600"
       }`}>
-        <Smartphone className={`flex-shrink-0 ml-1 mr-2.5 sm:mr-3 h-5 w-5 transition-colors duration-300 ${
+        <Smartphone className={`flex-shrink-0 ml-3 mr-2.5 sm:mr-3 h-5 w-5 transition-colors duration-300 ${
           error ? "text-red-500" : "text-gray-500 focus-within:text-blue-600"
         }`} />
 
@@ -1001,9 +1001,9 @@ function CountrySelect({ value, onChange }) {
     <div className="relative flex items-center w-full">
       <Globe
         size={18}
-        className="absolute left-2 text-gray-500 pointer-events-none"
+        className="absolute left-4 text-gray-500 pointer-events-none"
       />
-      <div className="flex items-center w-full h-11 sm:h-12 border-b-2 border-gray-300 focus-within:border-blue-600">
+      <div className="flex items-center w-full p-3.5 border-2 rounded-lg border-gray-300 transition-all duration-300 focus-within:border-blue-600">
         <select
           value={value}
           onChange={(e) => onChange(e.target.value)}
@@ -1206,7 +1206,7 @@ function UserSignup() {
         variants={formVariants}
         initial="hidden"
         animate="visible"
-        className="w-full max-w-md sm:max-w-lg md:max-w-lg bg-white rounded-xl sm:rounded-xl p-6 sm:p-8 md:p-10 shadow-lg border border-gray-200"
+        className="w-full max-w-md sm:max-w-lg bg-white rounded-xl p-6 sm:p-8 shadow-md border border-gray-200"
       >
         <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-emerald-600 text-center mb-2 sm:mb-3">
           {t("userSignup.title")}
@@ -1239,7 +1239,7 @@ function UserSignup() {
           )}
 
           {step === 2 && (
-            <div className="space-y-6 sm:space-y-8">
+            <div className="space-y-8">
               <PhoneInputField
                 label={t("userSignup.phoneNumber")}
                 value={formData.phoneNumber}
@@ -1309,7 +1309,7 @@ function UserSignup() {
                 whileTap="tap"
                 type="submit"
                 disabled={loading}
-                className={`w-full bg-gradient-to-r from-green-500 to-blue-600 text-white font-bold py-3 sm:py-3.5 rounded-full shadow-lg transition-all duration-300 text-base sm:text-lg
+                className={`w-full bg-gradient-to-r from-green-500 to-blue-600 text-white font-bold py-2.5 sm:py-2 rounded-full transition-all duration-300 text-base sm:text-lg
                   ${loading ? "opacity-60 cursor-not-allowed" : "hover:from-green-600 hover:to-blue-700"}`}
               >
                 {loading ? (
@@ -1326,7 +1326,7 @@ function UserSignup() {
           )}
         </form>
 
-        <div className="mt-6 sm:mt-8 space-y-3 sm:space-y-4">
+        <div className="mt-3 sm:mt-4 space-y-3 sm:space-y-4">
           {step < 3 && (
             <NextButton onClick={nextStep} />
           )}
@@ -1335,7 +1335,7 @@ function UserSignup() {
             <button
               type="button"
               onClick={() => setStep((prev) => prev - 1)}
-              className="w-full py-2.5 bg-gray-200 hover:bg-gray-300 active:scale-[0.99] text-gray-700 font-semibold rounded-full transition-all duration-300 text-base sm:text-lg"
+              className="w-full py-2.5 sm:py-2 bg-gray-200 hover:bg-gray-300 active:scale-[0.99] text-gray-700 font-semibold rounded-full transition-all duration-300 text-base sm:text-lg"
             >
               {t("userSignup.back")}
             </button>
@@ -1367,7 +1367,7 @@ function NextButton({ onClick }) {
       whileTap="tap"
       type="button"
       onClick={onClick}
-      className="w-full py-2.5 font-bold rounded-full shadow-lg transition-all duration-300 text-base sm:text-lg
+      className="w-full py-2.5 sm:py-2 font-bold rounded-full transition-all duration-300 text-base sm:text-lg
         bg-gradient-to-r from-emerald-500 to-emerald-600 text-white hover:from-emerald-600 hover:to-emerald-700"
     >
       {t("userSignup.next")}

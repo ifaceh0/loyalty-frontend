@@ -824,8 +824,8 @@ const buttonVariants = {
 function UnderlineInput({ label, name, value, onChange, type = "text", Icon, ToggleIcon, onToggle }) {
   return (
     <div className="relative flex items-center w-full">
-      <div className="flex items-center w-full h-11 sm:h-12 border-b-2 border-gray-300 transition-all duration-300 focus-within:border-blue-600">
-        {Icon && <Icon className="flex-shrink-0 ml-1 mr-2 sm:mr-3 h-5 w-5 text-gray-500 transition-colors duration-300 focus-within:text-blue-600" />}
+      <div className="flex items-center p-1.5 w-full border-2 border-gray-300 rounded-lg transition-all duration-300 focus-within:border-blue-600">
+        {Icon && <Icon className="flex-shrink-0 ml-3 mr-2 sm:mr-3 h-5 w-5 text-gray-500 transition-colors duration-300 focus-within:text-blue-600" />}
         <input
           type={type}
           name={name}
@@ -861,8 +861,8 @@ function PhoneInputField({ label, value, onChange }) {
 
   return (
     <div className="relative flex items-center w-full">
-      <div className={`flex items-center w-full h-11 sm:h-12 border-b-2 transition-all duration-300 ${error ? "border-red-500" : "border-gray-300 focus-within:border-blue-600"}`}>
-        <Smartphone className={`flex-shrink-0 ml-1 mr-2 sm:mr-3 h-5 w-5 transition-colors duration-300 ${error ? "text-red-500" : "text-gray-500 focus-within:text-blue-600"}`} />
+      <div className={`flex items-center w-full p-1.5 border-2 border-gray-300 rounded-lg transition-all duration-300 ${error ? "border-red-500" : "border-gray-300 focus-within:border-blue-600"}`}>
+        <Smartphone className={`flex-shrink-0 ml-3 mr-2 sm:mr-3 h-5 w-5 transition-colors duration-300 ${error ? "text-red-500" : "text-gray-500 focus-within:text-blue-600"}`} />
         <input
           type="text"
           value={value}
@@ -1038,19 +1038,19 @@ export default function EmployeeSignupPage() {
 
   const getProgress = () => (step / 3) * 100;
 
-  if (!token) {
-    return (
-      <div className="min-h-screen flex items-center justify-center p-4 sm:p-6">
-        <div className="p-14 rounded-xl border border-red-200 text-center max-w-sm w-full">
-          <h2 className="text-xl sm:text-2xl font-bold text-red-700 mb-3">{t("employeeSignup.invalidLinkTitle")}</h2>
-          <p className="text-gray-600 mb-6 text-sm sm:text-base">{t("employeeSignup.invalidLinkMessage")}</p>
-          <button onClick={() => navigate("/")} className="w-full bg-red-600 text-white py-2.5 rounded-full hover:bg-red-700 text-sm sm:text-base">
-            {t("employeeSignup.goHome")}
-          </button>
-        </div>
-      </div>
-    );
-  }
+  // if (!token) {
+  //   return (
+  //     <div className="min-h-screen flex items-center justify-center p-4 sm:p-6">
+  //       <div className="p-14 rounded-xl border border-red-200 text-center max-w-sm w-full">
+  //         <h2 className="text-xl sm:text-2xl font-bold text-red-700 mb-3">{t("employeeSignup.invalidLinkTitle")}</h2>
+  //         <p className="text-gray-600 mb-6 text-sm sm:text-base">{t("employeeSignup.invalidLinkMessage")}</p>
+  //         <button onClick={() => navigate("/")} className="w-full bg-red-600 text-white py-2.5 rounded-full hover:bg-red-700 text-sm sm:text-base">
+  //           {t("employeeSignup.goHome")}
+  //         </button>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
@@ -1060,7 +1060,7 @@ export default function EmployeeSignupPage() {
         variants={formVariants}
         initial="hidden"
         animate="visible"
-        className="w-full max-w-md sm:max-w-lg md:max-w-lg bg-white rounded-xl sm:rounded-xl p-6 sm:p-8 md:p-10 shadow-lg border border-gray-200"
+        className="w-full max-w-md sm:max-w-lg bg-white rounded-xl p-6 sm:p-8 shadow-md border border-gray-200"
       >
         <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-emerald-600 text-center mb-2 sm:mb-3">
           {t("employeeSignup.title")}
@@ -1093,7 +1093,7 @@ export default function EmployeeSignupPage() {
           )}
 
           {step === 2 && (
-            <div className="space-y-6 sm:space-y-8">
+            <div className="space-y-8">
               <div className="relative">
                 <PhoneInputField label={t("employeeSignup.phoneNumber")} value={formData.phone} onChange={handlePhoneChange} />
               </div>
@@ -1163,7 +1163,7 @@ export default function EmployeeSignupPage() {
                 whileTap="tap"
                 type="submit"
                 disabled={loading}
-                className={`w-full bg-gradient-to-r from-green-500 to-blue-600 text-white font-bold py-3 sm:py-3.5 rounded-full shadow-lg transition-all duration-300 text-base sm:text-lg
+                className={`w-full bg-gradient-to-r from-green-500 to-blue-600 text-white font-bold py-2.5 sm:py-2 rounded-full shadow-lg transition-all duration-300 text-base sm:text-lg
                   ${loading ? "opacity-60 cursor-not-allowed" : "hover:from-green-600 hover:to-blue-700 active:scale-[0.99]"}`}
               >
                 {loading ? (
@@ -1180,7 +1180,7 @@ export default function EmployeeSignupPage() {
           )}
         </form>
 
-        <div className="mt-6 sm:mt-8 space-y-3 sm:space-y-4">
+        <div className="mt-3 sm:mt-6 space-y-3 sm:space-y-4">
           {step < 3 && (
             <motion.button
               variants={buttonVariants}
@@ -1188,7 +1188,7 @@ export default function EmployeeSignupPage() {
               whileTap="tap"
               type="button"
               onClick={nextStep}
-              className="w-full py-2.5 font-bold rounded-full shadow-lg transition-all duration-300 text-base sm:text-lg bg-gradient-to-r from-emerald-500 to-blue-600 text-white hover:from-emerald-600 hover:to-blue-700 active:scale-[0.99]"
+              className="w-full py-2.5 sm:py-2 font-bold rounded-full shadow-lg transition-all duration-300 text-base sm:text-lg bg-gradient-to-r from-emerald-500 to-blue-600 text-white hover:from-emerald-600 hover:to-blue-700 active:scale-[0.99]"
             >
               {t("employeeSignup.next")}
             </motion.button>
@@ -1197,7 +1197,7 @@ export default function EmployeeSignupPage() {
             <button
               type="button"
               onClick={() => setStep(prev => prev - 1)}
-              className="w-full py-2.5 bg-gray-200 hover:bg-gray-300 active:scale-[0.99] text-gray-700 font-semibold rounded-full transition-all duration-300 text-base sm:text-lg"
+              className="w-full py-2.5 sm:py-2 bg-gray-200 hover:bg-gray-300 active:scale-[0.99] text-gray-700 font-semibold rounded-full transition-all duration-300 text-base sm:text-lg"
             >
               {t("employeeSignup.back")}
             </button>

@@ -1253,7 +1253,7 @@ function Shopkeeper() {
         variants={formVariants}
         initial="hidden"
         animate="visible"
-        className="w-full max-w-md sm:max-w-lg md:max-w-xl bg-white shadow-lg border border-gray-200 rounded-xl sm:rounded-xl p-6 sm:p-8 md:p-10"
+        className="w-full max-w-md sm:max-w-lg bg-white shadow-md border border-gray-200 rounded-xl sm:rounded-xl p-6 sm:p-8"
       >
         <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-teal-700 text-center mb-1 sm:mb-2">
           {t("shopkeeper.title")}

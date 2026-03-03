@@ -185,10 +185,23 @@ const FeatureCard = ({ icon, title, description, gradient }) => (
 const SubscriptionDashboard = () => {
   const { t } = useTranslation();
   
-  const companyEmail =
-    typeof window !== "undefined" ? localStorage.getItem("companyEmail") || "" : "";
+  // const companyEmail =
+  //   typeof window !== "undefined" ? localStorage.getItem("companyEmail") || "" : "";
 
-  const subscriptionUrl = `https://subscription-frontend-psi.vercel.app/subscription-dashboard?email=${encodeURIComponent(
+  // const subscriptionUrl = `https://subscription-frontend-psi.vercel.app/subscription-dashboard?email=${encodeURIComponent(
+  //   companyEmail
+  // )}`;
+  const companyEmail =
+    typeof window !== "undefined"
+      ? localStorage.getItem("companyEmail") || ""
+      : "";
+
+  const baseUrl =
+    import.meta.env.MODE === "development"
+      ? "https://subscription-frontend-git-develop-pradyumna-dikhits-projects.vercel.app"
+      : "https://subscription-frontend-psi.vercel.app";
+
+  const subscriptionUrl = `${baseUrl}/subscription-dashboard?email=${encodeURIComponent(
     companyEmail
   )}`;
 

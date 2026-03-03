@@ -619,7 +619,7 @@ export default function Resources() {
                   onClick={() => openModal({ ...resource, details: getDetails(resource.key) })}
                   className="group block text-left"
                 >
-                  <div className="relative bg-white/80 backdrop-blur-sm rounded-xl p-1 shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100">
+                  <div className="relative bg-white backdrop-blur-sm rounded-xl p-1 shadow-md hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100">
                     <div
                       className={`absolute inset-0 bg-gradient-to-br ${resource.gradient} opacity-0 group-hover:opacity-30 transition-opacity duration-500`}
                     />

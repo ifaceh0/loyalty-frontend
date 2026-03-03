@@ -705,7 +705,7 @@ const Shopdashboard = () => {
                 className="p-2 sm:p-2 rounded-full bg-blue-600 hover:bg-blue-700 text-white transition flex items-center justify-center"
                 aria-label="Close sidebar"
               >
-                <X className="w-6 h-6 sm:w-5 sm:h-5" />
+                <X className="w-6 h-6 sm:w-6 sm:h-6" />
               </button>
             )}
           </div>

@@ -1396,7 +1396,7 @@ export default function Home() {
   const nextSlide = () => setCurrentIndex((prev) => (prev + 1) % heroImages.length);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
+    <div className="min-h-screen">
 
       {/* HERO CAROUSEL - improved mobile scaling */}
       {/* <section className="relative h-[65vh] min-h-[360px] xs:h-[70vh] sm:h-[75vh] md:h-[80vh] lg:h-[85vh] overflow-hidden"> */}
@@ -1487,7 +1487,7 @@ export default function Home() {
               <motion.div
                 key={i}
                 variants={cardVariants}
-                className="group bg-white rounded-xl p-8 xs:p-7 sm:p-6 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 min-h-[200px] flex flex-col"
+                className="group bg-white rounded-xl p-8 xs:p-7 sm:p-6 shadow-md hover:shadow-2xl transition-all duration-300 border border-gray-100 min-h-[200px] flex flex-col"
               >
                 <div className="mb-3 xs:mb-6 flex justify-center transform group-hover:scale-110 transition-transform">
                   {step.icon}
@@ -1508,7 +1508,7 @@ export default function Home() {
         whileInView="visible"
         viewport={{ once: true, amount: 0.15 }}
         variants={staggerContainer}
-        className="py-10 xs:py-12 md:py-14 px-4 xs:px-5 sm:px-6 lg:px-8 bg-white"
+        className="py-10 xs:py-12 md:py-14 px-4 xs:px-5 sm:px-6 lg:px-8"
       >
         <div className="max-w-6xl mx-auto text-center">
           <h2 className="text-3xl xs:text-4xl font-extrabold bg-gradient-to-r from-emerald-600 to-teal-700 bg-clip-text text-transparent mb-5 xs:mb-6">
@@ -1529,7 +1529,7 @@ export default function Home() {
               <motion.div
                 key={i}
                 variants={cardVariants}
-                className="group bg-gradient-to-br from-emerald-50 to-teal-50 p-5 xs:p-6 rounded-xl border-2 border-emerald-100 hover:border-emerald-300 hover:shadow-lg transition-all duration-300 cursor-pointer min-h-[140px] flex flex-col justify-center items-center"
+                className="group bg-gradient-to-br from-emerald-50 to-teal-50 p-5 xs:p-6 rounded-xl shadow-md hover:shadow-2xl transition-all duration-300 cursor-pointer min-h-[140px] flex flex-col justify-center items-center"
               >
                 <div className="text-emerald-600 flex justify-center mb-3 xs:mb-4 group-hover:scale-110 transition-transform duration-300">
                   {category.icon}
@@ -1550,7 +1550,7 @@ export default function Home() {
         whileInView="visible"
         viewport={{ once: true }}
         variants={staggerContainer}
-        className="py-10 xs:py-12 md:py-14 bg-gradient-to-r from-emerald-50 to-teal-50 px-4 xs:px-5 sm:px-6 lg:px-8"
+        className="py-10 xs:py-12 md:py-14 px-4 xs:px-5 sm:px-6 lg:px-8"
       >
         <div className="max-w-6xl mx-auto text-center">
           <h2 className="text-3xl xs:text-4xl font-extrabold text-emerald-800 mb-8 xs:mb-10 md:mb-12">
@@ -1559,7 +1559,7 @@ export default function Home() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 xs:gap-6 md:gap-8">
             <motion.div
               variants={cardVariants}
-              className="bg-white rounded-xl p-6 xs:p-7 sm:p-8 shadow-xl border border-emerald-100 text-center min-h-[180px] flex flex-col justify-center"
+              className="bg-white rounded-xl p-4 xs:p-7 sm:p-8 shadow-md hover:shadow-2xl text-center min-h-[180px] flex flex-col justify-center"
             >
               <Users className="w-10 h-10 xs:w-12 xs:h-12 text-emerald-600 mx-auto mb-4 xs:mb-5" />
               <div className="text-3xl xs:text-4xl font-extrabold text-emerald-700">
@@ -1572,7 +1572,7 @@ export default function Home() {
 
             <motion.div
               variants={cardVariants}
-              className="bg-white rounded-xl p-6 xs:p-7 sm:p-8 shadow-xl border border-emerald-100 text-center min-h-[180px] flex flex-col justify-center"
+              className="bg-white rounded-xl p-6 xs:p-7 sm:p-8 shadow-md hover:shadow-2xl text-center min-h-[180px] flex flex-col justify-center"
             >
               <Store className="w-10 h-10 xs:w-12 xs:h-12 text-emerald-600 mx-auto mb-4 xs:mb-5" />
               <div className="text-3xl xs:text-4xl font-extrabold text-emerald-700">
@@ -1585,7 +1585,7 @@ export default function Home() {
 
             <motion.div
               variants={cardVariants}
-              className="bg-white rounded-xl p-6 xs:p-7 sm:p-8 shadow-xl border border-emerald-100 text-center min-h-[180px] flex flex-col justify-center"
+              className="bg-white rounded-xl p-6 xs:p-7 sm:p-8 shadow-md hover:shadow-2xl text-center min-h-[180px] flex flex-col justify-center"
             >
               <Banknote className="w-10 h-10 xs:w-12 xs:h-12 text-emerald-600 mx-auto mb-4 xs:mb-5" />
 
@@ -1612,7 +1612,7 @@ export default function Home() {
         whileInView="visible"
         viewport={{ once: true, amount: 0.15 }}
         variants={staggerContainer}
-        className="py-10 xs:py-12 md:py-14 px-4 xs:px-5 sm:px-6 lg:px-8 bg-gradient-to-br from-blue-50 to-indigo-50"
+        className="py-10 xs:py-12 md:py-14 px-4 xs:px-5 sm:px-6 lg:px-8"
       >
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-8 xs:mb-10 md:mb-12">
@@ -1633,7 +1633,7 @@ export default function Home() {
               <motion.div
                 key={i}
                 variants={cardVariants}
-                className="bg-white p-5 xs:p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-blue-100 min-h-[160px] flex flex-col justify-between"
+                className="bg-white p-5 xs:p-6 rounded-xl shadow-md hover:shadow-2xl transition-all duration-300 min-h-[160px] flex flex-col justify-between"
               >
                 <div className="text-blue-600 mb-3 xs:mb-4 flex justify-center">{feature.icon}</div>
                 <h4 className="font-bold text-blue-900 mb-2 text-[15px] xs:text-base sm:text-lg">{feature.title}</h4>
@@ -1650,7 +1650,7 @@ export default function Home() {
         whileInView="visible"
         viewport={{ once: true, amount: 0.15 }}
         variants={staggerContainer}
-        className="py-10 xs:py-12 md:py-14 px-4 xs:px-5 sm:px-6 lg:px-8 bg-white"
+        className="py-10 xs:py-12 md:py-14 px-4 xs:px-5 sm:px-6 lg:px-8"
       >
         <div className="max-w-6xl mx-auto text-center">
           <h2 className="text-3xl xs:text-4xl font-extrabold bg-gradient-to-r from-emerald-600 to-teal-700 bg-clip-text text-transparent mb-8 xs:mb-10 md:mb-12">
@@ -1661,7 +1661,7 @@ export default function Home() {
               <motion.div
                 key={i}
                 variants={cardVariants}
-                className="bg-gradient-to-br from-emerald-50 to-teal-50 p-4 xs:p-5 sm:p-6 rounded-xl text-center border border-emerald-200 hover:shadow-lg transition min-h-[110px] flex flex-col justify-center items-center"
+                className="bg-gradient-to-br from-emerald-50 to-teal-50 p-4 xs:p-5 sm:p-6 rounded-xl text-center shadow-md hover:shadow-2xl transition min-h-[110px] flex flex-col justify-center items-center"
               >
                 <Star className="w-7 h-7 xs:w-8 xs:h-8 sm:w-9 sm:h-9 text-emerald-600 mx-auto mb-2 xs:mb-3" />
                 <p className="font-semibold text-emerald-900 text-[14px] xs:text-[15px] sm:text-base">{benefit}</p>
@@ -1677,7 +1677,7 @@ export default function Home() {
         whileInView="visible"
         viewport={{ once: true, amount: 0.15 }}
         variants={staggerContainer}
-        className="py-10 xs:py-12 md:py-14 px-4 xs:px-5 sm:px-6 lg:px-8 bg-gray-50"
+        className="py-10 xs:py-12 md:py-14 px-4 xs:px-5 sm:px-6 lg:px-8"
       >
         <div className="max-w-6xl mx-auto text-center">
           <h2 className="text-3xl xs:text-4xl font-extrabold text-emerald-800 mb-8 xs:mb-10 md:mb-12">
@@ -1688,7 +1688,7 @@ export default function Home() {
               <motion.div
                 key={i}
                 variants={cardVariants}
-                className="bg-white rounded-xl p-5 xs:p-6 shadow-lg border border-gray-200 min-h-[220px] flex flex-col"
+                className="bg-white rounded-xl p-5 xs:p-6 shadow-md hover:shadow-2xl min-h-[220px] flex flex-col"
               >
                 <div className="flex justify-center mb-3 xs:mb-4">
                   {[...Array(testimonial.rating)].map((_, j) => (
@@ -1724,7 +1724,7 @@ export default function Home() {
               <motion.div
                 key={user.rank}
                 variants={cardVariants}
-                className={`relative bg-white rounded-xl p-5 xs:p-6 shadow-lg border-2 ${
+                className={`relative bg-white rounded-xl p-5 xs:p-6 shadow-md hover:shadow-2xl border ${
                   user.rank === 1 ? 'border-yellow-400' : 'border-emerald-200'
                 } min-h-[160px] flex flex-col justify-center items-center`}
               >
@@ -1748,7 +1748,7 @@ export default function Home() {
         whileInView="visible"
         viewport={{ once: true, amount: 0.15 }}
         variants={staggerContainer}
-        className="py-10 xs:py-12 md:py-14 px-4 xs:px-5 sm:px-6 lg:px-8 bg-white"
+        className="py-10 xs:py-12 md:py-14 px-4 xs:px-5 sm:px-6 lg:px-8"
       >
         <div className="max-w-5xl mx-auto">
           <h2 className="text-3xl xs:text-4xl font-extrabold text-center text-emerald-800 mb-8 xs:mb-10 md:mb-12">
@@ -1759,7 +1759,7 @@ export default function Home() {
               <motion.details
                 key={i}
                 variants={cardVariants}
-                className="group bg-gray-50 rounded-xl overflow-hidden border border-gray-200 shadow-sm"
+                className="group bg-gray-50 rounded-xl overflow-hidden border border-gray-200"
               >
                 <summary className="flex justify-between items-center p-4 xs:p-5 font-semibold text-emerald-800 cursor-pointer hover:bg-emerald-50 transition text-[15px] xs:text-base">
                   {faq.q}
@@ -1780,21 +1780,21 @@ export default function Home() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.9 }}
-        className="py-10 xs:py-12 md:py-14 bg-gradient-to-r from-emerald-500 to-teal-600 text-white text-center px-4 xs:px-5 sm:px-8"
+        className="py-10 xs:py-12 md:py-14 text-center px-4 xs:px-5 sm:px-8"
       >
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl xs:text-4xl md:text-5xl font-extrabold mb-4 xs:mb-5 md:mb-6">
+          <h2 className="text-3xl xs:text-4xl md:text-5xl font-extrabold text-emerald-600 mb-4 xs:mb-5 md:mb-6">
             {t('home.finalCTA.title')}
           </h2>
           <p className="text-base xs:text-lg sm:text-xl mb-6 xs:mb-8 md:mb-10 opacity-90 max-w-3xl mx-auto">
             {t('home.finalCTA.subtitle')}
           </p>
-          <div className="flex flex-row xs:flex-row justify-center items-center gap-2 xs:gap-5 md:gap-6">
+          <div className="flex flex-col sm:flex-row justify-center items-center gap-4 xs:gap-5 md:gap-6">
             <motion.button
               whileHover={{ scale: 1.05, y: -3 }}
               whileTap={{ scale: 0.97 }}
               onClick={() => navigate('/signup-user')}
-              className="inline-flex items-center gap-2.5 xs:gap-3 px-6 xs:px-7 sm:px-8 py-3.5 xs:py-4 bg-white text-emerald-700 font-bold text-[15px] xs:text-base sm:text-lg rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 w-full xs:w-auto justify-center min-h-[52px]"
+              className="inline-flex items-center gap-2.5 sm:gap-3 px-6 xs:px-7 sm:px-8 py-3 sm:py-3 bg-emerald-600 text-white font-bold text-[15px] xs:text-base sm:text-lg rounded-full transition-all duration-300 w-full justify-center"
             >
               {t('home.finalCTA.userCTA')}
               <ArrowRight className="w-5 h-5 xs:w-5 xs:h-5 sm:w-6 sm:h-6" />
@@ -1805,7 +1805,7 @@ export default function Home() {
               rel="noopener noreferrer"
               whileHover={{ scale: 1.05, y: -3 }}
               whileTap={{ scale: 0.97 }}
-              className="inline-flex items-center gap-2.5 xs:gap-3 px-6 xs:px-7 sm:px-8 py-3.5 xs:py-4 bg-transparent border-2 border-white text-white font-bold text-[15px] xs:text-base sm:text-lg rounded-full shadow-xl hover:bg-white/10 transition-all duration-300 w-full xs:w-auto justify-center min-h-[52px]"
+              className="inline-flex items-center gap-2.5 sm:gap-3 px-6 sm:px-7 sm:px-8 py-3 sm:py-3 border-2 border-gray-200 text-emerald-600 font-bold text-[15px] sm:text-lg rounded-full transition-all duration-300 w-full justify-center"
             >
               {t('home.finalCTA.businessCTA')}
               <Store className="w-5 h-5 xs:w-5 xs:h-5 sm:w-6 sm:h-6" />
