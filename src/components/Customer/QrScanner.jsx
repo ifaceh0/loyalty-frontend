@@ -1545,6 +1545,22 @@ const QrScanner = ({ onClose }) => {
     return String(scannedShopId) === String(loggedInShopId);
   };
 
+  const checkCameraPermission = async () => {
+    try {
+      const permission = await navigator.permissions.query({ name: "camera" });
+
+      if (permission.state === "denied") {
+        setError("Camera permission denied. Please enable it in browser settings.");
+        setShowErrorPopup(true);
+        return false;
+      }
+
+      return true;
+    } catch {
+      return true;
+    }
+  };
+
   const handleQrScan = async (parsed) => {
     if (hasScannedRef.current) return;
 
@@ -1757,21 +1773,44 @@ const QrScanner = ({ onClose }) => {
   //   }
   // };
   const stopCamera = () => {
-    if (codeReader.current) {
-      codeReader.current.reset();
-    }
-    if (videoRef.current && videoRef.current.srcObject) {
-      const stream = videoRef.current.srcObject;
-      stream.getTracks().forEach((track) => {
-        track.stop();
-        track.enabled = false;
-      });
-      videoRef.current.srcObject = null;
-      videoRef.current.pause();
+    try {
+      if (videoRef.current && videoRef.current.srcObject) {
+        const stream = videoRef.current.srcObject;
+        const tracks = stream.getTracks();
+
+        tracks.forEach(async (track) => {
+          try {
+            const capabilities = track.getCapabilities();
+
+            // turn off torch if supported
+            if (capabilities.torch) {
+              await track.applyConstraints({
+                advanced: [{ torch: false }]
+              });
+            }
+          } catch (err) {
+            console.warn("Torch disable failed:", err);
+          }
+
+          track.stop();
+        });
+
+        videoRef.current.srcObject = null;
+      }
+
+      if (codeReader.current) {
+        codeReader.current.reset();
+      }
+
+    } catch (error) {
+      console.error("Error stopping camera:", error);
     }
   };
 
   const startCamera = async () => {
+    const allowed = await checkCameraPermission();
+    if (!allowed) return;
+
     stopCamera();
     codeReader.current = new BrowserMultiFormatReader();
     try {
@@ -1872,7 +1911,11 @@ const QrScanner = ({ onClose }) => {
       await new Promise(resolve => setTimeout(resolve, 300));
 
       const stream = await navigator.mediaDevices.getUserMedia({
-        video: { deviceId: { exact: nextDevice.deviceId } }
+        // video: { deviceId: { exact: nextDevice.deviceId } }
+        video: {
+          deviceId: nextDevice.deviceId ? { exact: nextDevice.deviceId } : undefined,
+          facingMode: "environment"
+        }
       });
 
       videoRef.current.srcObject = stream;
@@ -1984,6 +2027,18 @@ const QrScanner = ({ onClose }) => {
     setShowConfirmClaimPopup(false);
     onClose();
   };
+
+  if (error?.includes("denied")) {
+    setError(
+      "Camera permission is blocked.\n\nPlease enable it:\n\nChrome → Settings → Site Settings → Camera → Allow"
+    );
+  }
+
+  useEffect(() => {
+    return () => {
+      stopCamera();
+    };
+  }, []);
 
   // const isPopupOpen = showErrorPopup || showSuccessPopup || showClaimIntentPopup || showPreviewPopup || showConfirmClaimPopup || isCheckingEligibility;
 
