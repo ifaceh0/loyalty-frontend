@@ -973,7 +973,7 @@ import {
   useLocation,
   useNavigate,
 } from 'react-router-dom';
-import { FaUser, FaSignOutAlt } from 'react-icons/fa';
+import { FaUser, FaSignOutAlt, FaChevronDown } from 'react-icons/fa';
 import { X, List, Menu, Globe, LayoutDashboard  } from 'lucide-react';
 import { useSidebar } from '../../context/SidebarContext';
 import { useTranslation } from 'react-i18next';
@@ -1025,11 +1025,11 @@ export default function Header() {
   );
 
   const navLinkClasses = ({ isActive }) =>
-    `relative px-4 py-2 rounded-full transition-all duration-200 text-[15px] sm:text-base
+    `relative px-3 py-2 text-sm font-medium transition-all duration-200
      ${isActive
-        ? 'text-white bg-emerald-500 shadow-sm'
-        : 'text-gray-800 hover:text-emerald-600 active:bg-emerald-50'
-      } flex items-center justify-center`;
+        ? 'text-emerald-600'
+        : 'text-slate-600 hover:text-emerald-500'
+      } `;
 
   const GuestMobileDrawer = () => (
     <div className="flex flex-col gap-5 p-6 pb-10">
@@ -1046,7 +1046,7 @@ export default function Header() {
         href="https://subscription-frontend-psi.vercel.app/subscription"
         target="_blank"
         rel="noopener noreferrer"
-        className="px-5 py-3.5 text-[15px] sm:text-base text-gray-800 hover:text-emerald-600 hover:bg-gray-50 rounded-xl transition min-h-[52px] flex items-center justify-center"
+        className="px-3 py-2 text-sm font-medium transition-all duration-200 text-slate-600 hover:text-emerald-500"
         onClick={() => setMobileMenuOpen(false)}
       >
         {t('header.subscription')}
@@ -1065,14 +1065,14 @@ export default function Header() {
             href="https://subscription-frontend-psi.vercel.app/subscription"
             target="_blank"
             rel="noopener noreferrer"
-            className="px-6 py-2 text-[15px] sm:text-base font-medium text-emerald-700 hover:bg-emerald-50 rounded-full border border-emerald-200 transition flex items-center justify-center shadow-sm"
+            className="px-6 py-2 text-[15px] sm:text-base font-medium text-slate-700 hover:bg-emerald-50 rounded-full border border-slate-200 transition flex items-center justify-center shadow-sm"
             onClick={() => setMobileMenuOpen(false)}
           >
             {t('header.signUpShopkeeper')}
           </a>
           <NavLink
             to="/signup-user"
-            className="px-6 py-2 text-[15px] sm:text-base font-medium text-emerald-700 hover:bg-emerald-50 rounded-full border border-emerald-200 transition flex items-center justify-center shadow-sm"
+            className="px-6 py-2 text-[15px] sm:text-base font-medium text-slate-700 hover:bg-emerald-50 rounded-full border border-slate-200 transition flex items-center justify-center shadow-sm"
             onClick={() => setMobileMenuOpen(false)}
           >
             {t('header.signUpUser')}
@@ -1082,7 +1082,7 @@ export default function Header() {
 
       <NavLink
         to="/signin"
-        className="mt-4 bg-emerald-500 hover:bg-emerald-600 active:bg-emerald-700 text-white font-medium rounded-full text-[17px] sm:text-lg px-8 py-2 transition shadow-md text-center flex items-center justify-center"
+        className="mt-4 bg-slate-700 hover:bg-emerald-600 active:bg-slate-700 text-white font-medium rounded-full text-[17px] sm:text-lg px-8 py-2 transition shadow-md text-center flex items-center justify-center"
         onClick={() => setMobileMenuOpen(false)}
       >
         {t('header.signIn')}
@@ -1134,7 +1134,7 @@ export default function Header() {
           {isLoggedIn ? (
             <button
               onClick={() => setSidebarOpen(true)}
-              className="text-white transition p-1 -ml-1 bg-blue-600 rounded"
+              className="hover:text-white transition p-1.5 -ml-1 text-slate hover:bg-blue-600 rounded-full"
             >
               <Menu size={28} strokeWidth={2.2} />
             </button>
@@ -1159,7 +1159,7 @@ export default function Header() {
                 href="https://subscription-frontend-psi.vercel.app/subscription"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-800 hover:text-emerald-600 px-4 py-2.5 text-base transition min-h-[44px] flex items-center"
+                className="px-3 py-2 text-sm font-medium transition-all duration-200 text-slate-600 hover:text-emerald-500"
               >
                 {t('header.subscription')}
               </a>
@@ -1180,21 +1180,21 @@ export default function Header() {
             {!isLoggedIn ? (
               <>
                 <div className="relative group">
-                  <button className="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-medium rounded-full text-base px-6 py-2 transition shadow-md">
-                    {t('header.signUp')}
+                  <button className="flex items-center gap-2 bg-slate-900 text-white px-6 py-2 rounded-full text-sm font-semibold hover:bg-emerald-600 transition shadow-lg shadow-slate-200">
+                    {t('header.signUp')} <FaChevronDown size={10} />
                   </button>
-                  <div className="absolute right-0 mt-2 bg-white rounded-xl shadow-xl z-10 min-w-[200px] opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-200 border border-gray-200">
+                  <div className="absolute right-0 mt-2 w-48 bg-white border border-slate-100 rounded-2xl shadow-xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 translate-y-2 group-hover:translate-y-0">
                     <a
                       href="https://subscription-frontend-psi.vercel.app/subscription"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="block px-5 py-2.5 text-base text-emerald-700 hover:bg-emerald-50 transition rounded-t-xl"
+                      className="block px-4 py-2 text-sm text-slate-700 hover:bg-emerald-50 hover:text-emerald-600 transition"
                     >
                       {t('header.signUpShopkeeper')}
                     </a>
                     <NavLink
                       to="/signup-user"
-                      className="block px-5 py-2.5 text-base text-emerald-700 hover:bg-emerald-50 transition rounded-b-xl"
+                      className="block px-4 py-2 text-sm text-slate-700 hover:bg-emerald-50 hover:text-emerald-600 transition"
                     >
                       {t('header.signUpUser')}
                     </NavLink>
@@ -1203,7 +1203,7 @@ export default function Header() {
 
                 <NavLink
                   to="/signin"
-                  className="text-gray-800 border border-gray-300 hover:bg-gray-100 font-medium rounded-full text-base px-6 py-2 transition text-center"
+                  className="text-gray-800 border border-gray-300 hover:bg-gray-100 rounded-full text-sm font-semibold px-6 py-2 transition text-center"
                 >
                   {t('header.signIn')}
                 </NavLink>
@@ -1237,7 +1237,7 @@ export default function Header() {
             ) : isLoggedIn ? (
               <UserOnlineIcon />
             ) : (
-              <List className="text-emerald-600" size={28} strokeWidth={2.2} />
+              <List className="text-slate-800" size={28} strokeWidth={2.2} />
             )}
           </button>
         </div>

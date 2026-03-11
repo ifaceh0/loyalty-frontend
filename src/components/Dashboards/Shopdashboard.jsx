@@ -678,7 +678,7 @@ const Shopdashboard = () => {
       <aside
         className={`fixed h-screen top-0 bg-gradient-to-b from-[#dbeafe] to-[#bfdbfe] text-slate-800 p-3 sm:p-4 shadow-lg z-50 transform transition-all duration-300 ease-in-out ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
-        } ${isSidebarExpanded ? "w-64 sm:w-72" : "w-16 sm:w-20"} rounded-r-xl`}
+        } ${isSidebarExpanded ? "w-64" : "w-16"} rounded-r-xl`}
       >
         <div className="flex justify-between items-center mb-5 sm:mb-6">
           {isSidebarExpanded && (
@@ -690,7 +690,7 @@ const Shopdashboard = () => {
             {!sidebarOpen && (
               <button
                 onClick={() => setSidebarOpen(true)}
-                className="p-2 sm:p-3 rounded-full bg-blue-600 hover:bg-blue-700 text-white transition flex items-center justify-center absolute left-2 sm:left-4 top-3 sm:top-4"
+                className="p-2 rounded-full bg-blue-600 hover:bg-blue-700 text-white transition flex items-center justify-center absolute left-2 sm:left-4 top-3 sm:top-4"
                 aria-label="Open sidebar"
               >
                 <Menu className="w-6 h-6 sm:w-7 sm:h-7" />
@@ -702,10 +702,10 @@ const Shopdashboard = () => {
                   setSidebarOpen(false);
                   setIsSidebarExpanded(false);
                 }}
-                className="p-2 sm:p-2 rounded-full bg-blue-600 hover:bg-blue-700 text-white transition flex items-center justify-center"
+                className="p-2 rounded-full bg-blue-600 hover:bg-blue-700 text-white transition flex items-center justify-center"
                 aria-label="Close sidebar"
               >
-                <X className="w-6 h-6 sm:w-6 sm:h-6" />
+                <X className="w-6 h-6 sm:w-5 sm:h-5" />
               </button>
             )}
           </div>
@@ -728,7 +728,7 @@ const Shopdashboard = () => {
                   setActiveTab(tab);
                   if (!isSidebarExpanded) toggleSidebarExpansion();
                 }}
-                className={`flex items-center w-full text-left px-3 sm:px-4 py-3 sm:py-2 rounded-full transition text-base sm:text-lg ${
+                className={`flex items-center w-full text-left px-3 py-3 sm:py-2 rounded-full transition text-base ${
                   activeTab === tab
                     ? "bg-blue-600 text-white font-semibold shadow-md"
                     : "hover:bg-blue-200 hover:text-blue-800 text-slate-700"
@@ -738,7 +738,7 @@ const Shopdashboard = () => {
                   icon={icon}
                   className={`${isSidebarExpanded ? "mr-3 sm:mr-4" : ""} ${
                     activeTab === tab ? "text-white" : "text-blue-600"
-                  } text-lg sm:text-xl`}
+                  } text-lg`}
                 />
                 {isSidebarExpanded && <span className="truncate">{label}</span>}
               </button>

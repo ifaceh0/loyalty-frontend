@@ -1472,30 +1472,64 @@ export default function Home() {
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
         variants={staggerContainer}
-        className="py-10 xs:py-12 md:py-14 px-4 xs:px-5 sm:px-6 lg:px-8"
+        className="py-10 xs:py-12 md:py-14 px-6 lg:px-8 bg-white"
       >
-        <div className="max-w-5xl mx-auto text-center">
-          <h2 className="text-3xl xs:text-4xl sm:text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-emerald-600 to-teal-700 bg-clip-text text-transparent mb-8 md:mb-14">
-            {t('home.howItWorks.title')}
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 xs:gap-6 md:gap-8 lg:gap-10">
+        <div className="max-w-6xl mx-auto">
+          {/* Header: Centered with tight tracking and deep color */}
+          <div className="text-center mb-16 md:mb-20">
+            <h2 className="text-3xl md:text-5xl font-bold text-slate-900 tracking-tight">
+              {t('home.howItWorks.title')}
+            </h2>
+            <div className="mt-4 h-1.5 w-20 bg-emerald-500 mx-auto rounded-full" />
+          </div>
+
+          {/* Grid: Modern soft cards with distinct character */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
             {[
-              { icon: <CheckCircle className="w-12 h-12 xs:w-14 xs:h-14 text-emerald-600" />, title: t('home.howItWorks.steps.0.title'), desc: t('home.howItWorks.steps.0.desc') },
-              { icon: <Store className="w-12 h-12 xs:w-14 xs:h-14 text-teal-600" />, title: t('home.howItWorks.steps.1.title'), desc: t('home.howItWorks.steps.1.desc') },
-              { icon: <Gift className="w-12 h-12 xs:w-14 xs:h-14 text-indigo-600" />, title: t('home.howItWorks.steps.2.title'), desc: t('home.howItWorks.steps.2.desc') },
+              { 
+                icon: <CheckCircle strokeWidth={1.5} />, 
+                title: t('home.howItWorks.steps.0.title'), 
+                desc: t('home.howItWorks.steps.0.desc'),
+                color: "text-emerald-600",
+                bg: "bg-emerald-50"
+              },
+              { 
+                icon: <Store strokeWidth={1.5} />, 
+                title: t('home.howItWorks.steps.1.title'), 
+                desc: t('home.howItWorks.steps.1.desc'),
+                color: "text-teal-600",
+                bg: "bg-teal-50"
+              },
+              { 
+                icon: <Gift strokeWidth={1.5} />, 
+                title: t('home.howItWorks.steps.2.title'), 
+                desc: t('home.howItWorks.steps.2.desc'),
+                color: "text-indigo-600",
+                bg: "bg-indigo-50"
+              },
             ].map((step, i) => (
               <motion.div
                 key={i}
                 variants={cardVariants}
-                className="group bg-white rounded-xl p-8 xs:p-7 sm:p-6 shadow-md hover:shadow-2xl transition-all duration-300 border border-gray-100 min-h-[200px] flex flex-col"
+                className="group relative bg-slate-50/50 rounded-[1rem] p-8 md:p-10 border border-slate-100 hover:bg-white hover:border-white hover:shadow-2xl hover:shadow-slate-200 transition-all duration-500 ease-out flex flex-col items-start text-start"
               >
-                <div className="mb-3 xs:mb-6 flex justify-center transform group-hover:scale-110 transition-transform">
-                  {step.icon}
+                {/* Step Number Badge */}
+                <span className="absolute top-6 right-6 text-xs font-bold text-slate-300 group-hover:text-slate-900 transition-colors">
+                  0{i + 1}
+                </span>
+
+                {/* Icon: Soft circle backdrop with high-contrast icon */}
+                <div className={`mb-8 w-20 h-20 ${step.bg} ${step.color} rounded-lg flex items-center justify-center transform group-hover:scale-110 group-hover:rotate-3 transition-all duration-500`}>
+                  {React.cloneElement(step.icon, { className: "w-10 h-10" })}
                 </div>
-                <h3 className="text-lg xs:text-xl sm:text-2xl font-bold text-gray-800 mb-3 xs:mb-4 group-hover:text-emerald-700 transition">
+                
+                <h3 className="text-xl md:text-2xl font-bold text-slate-900 mb-4 tracking-tight">
                   {step.title}
                 </h3>
-                <p className="text-gray-600 text-[15px] xs:text-base">{step.desc}</p>
+                
+                <p className="text-slate-600 leading-relaxed text-base md:text-[17px]">
+                  {step.desc}
+                </p>
               </motion.div>
             ))}
           </div>
@@ -1508,36 +1542,48 @@ export default function Home() {
         whileInView="visible"
         viewport={{ once: true, amount: 0.15 }}
         variants={staggerContainer}
-        className="py-10 xs:py-12 md:py-14 px-4 xs:px-5 sm:px-6 lg:px-8"
+        className="py-10 xs:py-12 md:py-14 px-6 lg:px-8 bg-white"
       >
-        <div className="max-w-6xl mx-auto text-center">
-          <h2 className="text-3xl xs:text-4xl font-extrabold bg-gradient-to-r from-emerald-600 to-teal-700 bg-clip-text text-transparent mb-5 xs:mb-6">
-            {t('home.categories.title')}
-          </h2>
-          <p className="text-gray-600 mb-8 xs:mb-10 max-w-3xl mx-auto text-[15px] xs:text-base">
-            {t('home.categories.subtitle')}
-          </p>
-          <div className="grid grid-cols-3 xs:grid-cols-3 lg:grid-cols-6 gap-3 xs:gap-5 sm:gap-6">
+        <div className="max-w-6xl mx-auto">
+          {/* Header: Strong contrast and personality */}
+          <div className="text-center mb-16 md:mb-20">
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight mb-4">
+              {t('home.categories.title')}
+            </h2>
+            <p className="text-slate-500 max-w-xl mx-auto text-base">
+              {t('home.categories.subtitle')}
+            </p>
+          </div>
+
+          {/* Grid: Modern "Squircle" Cards */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6">
             {[
-              { icon: <Coffee className="w-9 h-9 xs:w-10 xs:h-10 sm:w-12 sm:h-12" />, name: t('home.categories.items.0.name'), count: t('home.categories.items.0.count') },
-              { icon: <Utensils className="w-9 h-9 xs:w-10 xs:h-10 sm:w-12 sm:h-12" />, name: t('home.categories.items.1.name'), count: t('home.categories.items.1.count') },
-              { icon: <ShoppingBag className="w-9 h-9 xs:w-10 xs:h-10 sm:w-12 sm:h-12" />, name: t('home.categories.items.2.name'), count: t('home.categories.items.2.count') },
-              { icon: <Car className="w-9 h-9 xs:w-10 xs:h-10 sm:w-12 sm:h-12" />, name: t('home.categories.items.3.name'), count: t('home.categories.items.3.count') },
-              { icon: <Heart className="w-9 h-9 xs:w-10 xs:h-10 sm:w-12 sm:h-12" />, name: t('home.categories.items.4.name'), count: t('home.categories.items.4.count') },
-              { icon: <Gamepad2 className="w-9 h-9 xs:w-10 xs:h-10 sm:w-12 sm:h-12" />, name: t('home.categories.items.5.name'), count: t('home.categories.items.5.count') },
+              { icon: <Coffee />, name: t('home.categories.items.0.name'), count: t('home.categories.items.0.count'), color: 'bg-orange-50 text-orange-600' },
+              { icon: <Utensils />, name: t('home.categories.items.1.name'), count: t('home.categories.items.1.count'), color: 'bg-rose-50 text-rose-600' },
+              { icon: <ShoppingBag />, name: t('home.categories.items.2.name'), count: t('home.categories.items.2.count'), color: 'bg-emerald-50 text-emerald-600' },
+              { icon: <Car />, name: t('home.categories.items.3.name'), count: t('home.categories.items.3.count'), color: 'bg-blue-50 text-blue-600' },
+              { icon: <Heart />, name: t('home.categories.items.4.name'), count: t('home.categories.items.4.count'), color: 'bg-pink-50 text-pink-600' },
+              { icon: <Gamepad2 />, name: t('home.categories.items.5.name'), count: t('home.categories.items.5.count'), color: 'bg-indigo-50 text-indigo-600' },
             ].map((category, i) => (
               <motion.div
                 key={i}
                 variants={cardVariants}
-                className="group bg-gradient-to-br from-emerald-50 to-teal-50 p-5 xs:p-6 rounded-xl shadow-md hover:shadow-2xl transition-all duration-300 cursor-pointer min-h-[140px] flex flex-col justify-center items-center"
+                className="group flex flex-col items-center p-6 rounded-[1rem] bg-slate-50/50 border border-transparent hover:bg-white hover:border-slate-100 hover:shadow-xl hover:shadow-slate-200/60 transition-all duration-500 cursor-pointer"
               >
-                <div className="text-emerald-600 flex justify-center mb-3 xs:mb-4 group-hover:scale-110 transition-transform duration-300">
-                  {category.icon}
+                {/* Icon Wrapper: The "Soft Pop" element */}
+                <div className={`w-14 h-14 flex items-center justify-center rounded-lg ${category.color} mb-4 transform group-hover:scale-110 group-hover:-rotate-3 transition-all duration-500 shadow-sm`}>
+                  {React.cloneElement(category.icon, { strokeWidth: 2, className: "w-6 h-6" })}
                 </div>
-                <h4 className="font-bold text-emerald-900 mb-1 text-[15px] xs:text-base sm:text-lg">{category.name}</h4>
-                <p className="text-[13px] xs:text-sm text-emerald-700">
-                  {category.count} {t('home.categories.stores')}
-                </p>
+                
+                <h4 className="text-sm md:text-base font-bold text-slate-900 text-center">
+                  {category.name}
+                </h4>
+                
+                <div className="mt-1 px-2.5 py-0.5 rounded-full bg-white border border-slate-100 shadow-sm">
+                  <span className="text-[10px] md:text-xs font-semibold text-slate-400">
+                    {category.count}
+                  </span>
+                </div>
               </motion.div>
             ))}
           </div>
@@ -1550,58 +1596,68 @@ export default function Home() {
         whileInView="visible"
         viewport={{ once: true }}
         variants={staggerContainer}
-        className="py-10 xs:py-12 md:py-14 px-4 xs:px-5 sm:px-6 lg:px-8"
+        className="py-10 xs:py-12 md:py-14 px-6 bg-white"
       >
-        <div className="max-w-6xl mx-auto text-center">
-          <h2 className="text-3xl xs:text-4xl font-extrabold text-emerald-800 mb-8 xs:mb-10 md:mb-12">
-            {t('home.stats.title')}
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 xs:gap-6 md:gap-8">
-            <motion.div
-              variants={cardVariants}
-              className="bg-white rounded-xl p-4 xs:p-7 sm:p-8 shadow-md hover:shadow-2xl text-center min-h-[180px] flex flex-col justify-center"
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl xs:text-4xl font-extrabold text-center text-slate-800 mb-8 xs:mb-10 md:mb-12">
+              {t('home.stats.title')}
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            
+            {/* Total Users */}
+            <motion.div 
+              variants={cardVariants} 
+              className="bg-white border-2 border-slate-900 rounded-xl p-8 shadow-[4px_4px_0px_0px_rgba(15,23,42,1)]"
             >
-              <Users className="w-10 h-10 xs:w-12 xs:h-12 text-emerald-600 mx-auto mb-4 xs:mb-5" />
-              <div className="text-3xl xs:text-4xl font-extrabold text-emerald-700">
-                {loading ? '.....' : <CountUp end={stats.totalUsers} duration={2.5} separator="," />}
+              <div className="flex items-center justify-between mb-6">
+                <Users className="w-6 h-6 text-emerald-600" strokeWidth={2} />
+                {/* <span className="text-[11px] font-black uppercase tracking-[0.2em] text-slate-400">Community</span> */}
               </div>
-              <p className="text-gray-600 mt-2 xs:mt-3 text-[15px] xs:text-base">
-                {t('home.stats.items.0.label')}
-              </p>
+              <div className="text-5xl font-black text-slate-900 tracking-tighter">
+                {loading ? "···" : <CountUp end={stats.totalUsers} duration={2} separator="," />}
+              </div>
+              <p className="text-slate-500 font-medium mt-2">{t('home.stats.items.0.label')}</p>
             </motion.div>
 
-            <motion.div
-              variants={cardVariants}
-              className="bg-white rounded-xl p-6 xs:p-7 sm:p-8 shadow-md hover:shadow-2xl text-center min-h-[180px] flex flex-col justify-center"
+            {/* Total Shops */}
+            <motion.div 
+              variants={cardVariants} 
+              className="bg-white border-2 border-slate-900 rounded-xl p-8 shadow-[4px_4px_0px_0px_rgba(15,23,42,1)]"
             >
-              <Store className="w-10 h-10 xs:w-12 xs:h-12 text-emerald-600 mx-auto mb-4 xs:mb-5" />
-              <div className="text-3xl xs:text-4xl font-extrabold text-emerald-700">
-                {loading ? '.....' : <CountUp end={stats.totalShops} duration={2.5} separator="," />}
+              <div className="flex items-center justify-between mb-6">
+                <Store className="w-6 h-6 text-emerald-600" strokeWidth={2} />
+                {/* <span className="text-[11px] font-black uppercase tracking-[0.2em] text-slate-400">Network</span> */}
               </div>
-              <p className="text-gray-600 mt-2 xs:mt-3 text-[15px] xs:text-base">
-                {t('home.stats.items.1.label')}
-              </p>
+              <div className="text-5xl font-black text-slate-900 tracking-tighter">
+                {loading ? "···" : <CountUp end={stats.totalShops} duration={2} separator="," />}
+              </div>
+              <p className="text-slate-500 font-medium mt-2">{t('home.stats.items.1.label')}</p>
             </motion.div>
 
-            <motion.div
-              variants={cardVariants}
-              className="bg-white rounded-xl p-6 xs:p-7 sm:p-8 shadow-md hover:shadow-2xl text-center min-h-[180px] flex flex-col justify-center"
+            {/* Transactions - Cleaned up currency logic */}
+            <motion.div 
+              variants={cardVariants} 
+              className="bg-slate-900 rounded-xl p-8 shadow-xl"
             >
-              <Banknote className="w-10 h-10 xs:w-12 xs:h-12 text-emerald-600 mx-auto mb-4 xs:mb-5" />
-
-              {loading ? (
-                "....."
-              ) : (
-                <div className="space-y-2 xs:space-y-3 text-lg xs:text-xl sm:text-2xl font-bold text-emerald-700">
-                  <div>🇺🇸 USA : ${new Intl.NumberFormat().format(stats.totalUsaTransactionAmount)}</div>
-                  <div>🇮🇳 India : ₹{new Intl.NumberFormat().format(stats.totalIndiaTransactionAmount)}</div>
+              <div className="flex items-center justify-between mb-6">
+                <Banknote className="w-6 h-6 text-emerald-400" strokeWidth={2} />
+                {/* <span className="text-[11px] font-black uppercase tracking-[0.2em] text-slate-400">Volume</span> */}
+              </div>
+              <div className="space-y-1">
+                <div className="text-2xl font-bold text-white flex items-baseline gap-2">
+                  <span className="text-sm text-emerald-400 font-mono">🇺🇸 USA:</span>
+                  {loading ? "···" : `$${new Intl.NumberFormat().format(stats.totalUsaTransactionAmount)}`}
                 </div>
-              )}
-
-              <p className="text-gray-600 mt-3 xs:mt-4 text-[15px] xs:text-base">
-                {t('home.stats.items.2.label')}
-              </p>
+                <div className="text-2xl font-bold text-white flex items-baseline gap-2 border-t border-slate-800 pt-1">
+                  <span className="text-sm text-emerald-400 font-mono">🇮🇳 India:</span>
+                  {loading ? "···" : `₹${new Intl.NumberFormat().format(stats.totalIndiaTransactionAmount)}`}
+                </div>
+              </div>
+              <p className="text-slate-400 font-medium mt-4">{t('home.stats.items.2.label')}</p>
             </motion.div>
+
           </div>
         </div>
       </motion.section>
@@ -1612,32 +1668,35 @@ export default function Home() {
         whileInView="visible"
         viewport={{ once: true, amount: 0.15 }}
         variants={staggerContainer}
-        className="py-10 xs:py-12 md:py-14 px-4 xs:px-5 sm:px-6 lg:px-8"
+        className="py-10 xs:py-12 md:py-14 px-6 lg:px-8 bg-white"
       >
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-8 xs:mb-10 md:mb-12">
-            <h2 className="text-3xl xs:text-4xl font-extrabold bg-gradient-to-r from-blue-600 to-indigo-700 bg-clip-text text-transparent mb-3 xs:mb-4">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight mb-4">
               {t('home.mobile.title')}
             </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto text-[15px] xs:text-base">
+            <p className="text-slate-500 max-w-2xl mx-auto text-base">
               {t('home.mobile.subtitle')}
             </p>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 xs:gap-6">
+
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { icon: <Smartphone className="w-8 h-8 xs:w-9 xs:h-9 sm:w-10 sm:h-10" />, title: t('home.mobile.features.0.title'), desc: t('home.mobile.features.0.desc') },
-              { icon: <Bell className="w-8 h-8 xs:w-9 xs:h-9 sm:w-10 sm:h-10" />, title: t('home.mobile.features.1.title'), desc: t('home.mobile.features.1.desc') },
-              { icon: <MapPin className="w-8 h-8 xs:w-9 xs:h-9 sm:w-10 sm:h-10" />, title: t('home.mobile.features.2.title'), desc: t('home.mobile.features.2.desc') },
-              { icon: <TrendingUp className="w-8 h-8 xs:w-9 xs:h-9 sm:w-10 sm:h-10" />, title: t('home.mobile.features.3.title'), desc: t('home.mobile.features.3.desc') },
+              { icon: <Smartphone />, title: t('home.mobile.features.0.title'), desc: t('home.mobile.features.0.desc'), color: 'bg-blue-50 text-blue-600' },
+              { icon: <Bell />, title: t('home.mobile.features.1.title'), desc: t('home.mobile.features.1.desc'), color: 'bg-indigo-50 text-indigo-600' },
+              { icon: <MapPin />, title: t('home.mobile.features.2.title'), desc: t('home.mobile.features.2.desc'), color: 'bg-violet-50 text-violet-600' },
+              { icon: <TrendingUp />, title: t('home.mobile.features.3.title'), desc: t('home.mobile.features.3.desc'), color: 'bg-sky-50 text-sky-600' },
             ].map((feature, i) => (
               <motion.div
                 key={i}
                 variants={cardVariants}
-                className="bg-white p-5 xs:p-6 rounded-xl shadow-md hover:shadow-2xl transition-all duration-300 min-h-[160px] flex flex-col justify-between"
+                className="group p-8 rounded-[1rem] bg-slate-50/50 border border-transparent hover:bg-white hover:border-slate-100 hover:shadow-2xl hover:shadow-slate-200/60 transition-all duration-500"
               >
-                <div className="text-blue-600 mb-3 xs:mb-4 flex justify-center">{feature.icon}</div>
-                <h4 className="font-bold text-blue-900 mb-2 text-[15px] xs:text-base sm:text-lg">{feature.title}</h4>
-                <p className="text-[14px] xs:text-sm text-gray-600">{feature.desc}</p>
+                <div className={`w-14 h-14 rounded-lg ${feature.color} flex items-center justify-center mb-6 transform group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 shadow-sm`}>
+                  {React.cloneElement(feature.icon, { strokeWidth: 2, className: "w-7 h-7" })}
+                </div>
+                <h4 className="font-bold text-slate-900 mb-3 text-lg">{feature.title}</h4>
+                <p className="text-slate-500 text-sm leading-relaxed">{feature.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -1650,21 +1709,29 @@ export default function Home() {
         whileInView="visible"
         viewport={{ once: true, amount: 0.15 }}
         variants={staggerContainer}
-        className="py-10 xs:py-12 md:py-14 px-4 xs:px-5 sm:px-6 lg:px-8"
+        className="py-10 xs:py-12 md:py-14 px-6 lg:px-8 bg-white"
       >
-        <div className="max-w-6xl mx-auto text-center">
-          <h2 className="text-3xl xs:text-4xl font-extrabold bg-gradient-to-r from-emerald-600 to-teal-700 bg-clip-text text-transparent mb-8 xs:mb-10 md:mb-12">
-            {t('home.benefits.title')}
-          </h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 xs:gap-5 sm:gap-6">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight">
+              {t('home.benefits.title')}
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-2 xs:grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
             {t('home.benefits.items', { returnObjects: true }).map((benefit, i) => (
               <motion.div
                 key={i}
                 variants={cardVariants}
-                className="bg-gradient-to-br from-emerald-50 to-teal-50 p-4 xs:p-5 sm:p-6 rounded-xl text-center shadow-md hover:shadow-2xl transition min-h-[110px] flex flex-col justify-center items-center"
+                className="group bg-white p-6 rounded-xl border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex items-center space-x-4 md:flex-col md:space-x-0 md:text-center md:justify-center"
               >
-                <Star className="w-7 h-7 xs:w-8 xs:h-8 sm:w-9 sm:h-9 text-emerald-600 mx-auto mb-2 xs:mb-3" />
-                <p className="font-semibold text-emerald-900 text-[14px] xs:text-[15px] sm:text-base">{benefit}</p>
+                {/* Soft Glow Star Icon */}
+                <div className="flex-shrink-0 w-10 h-10 md:mb-4 bg-emerald-50 rounded-md flex items-center justify-center group-hover:bg-emerald-500 transition-colors duration-300">
+                  <Star className="w-5 h-5 text-emerald-600 group-hover:text-white transition-colors duration-300" fill="currentColor" />
+                </div>
+                <p className="font-bold text-slate-800 text-sm md:text-base leading-tight">
+                  {benefit}
+                </p>
               </motion.div>
             ))}
           </div>
@@ -1677,29 +1744,53 @@ export default function Home() {
         whileInView="visible"
         viewport={{ once: true, amount: 0.15 }}
         variants={staggerContainer}
-        className="py-10 xs:py-12 md:py-14 px-4 xs:px-5 sm:px-6 lg:px-8"
+        className="py-10 xs:py-12 md:py-14 px-6 lg:px-8 bg-white"
       >
-        <div className="max-w-6xl mx-auto text-center">
-          <h2 className="text-3xl xs:text-4xl font-extrabold text-emerald-800 mb-8 xs:mb-10 md:mb-12">
-            {t('home.testimonials.title')}
-          </h2>
-          <div className="grid grid-cols-3 md:grid-cols-3 gap-2 xs:gap-6 md:gap-8">
+        <div className="max-w-6xl mx-auto">
+          {/* Header: Focused & Clean */}
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight">
+              {t('home.testimonials.title')}
+            </h2>
+          </div>
+
+          {/* Grid: Modern "Lift" Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
             {t('home.testimonials.items', { returnObjects: true }).map((testimonial, i) => (
               <motion.div
                 key={i}
                 variants={cardVariants}
-                className="bg-white rounded-xl p-5 xs:p-6 shadow-md hover:shadow-2xl min-h-[220px] flex flex-col"
+                className="group relative bg-slate-50/50 p-8 rounded-[2.5rem] border border-transparent hover:bg-white hover:border-slate-100 hover:shadow-2xl hover:shadow-slate-200/60 transition-all duration-500 flex flex-col"
               >
-                <div className="flex justify-center mb-3 xs:mb-4">
+                {/* Rating: Clean & Simple */}
+                <div className="flex gap-1 mb-6">
                   {[...Array(testimonial.rating)].map((_, j) => (
-                    <Star key={j} className="w-5 h-5 text-yellow-400 fill-current" />
+                    <Star key={j} className="w-4 h-4 text-amber-400 fill-current" />
                   ))}
                 </div>
-                <p className="text-gray-700 italic mb-3 xs:mb-4 text-[14px] xs:text-[15px] sm:text-base flex-grow">"{testimonial.review}"</p>
-                <div className="border-t pt-3 xs:pt-4 mt-auto">
-                  <h5 className="font-bold text-emerald-900 text-[15px] xs:text-base">{testimonial.name}</h5>
-                  <p className="text-[13px] xs:text-sm text-gray-600">{testimonial.location}</p>
-                  <p className="text-[13px] xs:text-sm text-emerald-600 font-semibold mt-1">{testimonial.points}</p>
+
+                {/* Review Text: Improved Legibility */}
+                <blockquote className="flex-grow">
+                  <p className="text-slate-700 leading-relaxed text-base md:text-lg font-medium italic">
+                    “{testimonial.review}”
+                  </p>
+                </blockquote>
+
+                {/* Author Section: Integrated & Polished */}
+                <div className="mt-8 pt-6 border-t border-slate-100 flex flex-col">
+                  <h5 className="font-bold text-slate-900 text-base">
+                    {testimonial.name}
+                  </h5>
+                  <div className="flex items-center justify-between mt-1">
+                    <p className="text-sm text-slate-500">
+                      {testimonial.location}
+                    </p>
+                    
+                    {/* Points: Styled as a subtle badge */}
+                    <span className="px-3 py-1 bg-emerald-100/50 text-emerald-700 text-[11px] font-black uppercase tracking-wider rounded-full">
+                      {testimonial.points}
+                    </span>
+                  </div>
                 </div>
               </motion.div>
             ))}
@@ -1708,39 +1799,69 @@ export default function Home() {
       </motion.section>
 
       {/* LEADERBOARD */}
-      <motion.section
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.15 }}
-        variants={staggerContainer}
-        className="py-10 xs:py-12 md:py-14 bg-gray-50 px-4 xs:px-5 sm:px-6 lg:px-8"
-      >
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl xs:text-4xl font-extrabold text-emerald-800 mb-8 xs:mb-10 md:mb-12">
-            {t('home.leaderboard.title')}
-          </h2>
-          <div className="grid grid-cols-3 sm:grid-cols-3 gap-2 xs:gap-6">
-            {t('home.leaderboard.items', { returnObjects: true }).map((user) => (
-              <motion.div
-                key={user.rank}
-                variants={cardVariants}
-                className={`relative bg-white rounded-xl p-5 xs:p-6 shadow-md hover:shadow-2xl border ${
-                  user.rank === 1 ? 'border-yellow-400' : 'border-emerald-200'
-                } min-h-[160px] flex flex-col justify-center items-center`}
-              >
-                {user.rank === 1 && (
-                  <div className="absolute -top-3 xs:-top-4 left-1/2 -translate-x-1/2 bg-yellow-400 text-white text-xs font-bold px-3 py-1 rounded-full">
-                    #1
+        {/* <motion.section
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.15 }}
+          variants={staggerContainer}
+          className="py-20 px-6 lg:px-8 bg-white"
+        >
+          <div className="max-w-4xl mx-auto">
+            
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight">
+                {t('home.leaderboard.title')}
+              </h2>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 md:gap-8 items-end">
+              {t('home.leaderboard.items', { returnObjects: true }).map((user) => (
+                <motion.div
+                  key={user.rank}
+                  variants={cardVariants}
+                  className={`relative group flex flex-col items-center p-8 rounded-[1rem] transition-all duration-500 ${
+                    user.rank === 1 
+                      ? 'bg-white shadow-2xl shadow-emerald-200/50 border-2 border-emerald-100 py-12 z-10' 
+                      : 'bg-white/60 border border-slate-100 hover:bg-white hover:shadow-xl hover:shadow-slate-200/60'
+                  }`}
+                >
+                  <div className={`absolute -top-4 px-4 py-1.5 rounded-full text-xs font-black tracking-widest uppercase shadow-sm ${
+                    user.rank === 1 ? 'bg-emerald-500 text-white' : 'bg-slate-900 text-white'
+                  }`}>
+                    Rank #{user.rank}
                   </div>
-                )}
-                <h3 className="text-lg xs:text-xl font-bold text-emerald-700">{user.name}</h3>
-                <p className="text-3xl xs:text-4xl font-extrabold text-emerald-600 mt-2">{user.points}</p>
-                <p className="text-[14px] xs:text-sm text-gray-600">{t('home.leaderboard.points')}</p>
-              </motion.div>
-            ))}
+
+                  <div className={`w-12 h-12 rounded-full mb-4 flex items-center justify-center font-bold ${
+                    user.rank === 1 ? 'bg-emerald-100 text-emerald-600' : 'bg-slate-100 text-slate-400'
+                  }`}>
+                    {user.name.charAt(0)}
+                  </div>
+
+                  <h3 className="text-lg font-bold text-slate-900 mb-1">
+                    {user.name}
+                  </h3>
+                  
+                  <div className="flex flex-col items-center">
+                    <span className={`text-4xl md:text-5xl font-black tracking-tighter tabular-nums ${
+                      user.rank === 1 ? 'text-emerald-600' : 'text-slate-900'
+                    }`}>
+                      {user.points}
+                    </span>
+                    <span className="text-[11px] font-black uppercase tracking-[0.2em] text-slate-400 mt-1">
+                      {t('home.leaderboard.points')}
+                    </span>
+                  </div>
+
+                  {user.rank === 1 && (
+                    <div className="absolute top-4 right-4 animate-pulse">
+                      <Star className="w-5 h-5 text-emerald-200 fill-current" />
+                    </div>
+                  )}
+                </motion.div>
+              ))}
+            </div>
           </div>
-        </div>
-      </motion.section>
+        </motion.section> */}
 
       {/* FAQ ACCORDION */}
       <motion.section
@@ -1748,25 +1869,35 @@ export default function Home() {
         whileInView="visible"
         viewport={{ once: true, amount: 0.15 }}
         variants={staggerContainer}
-        className="py-10 xs:py-12 md:py-14 px-4 xs:px-5 sm:px-6 lg:px-8"
+        className="py-10 xs:py-12 md:py-14 px-6 lg:px-8 bg-white"
       >
-        <div className="max-w-5xl mx-auto">
-          <h2 className="text-3xl xs:text-4xl font-extrabold text-center text-emerald-800 mb-8 xs:mb-10 md:mb-12">
-            {t('home.faq.title')}
-          </h2>
-          <div className="space-y-3 xs:space-y-4">
+        <div className="max-w-4xl mx-auto">
+          {/* Header: Clean & Balanced */}
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight">
+              {t('home.faq.title')}
+            </h2>
+          </div>
+
+          {/* FAQ List: Soft "Island" Accordions */}
+          <div className="space-y-3">
             {t('home.faq.items', { returnObjects: true }).map((faq, i) => (
               <motion.details
                 key={i}
                 variants={cardVariants}
-                className="group bg-gray-50 rounded-xl overflow-hidden border border-gray-200"
+                className="group bg-slate-50 rounded-[0.5rem] overflow-hidden border border-transparent open:bg-white open:border-slate-100 open:shadow-2xl open:shadow-slate-200/60 transition-all duration-500"
               >
-                <summary className="flex justify-between items-center p-4 xs:p-5 font-semibold text-emerald-800 cursor-pointer hover:bg-emerald-50 transition text-[15px] xs:text-base">
-                  {faq.q}
-                  <ChevronRight className="w-5 h-5 text-emerald-600 group-open:rotate-90 transition-transform" />
+                <summary className="flex justify-between items-center p-4 md:p-3 font-bold text-slate-800 cursor-pointer list-none">
+                  <span className="text-base md:text-lg pr-4">{faq.q}</span>
+                  <div className="flex-shrink-0 w-8 h-8 rounded-full bg-white shadow-sm flex items-center justify-center group-open:bg-slate-900 group-open:text-white transition-all duration-500">
+                    <ChevronRight className="w-4 h-4 transition-transform duration-500 group-open:rotate-90" />
+                  </div>
                 </summary>
-                <div className="px-4 xs:px-5 pb-4 xs:pb-5 text-gray-700 leading-relaxed text-[14px] xs:text-[15px] sm:text-base">
-                  {faq.a}
+                
+                <div className="px-6 md:px-8 pb-8 text-slate-600 leading-relaxed text-sm md:text-base">
+                  <div className="pt-2 border-t border-slate-100/50">
+                    {faq.a}
+                  </div>
                 </div>
               </motion.details>
             ))}
@@ -1779,37 +1910,50 @@ export default function Home() {
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.9 }}
-        className="py-10 xs:py-12 md:py-14 text-center px-4 xs:px-5 sm:px-8"
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className="py-10 xs:py-12 md:py-14 px-6 lg:px-8"
       >
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl xs:text-4xl md:text-5xl font-extrabold text-emerald-600 mb-4 xs:mb-5 md:mb-6">
-            {t('home.finalCTA.title')}
-          </h2>
-          <p className="text-base xs:text-lg sm:text-xl mb-6 xs:mb-8 md:mb-10 opacity-90 max-w-3xl mx-auto">
-            {t('home.finalCTA.subtitle')}
-          </p>
-          <div className="flex flex-col sm:flex-row justify-center items-center gap-4 xs:gap-5 md:gap-6">
-            <motion.button
-              whileHover={{ scale: 1.05, y: -3 }}
-              whileTap={{ scale: 0.97 }}
-              onClick={() => navigate('/signup-user')}
-              className="inline-flex items-center gap-2.5 sm:gap-3 px-6 xs:px-7 sm:px-8 py-3 sm:py-3 bg-emerald-600 text-white font-bold text-[15px] xs:text-base sm:text-lg rounded-full transition-all duration-300 w-full justify-center"
-            >
-              {t('home.finalCTA.userCTA')}
-              <ArrowRight className="w-5 h-5 xs:w-5 xs:h-5 sm:w-6 sm:h-6" />
-            </motion.button>
-            <motion.a
-              href="https://subscription-frontend-psi.vercel.app/subscription"
-              target="_blank"
-              rel="noopener noreferrer"
-              whileHover={{ scale: 1.05, y: -3 }}
-              whileTap={{ scale: 0.97 }}
-              className="inline-flex items-center gap-2.5 sm:gap-3 px-6 sm:px-7 sm:px-8 py-3 sm:py-3 border-2 border-gray-200 text-emerald-600 font-bold text-[15px] sm:text-lg rounded-full transition-all duration-300 w-full justify-center"
-            >
-              {t('home.finalCTA.businessCTA')}
-              <Store className="w-5 h-5 xs:w-5 xs:h-5 sm:w-6 sm:h-6" />
-            </motion.a>
+        {/* The Main "Island" Container */}
+        <div className="max-w-5xl mx-auto bg-slate-900 rounded-[1rem] p-8 md:p-16 text-center relative overflow-hidden shadow-2xl shadow-emerald-200/20">
+          
+          {/* Subtle Decorative Background Element */}
+          <div className="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
+
+          <div className="relative z-10 max-w-3xl mx-auto">
+            <h2 className="text-3xl md:text-5xl font-black text-white tracking-tighter mb-6">
+              {t('home.finalCTA.title')}
+            </h2>
+            
+            <p className="text-slate-400 text-base md:text-lg mb-10 leading-relaxed">
+              {t('home.finalCTA.subtitle')}
+            </p>
+
+            <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
+              {/* Primary CTA: High Contrast */}
+              <motion.button
+                whileHover={{ scale: 1.02, y: -2 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={() => navigate('/signup-user')}
+                className="group flex items-center justify-center gap-3 px-8 py-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-base md:text-lg rounded-full transition-all duration-300 w-full sm:w-auto shadow-lg shadow-emerald-500/20"
+              >
+                {t('home.finalCTA.userCTA')}
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </motion.button>
+
+              {/* Secondary CTA: Soft Ghost Style */}
+              <motion.a
+                href="https://subscription-frontend-psi.vercel.app/subscription"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.02, y: -2 }}
+                whileTap={{ scale: 0.98 }}
+                className="group flex items-center justify-center gap-3 px-8 py-2 bg-slate-800 hover:bg-slate-700 text-white font-bold text-base md:text-lg rounded-full transition-all duration-300 w-full sm:w-auto border border-slate-700"
+              >
+                {t('home.finalCTA.businessCTA')}
+                <Store className="w-5 h-5 text-slate-400 group-hover:text-emerald-400 transition-colors" />
+              </motion.a>
+            </div>
           </div>
         </div>
       </motion.section>

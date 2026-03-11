@@ -25,7 +25,7 @@ export default function LanguageSelector() {
         onClick={() => setOpen(v => !v)}
         className="
           flex items-center gap-2 bg-white border border-gray-300 
-          text-gray-700 text-sm rounded-md px-3 py-1.5
+          text-gray-700 text-sm font-semibold rounded-full px-3 py-1.5
           focus:outline-none focus:ring-2 focus:ring-gray-400
           cursor-pointer
         "
