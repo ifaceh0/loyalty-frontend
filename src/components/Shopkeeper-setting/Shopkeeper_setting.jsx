@@ -564,6 +564,7 @@ import { FiTrash2, FiX, FiEdit3, FiSave, FiPlus, FiLoader, FiSettings } from "re
 import { useTranslation } from "react-i18next"; 
 import { API_BASE_URL } from '../../apiConfig';
 import { getCurrencySymbol } from "../../utils/currency";
+import { fetchWithAuth } from "../../auth/fetchWithAuth";
 
 const inputStyle =
   "w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition duration-200 text-sm sm:text-base";
@@ -620,9 +621,10 @@ const ShopkeeperSetting = () => {
     const fetchSetting = async () => {
       setIsLoading(true);
       try {
-        const response = await fetch(
-          `${API_BASE_URL}/api/shop/get-setting/${shopId}`
-        );
+        const response = await fetchWithAuth(
+          `${API_BASE_URL}/api/shop/get-setting/${shopId}`, {
+            credentials: "include",
+          });
         if (response.ok) {
           const data = await response.json();
           const parsedData = parseFetchedData(data);
@@ -754,9 +756,10 @@ const ShopkeeperSetting = () => {
     };
     
     try {
-      const response = await fetch(
+      const response = await fetchWithAuth(
         `${API_BASE_URL}/api/shop/update-setting`,
         {
+          credentials: "include",
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),

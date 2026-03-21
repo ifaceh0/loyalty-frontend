@@ -711,7 +711,8 @@
 
 //translated version below
 import React, { useState, useEffect } from "react";
-import { Phone, Mail, QrCode } from "lucide-react";
+import { Phone, Mail, Search, Send, MailPlus,Store, CheckCircle2, AlertCircle, QrCode, X } from "lucide-react";
+import { motion, AnimatePresence } from 'framer-motion';
 import QrScanner from "./QrScanner";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -729,6 +730,7 @@ import {
 import { useTranslation } from "react-i18next";
 import { API_BASE_URL } from '../../apiConfig';
 import { getCurrencySymbol } from "../../utils/currency";
+import { fetchWithAuth } from "../../auth/fetchWithAuth";
 
 const PRIMARY_COLOR = "blue-600";
 const ACCENT_COLOR = "cyan-500";
@@ -737,7 +739,7 @@ const ERROR_COLOR = "red-600";
 const INFO_COLOR = "blue-500";
 
 const CustomerLookup = () => {
-  const { t } = useTranslation(); // ← ADDED
+  const { t } = useTranslation();
 
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
@@ -831,9 +833,10 @@ const CustomerLookup = () => {
 
       console.log("Searching with:", { type, query, shopId }); 
 
-      const res = await fetch(
-        `${API_BASE_URL}/api/shop/${endpoint}?shopId=${shopId}&${query}`
-      );
+      const res = await fetchWithAuth(
+        `${API_BASE_URL}/api/shop/${endpoint}?shopId=${shopId}&${query}`, {
+          credentials: "include",
+        });
 
       if (!res.ok) {
         const text = await res.text();
@@ -873,7 +876,8 @@ const CustomerLookup = () => {
 
     setSendingInvite(true);
     try {
-      const res = await fetch(`${API_BASE_URL}/api/dashboard/invite`, {
+      const res = await fetchWithAuth(`${API_BASE_URL}/api/dashboard/invite`, {
+        credentials: "include",
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: inviteEmail, shopId, shopName }),
@@ -894,7 +898,8 @@ const CustomerLookup = () => {
     setError(null);
 
     try {
-      const res = await fetch(`${API_BASE_URL}/api/qrcode/decode`, {
+      const res = await fetchWithAuth(`${API_BASE_URL}/api/qrcode/decode`, {
+        credentials: "include",
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(parsed),
@@ -923,7 +928,9 @@ const CustomerLookup = () => {
   const checkRewardEligibility = async (userId, shopId) => {
     try {
       const url = `${API_BASE_URL}/api/qrcode/check-eligible?userId=${userId}&shopId=${shopId}`;
-      const res = await fetch(url);
+      const res = await fetchWithAuth(url, {
+        credentials: "include",
+      });
       if (!res.ok) throw new Error("Eligibility check failed");
       const data = await res.json();
       setEligibleReward(data.eligibleAmount || 0);
@@ -953,7 +960,8 @@ const CustomerLookup = () => {
 
     setIsSubmitting(true);
     try {
-      const res = await fetch(`${API_BASE_URL}/api/qrcode/add-points`, {
+      const res = await fetchWithAuth(`${API_BASE_URL}/api/qrcode/add-points`, {
+        credentials: "include",
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -982,7 +990,8 @@ const CustomerLookup = () => {
     setIsConfirming(true);
 
     try {
-      const res = await fetch(`${API_BASE_URL}/api/qrcode/process-purchase`, {
+      const res = await fetchWithAuth(`${API_BASE_URL}/api/qrcode/process-purchase`, {
+        credentials: "include",
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -1067,7 +1076,7 @@ const CustomerLookup = () => {
     return (
       <div className="fixed inset-0 flex items-center justify-center bg-gray-900/70 z-50">
         <div className="relative w-full max-w-2xl px-6">
-          {!isPopupOpen && (
+          {/* {!isPopupOpen && (
             <div className={`bg-white rounded-xl shadow-2xl w-full max-h-[90vh] flex flex-col z-10 border-t-${PRIMARY_COLOR}`}>
               <nav className={`bg-${PRIMARY_COLOR} text-white rounded-t-xl px-6 py-4 flex justify-between items-center sticky top-0 z-20`}>
                 <h2 className="text-2xl font-bold">{t("customerLookup.transaction.title")}</h2>
@@ -1164,6 +1173,159 @@ const CustomerLookup = () => {
                 </div>
               </div>
             </div>
+          )} */}
+
+          {!isPopupOpen && (
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="bg-white rounded-[0.5rem] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] w-full max-h-[90vh] flex flex-col z-10 overflow-hidden border border-slate-100"
+            >
+              {/* Clean Header */}
+              <nav className="bg-white/80 backdrop-blur-md px-8 py-3 flex justify-between items-center sticky top-0 z-20 border-b border-slate-50">
+                <div className="flex items-center gap-3">
+                  <div className={`w-2 h-8 rounded-full bg-${PRIMARY_COLOR}`} />
+                  <h2 className="text-2xl font-bold text-slate-800 tracking-tight">
+                    {t("customerLookup.transaction.title")}
+                  </h2>
+                </div>
+                <button
+                  onClick={resetAll}
+                  className="group bg-slate-50 text-slate-400 p-2.5 rounded-2xl hover:bg-rose-50 hover:text-rose-500 transition-all duration-300"
+                  aria-label={t("customerLookup.buttons.close")}
+                >
+                  <FontAwesomeIcon icon={faXmark} className="w-5 h-5 transition-transform group-hover:rotate-90" />
+                </button>
+              </nav>
+
+              <div className="p-8 overflow-y-auto flex-1">
+                <div className="max-w-2xl mx-auto space-y-6">
+                  
+                  {/* Customer Detail Card */}
+                  <div className="bg-white rounded-[0.5rem] p-6 ring-1 ring-slate-100 shadow-sm border-b-4 border-slate-50">
+                    <div className="flex items-center gap-4 mb-4">
+                      <div className={`w-12 h-12 rounded-xl bg-${PRIMARY_COLOR}/10 flex items-center justify-center`}>
+                        <FontAwesomeIcon icon={faIdCard} className={`text-${PRIMARY_COLOR} text-xl`} />
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-bold text-slate-800 tracking-tight">
+                          {t("customerLookup.transaction.details")}
+                        </h3>
+                        <p className="text-sm text-slate-400">{t("customerLookup.customer.info")}</p>
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                      {/* Identity Info */}
+                      <div className="space-y-3">
+                        <div className="bg-slate-100 p-3 rounded-xl border border-white">
+                          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-1">
+                            {t("customerLookup.customer.name")}
+                          </span>
+                          <p className="text-slate-800 font-bold text-lg">
+                            {scannedData.userName || t("customerLookup.na")}
+                          </p>
+                        </div>
+                        
+                        <div className="grid grid-cols-2 gap-2">
+                          <div className="text-sm">
+                            <span className="text-slate-400 block text-[10px] uppercase font-bold">{t("qrScanner.customer.shop")}</span>
+                            <span className={`font-bold text-${SUCCESS_COLOR}`}>{scannedData.shopName}</span>
+                          </div>
+                          <div className="text-sm">
+                            <span className="text-slate-400 block text-[10px] uppercase font-bold">{t("qrScanner.customer.phone")}</span>
+                            <span className="text-slate-600 font-semibold">{scannedData.phone || t("qrScanner.na")}</span>
+                          </div>
+                          <div className="text-sm">
+                            <span className="text-slate-400 block text-[10px] uppercase font-bold">{t("qrScanner.customer.email")}</span>
+                            <span className="text-slate-600 font-semibold">{scannedData.email || t("qrScanner.na")}</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Points Balance Card */}
+                      <div className={`p-6 rounded-xl border-2 transition-all duration-500 flex flex-col items-center justify-center text-center
+                        ${successAnimation ? `bg-emerald-50 border-emerald-500 scale-105 shadow-lg` : `bg-blue-50/50 border-${ACCENT_COLOR}/20`}
+                      `}>
+                        <FontAwesomeIcon icon={faCoins} className={`text-${ACCENT_COLOR} text-2xl mb-3`} />
+                        <span className="text-xs font-bold text-slate-400 uppercase tracking-tighter mb-1">
+                          {t("customerLookup.points.available")}
+                        </span>
+                        <span className={`text-4xl font-black text-${PRIMARY_COLOR}`}>
+                          {scannedData.verifiedBalance ?? scannedData.availableBalance ?? 0}
+                        </span>
+                        <p className="text-[10px] text-slate-400 mt-2 leading-tight">{t("customerLookup.points.updateNote")}</p>
+                      </div>
+                    </div>
+
+                    {/* Form Section */}
+                    <form onSubmit={handleSubmit} className="mt-10 pt-8 border-t border-slate-50 space-y-6">
+                      <div className="space-y-2">
+                        <label className="text-sm font-bold text-slate-700 ml-2">
+                          {t("customerLookup.purchase.enterAmount", { currency: currencySymbol })}
+                        </label>
+                        <div className="relative group">
+                          <span className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 font-bold text-xl group-focus-within:text-blue-500 transition-colors">
+                            {currencySymbol}
+                          </span>
+                          <input
+                            type="number"
+                            min="01"
+                            step="1"
+                            placeholder="0"
+                            value={purchaseAmount}
+                            onChange={(e) => {
+                              const v = e.target.value;
+                              if (v === "" || parseFloat(v) <= 0) setPurchaseAmount("");
+                              else setPurchaseAmount(v);
+                            }}
+                            required
+                            className="w-full pl-12 pr-6 py-2 bg-slate-100 shadow-inner border-2 border-transparent rounded-md text-2xl font-black text-slate-800 placeholder-slate-300 focus:bg-white focus:border-blue-400 focus:ring-4 focus:ring-blue-500/5 outline-none transition-all duration-300"
+                          />
+                        </div>
+                      </div>
+
+                      {!associated && (
+                        <div className="flex items-center gap-3 p-3 bg-amber-50 rounded-xl border border-amber-100/50">
+                          <div className="w-8 h-8 rounded-full bg-amber-200/50 flex items-center justify-center">
+                            <FontAwesomeIcon icon={faUser} className="text-amber-600 text-xs" />
+                          </div>
+                          <p className="text-xs text-amber-800 font-medium italic">
+                            {t("customerLookup.newCustomerNote")}
+                          </p>
+                        </div>
+                      )}
+
+                      <button
+                        type="submit"
+                        disabled={isSubmitting || !purchaseAmount || parseFloat(purchaseAmount) <= 0}
+                        className={`w-full py-2 bg-slate-900 text-white rounded-full text-lg font-bold shadow-xl transition-all duration-300 active:scale-95 disabled:opacity-30 disabled:grayscale
+                          ${!isSubmitting && 'hover:bg-blue-600 hover:shadow-blue-200'}
+                        `}
+                      >
+                        {isSubmitting ? (
+                          <div className="flex items-center justify-center gap-3">
+                            <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                            <span>{t("customerLookup.buttons.processing")}</span>
+                          </div>
+                        ) : t("customerLookup.buttons.submitPreview")}
+                      </button>
+                    </form>
+                  </div>
+
+                  {/* Search Another Action */}
+                  <div className="flex justify-center pb-4">
+                    <button
+                      onClick={resetAll}
+                      className="flex items-center gap-2 px-8 py-2 bg-white text-slate-500 shadow-sm font-bold rounded-full border border-slate-100 hover:bg-slate-50 hover:text-slate-600 transition-all duration-300 shadow-sm"
+                    >
+                      <FontAwesomeIcon icon={faArrowRotateLeft} className="text-xs" />
+                      <span className="text-sm">{t("customerLookup.buttons.searchAnother")}</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
           )}
 
           {showSuccessPopup && (
@@ -1286,143 +1448,353 @@ const CustomerLookup = () => {
 
   return (
     <div className="min-h-screen p-4 sm:p-6 md:p-8">
-      <div className="flex justify-center mt-14 px-4">
-        <div className="text-black border-2 border-gray-300 rounded-xl p-2 md:p-3 mb-12 max-w-6xl mx-auto w-full">
-          <h1 className="text-2xl md:text-4xl text-center font-black mb-2">
-            {t("customerLookup.shopName")}: <span className="text-blue-600">{shopName || t("customerLookup.defaultShopName")}</span>
-          </h1>
+      <motion.div 
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="flex justify-center mt-12 mb-10 px-4"
+      >
+        <div className="relative group max-w-6xl w-full">
+          {/* Subtle Background Glow */}
+          <div className="absolute -inset-1 bg-gradient-to-r from-blue-500/10 to-indigo-500/10 rounded-[0.5rem] blur-2xl opacity-0 group-hover:opacity-100 transition duration-1000"></div>
+          
+          <div className="relative bg-white/80 backdrop-blur-md ring-1 ring-slate-200/60 rounded-xl p-6 shadow-sm flex flex-col md:flex-row items-center justify-center gap-4 border border-white/50">
+            
+            {/* Shop Icon / Avatar */}
+            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-50 to-indigo-50 flex items-center justify-center shadow-inner">
+              <Store className="w-6 h-6 text-blue-500" strokeWidth={1.5} />
+            </div>
+
+            <div className="text-center md:text-left space-y-1">
+              <p className="text-[10px] uppercase tracking-[0.2em] text-slate-400 font-bold">
+                {t("customerLookup.currentlyManaging") || "Currently Managing"}
+              </p>
+              <h1 className="text-2xl md:text-3xl font-bold text-slate-800 tracking-tight">
+                {t("customerLookup.shopName")}:{" "}
+                <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                  {shopName || t("customerLookup.defaultShopName")}
+                </span>
+              </h1>
+            </div>
+
+            {/* Live Status Badge */}
+            <div className="md:ml-auto flex items-center gap-2 px-4 py-2 bg-emerald-50 rounded-full border border-emerald-100">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+              </span>
+              <span className="text-[11px] font-bold text-emerald-700 uppercase tracking-wider">
+                {t("customerLookup.statusActive") || "Active Session"}
+              </span>
+            </div>
+          </div>
         </div>
-      </div>
+      </motion.div>
 
       <div className="grid grid-cols-2 gap-2 sm:gap-4 md:grid-cols-2 xl:grid-cols-4 max-w-6xl mx-auto">
         {/* QR Scanner */}
-        <div className="relative rounded-xl border-2 border-blue-400 p-6 px-4 shadow-lg text-center">
-          {/* Badge */}
-          <span className="absolute top-1 right-1 sm:top-2 sm:right-2 text-xs bg-blue-600 text-white px-2 py-0.5 rounded-full">
-            Recommended
-          </span>
+        
 
-          <QrCode className="text-blue-600 mx-auto mb-3" size={36} />
-          <h2 className="text-lg font-semibold mb-3 text-black-500">
-            ⚡ {t("customerLookup.cards.quickScan.title")}
-          </h2>
-          <p className="text-sm text-gray-600 mb-6">
-            {t("customerLookup.cards.quickScan.desc")}
-          </p>
+        <motion.div 
+          whileHover={{ y: -5 }}
+          className="relative group bg-white rounded-[0.5rem] p-6 shadow-sm hover:shadow-2xl hover:shadow-blue-500/10 ring-1 ring-slate-200/60 transition-all duration-500 text-center overflow-hidden"
+        >
+          {/* Modern Floating Badge */}
+          <div className="absolute top-2 inset-x-0 flex justify-center">
+            <span className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest bg-blue-50 text-blue-600 px-3 py-1 rounded-full ring-1 ring-blue-100 animate-pulse">
+              <span className="w-1.5 h-1.5 bg-blue-600 rounded-full" />
+              {t("customerLookup.recommended")}
+            </span>
+          </div>
+
+          {/* Icon Container */}
+          <div className="mt-6 mb-4 relative">
+            <div className="w-16 h-16 mx-auto bg-blue-50 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-500 group-hover:rotate-3">
+              <QrCode className="text-blue-600" size={40} strokeWidth={1.5} />
+            </div>
+            {/* Decorative Soft Glow behind icon */}
+            <div className="absolute inset-0 bg-blue-400/20 blur-3xl rounded-full -z-10 opacity-0 group-hover:opacity-100 transition-opacity" />
+          </div>
+
+          <div className="space-y-3 mb-6">
+            <h2 className="text-xl font-bold text-slate-800 tracking-tight flex items-center justify-center gap-2">
+              <span className="text-blue-500">⚡</span>
+              {t("customerLookup.cards.quickScan.title")}
+            </h2>
+            <p className="text-slate-500 text-sm leading-relaxed max-w-[200px] mx-auto font-light">
+              {t("customerLookup.cards.quickScan.desc")}
+            </p>
+          </div>
+
           <button
-            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-full font-medium"
             onClick={() => setShowScanner(true)}
+            className="w-full py-2 px-6 bg-slate-900 text-white rounded-full font-bold text-sm hover:bg-blue-600 shadow-lg shadow-slate-200 hover:shadow-blue-200 transition-all duration-300 active:scale-95"
           >
             {t("customerLookup.cards.quickScan.button")}
           </button>
-        </div>
-     
+        </motion.div>
+            
         {/* Phone */}
-        <div className="rounded-xl border border-gray-200 p-6 px-4 shadow-lg">
-          <h2 className="text-lg font-semibold text-black-500 mb-4">📞 {t("customerLookup.cards.phone.title")}</h2>
-          <input
-            type="text"
-            inputMode="numeric"
-            value={phone}
-            onChange={(e) => {
-              let value = e.target.value.replace(/\D/g, ""); 
-              if (value.length > 10) value = value.slice(0, 10); 
-              setPhone(value);
-            }}
-            placeholder={t("customerLookup.cards.phone.placeholder")}
-            maxLength={10}
-            className={`w-full px-4 py-2 border rounded-full focus:outline-none focus:ring-2 mb-4 ${
-              phone && phone.length !== 10 ? "border-red-400 focus:ring-red-400" : "border-indigo-300 focus:ring-indigo-400"
-            }`}
-          />
-          {phone && phone.length !== 10 && (
-            <p className="text-xs text-red-600 mt-1">{t("customerLookup.cards.phone.error")}</p>
-          )}
-          <div className="flex justify-center">
+        <motion.div 
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="relative bg-white rounded-[0.5rem] p-6 shadow-sm hover:shadow-xl hover:shadow-indigo-500/5 ring-1 ring-slate-200/60 transition-all duration-500"
+        >
+          {/* Card Header */}
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center">
+              <Phone className="w-5 h-5 text-indigo-600" strokeWidth={2} />
+            </div>
+            <h2 className="text-xl font-bold text-slate-800 tracking-tight">
+              {t("customerLookup.cards.phone.title")}
+            </h2>
+          </div>
+
+          <div className="space-y-4">
+            <div className="relative">
+              <input
+                type="text"
+                inputMode="numeric"
+                value={phone}
+                onChange={(e) => {
+                  let value = e.target.value.replace(/\D/g, "");
+                  if (value.length > 10) value = value.slice(0, 10);
+                  setPhone(value);
+                }}
+                placeholder={t("customerLookup.cards.phone.placeholder")}
+                maxLength={10}
+                className={`
+                  w-full px-6 py-2.5 rounded-xl bg-slate-100 shadow-inner border-2 transition-all duration-300
+                  placeholder:text-slate-400 text-slate-700 font-medium focus:outline-none
+                  ${phone && phone.length !== 10 
+                    ? "border-rose-100 bg-rose-50/30 focus:border-rose-400" 
+                    : "border-transparent focus:bg-white focus:border-indigo-500 focus:shadow-lg focus:shadow-indigo-500/10"
+                  }
+                `}
+              />
+              
+              {/* Dynamic Validation Icon */}
+              {phone.length === 10 && (
+                <motion.div 
+                  initial={{ scale: 0 }} 
+                  animate={{ scale: 1 }}
+                  className="absolute right-4 top-1/3 -translate-y-1/2 text-emerald-500"
+                >
+                  <CheckCircle2 size={20} />
+                </motion.div>
+              )}
+            </div>
+
+            {phone && phone.length !== 10 && (
+              <motion.div 
+                initial={{ opacity: 0, x: -10 }} 
+                animate={{ opacity: 1, x: 0 }}
+                className="flex items-center gap-2 px-2 text-rose-500"
+              >
+                <AlertCircle size={14} />
+                <p className="text-xs font-medium">{t("customerLookup.cards.phone.error")}</p>
+              </motion.div>
+            )}
+
             <button
               onClick={() => handleSearch("phone")}
               disabled={!phone.trim() || loading.phone}
-              className={`px-6 sm:w-full py-2 rounded-full text-white font-medium ${
-                loading.phone ? "bg-indigo-300" : "bg-indigo-600 hover:bg-indigo-700"
-              }`}
+              className={`
+                w-full py-2 rounded-full font-bold text-sm transition-all duration-300
+                flex items-center justify-center gap-2 active:scale-[0.98]
+                ${loading.phone 
+                  ? "bg-slate-100 text-slate-400 cursor-wait" 
+                  : "bg-slate-900 text-white hover:bg-indigo-600 shadow-lg shadow-slate-200 hover:shadow-indigo-200"
+                }
+              `}
             >
-              {loading.phone ? t("customerLookup.buttons.searching") : t("customerLookup.buttons.search")}
+              {loading.phone ? (
+                <div className="w-5 h-5 border-2 border-slate-300 border-t-slate-600 rounded-full animate-spin" />
+              ) : (
+                <Search size={18} strokeWidth={2.5} />
+              )}
+              <span>{loading.phone ? t("customerLookup.buttons.searching") : t("customerLookup.buttons.search")}</span>
             </button>
-          </div>  
-          <p className="text-xs text-gray-500 mt-3">
-            {t("customerLookup.cards.phone.note")}
-          </p>
-        </div>
+          </div>
+
+          <div className="mt-6 flex items-start gap-2 px-2 opacity-60">
+            <div className="w-1 h-1 rounded-full bg-slate-400 mt-1.5 shrink-0" />
+            <p className="text-[11px] leading-relaxed text-slate-500 font-medium italic">
+              {t("customerLookup.cards.phone.note")}
+            </p>
+          </div>
+        </motion.div>
 
         {/* Email */}
-        <div className="rounded-xl border border-gray-200 p-6 px-4 shadow-lg">
-          <h2 className="text-lg font-semibold text-black-500 mb-4">📧 {t("customerLookup.cards.email.title")}</h2>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder={t("customerLookup.cards.email.placeholder")}
-            className="w-full px-4 py-2 border border-sky-300 rounded-full focus:outline-none focus:ring-2 focus:ring-sky-400 mb-4"
-          />
-          <div className="flex justify-center">
+        <motion.div 
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="relative bg-white rounded-[0.5rem] p-6 shadow-sm hover:shadow-xl hover:shadow-sky-500/5 ring-1 ring-slate-200/60 transition-all duration-500"
+        >
+          {/* Card Header */}
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-10 h-10 rounded-xl bg-sky-50 flex items-center justify-center">
+              <Mail className="w-5 h-5 text-sky-600" strokeWidth={2} />
+            </div>
+            <h2 className="text-xl font-bold text-slate-800 tracking-tight">
+              {t("customerLookup.cards.email.title")}
+            </h2>
+          </div>
+
+          <div className="space-y-4">
+            <div className="relative group">
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder={t("customerLookup.cards.email.placeholder")}
+                className="w-full px-6 py-2.5 rounded-xl bg-slate-100 shadow-inner border-2 border-transparent transition-all duration-300 placeholder:text-slate-400 text-slate-700 font-medium focus:outline-none focus:bg-white focus:border-sky-400 focus:shadow-lg focus:shadow-sky-500/10"
+              />
+            </div>
+
             <button
               onClick={() => handleSearch("email")}
               disabled={!email.trim() || loading.email}
-              className={`px-6 sm:w-full py-2 rounded-full text-white font-medium ${
-                loading.email ? "bg-sky-300" : "bg-sky-600 hover:bg-sky-700"
-              }`}
+              className={`
+                w-full py-2 rounded-full font-bold text-sm transition-all duration-300
+                flex items-center justify-center gap-2 active:scale-[0.98]
+                ${loading.email 
+                  ? "bg-slate-100 text-slate-400 cursor-wait" 
+                  : "bg-slate-900 text-white hover:bg-sky-600 shadow-lg shadow-slate-200 hover:shadow-sky-200"
+                }
+              `}
             >
-              {loading.email ? t("customerLookup.buttons.searching") : t("customerLookup.buttons.search")}
+              {loading.email ? (
+                <div className="w-5 h-5 border-2 border-slate-300 border-t-slate-600 rounded-full animate-spin" />
+              ) : (
+                <Search size={18} strokeWidth={2.5} />
+              )}
+              <span>
+                {loading.email ? t("customerLookup.buttons.searching") : t("customerLookup.buttons.search")}
+              </span>
             </button>
-          </div>  
-          <p className="text-xs text-gray-500 mt-3">{t("customerLookup.cards.email.note")}</p>
-        </div>
+          </div>
+
+          <div className="mt-6 flex items-start gap-2 px-2 opacity-60">
+            <div className="w-1 h-1 rounded-full bg-slate-400 mt-1.5 shrink-0" />
+            <p className="text-[11px] leading-relaxed text-slate-500 font-medium italic">
+              {t("customerLookup.cards.email.note")}
+            </p>
+          </div>
+        </motion.div>
 
         {/* Invite */}
-        <div className="rounded-xl border border-gray-200 p-6 px-4 shadow-lg">
-          <h2 className="text-lg font-semibold text-black-500 mb-4">✉️ {t("customerLookup.cards.invite.title")}</h2>
-          <input
-            type="email"
-            value={inviteEmail}
-            onChange={(e) => setInviteEmail(e.target.value)}
-            placeholder={t("customerLookup.cards.invite.placeholder")}
-            className="w-full px-4 py-2 border border-violet-300 rounded-full focus:outline-none focus:ring-2 focus:ring-violet-400 mb-4"
-          />
-          <div className="flex justify-center">
+        <motion.div 
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="relative bg-white rounded-[0.5rem] p-6 shadow-sm hover:shadow-xl hover:shadow-violet-500/5 ring-1 ring-slate-200/60 transition-all duration-500"
+        >
+          {/* Card Header */}
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-10 h-10 rounded-xl bg-violet-50 flex items-center justify-center">
+              <Send className="w-5 h-5 text-violet-600 -rotate-12 translate-x-0.5" strokeWidth={2} />
+            </div>
+            <h2 className="text-xl font-bold text-slate-800 tracking-tight">
+              {t("customerLookup.cards.invite.title")}
+            </h2>
+          </div>
+
+          <div className="space-y-4">
+            <div className="relative group">
+              <input
+                type="email"
+                value={inviteEmail}
+                onChange={(e) => setInviteEmail(e.target.value)}
+                placeholder={t("customerLookup.cards.invite.placeholder")}
+                className="w-full px-6 py-2.5 rounded-xl bg-slate-100 shadow-inner border-2 border-transparent transition-all duration-300 placeholder:text-slate-400 text-slate-700 font-medium focus:outline-none focus:bg-white focus:border-violet-400 focus:shadow-lg focus:shadow-violet-500/10"
+              />
+            </div>
+
             <button
               onClick={handleSendInvite}
               disabled={!inviteEmail.trim() || sendingInvite}
-              className={`px-6 sm:w-full py-2 rounded-full text-white font-medium ${
-                sendingInvite ? "bg-violet-300" : "bg-violet-600 hover:bg-violet-700"
-              }`}
+              className={`
+                w-full py-2 rounded-full font-bold text-sm transition-all duration-300
+                flex items-center justify-center gap-2 active:scale-[0.98]
+                ${sendingInvite 
+                  ? "bg-slate-100 text-slate-400 cursor-wait" 
+                  : "bg-slate-900 text-white hover:bg-violet-600 shadow-lg shadow-slate-200 hover:shadow-violet-200"
+                }
+              `}
             >
-              {sendingInvite ? t("customerLookup.buttons.sending") : t("customerLookup.cards.invite.button")}
+              {sendingInvite ? (
+                <div className="w-5 h-5 border-2 border-slate-300 border-t-slate-600 rounded-full animate-spin" />
+              ) : (
+                <MailPlus size={18} strokeWidth={2.5} />
+              )}
+              <span>
+                {sendingInvite ? t("customerLookup.buttons.sending") : t("customerLookup.cards.invite.button")}
+              </span>
             </button>
-          </div>  
-          <p className="text-xs text-gray-500 mt-3">{t("customerLookup.cards.invite.note")}</p>
-        </div>
+          </div>
+
+          <div className="mt-6 flex items-start gap-2 px-2 opacity-60">
+            <div className="w-1 h-1 rounded-full bg-slate-400 mt-1.5 shrink-0" />
+            <p className="text-[11px] leading-relaxed text-slate-500 font-medium italic">
+              {t("customerLookup.cards.invite.note")}
+            </p>
+          </div>
+        </motion.div>
       </div>
 
       {/* Not Found Modal */}
       {showNotFound && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-          <div className="bg-white rounded-xl w-full shadow-2xl max-w-sm border-t-8 border-red-600 p-6 transition-all duration-300">
-            <h2 className="text-2xl font-bold mb-4 text-center text-red-700 flex items-center justify-center gap-3">
-              <FontAwesomeIcon icon={faExclamationCircle} className="text-red-600" />
-              {t("customerLookup.notFound.title")}
-            </h2>
-            <div className="space-y-3 text-gray-700 text-base leading-relaxed text-center">
-              <p className="font-semibold">{t("customerLookup.notFound.message1")}</p>
-              <p>{t("customerLookup.notFound.message2")}</p>
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-md p-4"
+        >
+          <motion.div 
+            initial={{ scale: 0.9, opacity: 0, y: 20 }}
+            animate={{ scale: 1, opacity: 1, y: 0 }}
+            className="bg-white rounded-[0.5rem] w-full max-w-sm p-8 shadow-[0_32px_64px_-12px_rgba(0,0,0,0.14)] relative overflow-hidden text-center"
+          >
+            {/* Subtle Background Accent */}
+            <div className="absolute top-0 inset-x-0 h-2 bg-gradient-to-r from-rose-400/20 via-rose-500 to-rose-400/20" />
+
+            {/* Main Alert Icon */}
+            <div className="mx-auto w-20 h-20 bg-rose-50 rounded-xl flex items-center justify-center mb-6">
+              <div className="w-12 h-12 bg-rose-100 rounded-xl flex items-center justify-center">
+                <AlertCircle className="w-8 h-8 text-rose-500" strokeWidth={1.5} />
+              </div>
             </div>
+
+            {/* Content */}
+            <div className="space-y-3">
+              <h2 className="text-2xl font-bold text-slate-800 tracking-tight">
+                {t("customerLookup.notFound.title")}
+              </h2>
+              <div className="space-y-2 px-2">
+                <p className="text-slate-600 font-semibold leading-relaxed">
+                  {t("customerLookup.notFound.message1")}
+                </p>
+                <p className="text-slate-400 text-sm font-medium">
+                  {t("customerLookup.notFound.message2")}
+                </p>
+              </div>
+            </div>
+
+            {/* Modern Soft Button */}
             <button
-              className="mt-8 w-full py-2 bg-red-600 hover:bg-red-700 text-white rounded-full font-bold shadow-md transition-all duration-200 text-lg"
               onClick={() => setShowNotFound(false)}
+              className="mt-10 w-full py-2 bg-slate-900 hover:bg-rose-600 text-white rounded-full font-bold transition-all duration-300 shadow-lg shadow-slate-200 hover:shadow-rose-200 active:scale-95 flex items-center justify-center gap-2"
             >
-              {t("customerLookup.notFound.closeButton")}
+              <span>{t("customerLookup.notFound.closeButton")}</span>
             </button>
-          </div>
-        </div>
+
+            <button 
+              onClick={() => setShowNotFound(false)}
+              className="absolute top-6 right-6 text-slate-300 hover:text-slate-500 transition-colors"
+            >
+              <X size={20} />
+            </button>
+          </motion.div>
+        </motion.div>
       )}
     </div>
   );

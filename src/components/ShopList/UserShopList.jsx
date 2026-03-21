@@ -388,6 +388,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { API_BASE_URL } from '../../apiConfig';
+import { fetchWithAuth } from "../../auth/fetchWithAuth";
 
 const API_BASE = `${API_BASE_URL}/api/qrcode`;
 const ITEMS_PER_PAGE = 8;
@@ -408,9 +409,8 @@ export default function UserShopList() {
   const [totalPages, setTotalPages] = useState(1);
 
   const checkAuth = () => {
-    const isLoggedIn = localStorage.getItem('isLoggedIn');
     const userId = localStorage.getItem('id');
-    if (!isLoggedIn || !userId) {
+    if (!userId) {
       navigate('/signin');
       return null;
     }
@@ -459,7 +459,7 @@ export default function UserShopList() {
   const fetchShops = async (userId, page = 1) => {
     setIsLoading(true);
     try {
-      const response = await fetch(
+      const response = await fetchWithAuth(
         `${API_BASE}/userSpecificShop?userId=${userId}&page=${page-1}&size=${ITEMS_PER_PAGE}`,
         { credentials: "include" }
       );
@@ -501,7 +501,7 @@ export default function UserShopList() {
       setLoadingShopId(shop.shopId);
       setError(null);
 
-      const response = await fetch(
+      const response = await fetchWithAuth(
         `${API_BASE}/generate?shopId=${shop.shopId}&userId=${userId}`,
         {
           credentials: "include",
@@ -564,15 +564,17 @@ export default function UserShopList() {
   }
 
   return (
-    <div className="p-6 md:p-4 min-h-screen">
-      <motion.h1
-        className="text-4xl font-extrabold text-center text-blue-800 mb-16"
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-      >
-        {t('userShopList.title')}
-      </motion.h1>
+    <div className="p-8 md:p-12 min-h-screen">
+      <header className="max-w-4xl mx-auto text-center mb-16 space-y-4">
+        <motion.h1
+          className="text-4xl md:text-5xl font-black text-slate-900 tracking-tight"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          {t('userShopList.title')}
+        </motion.h1>
+      </header>
 
       {/* <div className="flex justify-center mb-10">
         <input
@@ -596,107 +598,188 @@ export default function UserShopList() {
           {t('userShopList.noResults.message')}
         </p>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 w-full max-w-7xl mx-auto">
+        // <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-2 lg:gap-6 w-full max-w-7xl mx-auto">
+        //   {currentShops.map((shop) => (
+        //     <div
+        //       key={shop.shopId}
+        //       className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition transform hover:-translate-y-1 border border-blue-100"
+        //     >
+        //       {/* Gradient Header with Check */}
+        //       <div className="bg-blue-700 p-3 text-white flex items-center justify-between">
+        //         <div className="flex items-center">
+        //           <FontAwesomeIcon icon={faStore} className="mr-2 text-lg" />
+        //           <h2 className="font-bold text-lg truncate">{shop.shopName}</h2>
+        //         </div>
+        //         <FontAwesomeIcon
+        //           icon={faCheckCircle}
+        //           className="text-white text-lg"
+        //           title={t('userShopList.visitedBadge')}
+        //         />
+        //       </div>
+
+        //       {/* Image with Awning */}
+        //       <div className="relative">
+        //         <div className="absolute top-0 left-0 right-0 h-4 bg-blue-600 clip-awning"></div>
+        //         {shop.logoUrl ? (
+        //           <img
+        //             src={`${API_BASE_URL}${shop.logoUrl}`}  
+        //             alt={shop.shopName}
+        //             className="w-full h-40 object-cover border-blue-800"
+        //             loading="lazy" 
+        //           />
+        //         ) : (
+        //           <div className="w-full h-40 bg-gradient-to-br from-blue-100 to-blue-200 border-blue-800 flex items-center justify-center">
+        //             <span className="text-5xl font-bold text-blue-700">
+        //               {shop.shopName.charAt(0).toUpperCase()}
+        //             </span>
+        //           </div>
+        //         )}
+        //       </div>
+
+        //       {/* Card Body */}
+        //       <div className="p-4 bg-blue-50">
+        //         {/* Country & City */}
+        //         <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 text-sm mb-3">
+        //           <div className="flex items-center bg-white p-1 rounded border border-blue-200">
+        //             <FontAwesomeIcon icon={faGlobe} className="mr-2 text-blue-700 text-xs" />
+        //             <span className="font-medium text-blue-800 truncate">
+        //               {shop.country ? shop.country.toUpperCase() : 'N/A'}
+        //             </span>
+        //           </div>
+        //           <div className="flex items-center bg-white p-1 rounded border border-blue-200">
+        //             <FontAwesomeIcon icon={faCity} className="mr-2 text-blue-700 text-xs" />
+        //             <span className="font-medium text-blue-800 truncate">
+        //               {shop.city ? shop.city.toUpperCase() : 'N/A'}
+        //             </span>
+        //           </div>
+        //         </div>
+
+        //         {/* Phone */}
+        //         <div className="flex items-center mt-2 bg-white p-1 rounded border border-blue-200">
+        //           <FontAwesomeIcon icon={faPhoneAlt} className="mr-2 text-blue-700" />
+        //           <span className="text-sm font-medium text-blue-800">
+        //             {shop.shopPhone || 'N/A'}
+        //           </span>
+        //         </div>
+
+        //         {/* QR Button */}
+        //         <motion.button
+        //           whileHover={{ scale: 1.02 }}
+        //           whileTap={{ scale: 0.98 }}
+        //           onClick={() => handleGenerateQR(shop)}
+        //           disabled={loadingShopId === shop.shopId}
+        //           className={`w-full mt-3 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-full text-sm font-medium transition flex items-center justify-center gap-2
+        //             ${loadingShopId === shop.shopId ? 'opacity-70 cursor-not-allowed' : ''}`}
+        //         >
+        //           {loadingShopId === shop.shopId ? (
+        //             <>
+        //               <Loader2 className="w-4 h-4 animate-spin" />
+        //               {t('userShopList.qr.generating')}
+        //             </>
+        //           ) : (
+        //             <>
+        //               <FontAwesomeIcon icon={faQrcode} />
+        //               {t('userShopList.qr.button')}
+        //             </>
+        //           )}
+        //         </motion.button>
+        //       </div>
+        //     </div>
+        //   ))}
+        // </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6 w-full max-w-7xl mx-auto">
           {currentShops.map((shop) => (
-            <div
+            <motion.div
               key={shop.shopId}
-              className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition transform hover:-translate-y-1 border border-blue-100"
+              whileHover={{ y: -8 }}
+              className="group bg-white rounded-[1rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] transition-all duration-500 overflow-hidden border border-slate-100 flex flex-col"
             >
-              {/* Gradient Header with Check */}
-              <div className="bg-blue-700 p-3 text-white flex items-center justify-between">
-                <div className="flex items-center">
-                  <FontAwesomeIcon icon={faStore} className="mr-2 text-lg" />
-                  <h2 className="font-bold text-lg truncate">{shop.shopName}</h2>
+              {/* Visual Header / Image Section */}
+              <div className="relative h-48 overflow-hidden">
+                {/* Visited Badge - Floating Glassmorphism */}
+                <div className="absolute top-4 right-4 z-20">
+                  <div className="backdrop-blur-md shadow-sm text-emerald-600">
+                    <FontAwesomeIcon icon={faCheckCircle} className="text-lg" title={t('userShopList.visitedBadge')} />
+                  </div>
                 </div>
-                <FontAwesomeIcon
-                  icon={faCheckCircle}
-                  className="text-white text-lg"
-                  title={t('userShopList.visitedBadge')}
-                />
-              </div>
 
-              {/* Image with Awning */}
-              <div className="relative">
-                <div className="absolute top-0 left-0 right-0 h-4 bg-blue-600 clip-awning"></div>
-                {/* {shop.logoImage ? (
-                  <img
-                    src={`data:image/jpeg;base64,${shop.logoImage}`}
-                    alt={shop.shopName}
-                    className="w-full h-40 object-cover border-blue-800"
-                  /> */}
+                {/* Shop Identity Overlay (Visible on Hover/Always) */}
+                <div className="absolute inset-x-0 bottom-0 p-5 z-20 bg-gradient-to-t from-black/60 via-black/20 to-transparent">
+                  <h2 className="font-bold text-white text-lg tracking-tight truncate">
+                    {shop.shopName}
+                  </h2>
+                </div>
 
+                {/* Hero Image with Zoom effect */}
                 {shop.logoUrl ? (
                   <img
-                    src={`${API_BASE_URL}${shop.logoUrl}`}  
+                    src={`${API_BASE_URL}${shop.logoUrl}`}
                     alt={shop.shopName}
-                    className="w-full h-40 object-cover border-blue-800"
-                    loading="lazy" 
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    loading="lazy"
                   />
                 ) : (
-                  <div className="w-full h-40 bg-gradient-to-br from-blue-100 to-blue-200 border-blue-800 flex items-center justify-center">
-                    <span className="text-5xl font-bold text-blue-700">
+                  <div className="w-full h-full bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
+                    <span className="text-6xl font-black text-indigo-200/60">
                       {shop.shopName.charAt(0).toUpperCase()}
                     </span>
                   </div>
                 )}
               </div>
 
-              {/* Card Body */}
-              <div className="p-4 bg-blue-50">
-                {/* Shop ID Badge */}
-                <div className="flex justify-end mb-2">
-                  <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">
-                    ID: shop{shop.shopId}
-                  </span>
-                </div>
-
-                {/* Country & City */}
-                <div className="grid grid-cols-2 gap-2 text-sm mb-3">
-                  <div className="flex items-center bg-white p-1 rounded border border-blue-200">
-                    <FontAwesomeIcon icon={faGlobe} className="mr-2 text-blue-700 text-xs" />
-                    <span className="font-medium text-blue-800 truncate">
-                      {shop.country ? shop.country.toUpperCase() : 'N/A'}
+              {/* Card Content Body */}
+              <div className="p-6 bg-white flex-1 flex flex-col">
+                {/* Metadata: Location Tags */}
+                <div className="flex flex-wrap gap-2 mb-4">
+                  <div className="flex items-center gap-1.5 px-3 py-1 bg-slate-100 rounded-full border border-slate-100">
+                    <FontAwesomeIcon icon={faGlobe} className="text-indigo-400 text-[10px]" />
+                    <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">
+                      {shop.country || 'N/A'}
                     </span>
                   </div>
-                  <div className="flex items-center bg-white p-1 rounded border border-blue-200">
-                    <FontAwesomeIcon icon={faCity} className="mr-2 text-blue-700 text-xs" />
-                    <span className="font-medium text-blue-800 truncate">
-                      {shop.city ? shop.city.toUpperCase() : 'N/A'}
+                  <div className="flex items-center gap-1.5 px-3 py-1 bg-slate-100 rounded-full border border-slate-100">
+                    <FontAwesomeIcon icon={faCity} className="text-indigo-400 text-[10px]" />
+                    <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">
+                      {shop.city || 'N/A'}
                     </span>
                   </div>
                 </div>
 
-                {/* Phone */}
-                <div className="flex items-center mt-2 bg-white p-1.5 rounded border border-blue-200">
-                  <FontAwesomeIcon icon={faPhoneAlt} className="mr-2 text-blue-700" />
-                  <span className="text-sm font-medium text-blue-800">
+                {/* Metadata: Phone */}
+                <div className="flex items-center gap-3 text-slate-400 mb-6 px-1">
+                  <FontAwesomeIcon icon={faPhoneAlt} className="text-xs text-slate-400" />
+                  <span className="text-sm font-medium tracking-tight">
                     {shop.shopPhone || 'N/A'}
                   </span>
                 </div>
 
-                {/* QR Button */}
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={() => handleGenerateQR(shop)}
-                  disabled={loadingShopId === shop.shopId}
-                  className={`w-full mt-3 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-full text-sm font-medium transition flex items-center justify-center gap-2
-                    ${loadingShopId === shop.shopId ? 'opacity-70 cursor-not-allowed' : ''}`}
-                >
-                  {loadingShopId === shop.shopId ? (
-                    <>
-                      <Loader2 className="w-4 h-4 animate-spin" />
-                      {t('userShopList.qr.generating')}
-                    </>
-                  ) : (
-                    <>
-                      <FontAwesomeIcon icon={faQrcode} />
-                      {t('userShopList.qr.button')}
-                    </>
-                  )}
-                </motion.button>
+                {/* Action Button */}
+                <div className="mt-auto">
+                  <motion.button
+                    whileTap={{ scale: 0.96 }}
+                    onClick={() => handleGenerateQR(shop)}
+                    disabled={loadingShopId === shop.shopId}
+                    className={`w-full py-1.5 rounded-full text-sm font-bold transition-all duration-300 flex items-center justify-center gap-3 shadow-sm
+                      ${loadingShopId === shop.shopId 
+                        ? 'bg-slate-100 text-slate-400 cursor-not-allowed' 
+                        : 'bg-slate-900 text-white hover:bg-indigo-600 hover:shadow-indigo-100 active:bg-slate-800'
+                      }`}
+                  >
+                    {loadingShopId === shop.shopId ? (
+                      <>
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                        <span>{t('userShopList.qr.generating')}</span>
+                      </>
+                    ) : (
+                      <>
+                        <FontAwesomeIcon icon={faQrcode} className="text-xs" />
+                        <span>{t('userShopList.qr.button')}</span>
+                      </>
+                    )}
+                  </motion.button>
+                </div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       )}

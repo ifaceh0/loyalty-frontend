@@ -727,6 +727,7 @@ import { format } from 'date-fns';
 import { useTranslation } from 'react-i18next'; 
 import { API_BASE_URL } from '../../apiConfig';
 import { getCurrencySymbol } from "../../utils/currency";
+import { fetchWithAuth } from "../../auth/fetchWithAuth";
 
 const DailyTransaction = () => {
   const { t } = useTranslation();
@@ -756,7 +757,7 @@ const DailyTransaction = () => {
     setUserError('');
 
     try {
-      const response = await fetch(
+      const response = await fetchWithAuth(
         `${API_BASE_URL}/api/dashboard/transactions/${userId}/${shopId}`,
         { method: 'GET', credentials: 'include' }
       );
@@ -795,7 +796,7 @@ const DailyTransaction = () => {
     setDailyError('');
 
     try {
-      const response = await fetch(
+      const response = await fetchWithAuth(
         `${API_BASE_URL}/api/dashboard/date_transactions/${shopId}/${date}`,
         { method: 'GET', credentials: 'include' }
       );
@@ -879,7 +880,7 @@ const DailyTransaction = () => {
   return (
     <>
       {/* MAIN PAGE */}
-      <div className="min-h-screen py-20 sm:py-12 px-4 sm:px-6 lg:px-8">
+      <div className="min-h-screen py-20 sm:py-16 px-4 sm:px-6 lg:px-8">
         <header className="mb-6 sm:mb-8">
           <div className="flex justify-center">
             <h1 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight flex items-center gap-3">
@@ -890,7 +891,7 @@ const DailyTransaction = () => {
         </header>
 
         <main className="flex justify-center">
-          <div className="bg-white rounded-xl p-8 md:p-12 w-full max-w-5xl border border-blue-200">
+          <div className="p-8 md:p-12 w-full max-w-5xl">
             <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center text-blue-700">
               {t('daily.page.subtitle')}
             </h2>

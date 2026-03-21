@@ -7,6 +7,8 @@ import Layout from './Layout.jsx'
 import Features from './components/Features/Features.jsx'
 import Home from './components/Home/Home.jsx'
 import {Subscription} from "global-subscription";
+import ProtectedRoute from "./auth/ProtectedRoute";
+import PublicRoute from "./auth/PublicRoute";
 
 
 
@@ -34,6 +36,9 @@ import ShopkeeperGuide from './components/Home/ShopkeeperGuide.jsx'
 import InactiveShopsPage from './components/Employee/InactiveShopsPage.jsx'
 import EmployeeDashboard from './components/Dashboards/EmployeeDashboard.jsx';
 import AdminSupportInbox from './components/Contact/AdminSupportInbox.jsx';
+import PrivacyPolicy from './components/policy/PrivacyPolicy.jsx';
+import TermsOfService from './components/policy/TermsOfService.jsx';
+import FAQPage from './components/policy/FAQPage.jsx';
 
 import './i18n';
 
@@ -42,123 +47,115 @@ const router = createBrowserRouter([
     path:'/',
     element: <Layout/>,
     children:[
-      {
-        path:"",
-        element:<Home/>
-      },
-      {
-        path:"features",
-        element:<Features/>
-      },
-      {
-        path:"subscription",
-        element:<Subscription/>
-      },
-      {
-        path:"resources",
-        element:<Resources/>
-      },
-      {
-        path:"contact",
-        element:<Contact/>
-      },
-      {
-        path:"signup-shopkeeper",
-        element:<Shopkeeper/>
-      },
+      {path:"",element:<Home/>},
       {
         path: "/shopkeeper/customer-lookup",
-        element: <CustomerLookup />
+        element: (
+          <ProtectedRoute allowedRoles={["SHOPKEEPER"]}>
+            <CustomerLookup />
+          </ProtectedRoute>
+        )
       },
       {
         path: "/shopkeeper/qr-scanner",
-        element: <QrScanner />
-      },
-      {
-        path:"signup-user",
-        element:<User/>
-      },
-      {
-        path:"signin",
-        element:<Signin/>
-      },
-      {
-        path:"/user/dashboard",
-        element:<Userdashboard/>
+        element: (
+          <ProtectedRoute allowedRoles={["SHOPKEEPER"]}>
+            <QrScanner />
+          </ProtectedRoute>
+        )
       },
       {
         path:"/shopkeeper/dashboard",
-        element:<Shopdashboard/>
+        element: (
+          <ProtectedRoute allowedRoles={["SHOPKEEPER"]}>
+            <Shopdashboard />
+          </ProtectedRoute>
+        )
       },
-
-      {
-        path:"/forgot-password",
-        element:<ForgotPassword/>
-      },
-
-      {
-        path:"/reset-password",
-        element:<ResetPassword/>
-      },
-
       {
         path:"/shopkeeper/profile",
-        element:<ShopkeeperProfile/>
+        element: (
+          <ProtectedRoute allowedRoles={["SHOPKEEPER"]}>
+            <ShopkeeperProfile/>
+          </ProtectedRoute>
+        )
       },
-
       {
         path:"/shopkeeper/subscription-dashboard",
-        element:<SubscriptionDashboard/>
+        element: (
+          <ProtectedRoute allowedRoles={["SHOPKEEPER"]}>
+            <SubscriptionDashboard/>
+          </ProtectedRoute>
+        )
       },
-
-      {
-        path:"shop-list",
-        element:<UserShopList/>
-      },
-      // {
-      //   path:"/shopkeeper/plan-selection",
-      //   element:<PlanChange/>
-      // },
-
-      {
-        path:"/employee/signup",
-        element:<EmployeeSignupPage/>
-      },
-
       {
         path:"/shopkeeper/invite-employee",
-        element:<InviteEmployeePage/>
+        element: (
+          <ProtectedRoute allowedRoles={["SHOPKEEPER"]}>
+            <InviteEmployeePage/>
+          </ProtectedRoute>
+        )
       },
-
       {
         path:"/shopkeeper/daily-transaction-report",
-        element:<DailyTransactionReport/>
+        element: (
+          <ProtectedRoute allowedRoles={["SHOPKEEPER"]}>
+            <DailyTransactionReport/>
+          </ProtectedRoute>
+        )
       },
       {
-        path:"onboarding-guide",
-        element:<ShopkeeperGuide/>
+        path:"/user/dashboard",
+        element: (
+          <ProtectedRoute allowedRoles={["USER"]}>
+            <Userdashboard />
+          </ProtectedRoute>
+        )
       },
       {
         path:"/employee/inactive-shops",
-        element:<InactiveShopsPage/>
+        element: (
+          <ProtectedRoute allowedRoles={["EMPLOYEE"]}>
+            <InactiveShopsPage/>
+          </ProtectedRoute>
+        )
       },
       {
         path:"/employee/dashboard",
-        element:<EmployeeDashboard/>
+        element: (
+          <ProtectedRoute allowedRoles={["EMPLOYEE"]}>
+            <EmployeeDashboard />
+          </ProtectedRoute>
+        )
       },
       {
-        path:"/support-inbox",
-        element:<AdminSupportInbox/>
-      }
-
+        path:"signin",
+        element: (
+          <PublicRoute>
+            <Signin />
+          </PublicRoute>
+        )
+      },
+      {path:"/employee/signup",element:<EmployeeSignupPage/>},
+      {path:"/forgot-password",element:<ForgotPassword/>},
+      {path:"/reset-password",element:<ResetPassword/>},
+      {path:"signup-user",element:<User/>},
+      {path:"features",element:<Features/>},
+      {path:"subscription",element:<Subscription/>},
+      {path:"resources",element:<Resources/>},
+      {path:"contact",element:<Contact/>},
+      {path:"signup-shopkeeper",element:<Shopkeeper/>},
+      {path:"/support-inbox",element:<AdminSupportInbox/>},
+      {path:"onboarding-guide",element:<ShopkeeperGuide/>},
+      {path:"/privacy",element:<PrivacyPolicy/>},
+      {path:"/terms", element:<TermsOfService/>},
+      {path:"/faq", element:<FAQPage/>}
     ]
-
    }
 ])
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-   {/* <RouterProvider router={router}/> */}
    <SidebarProvider>
       <RouterProvider router={router} />
     </SidebarProvider>

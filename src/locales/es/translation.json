@@ -100,6 +100,11 @@
     },
     "faq": {
       "title": "Preguntas Frecuentes",
+      "common": "Preguntas",
+      "question": "Frecuentes",
+      "curious": "¿Aún tienes dudas?",
+      "help": "Estamos aquí para ayudarte a aprovechar al máximo tus recompensas.",
+      "support": "Contactar Soporte",
       "items": [
         { "q": "¿Cómo gano puntos?", "a": "Compra en cualquier tienda asociada y escanea tu código QR al pagar. Los puntos se añaden al instante." },
         { "q": "¿Dónde puedo canjear mis recompensas?", "a": "Canjea en tu panel, directamente en las tiendas o desde la app móvil." },
@@ -117,6 +122,7 @@
       "userCTA": "Únete Gratis Ahora",
       "businessCTA": "Asocia Tu Negocio"
     }
+
   },
 
   "features": {
@@ -391,10 +397,13 @@
     "quickLinks": [
       { "label": "Inicio", "to": "/" },
       { "label": "Únete Ahora", "to": "/signup-user" },
-      { "label": "Cómo Funciona", "to": "#" },
-      { "label": "Preguntas Frecuentes", "to": "/onboarding-guide" },
+      { "label": "Cómo Funciona", "to": "/onboarding-guide" },
+      { "label": "Preguntas Frecuentes", "to": "/faq" }
+    ],
+    "quickLink": [
       { "label": "Contacto", "to": "/contact" }
     ],
+    "support":"Apoyo",
     "stayConnectedTitle": "Mantente Conectado",
     "stayConnectedDesc": "Síguenos para ofertas exclusivas y novedades",
     "newsletterTitle": "Boletín",
@@ -412,6 +421,7 @@
     "title": "Iniciar Sesión",
     "subtitle": "Ingresa tus credenciales para acceder a la plataforma.",
     "hero": {
+      "tagline":"plataforma de nueva generación",
       "title": "Impulsa la Fidelidad. Genera Crecimiento.",
       "subtitle": "La forma más simple para que los pequeños negocios lancen, gestionen y escalen sus programas de recompensas para clientes."
     },
@@ -828,6 +838,9 @@
   "customerLookup": {
     "shopName": "Nombre de la Tienda",
     "defaultShopName": "Nombre de la Tienda",
+    "statusActive": "Sesión activa",
+    "currentlyManaging": "Gestionando actualmente",
+    "recommended": "Recomendado",
     "cards": {
       "quickScan": { "title": "Escaneo Rápido", "desc": "Usa la cámara para identificar al instante.", "button": "Abrir Escáner" },
       "phone": { "title": "Número de Teléfono", "placeholder": "Ingresa número móvil de 10 dígitos", "error": "Debe tener exactamente 10 dígitos", "note": "Debe ser un número válido de 10 dígitos.", "button": "Buscar" },
@@ -1229,6 +1242,9 @@
     "title": "Código QR para",
     "downloadButton": "Descargar Código QR de Fidelidad",
     "accountDetails": "Detalles de la Cuenta",
+    "use": "Cómo usar",
+    "done": "Listo",
+    "checkout": "Presenta este código QR al cajero durante el pago. Lo escanearán para identificar tu cuenta al instante y aplicar o sumar tus puntos de fidelidad a esta compra.",
     "showTip": "Mostrar Consejo",
     "hideTip": "Ocultar Consejo",
     "shopId": "ID de Tienda",
@@ -1296,26 +1312,46 @@
     "loading": "Obteniendo tus datos de transacciones...",
     "selectMerchant": "Seleccionar Comercio",
     "exportButton": "Exportar a Excel",
-    "stats": {
-      "availablePoints": "Puntos",
-      "amountSpent": "Monto Gastado",
-      "redeemAmount": "Monto Canjeado"
+
+    "filters": {
+      "title": "Refinar resultados",
+      "from": "Desde",
+      "to": "Hasta",
+      "apply": "Aplicar cambios",
+      "merchant": "Comercio"
     },
+
+    "stats": {
+      "availablePoints": "Saldo de puntos",
+      "amountSpent": "Total gastado",
+      "redeemAmount": "Total canjeado"
+    },
+
     "table": {
       "title": "Transacciones para",
       "date": "Fecha",
       "amount": "Monto",
+      "activity": "Actividad",
+      "benefit": "Beneficio",
       "points": "Puntos",
-      "pointsEarned": "Puntos Ganados",
-      "redeemPoints": "Puntos Canjeados",
-      "redeemAmount": "Monto Canjeado"
+      "pointsEarned": "Puntos ganados",
+      "redeemPoints": "Puntos canjeados",
+      "redeemAmount": "Monto canjeado",
+      "saved": "Ahorrado"
     },
+
+    "pagination": {
+      "page": "Página",
+      "of": "de"
+    },
+
     "noTransactions": {
-      "title": "No se encontraron transacciones para este comercio.",
-      "subtitle": "¡Haz una compra para empezar a ganar puntos!"
+      "title": "No se encontraron transacciones",
+      "subtitle": "Intenta ajustar los filtros o el rango de fechas"
     },
+
     "errors": {
-      "title": "Error al Cargar Datos",
+      "title": "Algo salió mal",
       "fetchFailed": "No se pudieron obtener las transacciones",
       "loadFailed": "Error al cargar los datos de transacciones."
     }
@@ -1334,7 +1370,7 @@
     "subtitle": "Lista de comercios donde tu acceso ha sido desactivado",
     "loading": "Cargando tus comercios inactivos...",
     "status": {
-      "inactive": "Inactivo"
+      "inactive": "Inactivo Archivo"
     },
     "labels": {
       "joined": "Ingresó",
