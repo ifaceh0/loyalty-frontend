@@ -1536,60 +1536,6 @@ export default function Home() {
         </div>
       </motion.section>
 
-      {/* PARTNER STORE CATEGORIES */}
-      <motion.section
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.15 }}
-        variants={staggerContainer}
-        className="py-10 xs:py-12 md:py-14 px-6 lg:px-8 bg-white"
-      >
-        <div className="max-w-6xl mx-auto">
-          {/* Header: Strong contrast and personality */}
-          <div className="text-center mb-16 md:mb-20">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight mb-4">
-              {t('home.categories.title')}
-            </h2>
-            <p className="text-slate-500 max-w-xl mx-auto text-base">
-              {t('home.categories.subtitle')}
-            </p>
-          </div>
-
-          {/* Grid: Modern "Squircle" Cards */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6">
-            {[
-              { icon: <Coffee />, name: t('home.categories.items.0.name'), count: t('home.categories.items.0.count'), color: 'bg-orange-50 text-orange-600' },
-              { icon: <Utensils />, name: t('home.categories.items.1.name'), count: t('home.categories.items.1.count'), color: 'bg-rose-50 text-rose-600' },
-              { icon: <ShoppingBag />, name: t('home.categories.items.2.name'), count: t('home.categories.items.2.count'), color: 'bg-emerald-50 text-emerald-600' },
-              { icon: <Car />, name: t('home.categories.items.3.name'), count: t('home.categories.items.3.count'), color: 'bg-blue-50 text-blue-600' },
-              { icon: <Heart />, name: t('home.categories.items.4.name'), count: t('home.categories.items.4.count'), color: 'bg-pink-50 text-pink-600' },
-              { icon: <Gamepad2 />, name: t('home.categories.items.5.name'), count: t('home.categories.items.5.count'), color: 'bg-indigo-50 text-indigo-600' },
-            ].map((category, i) => (
-              <motion.div
-                key={i}
-                variants={cardVariants}
-                className="group flex flex-col items-center p-6 rounded-[1rem] bg-slate-50/50 border border-transparent hover:bg-white hover:border-slate-100 hover:shadow-xl hover:shadow-slate-200/60 transition-all duration-500 cursor-pointer"
-              >
-                {/* Icon Wrapper: The "Soft Pop" element */}
-                <div className={`w-14 h-14 flex items-center justify-center rounded-lg ${category.color} mb-4 transform group-hover:scale-110 group-hover:-rotate-3 transition-all duration-500 shadow-sm`}>
-                  {React.cloneElement(category.icon, { strokeWidth: 2, className: "w-6 h-6" })}
-                </div>
-                
-                <h4 className="text-sm md:text-base font-bold text-slate-900 text-center">
-                  {category.name}
-                </h4>
-                
-                <div className="mt-1 px-2.5 py-0.5 rounded-full bg-white border border-slate-100 shadow-sm">
-                  <span className="text-[10px] md:text-xs font-semibold text-slate-400">
-                    {category.count}
-                  </span>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </motion.section>
-
       {/* LIVE STATS */}
       <motion.section
         initial="hidden"
@@ -1658,6 +1604,60 @@ export default function Home() {
               <p className="text-slate-400 font-medium mt-4">{t('home.stats.items.2.label')}</p>
             </motion.div>
 
+          </div>
+        </div>
+      </motion.section>
+
+      {/* PARTNER STORE CATEGORIES */}
+      <motion.section
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.15 }}
+        variants={staggerContainer}
+        className="py-10 xs:py-12 md:py-14 px-6 lg:px-8 bg-white"
+      >
+        <div className="max-w-6xl mx-auto">
+          {/* Header: Strong contrast and personality */}
+          <div className="text-center mb-16 md:mb-20">
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight mb-4">
+              {t('home.categories.title')}
+            </h2>
+            <p className="text-slate-500 max-w-xl mx-auto text-base">
+              {t('home.categories.subtitle')}
+            </p>
+          </div>
+
+          {/* Grid: Modern "Squircle" Cards */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6">
+            {[
+              { icon: <Coffee />, name: t('home.categories.items.0.name'), count: t('home.categories.items.0.count'), color: 'bg-orange-50 text-orange-600' },
+              { icon: <Utensils />, name: t('home.categories.items.1.name'), count: t('home.categories.items.1.count'), color: 'bg-rose-50 text-rose-600' },
+              { icon: <ShoppingBag />, name: t('home.categories.items.2.name'), count: t('home.categories.items.2.count'), color: 'bg-emerald-50 text-emerald-600' },
+              { icon: <Car />, name: t('home.categories.items.3.name'), count: t('home.categories.items.3.count'), color: 'bg-blue-50 text-blue-600' },
+              { icon: <Heart />, name: t('home.categories.items.4.name'), count: t('home.categories.items.4.count'), color: 'bg-pink-50 text-pink-600' },
+              { icon: <Gamepad2 />, name: t('home.categories.items.5.name'), count: t('home.categories.items.5.count'), color: 'bg-indigo-50 text-indigo-600' },
+            ].map((category, i) => (
+              <motion.div
+                key={i}
+                variants={cardVariants}
+                className="group flex flex-col items-center p-6 rounded-[1rem] bg-slate-50/50 border border-transparent hover:bg-white hover:border-slate-100 hover:shadow-xl hover:shadow-slate-200/60 transition-all duration-500 cursor-pointer"
+              >
+                {/* Icon Wrapper: The "Soft Pop" element */}
+                <div className={`w-14 h-14 flex items-center justify-center rounded-lg ${category.color} mb-4 transform group-hover:scale-110 group-hover:-rotate-3 transition-all duration-500 shadow-sm`}>
+                  {React.cloneElement(category.icon, { strokeWidth: 2, className: "w-6 h-6" })}
+                </div>
+                
+                <h4 className="text-sm md:text-base font-bold text-slate-900 text-center">
+                  {category.name}
+                </h4>
+                
+                <div className="mt-1 px-2.5 py-0.5 rounded-full bg-white border border-slate-100 shadow-sm">
+                  <span className="text-[10px] md:text-xs font-semibold text-slate-400">
+                    {category.count}
+                  </span>
+                </div>
+              </motion.div>
+            ))}
           </div>
         </div>
       </motion.section>
@@ -1738,180 +1738,13 @@ export default function Home() {
         </div>
       </motion.section>
 
-      {/* CUSTOMER TESTIMONIALS */}
-      <motion.section
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.15 }}
-        variants={staggerContainer}
-        className="py-10 xs:py-12 md:py-14 px-6 lg:px-8 bg-white"
-      >
-        <div className="max-w-6xl mx-auto">
-          {/* Header: Focused & Clean */}
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight">
-              {t('home.testimonials.title')}
-            </h2>
-          </div>
-
-          {/* Grid: Modern "Lift" Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
-            {t('home.testimonials.items', { returnObjects: true }).map((testimonial, i) => (
-              <motion.div
-                key={i}
-                variants={cardVariants}
-                className="group relative bg-slate-50/50 p-8 rounded-[2.5rem] border border-transparent hover:bg-white hover:border-slate-100 hover:shadow-2xl hover:shadow-slate-200/60 transition-all duration-500 flex flex-col"
-              >
-                {/* Rating: Clean & Simple */}
-                <div className="flex gap-1 mb-6">
-                  {[...Array(testimonial.rating)].map((_, j) => (
-                    <Star key={j} className="w-4 h-4 text-amber-400 fill-current" />
-                  ))}
-                </div>
-
-                {/* Review Text: Improved Legibility */}
-                <blockquote className="flex-grow">
-                  <p className="text-slate-700 leading-relaxed text-base md:text-lg font-medium italic">
-                    “{testimonial.review}”
-                  </p>
-                </blockquote>
-
-                {/* Author Section: Integrated & Polished */}
-                <div className="mt-8 pt-6 border-t border-slate-100 flex flex-col">
-                  <h5 className="font-bold text-slate-900 text-base">
-                    {testimonial.name}
-                  </h5>
-                  <div className="flex items-center justify-between mt-1">
-                    <p className="text-sm text-slate-500">
-                      {testimonial.location}
-                    </p>
-                    
-                    {/* Points: Styled as a subtle badge */}
-                    <span className="px-3 py-1 bg-emerald-100/50 text-emerald-700 text-[11px] font-black uppercase tracking-wider rounded-full">
-                      {testimonial.points}
-                    </span>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </motion.section>
-
-      {/* LEADERBOARD */}
-        {/* <motion.section
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.15 }}
-          variants={staggerContainer}
-          className="py-20 px-6 lg:px-8 bg-white"
-        >
-          <div className="max-w-4xl mx-auto">
-            
-            <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight">
-                {t('home.leaderboard.title')}
-              </h2>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 md:gap-8 items-end">
-              {t('home.leaderboard.items', { returnObjects: true }).map((user) => (
-                <motion.div
-                  key={user.rank}
-                  variants={cardVariants}
-                  className={`relative group flex flex-col items-center p-8 rounded-[1rem] transition-all duration-500 ${
-                    user.rank === 1 
-                      ? 'bg-white shadow-2xl shadow-emerald-200/50 border-2 border-emerald-100 py-12 z-10' 
-                      : 'bg-white/60 border border-slate-100 hover:bg-white hover:shadow-xl hover:shadow-slate-200/60'
-                  }`}
-                >
-                  <div className={`absolute -top-4 px-4 py-1.5 rounded-full text-xs font-black tracking-widest uppercase shadow-sm ${
-                    user.rank === 1 ? 'bg-emerald-500 text-white' : 'bg-slate-900 text-white'
-                  }`}>
-                    Rank #{user.rank}
-                  </div>
-
-                  <div className={`w-12 h-12 rounded-full mb-4 flex items-center justify-center font-bold ${
-                    user.rank === 1 ? 'bg-emerald-100 text-emerald-600' : 'bg-slate-100 text-slate-400'
-                  }`}>
-                    {user.name.charAt(0)}
-                  </div>
-
-                  <h3 className="text-lg font-bold text-slate-900 mb-1">
-                    {user.name}
-                  </h3>
-                  
-                  <div className="flex flex-col items-center">
-                    <span className={`text-4xl md:text-5xl font-black tracking-tighter tabular-nums ${
-                      user.rank === 1 ? 'text-emerald-600' : 'text-slate-900'
-                    }`}>
-                      {user.points}
-                    </span>
-                    <span className="text-[11px] font-black uppercase tracking-[0.2em] text-slate-400 mt-1">
-                      {t('home.leaderboard.points')}
-                    </span>
-                  </div>
-
-                  {user.rank === 1 && (
-                    <div className="absolute top-4 right-4 animate-pulse">
-                      <Star className="w-5 h-5 text-emerald-200 fill-current" />
-                    </div>
-                  )}
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </motion.section> */}
-
-      {/* FAQ ACCORDION */}
-      <motion.section
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.15 }}
-        variants={staggerContainer}
-        className="py-10 xs:py-12 md:py-14 px-6 lg:px-8 bg-white"
-      >
-        <div className="max-w-4xl mx-auto">
-          {/* Header: Clean & Balanced */}
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight">
-              {t('home.faq.title')}
-            </h2>
-          </div>
-
-          {/* FAQ List: Soft "Island" Accordions */}
-          <div className="space-y-3">
-            {t('home.faq.items', { returnObjects: true }).map((faq, i) => (
-              <motion.details
-                key={i}
-                variants={cardVariants}
-                className="group bg-slate-50 rounded-[0.5rem] overflow-hidden border border-transparent open:bg-white open:border-slate-100 open:shadow-2xl open:shadow-slate-200/60 transition-all duration-500"
-              >
-                <summary className="flex justify-between items-center p-4 md:p-3 font-bold text-slate-800 cursor-pointer list-none">
-                  <span className="text-base md:text-lg pr-4">{faq.q}</span>
-                  <div className="flex-shrink-0 w-8 h-8 rounded-full bg-white shadow-sm flex items-center justify-center group-open:bg-slate-900 group-open:text-white transition-all duration-500">
-                    <ChevronRight className="w-4 h-4 transition-transform duration-500 group-open:rotate-90" />
-                  </div>
-                </summary>
-                
-                <div className="px-6 md:px-8 pb-8 text-slate-600 leading-relaxed text-sm md:text-base">
-                  <div className="pt-2 border-t border-slate-100/50">
-                    {faq.a}
-                  </div>
-                </div>
-              </motion.details>
-            ))}
-          </div>
-        </div>
-      </motion.section>
-
       {/* FINAL CTA */}
       <motion.section
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className="py-10 xs:py-12 md:py-14 px-6 lg:px-8"
+        className="py-10 xs:py-12 md:py-14 px-6 lg:px-8 bg-white"
       >
         {/* The Main "Island" Container */}
         <div className="max-w-5xl mx-auto bg-slate-900 rounded-[1rem] p-8 md:p-16 text-center relative overflow-hidden shadow-2xl shadow-emerald-200/20">

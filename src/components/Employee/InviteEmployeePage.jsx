@@ -808,6 +808,7 @@ import {
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { API_BASE_URL } from '../../apiConfig';
+import { fetchWithAuth } from "../../auth/fetchWithAuth";
 
 const API_BASE = `${API_BASE_URL}/api`;
 
@@ -860,8 +861,8 @@ export default function InviteEmployeePage() {
     setFetching(true);
     try {
       const [invRes, empRes] = await Promise.all([
-        fetch(`${API_BASE}/employee/invitationList?shopId=${shopId}`, { credentials: 'include' }),
-        fetch(`${API_BASE}/employee/listOfEmployee?shopId=${shopId}`)
+        fetchWithAuth(`${API_BASE}/employee/invitationList?shopId=${shopId}`, { credentials: 'include' }),
+        fetchWithAuth(`${API_BASE}/employee/listOfEmployee?shopId=${shopId}`, { credentials: 'include' })
       ]);
       if (!invRes.ok || !empRes.ok) throw new Error('Failed to load');
       const [invData, empData] = await Promise.all([invRes.json(), empRes.json()]);
@@ -883,7 +884,7 @@ export default function InviteEmployeePage() {
     if (!email.trim()) return;
     setLoading(true);
     try {
-      const res = await fetch(`${API_BASE}/employee/inviteEmployee?shopId=${shopId}`, {
+      const res = await fetchWithAuth(`${API_BASE}/employee/inviteEmployee?shopId=${shopId}`, {
         method: 'POST',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
@@ -903,7 +904,7 @@ export default function InviteEmployeePage() {
   const resendInvite = async (inviteId) => {
     if (!confirm(t('employee.confirm.resend'))) return;
     try {
-      const res = await fetch(`${API_BASE}/employee/resendInvitation?inviteId=${inviteId}`, {
+      const res = await fetchWithAuth(`${API_BASE}/employee/resendInvitation?inviteId=${inviteId}`, {
         method: 'POST',
         credentials: 'include',
       });
@@ -917,7 +918,7 @@ export default function InviteEmployeePage() {
   const deleteInvite = async (inviteId) => {
     if (!confirm(t('employee.confirm.delete'))) return;
     try {
-      const res = await fetch(`${API_BASE}/employee/deleteInvitation?inviteId=${inviteId}`, {
+      const res = await fetchWithAuth(`${API_BASE}/employee/deleteInvitation?inviteId=${inviteId}`, {
         method: 'DELETE',
         credentials: 'include',
       });
@@ -948,13 +949,11 @@ export default function InviteEmployeePage() {
     if (!confirm(t('employee.confirm.toggle', { action: willBeActive ? t('employee.status.activate') : t('employee.status.deactivate') }))) return;
 
     try {
-      const res = await fetch(
-        `${API_BASE}/employee/toggleEmployeeStatus?shopId=${shopId}&userId=${userId}&active=${willBeActive}`,
-        {
+      const res = await fetchWithAuth(
+        `${API_BASE}/employee/toggleEmployeeStatus?shopId=${shopId}&userId=${userId}&active=${willBeActive}`, {
           method: 'PATCH',
           credentials: 'include',
-        }
-      );
+        });
 
       if (!res.ok) {
         const errData = await res.json();

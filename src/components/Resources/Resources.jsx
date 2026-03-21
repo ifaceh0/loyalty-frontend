@@ -1,486 +1,3 @@
-// import React, { useState } from 'react';
-// import {
-//   BookOpen,
-//   TrendingUp,
-//   Share2,
-//   FileText,
-//   LayoutDashboard,
-//   Gift,
-//   X,
-//   CheckCircle,
-//   ArrowRight,
-// } from 'lucide-react';
-
-// const resources = [
-//   {
-//     Icon: BookOpen,
-//     title: 'How Loyalty Points Work',
-//     description: 'Learn how you earn, track, and redeem points in our system.',
-//     details: [
-//       { type: 'step', text: 'Earn 1 point for every $1 spent.' },
-//       { type: 'step', text: 'Points appear instantly in your dashboard.' },
-//       { type: 'step', text: 'Redeem 100 points = $5 discount.' },
-//       { type: 'tip', text: 'Points never expire if you shop every 12 months.' },
-//     ],
-//     gradient: 'from-emerald-400 to-teal-500',
-//   },
-//   {
-//     Icon: TrendingUp,
-//     title: 'Benefits for Businesses',
-//     description: 'Discover how loyalty programs boost customer retention and revenue.',
-//     details: [
-//       { type: 'stat', text: 'Loyal customers spend 67% more' },
-//       { type: 'stat', text: '30% average increase in repeat visits' },
-//       { type: 'tip', text: 'Use analytics to run targeted campaigns' },
-//       { type: 'tip', text: 'Reward top spenders with VIP tiers' },
-//     ],
-//     gradient: 'from-cyan-400 to-blue-500',
-//   },
-//   {
-//     Icon: Share2,
-//     title: 'Referral Program Guide',
-//     description: 'Maximize your earnings by referring others and topping the leaderboard.',
-//     details: [
-//       { type: 'step', text: 'Share your unique referral link' },
-//       { type: 'step', text: 'Friend joins & makes first purchase' },
-//       { type: 'step', text: 'Both get 50 bonus points' },
-//       { type: 'tip', text: 'Top 10 referrers win exclusive rewards monthly' },
-//     ],
-//     gradient: 'from-indigo-400 to-purple-500',
-//   },
-//   {
-//     Icon: FileText,
-//     title: 'Reward Redemption Rules',
-//     description: 'Understand the terms and conditions for redeeming your earned rewards.',
-//     details: [
-//       { type: 'rule', text: 'Minimum 50 points to redeem' },
-//       { type: 'rule', text: 'Rewards valid for 90 days' },
-//       { type: 'rule', text: 'Cannot combine with other offers' },
-//       { type: 'rule', text: 'Non-transferable & non-refundable' },
-//     ],
-//     gradient: 'from-amber-400 to-orange-500',
-//   },
-//   {
-//     Icon: LayoutDashboard,
-//     title: 'Loyalty Dashboard Features',
-//     description: 'Track your purchase history, referral stats, and bonus rewards all in one place.',
-//     details: [
-//       { type: 'feature', text: 'Real-time points balance' },
-//       { type: 'feature', text: 'Full transaction history' },
-//       { type: 'feature', text: 'Live referral leaderboard' },
-//       { type: 'tip', text: 'Export reports as PDF or CSV' },
-//     ],
-//     gradient: 'from-pink-400 to-rose-500',
-//   },
-//   {
-//     Icon: Gift,
-//     title: 'Promotions & Bonuses',
-//     description: 'Stay updated on seasonal offers and limited-time bonus point opportunities.',
-//     details: [
-//       { type: 'promo', text: 'Double points every Friday' },
-//       { type: 'promo', text: 'Birthday month: 100 bonus points' },
-//       { type: 'promo', text: 'Flash sales: 3× points on select items' },
-//       { type: 'tip', text: 'Enable notifications to never miss a deal' },
-//     ],
-//     gradient: 'from-lime-400 to-green-500',
-//   },
-// ];
-
-// export default function Resources() {
-//   const [modalOpen, setModalOpen] = useState(null);
-
-//   const openModal = (resource) => setModalOpen(resource);
-//   const closeModal = () => setModalOpen(null);
-
-//   return (
-//     <>
-//       <section className="py-10 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-slate-50 to-white">
-//         <div className="max-w-7xl mx-auto">
-//           {/* Header */}
-//           <div className="text-center mb-16">
-//             <h1 className="text-4xl sm:text-5xl font-extrabold bg-gradient-to-r from-emerald-600 to-teal-700 bg-clip-text text-transparent mb-4">
-//               Loyalty Program Resources
-//             </h1>
-//             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-//               Everything you need to understand, manage, and maximize your loyalty experience.
-//             </p>
-//           </div>
-
-//           {/* Grid */}
-//           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-//             {resources.map((resource, idx) => {
-//               const Icon = resource.Icon;
-//               return (
-//                 <button
-//                   key={idx}
-//                   onClick={() => openModal(resource)}
-//                   className="group block text-left"
-//                 >
-//                   <div className="relative bg-white/80 backdrop-blur-sm rounded-md p-1 shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100">
-//                     <div
-//                       className={`absolute inset-0 bg-gradient-to-br ${resource.gradient} opacity-0 group-hover:opacity-30 transition-opacity duration-300`}
-//                     />
-//                     <div className="relative bg-white rounded-md p-6 h-full">
-//                       <div className="mb-4 w-12 h-12 rounded-md bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform duration-300">
-//                         <Icon className="w-6 h-6 text-emerald-600" />
-//                       </div>
-//                       <h3 className="text-xl font-bold text-gray-800 mb-2 group-hover:text-emerald-700 transition-colors">
-//                         {resource.title}
-//                       </h3>
-//                       <p className="text-gray-600 text-sm leading-relaxed mb-4">
-//                         {resource.description}
-//                       </p>
-//                       <div className="flex items-center justify-between">
-//                         <span className="text-emerald-600 font-medium text-sm flex items-center gap-1 group-hover:gap-2 transition-all">
-//                           Read More
-//                           <ArrowRight className="w-4 h-4" />
-//                         </span>
-//                       </div>
-//                     </div>
-//                   </div>
-//                 </button>
-//               );
-//             })}
-//           </div>
-//         </div>
-//       </section>
-
-//       {/* ---------- MODAL (demo only) ---------- */}
-//       {modalOpen && (
-//         <div
-//           className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50"
-//           onClick={closeModal}
-//         >
-//           <div
-//             className="relative max-w-2xl w-full bg-white rounded-md shadow-2xl overflow-hidden"
-//             onClick={(e) => e.stopPropagation()}
-//           >
-//             {/* Close X */}
-//             <button
-//               onClick={closeModal}
-//               className="absolute top-4 right-4 p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition z-10"
-//             >
-//               <X className="w-5 h-5 text-gray-600" />
-//             </button>
-
-//             <div className="p-6 lg:p-8">
-//               {/* Title + Icon */}
-//               <div className="flex items-center gap-3 mb-6">
-//                 <div className="w-12 h-12 rounded-md bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
-//                   <modalOpen.Icon className="w-7 h-7 text-emerald-600" />
-//                 </div>
-//                 <h2 className="text-2xl font-bold text-gray-800">
-//                   {modalOpen.title}
-//                 </h2>
-//               </div>
-
-//               {/* Dynamic useful content */}
-//               <div className="space-y-4">
-//                 {modalOpen.details.map((item, i) => {
-//                   if (item.type === 'step')
-//                     return (
-//                       <div key={i} className="flex items-start gap-3">
-//                         <CheckCircle className="w-5 h-5 text-emerald-600 mt-0.5 flex-shrink-0" />
-//                         <p className="text-gray-700">{item.text}</p>
-//                       </div>
-//                     );
-//                   if (item.type === 'stat')
-//                     return (
-//                       <div
-//                         key={i}
-//                         className="bg-emerald-50 text-emerald-800 px-4 py-2 rounded-md font-medium"
-//                       >
-//                         {item.text}
-//                       </div>
-//                     );
-//                   if (item.type === 'tip')
-//                     return (
-//                       <div key={i} className="flex items-start gap-3 text-sm">
-//                         <div className="w-5 h-5 rounded-full bg-amber-100 flex items-center justify-center flex-shrink-0">
-//                           <span className="text-amber-600 text-xs font-bold">i</span>
-//                         </div>
-//                         <p className="text-gray-600 italic">{item.text}</p>
-//                       </div>
-//                     );
-//                   if (item.type === 'rule')
-//                     return (
-//                       <div key={i} className="flex items-center gap-2 text-sm">
-//                         <div className="w-1.5 h-1.5 rounded-full bg-red-500 flex-shrink-0" />
-//                         <p className="text-gray-700">{item.text}</p>
-//                       </div>
-//                     );
-//                   if (item.type === 'promo')
-//                     return (
-//                       <div
-//                         key={i}
-//                         className="bg-gradient-to-r from-emerald-50 to-teal-50 text-emerald-800 px-4 py-2 rounded-md font-medium flex items-center gap-2"
-//                       >
-//                         <Gift className="w-4 h-4" />
-//                         {item.text}
-//                       </div>
-//                     );
-//                   if (item.type === 'feature')
-//                     return (
-//                       <div key={i} className="flex items-center gap-2">
-//                         <CheckCircle className="w-5 h-5 text-teal-600" />
-//                         <p className="text-gray-700">{item.text}</p>
-//                       </div>
-//                     );
-//                   return null;
-//                 })}
-//               </div>
-
-//               {/* ONLY "Got it" button (no external link) */}
-//               <div className="mt-8 flex justify-end">
-//                 <button
-//                   onClick={closeModal}
-//                   className="px-5 py-2.5 bg-emerald-600 text-white font-medium rounded-sm hover:bg-emerald-700 transition shadow-md"
-//                 >
-//                   Got it
-//                 </button>
-//               </div>
-//             </div>
-//           </div>
-//         </div>
-//       )}
-//     </>
-//   );
-// }
-
-
-
-
-
-
-
-
-
-
-// //translate
-// import React, { useState } from 'react';
-// import {
-//   BookOpen,
-//   TrendingUp,
-//   Share2,
-//   FileText,
-//   LayoutDashboard,
-//   Gift,
-//   X,
-//   CheckCircle,
-//   ArrowRight,
-// } from 'lucide-react';
-
-// import { useTranslation } from 'react-i18next';
-
-// const resources = [
-//   {
-//     key: 'howPointsWork',
-//     Icon: BookOpen,
-//     gradient: 'from-emerald-400 to-teal-500',
-//   },
-//   {
-//     key: 'businessBenefits',
-//     Icon: TrendingUp,
-//     gradient: 'from-cyan-400 to-blue-500',
-//   },
-//   {
-//     key: 'referralGuide',
-//     Icon: Share2,
-//     gradient: 'from-indigo-400 to-purple-500',
-//   },
-//   {
-//     key: 'redemptionRules',
-//     Icon: FileText,
-//     gradient: 'from-amber-400 to-orange-500',
-//   },
-//   {
-//     key: 'dashboardFeatures',
-//     Icon: LayoutDashboard,
-//     gradient: 'from-pink-400 to-rose-500',
-//   },
-//   {
-//     key: 'promotions',
-//     Icon: Gift,
-//     gradient: 'from-lime-400 to-green-500',
-//   },
-// ];
-
-// export default function Resources() {
-//   const { t } = useTranslation();
-//   const [modalOpen, setModalOpen] = useState(null);
-
-//   const openModal = (resource) => setModalOpen(resource);
-//   const closeModal = () => setModalOpen(null);
-
-//   // Helper to get dynamic content
-//   const getDetails = (key) => {
-//     const data = t(`resources.${key}`, { returnObjects: true });
-//     const steps = data.steps || [];
-//     const stats = data.stats || [];
-//     const tips = data.tips || [];
-//     const rules = data.rules || [];
-//     const features = data.features || [];
-//     const promos = data.promos || [];
-
-//     const result = [];
-
-//     steps.forEach(text => result.push({ type: 'step', text }));
-//     stats.forEach(text => result.push({ type: 'stat', text }));
-//     tips.forEach(text => result.push({ type: 'tip', text }));
-//     rules.forEach(text => result.push({ type: 'rule', text }));
-//     features.forEach(text => result.push({ type: 'feature', text }));
-//     promos.forEach(text => result.push({ type: 'promo', text }));
-
-//     return result;
-//   };
-
-//   return (
-//     <>
-//       <section className="py-10 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-slate-50 to-white">
-//         <div className="max-w-7xl mx-auto">
-//           <div className="text-center mb-16">
-//             <h1 className="text-4xl sm:text-5xl font-extrabold text-emerald-600 mb-4">
-//               {t('resources.title')}
-//             </h1>
-//             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-//               {t('resources.subtitle')}
-//             </p>
-//           </div>
-
-//           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-//             {resources.map((resource, idx) => {
-//               const Icon = resource.Icon;
-//               const key = `resources.${resource.key}`;
-//               return (
-//                 <button
-//                   key={idx}
-//                   onClick={() => openModal({ ...resource, details: getDetails(resource.key) })}
-//                   className="group block text-left"
-//                 >
-//                   <div className="relative bg-white/80 backdrop-blur-sm rounded p-1 shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100">
-//                     <div className={`absolute inset-0 bg-gradient-to-br ${resource.gradient} opacity-0 group-hover:opacity-30 transition-opacity duration-300`} />
-//                     <div className="relative bg-white rounded p-6 h-full">
-//                       <div className="mb-4 w-12 h-12 rounded bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform duration-300">
-//                         <Icon className="w-6 h-6 text-emerald-600" />
-//                       </div>
-//                       <h3 className="text-xl font-bold text-gray-800 mb-2 group-hover:text-emerald-700 transition-colors">
-//                         {t(`${key}.title`)}
-//                       </h3>
-//                       <p className="text-gray-600 text-sm leading-relaxed mb-4">
-//                         {t(`${key}.desc`)}
-//                       </p>
-//                       <div className="flex items-center justify-between">
-//                         <span className="text-emerald-600 font-medium text-sm flex items-center gap-1 group-hover:gap-2 transition-all">
-//                           {t('resources.readMore')}
-//                           <ArrowRight className="w-4 h-4" />
-//                         </span>
-//                       </div>
-//                     </div>
-//                   </div>
-//                 </button>
-//               );
-//             })}
-//           </div>
-//         </div>
-//       </section>
-
-//       {/* MODAL */}
-//       {modalOpen && (
-//         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50" onClick={closeModal}>
-//           <div
-//             className="relative max-w-2xl w-full bg-white rounded shadow-2xl overflow-hidden"
-//             onClick={(e) => e.stopPropagation()}
-//           >
-//             <button
-//               onClick={closeModal}
-//               className="absolute top-4 right-4 p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition z-10"
-//             >
-//               <X className="w-5 h-5 text-gray-600" />
-//             </button>
-
-//             <div className="p-6 lg:p-8">
-//               <div className="flex items-center gap-3 mb-6">
-//                 <div className="w-12 h-12 rounded bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
-//                   <modalOpen.Icon className="w-7 h-7 text-emerald-600" />
-//                 </div>
-//                 <h2 className="text-2xl font-bold text-gray-800">
-//                   {t(`resources.${modalOpen.key}.title`)}
-//                 </h2>
-//               </div>
-
-//               <div className="space-y-4">
-//                 {modalOpen.details.map((item, i) => {
-//                   if (item.type === 'step')
-//                     return (
-//                       <div key={i} className="flex items-start gap-3">
-//                         <CheckCircle className="w-5 h-5 text-emerald-600 mt-0.5 flex-shrink-0" />
-//                         <p className="text-gray-700">{item.text}</p>
-//                       </div>
-//                     );
-//                   if (item.type === 'stat')
-//                     return (
-//                       <div key={i} className="bg-emerald-50 text-emerald-800 px-4 py py-2 rounded font-medium">
-//                         {item.text}
-//                       </div>
-//                     );
-//                   if (item.type === 'tip')
-//                     return (
-//                       <div key={i} className="flex items-start gap-3 text-sm">
-//                         <div className="w-5 h-5 rounded-full bg-amber-100 flex items-center justify-center flex-shrink-0">
-//                           <span className="text-amber-600 text-xs font-bold">i</span>
-//                         </div>
-//                         <p className="text-gray-600 italic">{item.text}</p>
-//                       </div>
-//                     );
-//                   if (item.type === 'rule')
-//                     return (
-//                       <div key={i} className="flex items-center gap-2 text-sm">
-//                         <div className="w-1.5 h-1.5 rounded-full bg-red-500 flex-shrink-0" />
-//                         <p className="text-gray-700">{item.text}</p>
-//                       </div>
-//                     );
-//                   if (item.type === 'promo')
-//                     return (
-//                       <div key={i} className="bg-gradient-to-r from-emerald-50 to-teal-50 text-emerald-800 px-4 py-2 rounded font-medium flex items-center gap-2">
-//                         <Gift className="w-4 h-4" />
-//                         {item.text}
-//                       </div>
-//                     );
-//                   if (item.type === 'feature')
-//                     return (
-//                       <div key={i} className="flex items-center gap-2">
-//                         <CheckCircle className="w-5 h-5 text-teal-600" />
-//                         <p className="text-gray-700">{item.text}</p>
-//                       </div>
-//                     );
-//                   return null;
-//                 })}
-//               </div>
-
-//               <div className="mt-8 flex justify-end">
-//                 <button
-//                   onClick={closeModal}
-//                   className="px-5 py-2.5 bg-emerald-600 text-white font-medium rounded hover:bg-emerald-700 transition shadow-md"
-//                 >
-//                   {t('resources.gotIt')}
-//                 </button>
-//               </div>
-//             </div>
-//           </div>
-//         </div>
-//       )}
-//     </>
-//   );
-// }
-
-
-
-
-
-
-
-'use client';
-
 import React, { useState } from 'react';
 import {
   BookOpen,
@@ -493,63 +10,37 @@ import {
   CheckCircle,
   ArrowRight,
 } from 'lucide-react';
-
 import { useTranslation } from 'react-i18next';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
-// Animation variants
+// Refined animation variants
 const container = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
     transition: {
       staggerChildren: 0.1,
-      delayChildren: 0.15,
+      delayChildren: 0.1,
     },
   },
 };
 
 const item = {
-  hidden: { opacity: 0, y: 30, scale: 0.97 },
+  hidden: { opacity: 0, y: 20 },
   visible: {
     opacity: 1,
     y: 0,
-    scale: 1,
-    transition: { duration: 0.6, ease: 'easeOut' },
+    transition: { duration: 0.5, ease: [0.21, 1.02, 0.73, 1] },
   },
 };
 
 const resources = [
-  {
-    key: 'howPointsWork',
-    Icon: BookOpen,
-    gradient: 'from-emerald-400 to-teal-500',
-  },
-  {
-    key: 'businessBenefits',
-    Icon: TrendingUp,
-    gradient: 'from-cyan-400 to-blue-500',
-  },
-  {
-    key: 'referralGuide',
-    Icon: Share2,
-    gradient: 'from-indigo-400 to-purple-500',
-  },
-  {
-    key: 'redemptionRules',
-    Icon: FileText,
-    gradient: 'from-amber-400 to-orange-500',
-  },
-  {
-    key: 'dashboardFeatures',
-    Icon: LayoutDashboard,
-    gradient: 'from-pink-400 to-rose-500',
-  },
-  {
-    key: 'promotions',
-    Icon: Gift,
-    gradient: 'from-lime-400 to-green-500',
-  },
+  { key: 'howPointsWork', Icon: BookOpen, color: 'emerald' },
+  { key: 'businessBenefits', Icon: TrendingUp, color: 'blue' },
+  { key: 'referralGuide', Icon: Share2, color: 'indigo' },
+  { key: 'redemptionRules', Icon: FileText, color: 'orange' },
+  { key: 'dashboardFeatures', Icon: LayoutDashboard, color: 'rose' },
+  { key: 'promotions', Icon: Gift, color: 'green' },
 ];
 
 export default function Resources() {
@@ -559,42 +50,30 @@ export default function Resources() {
   const openModal = (resource) => setModalOpen(resource);
   const closeModal = () => setModalOpen(null);
 
-  // Helper to get dynamic content
   const getDetails = (key) => {
     const data = t(`resources.${key}`, { returnObjects: true });
-    const steps = data.steps || [];
-    const stats = data.stats || [];
-    const tips = data.tips || [];
-    const rules = data.rules || [];
-    const features = data.features || [];
-    const promos = data.promos || [];
-
     const result = [];
-
-    steps.forEach(text => result.push({ type: 'step', text }));
-    stats.forEach(text => result.push({ type: 'stat', text }));
-    tips.forEach(text => result.push({ type: 'tip', text }));
-    rules.forEach(text => result.push({ type: 'rule', text }));
-    features.forEach(text => result.push({ type: 'feature', text }));
-    promos.forEach(text => result.push({ type: 'promo', text }));
-
+    ['steps', 'stats', 'tips', 'rules', 'features', 'promos'].forEach((type) => {
+      const singularType = type.slice(0, -1);
+      (data[type] || []).forEach((text) => result.push({ type: singularType, text }));
+    });
     return result;
   };
 
   return (
     <>
-      <section className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-8">
+      <section className="py-24 px-6 bg-slate-50/50">
         <div className="max-w-7xl mx-auto">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-12 sm:mb-16 md:mb-20"
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-20"
           >
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-emerald-600 mb-4 md:mb-5">
+            <h1 className="text-4xl md:text-5xl font-semibold text-slate-900 mb-6 tracking-tight">
               {t('resources.title')}
             </h1>
-            <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-lg text-slate-500 max-w-2xl mx-auto leading-relaxed">
               {t('resources.subtitle')}
             </p>
           </motion.div>
@@ -603,8 +82,8 @@ export default function Resources() {
             variants={container}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, amount: 0.15 }}
-            className="grid gap-3 sm:gap-8 md:gap-10 grid-cols-2 sm:grid-cols-2 lg:grid-cols-3"
+            viewport={{ once: true, amount: 0.1 }}
+            className="grid gap-4 md:gap-6 grid-cols-2 lg:grid-cols-3"
           >
             {resources.map((resource, idx) => {
               const Icon = resource.Icon;
@@ -614,36 +93,27 @@ export default function Resources() {
                 <motion.button
                   key={idx}
                   variants={item}
-                  whileHover={{ scale: 1.03, y: -6 }}
-                  whileTap={{ scale: 0.98 }}
                   onClick={() => openModal({ ...resource, details: getDetails(resource.key) })}
-                  className="group block text-left"
+                  className="group relative text-left bg-white p-6 rounded-[0.5rem] ring-1 ring-slate-200/60 shadow-sm hover:shadow-2xl hover:shadow-emerald-500/5 transition-all duration-500"
                 >
-                  <div className="relative bg-white backdrop-blur-sm rounded-xl p-1 shadow-md hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100">
-                    <div
-                      className={`absolute inset-0 bg-gradient-to-br ${resource.gradient} opacity-0 group-hover:opacity-30 transition-opacity duration-500`}
-                    />
+                  <div className="mb-8 p-4 w-fit rounded-xl bg-slate-50 group-hover:bg-emerald-50 transition-colors duration-300">
+                    <Icon className="w-6 h-6 text-slate-600 group-hover:text-emerald-600 transition-colors" />
+                  </div>
 
-                    <div className="relative bg-white rounded-xl p-5 sm:p-6 md:p-7 h-full">
-                      <div className="mb-4 sm:mb-5 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform duration-300">
-                        <Icon className="w-6 h-6 sm:w-7 sm:h-7 text-emerald-600" />
-                      </div>
+                  <h3 className="text-xl font-bold text-slate-800 mb-3 group-hover:text-emerald-700 transition-colors">
+                    {t(`${key}.title`)}
+                  </h3>
 
-                      <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-800 mb-2 sm:mb-3 group-hover:text-emerald-700 transition-colors">
-                        {t(`${key}.title`)}
-                      </h3>
+                  <p className="text-slate-500 text-[0.95rem] leading-relaxed mb-8 line-clamp-2">
+                    {t(`${key}.desc`)}
+                  </p>
 
-                      <p className="text-gray-600 text-sm sm:text-base leading-relaxed mb-4 sm:mb-5">
-                        {t(`${key}.desc`)}
-                      </p>
-
-                      <div className="flex items-center justify-between">
-                        <span className="text-emerald-600 font-medium text-sm sm:text-base flex items-center gap-1 sm:gap-2 group-hover:gap-3 transition-all">
-                          {t('resources.readMore')}
-                          <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
-                        </span>
-                      </div>
-                    </div>
+                  <div className="flex items-center gap-2 text-emerald-600 font-semibold text-sm">
+                    <span className="relative">
+                      {t('resources.readMore')}
+                      <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-emerald-200 transition-all group-hover:w-full" />
+                    </span>
+                    <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
                   </div>
                 </motion.button>
               );
@@ -653,103 +123,76 @@ export default function Resources() {
       </section>
 
       {/* MODAL */}
-      {modalOpen && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
-          onClick={closeModal}
-        >
-          <motion.div
-            initial={{ opacity: 0, scale: 0.92, y: 30 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.92, y: 30 }}
-            transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-            className="relative max-w-lg sm:max-w-xl md:max-w-2xl lg:max-w-3xl w-full bg-white rounded-xl shadow-2xl overflow-hidden"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
+      <AnimatePresence>
+        {modalOpen && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
               onClick={closeModal}
-              className="absolute top-3 sm:top-4 right-3 sm:right-4 z-10 p-2.5 sm:p-3 rounded-full bg-white/90 hover:bg-gray-100 text-gray-700 transition shadow-sm"
+              className="absolute inset-0 bg-slate-900/40 backdrop-blur-md"
+            />
+            
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              className="relative max-w-xl lg:max-w-2xl w-full bg-white rounded-[0.5rem] shadow-2xl overflow-hidden"
+              onClick={(e) => e.stopPropagation()}
             >
-              <X className="w-5 h-5 sm:w-6 sm:h-6" />
-            </button>
+              <button
+                onClick={closeModal}
+                className="absolute top-6 right-6 z-10 p-2 rounded-full bg-slate-50 hover:bg-slate-100 text-slate-500 transition-all"
+              >
+                <X className="w-5 h-5" />
+              </button>
 
-            <div className="p-5 sm:p-6 md:p-8 lg:p-10">
-              <div className="flex items-center gap-3 sm:gap-4 mb-5 sm:mb-6 md:mb-7">
-                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center shadow-sm">
-                  <modalOpen.Icon className="w-6 h-6 sm:w-7 sm:h-7 text-emerald-600" />
+              <div className="p-4 sm:p-8">
+                <div className="flex items-center gap-5 mb-10">
+                  <div className="w-14 h-14 rounded-xl bg-emerald-50 flex items-center justify-center">
+                    <modalOpen.Icon className="w-7 h-7 text-emerald-600" />
+                  </div>
+                  <h2 className="text-2xl sm:text-3xl font-bold text-slate-800 tracking-tight">
+                    {t(`resources.${modalOpen.key}.title`)}
+                  </h2>
                 </div>
-                <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800">
-                  {t(`resources.${modalOpen.key}.title`)}
-                </h2>
-              </div>
 
-              <div className="space-y-4 sm:space-y-5 md:space-y-6 max-h-[60vh] overflow-y-auto pr-2">
-                {modalOpen.details.map((item, i) => {
-                  if (item.type === 'step')
-                    return (
-                      <div key={i} className="flex items-start gap-3 sm:gap-4">
-                        <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-600 mt-0.5 flex-shrink-0" />
-                        <p className="text-gray-700 text-sm sm:text-base">{item.text}</p>
+                <div className="space-y-4 max-h-[50vh] overflow-y-auto pr-4 custom-scrollbar">
+                  {modalOpen.details.map((item, i) => (
+                    <div key={i} className={`p-3 rounded-xl transition-all ${
+                      item.type === 'stat' ? 'bg-emerald-50/80 border border-emerald-100' : 
+                      item.type === 'promo' ? 'bg-blue-50/80 border border-blue-100' :
+                      'bg-slate-50 border border-slate-100'
+                    }`}>
+                      <div className="flex gap-4">
+                        {item.type === 'step' && <CheckCircle className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" />}
+                        {item.type === 'rule' && <div className="w-2 h-2 rounded-full bg-rose-400 shrink-0 mt-2" />}
+                        <p className={`text-[0.95rem] ${
+                          item.type === 'tip' ? 'italic text-slate-500' : 
+                          item.type === 'stat' || item.type === 'promo' ? 'font-semibold text-slate-800' : 
+                          'text-slate-700'
+                        }`}>
+                          {item.text}
+                        </p>
                       </div>
-                    );
-                  if (item.type === 'stat')
-                    return (
-                      <div
-                        key={i}
-                        className="bg-emerald-50 text-emerald-800 px-4 py-3 sm:py-4 rounded-lg font-medium text-sm sm:text-base"
-                      >
-                        {item.text}
-                      </div>
-                    );
-                  if (item.type === 'tip')
-                    return (
-                      <div key={i} className="flex items-start gap-3 sm:gap-4 text-sm sm:text-base">
-                        <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-amber-100 flex items-center justify-center flex-shrink-0 mt-0.5">
-                          <span className="text-amber-600 text-xs sm:text-sm font-bold">i</span>
-                        </div>
-                        <p className="text-gray-600 italic">{item.text}</p>
-                      </div>
-                    );
-                  if (item.type === 'rule')
-                    return (
-                      <div key={i} className="flex items-center gap-2 sm:gap-3 text-sm sm:text-base">
-                        <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-red-500 flex-shrink-0" />
-                        <p className="text-gray-700">{item.text}</p>
-                      </div>
-                    );
-                  if (item.type === 'promo')
-                    return (
-                      <div
-                        key={i}
-                        className="bg-gradient-to-r from-emerald-50 to-teal-50 text-emerald-800 px-4 py-3 sm:py-4 rounded-lg font-medium flex items-center gap-2 sm:gap-3 text-sm sm:text-base"
-                      >
-                        <Gift className="w-4 h-4 sm:w-5 sm:h-5" />
-                        {item.text}
-                      </div>
-                    );
-                  if (item.type === 'feature')
-                    return (
-                      <div key={i} className="flex items-center gap-2 sm:gap-3 text-sm sm:text-base">
-                        <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-teal-600 flex-shrink-0" />
-                        <p className="text-gray-700">{item.text}</p>
-                      </div>
-                    );
-                  return null;
-                })}
-              </div>
+                    </div>
+                  ))}
+                </div>
 
-              <div className="mt-6 sm:mt-8 md:mt-10 flex justify-end">
-                <button
-                  onClick={closeModal}
-                  className="px-5 sm:px-6 md:px-7 py-2.5 sm:py-3 bg-emerald-600 text-white font-medium rounded-full hover:bg-emerald-700 transition shadow-md hover:shadow-lg text-sm sm:text-base"
-                >
-                  {t('resources.gotIt')}
-                </button>
+                <div className="mt-10 flex justify-end">
+                  <button
+                    onClick={closeModal}
+                    className="w-auto px-10 py-2 bg-slate-900 text-white font-bold rounded-full hover:bg-emerald-600 transition-all duration-300 shadow-lg active:scale-95"
+                  >
+                    {t('resources.gotIt')}
+                  </button>
+                </div>
               </div>
-            </div>
-          </motion.div>
-        </div>
-      )}
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </>
   );
 }

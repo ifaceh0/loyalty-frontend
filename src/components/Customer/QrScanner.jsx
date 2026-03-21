@@ -1463,6 +1463,7 @@ import {
 import { useTranslation } from "react-i18next";
 import { API_BASE_URL } from '../../apiConfig';
 import { getCurrencySymbol } from "../../utils/currency";
+import { fetchWithAuth } from "../../auth/fetchWithAuth";
 
 const PRIMARY_COLOR = "blue-600";
 const ACCENT_COLOR = "cyan-500";
@@ -1471,7 +1472,7 @@ const ERROR_COLOR = "red-600";
 const INFO_COLOR = "blue-500";
 
 const QrScanner = ({ onClose }) => {
-  const { t } = useTranslation(); // ← ADDED
+  const { t } = useTranslation();
 
   const videoRef = useRef(null);
   const codeReader = useRef(null);
@@ -1578,7 +1579,8 @@ const QrScanner = ({ onClose }) => {
     setError(null);
 
     try {
-      const res = await fetch(`${API_BASE_URL}/api/qrcode/decode`, {
+      const res = await fetchWithAuth(`${API_BASE_URL}/api/qrcode/decode`, {
+        credentials: "include",
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(parsed),
@@ -1614,7 +1616,9 @@ const QrScanner = ({ onClose }) => {
     try {
       const url = `${API_BASE_URL}/api/qrcode/check-eligible?userId=${userId}&shopId=${shopId}`;
       console.log("Eligibility URL:", url);
-      const res = await fetch(url);
+      const res = await fetchWithAuth(url, {
+        credentials: "include",
+      });
 
       if (!res.ok) {
         const errText = await res.text();
@@ -1655,7 +1659,8 @@ const QrScanner = ({ onClose }) => {
     setIsSubmitting(true);
 
     try {
-      const res = await fetch(`${API_BASE_URL}/api/qrcode/add-points`, {
+      const res = await fetchWithAuth(`${API_BASE_URL}/api/qrcode/add-points`, {
+        credentials: "include",
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -1698,7 +1703,8 @@ const QrScanner = ({ onClose }) => {
     setIsConfirming(true);
 
     try {
-      const res = await fetch(`${API_BASE_URL}/api/qrcode/process-purchase`, {
+      const res = await fetchWithAuth(`${API_BASE_URL}/api/qrcode/process-purchase`, {
+        credentials: "include",
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -2045,7 +2051,7 @@ const QrScanner = ({ onClose }) => {
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-gray-900/70 z-50">
       <div className={`relative w-full px-6 ${scannedData ? 'max-w-2xl' : 'max-w-lg'}`}>
-        {!isPopupOpen && (
+        {/* {!isPopupOpen && (
           <div className={`bg-white shadow-2xl w-full rounded-xl max-h-[90vh] flex flex-col z-10 border-t-${PRIMARY_COLOR} overflow-hidden transition-all duration-300`}>
             <nav className={`bg-${PRIMARY_COLOR} text-white rounded-t-xl px-6 py-4 flex justify-between items-center sticky top-0 z-20`}>
               <h2 className="text-2xl font-bold">{t("qrScanner.title")}</h2>
@@ -2081,16 +2087,6 @@ const QrScanner = ({ onClose }) => {
                     {t("qrScanner.scanningInstruction")}
                   </p>
 
-                  {/* <p className="text-sm text-gray-500 text-center">{guidance}</p>
-                  {showSwitchButton && (
-                   <button
-                     onClick={switchCamera}
-                     className="mt-5 px-6 py-3 bg-gray-800 hover:bg-gray-700 text-white rounded-full font-medium flex items-center gap-3 shadow-lg transition-all"
-                   >
-                     <FontAwesomeIcon icon={faCameraRotate} className="text-lg" />
-                     Switch Camera
-                   </button>
-                  )} */}
                   <p className="text-sm text-gray-500 text-center">{guidance}</p>
                   {videoDevices.length > 1 && (
                     <button
@@ -2199,6 +2195,177 @@ const QrScanner = ({ onClose }) => {
                     className={`flex items-center gap-2 px-6 py-2 bg-gray-100 text-gray-700 rounded-full border border-gray-300 hover:bg-gray-200 shadow-sm transition duration-200`}
                   >
                     <FontAwesomeIcon icon={faArrowRotateLeft} /> {t("qrScanner.buttons.scanNext")}
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+        )} */}
+
+        {!isPopupOpen && (
+          <div className="bg-white shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] w-full rounded-[0.5rem] max-h-[90vh] flex flex-col z-10 overflow-hidden transition-all duration-500 border border-slate-100">
+            
+            {/* Clean Header */}
+            <nav className="bg-white/80 backdrop-blur-md px-6 py-3 flex justify-between items-center sticky top-0 z-20 border-b border-slate-50">
+              <div className="flex items-center gap-3">
+                <div className={`w-2 h-8 rounded-full bg-${PRIMARY_COLOR}`} />
+                <h2 className="text-2xl font-bold text-slate-800 tracking-tight">{t("qrScanner.title")}</h2>
+              </div>
+              <button
+                onClick={handleClose}
+                className="group bg-slate-50 text-slate-400 p-2.5 rounded-2xl hover:bg-rose-50 hover:text-rose-500 transition-all duration-300"
+                aria-label={t("qrScanner.buttons.close")}
+              >
+                <FontAwesomeIcon icon={faXmark} className="w-5 h-5 transition-transform group-hover:rotate-90" />
+              </button>
+            </nav>
+
+            <div className="p-8 overflow-y-auto flex-1 flex flex-col items-center">
+              {!scannedData ? (
+                <div className="w-full max-w-sm flex flex-col items-center">
+                  {/* Immersive Scanner Frame */}
+                  <div className="relative w-full aspect-square rounded-[2rem] overflow-hidden mb-8 shadow-2xl ring-8 ring-slate-50">
+                    <video
+                      ref={videoRef}
+                      className="w-full h-full object-cover scale-110"
+                      autoPlay
+                      playsInline
+                    />
+                    {/* Soft Focus Overlay */}
+                    <div className="absolute inset-0 bg-slate-900/20 backdrop-grayscale-[0.5]" />
+                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                      <div className="w-64 h-64 border-2 border-white/50 rounded-[0.5rem] relative">
+                        {/* Glowing Corner Accents */}
+                        <div className="absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 border-yellow-400 rounded-tl-lg shadow-[0_0_15px_rgba(250,204,21,0.5)]" />
+                        <div className="absolute top-0 right-0 w-8 h-8 border-t-4 border-r-4 border-yellow-400 rounded-tr-lg shadow-[0_0_15px_rgba(250,204,21,0.5)]" />
+                        <div className="absolute bottom-0 left-0 w-8 h-8 border-b-4 border-l-4 border-yellow-400 rounded-bl-lg shadow-[0_0_15px_rgba(250,204,21,0.5)]" />
+                        <div className="absolute bottom-0 right-0 w-8 h-8 border-b-4 border-r-4 border-yellow-400 rounded-br-lg shadow-[0_0_15px_rgba(250,204,21,0.5)]" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="text-center space-y-3 px-4">
+                    <p className="text-lg text-slate-700 font-semibold flex items-center justify-center gap-2">
+                      <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
+                      {t("qrScanner.scanningInstruction")}
+                    </p>
+                    <p className="text-sm text-slate-400 font-medium italic">{guidance}</p>
+                  </div>
+
+                  {videoDevices.length > 1 && (
+                    <button
+                      onClick={switchCamera}
+                      className="mt-8 px-8 py-3 bg-slate-900 text-white rounded-full font-bold flex items-center gap-3 shadow-xl shadow-slate-200 transition-all hover:bg-slate-800 active:scale-95 disabled:opacity-50"
+                      disabled={isCheckingEligibility || isSubmitting || isConfirming}
+                    >
+                      <FontAwesomeIcon icon={faCameraRotate} />
+                      <span>Switch Camera</span>
+                    </button>
+                  )}
+                </div>
+              ) : (
+                <div className="w-full max-w-xl space-y-6">
+                  {/* Detailed Info Card */}
+                  <div className="bg-white rounded-[0.5rem] p-6 ring-1 ring-slate-100 shadow-sm border-b-4 border-slate-50">
+                    <div className="flex items-center gap-4 mb-4">
+                      <div className={`w-12 h-12 rounded-xl bg-${PRIMARY_COLOR}/10 flex items-center justify-center`}>
+                        <FontAwesomeIcon icon={faIdCard} className={`text-${PRIMARY_COLOR} text-xl`} />
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-bold text-slate-800 tracking-tight">{t("qrScanner.transaction.details")}</h3>
+                        <p className="text-sm text-slate-400">{t("qrScanner.customer.info")}</p>
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                      {/* Left Side: Identity */}
+                      <div className="space-y-4">
+                        <div className="bg-slate-100 p-3 rounded-xl border border-white">
+                          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-1">{t("qrScanner.customer.name")}</span>
+                          <p className="text-slate-800 font-bold">{scannedData.userName || t("qrScanner.na")}</p>
+                        </div>
+                        <div className="grid grid-cols-2 gap-2">
+                          <div className="text-sm">
+                            <span className="text-slate-400 block text-[10px] uppercase font-bold">{t("qrScanner.customer.shop")}</span>
+                            <span className={`font-bold text-${SUCCESS_COLOR}`}>{scannedData.shopName}</span>
+                          </div>
+                          <div className="text-sm">
+                            <span className="text-slate-400 block text-[10px] uppercase font-bold">{t("qrScanner.customer.phone")}</span>
+                            <span className="text-slate-600 font-semibold">{scannedData.phone || t("qrScanner.na")}</span>
+                          </div>
+                          <div className="text-sm">
+                            <span className="text-slate-400 block text-[10px] uppercase font-bold">{t("qrScanner.customer.email")}</span>
+                            <span className="text-slate-600 font-semibold">{scannedData.email || t("qrScanner.na")}</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Right Side: Points - High Focus */}
+                      <div className={`p-6 rounded-xl border-2 transition-all duration-500 flex flex-col items-center justify-center text-center
+                        ${successAnimation ? `bg-emerald-50 border-emerald-500 scale-105 shadow-lg` : `bg-blue-50/50 border-${ACCENT_COLOR}/20`}
+                      `}>
+                        <FontAwesomeIcon icon={faCoins} className={`text-${ACCENT_COLOR} text-2xl mb-3`} />
+                        <span className="text-xs font-bold text-slate-400 uppercase tracking-tighter mb-1">{t("qrScanner.points.available")}</span>
+                        <span className={`text-4xl font-black text-${PRIMARY_COLOR}`}>
+                          {scannedData.verifiedBalance ?? scannedData.availableBalance ?? 0}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Form Section */}
+                    <form onSubmit={handleSubmit} className="mt-10 pt-8 border-t border-slate-100 space-y-6">
+                      <div className="space-y-2">
+                        <label className="text-sm font-bold text-slate-700 ml-2">{t("qrScanner.purchase.enterAmount", { currency: currencySymbol })}</label>
+                        <div className="relative group">
+                          <span className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 font-bold text-xl transition-colors group-focus-within:text-blue-500">{currencySymbol}</span>
+                          <input
+                            type="number"
+                            min="1"
+                            step="1"
+                            placeholder="0"
+                            value={purchaseAmount}
+                            onChange={(e) => setPurchaseAmount(e.target.value)}
+                            required
+                            className="w-full pl-12 pr-6 py-2 bg-slate-100 shadow-inner border-2 border-transparent rounded-md text-2xl font-black text-slate-800 placeholder-slate-300 focus:bg-white focus:border-blue-400 focus:ring-4 focus:ring-blue-500/5 outline-none transition-all duration-300"
+                          />
+                        </div>
+                      </div>
+
+                      {!associated && (
+                        <div className="flex items-center gap-3 p-3 bg-amber-50 rounded-xl border border-amber-100/50">
+                          <div className="w-8 h-8 rounded-full bg-amber-200/50 flex items-center justify-center">
+                            <FontAwesomeIcon icon={faUser} className="text-amber-600 text-xs" />
+                          </div>
+                          <p className="text-xs text-amber-800 font-medium">
+                            {t("qrScanner.newCustomerNote", { shopName: scannedData.shopName })}
+                          </p>
+                        </div>
+                      )}
+
+                      <button
+                        type="submit"
+                        disabled={isSubmitting || !purchaseAmount || parseFloat(purchaseAmount) <= 0}
+                        className={`w-full py-2 bg-slate-900 text-white rounded-full text-lg font-bold shadow-xl transition-all duration-300 active:scale-95 disabled:opacity-30 disabled:grayscale
+                          ${!isSubmitting && 'hover:bg-blue-600 hover:shadow-blue-200'}
+                        `}
+                      >
+                        {isSubmitting ? (
+                          <div className="flex items-center justify-center gap-3">
+                            <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                            <span>{t("qrScanner.buttons.processing")}</span>
+                          </div>
+                        ) : t("qrScanner.buttons.submitPreview")}
+                      </button>
+                    </form>
+                  </div>
+
+                  {/* Secondary Actions */}
+                  <button
+                    onClick={handleScanAgain}
+                    className="w-full flex items-center justify-center gap-2 py-2 border border-slate-200 shadow-sm rounded-full text-slate-500 font-bold hover:text-slate-600 transition-colors group"
+                  >
+                    <FontAwesomeIcon icon={faArrowRotateLeft} className="transition-transform group-hover:-rotate-45" /> 
+                    <span>{t("qrScanner.buttons.scanNext")}</span>
                   </button>
                 </div>
               )}

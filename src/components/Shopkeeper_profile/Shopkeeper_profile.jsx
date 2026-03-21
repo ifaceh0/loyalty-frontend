@@ -528,6 +528,7 @@ import {
 } from "react-icons/fi";
 import { useTranslation } from "react-i18next";
 import { API_BASE_URL } from '../../apiConfig';
+import { fetchWithAuth } from "../../auth/fetchWithAuth";
 
 const inputStyle = (isEditing) => 
   `w-full px-3 sm:px-4 py-2.5 sm:py-3 border rounded-lg outline-none transition duration-200 shadow-sm text-gray-800 text-sm sm:text-base ${
@@ -649,7 +650,9 @@ const ShopkeeperProfile = () => {
 
     setLoading(true);
     try {
-      const res = await fetch(`${API_BASE_URL}/api/shop/get-profile?shopId=${storedId}`);
+      const res = await fetchWithAuth(`${API_BASE_URL}/api/shop/get-profile?shopId=${storedId}`, {
+        credentials: "include"
+      });
       if (!res.ok) throw new Error("Failed to fetch profile");
       
       const data = await res.json();
@@ -691,7 +694,8 @@ const ShopkeeperProfile = () => {
     formDataUpload.append("file", selectedFile);
 
     try {
-      const res = await fetch(`${API_BASE_URL}/api/shop/upload-image`, {
+      const res = await fetchWithAuth(`${API_BASE_URL}/api/shop/upload-image`, {
+        credentials: "include",
         method: "POST",
         body: formDataUpload,
       });
@@ -718,7 +722,8 @@ const ShopkeeperProfile = () => {
 
     setIsRemoving(true);
     try {
-      const res = await fetch(`${API_BASE_URL}/api/shop/remove-image?shopId=${storedId}`, {
+      const res = await fetchWithAuth(`${API_BASE_URL}/api/shop/remove-image?shopId=${storedId}`, {
+        credentials: "include",
         method: "DELETE",
       });
       const data = await res.json();
@@ -757,7 +762,8 @@ const ShopkeeperProfile = () => {
     const { logoImage, ...submitData } = formData;
     
     try {
-      const res = await fetch(`${API_BASE_URL}/api/shop/update-profile`, {
+      const res = await fetchWithAuth(`${API_BASE_URL}/api/shop/update-profile`, {
+        credentials: "include",
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(submitData),

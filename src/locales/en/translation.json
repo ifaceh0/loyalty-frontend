@@ -95,6 +95,11 @@
     },
     "faq": {
       "title": "Common Questions",
+      "common":"Common",
+      "question":"Questions",
+      "curious":"Still curious?",
+      "help":"We're here to help you make the most of your rewards.",
+      "support":"Contact Support",
       "items": [
         { "q": "How do I earn points?", "a": "Shop at any partner store and scan your QR code at checkout. Points are added instantly." },
         { "q": "Where can I redeem rewards?", "a": "Redeem in your dashboard, at checkout in stores, or via the mobile app." },
@@ -334,10 +339,13 @@
     "quickLinks": [
       { "label": "Home", "to": "/" },
       { "label": "Join Now", "to": "/signup-user" },
-      { "label": "How It Works", "to": "#" },
-      { "label": "FAQ", "to": "/onboarding-guide" },
+      { "label": "How It Works", "to": "/onboarding-guide" },
+      { "label": "faq", "to": "/faq" }
+    ],
+    "quickLink": [
       { "label": "Contact", "to": "/contact" }
     ],
+    "support":"Support",
     "stayConnectedTitle": "Stay Connected",
     "stayConnectedDesc": "Follow us for exclusive deals and updates",
     "newsletterTitle": "Newsletter",
@@ -355,6 +363,7 @@
     "title": "Sign In",
     "subtitle": "Enter your credentials to access the platform.",
     "hero": {
+      "tagline":"New Generation Platform",
       "title": "Fuel Loyalty. Drive Growth.",
       "subtitle": "The simplest way for small businesses to launch, manage, and scale their customer reward programs."
     },
@@ -771,6 +780,9 @@
   "customerLookup": {
     "shopName": "Shop Name",
     "defaultShopName": "Shop Name",
+    "statusActive":"Active Session",
+    "currentlyManaging":"Currently Managing",
+    "recommended":"Recommended",
     "cards": {
       "quickScan": { "title": "Quick Scan", "desc": "Use camera to identify instantly.", "button": "Open Scanner" },
       "phone": { "title": "Phone Number", "placeholder": "Enter 10-digit mobile number", "error": "Must be exactly 10 digits", "note": "Must be a valid 10 digit number.", "button": "Search" },
@@ -1154,6 +1166,9 @@
     "title": "QR Code for",
     "downloadButton": "Download Loyalty QR Code",
     "accountDetails": "Account Details",
+    "use":"How to use",
+    "done":"Done",
+    "checkout":"Present this QR code to the cashier during checkout. They will scan it to instantly identify your account and apply or award your loyalty points to this transaction.",
     "showTip": "Show Tip",
     "hideTip": "Hide Tip",
     "shopId": "Shop ID",
@@ -1221,26 +1236,46 @@
     "loading": "Fetching your transaction data...",
     "selectMerchant": "Select Merchant",
     "exportButton": "Export to Excel",
-    "stats": {
-      "availablePoints": "Points",
-      "amountSpent": "Amount Spent",
-      "redeemAmount": "Redeem Amount"
+
+    "filters": {
+      "title": "Refine Results",
+      "from": "From",
+      "to": "To",
+      "apply": "Apply Changes",
+      "merchant": "Merchant"
     },
+
+    "stats": {
+      "availablePoints": "Points Balance",
+      "amountSpent": "Total Spent",
+      "redeemAmount": "Total Redeemed"
+    },
+
     "table": {
       "title": "Transactions for",
       "date": "Date",
       "amount": "Amount",
+      "activity": "Activity",
+      "benefit": "Benefit",
       "points": "Points",
       "pointsEarned": "Points Earned",
       "redeemPoints": "Redeem Points",
-      "redeemAmount": "Redeem Amount"
+      "redeemAmount": "Redeem Amount",
+      "saved": "Saved"
     },
+
+    "pagination": {
+      "page": "Page",
+      "of": "of"
+    },
+
     "noTransactions": {
-      "title": "No transactions found for this merchant.",
-      "subtitle": "Make a purchase to start earning points!"
+      "title": "No transactions found",
+      "subtitle": "Try adjusting your filters or date range"
     },
+
     "errors": {
-      "title": "Error Loading Data",
+      "title": "Something went wrong",
       "fetchFailed": "Failed to fetch transactions",
       "loadFailed": "Failed to load transaction data."
     }
@@ -1258,7 +1293,7 @@
     "subtitle": "List of shops where your access has been deactivated",
     "loading": "Loading your inactive shops...",
     "status": {
-      "inactive": "Inactive"
+      "inactive": "Inactive Archive"
     },
     "labels": {
       "joined": "Joined",

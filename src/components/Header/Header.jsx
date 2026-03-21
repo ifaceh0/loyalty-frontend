@@ -1091,7 +1091,7 @@ export default function Header() {
   );
 
   const LoggedInMobileDrawer = () => (
-    <div className="flex flex-col gap-3 p-6">
+    <div className="flex flex-col gap-3 p-4">
       <div className="flex items-center gap-4 p-2 rounded">
         <FaUser className="w-7 h-7 text-gray-600" />
         <div>
@@ -1105,7 +1105,7 @@ export default function Header() {
           setSidebarOpen(true);
           setMobileMenuOpen(false);
         }}
-        className="text-left gap-3 px-5 py-3 text-[17px] text-blue-600 hover:bg-blue-50 rounded-full font-medium transition flex items-center"
+        className="text-left gap-3 px-5 py-2 text-[17px] text-blue-600 hover:bg-blue-50 rounded font-medium transition flex items-center"
       >
         <LayoutDashboard className="w-5 h-5" />
         {t('header.openDashboard')}
@@ -1113,7 +1113,7 @@ export default function Header() {
 
       <button
         onClick={handleLogout}
-        className="flex items-center gap-3 px-5 py-3 text-[17px] text-red-600 hover:bg-red-50 rounded-full font-medium transition"
+        className="flex items-center gap-3 px-5 py-2 text-[17px] text-red-600 hover:bg-red-50 rounded font-medium transition"
       >
         <FaSignOutAlt className="w-5 h-5" />
         {t('header.logout')}
@@ -1128,13 +1128,13 @@ export default function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-white">
-      <nav className="px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+    <header className="sticky top-0 z-50 bg-white border-b border-slate-200 shadow-sm">
+      <nav className="px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
         <div className="flex items-center">
           {isLoggedIn ? (
             <button
               onClick={() => setSidebarOpen(true)}
-              className="hover:text-white transition p-1.5 -ml-1 text-slate hover:bg-blue-600 rounded-full"
+              className="transition p-2 -ml-1 text-slate hover:bg-slate-200 rounded-full"
             >
               <Menu size={28} strokeWidth={2.2} />
             </button>
@@ -1183,7 +1183,7 @@ export default function Header() {
                   <button className="flex items-center gap-2 bg-slate-900 text-white px-6 py-2 rounded-full text-sm font-semibold hover:bg-emerald-600 transition shadow-lg shadow-slate-200">
                     {t('header.signUp')} <FaChevronDown size={10} />
                   </button>
-                  <div className="absolute right-0 mt-2 w-48 bg-white border border-slate-100 rounded-2xl shadow-xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 translate-y-2 group-hover:translate-y-0">
+                  <div className="absolute right-0 mt-2 w-48 bg-white border border-slate-100 rounded-lg shadow-xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 translate-y-2 group-hover:translate-y-0">
                     <a
                       href="https://subscription-frontend-psi.vercel.app/subscription"
                       target="_blank"
@@ -1210,18 +1210,35 @@ export default function Header() {
               </>
             ) : (
               <div className="relative group">
-                <button className="flex items-center space-x-2 focus:outline-none">
-                  <FaUser className="text-gray-600 w-5 h-5" />
-                  <span className="text-blue-600 font-medium text-base">{userName || 'User'}</span>
+                {/* Trigger Button */}
+                <button className="flex items-center gap-3 px-3 py-1 rounded-full transition-all duration-300 hover:bg-slate-100 focus:outline-none">
+                  <div className="flex items-center justify-center w-8 h-8 rounded-full bg-slate-200 text-slate-500 border border-white shadow-sm">
+                    <FaUser size={12} />
+                  </div>
+                  <span className="text-sm font-bold tracking-tight text-slate-700">
+                    {userName || 'User'}
+                  </span>
+                  <FaChevronDown 
+                    size={10} 
+                    className="text-slate-400 transition-transform duration-300 group-hover:rotate-180" 
+                  />
                 </button>
-                <div className="hidden group-hover:block absolute top-full right-0 bg-white shadow-xl border rounded z-10 mt-1">
-                  <button
-                    onClick={handleLogout}
-                    className="flex items-center p-1.5 px-8 text-base hover:bg-gray-300 text-left text-red-600 rounded transition"
-                  >
-                    <FaSignOutAlt className="mr-3 w-4 h-4" />
-                    {t('header.logout')}
-                  </button>
+
+                {/* Soft Dropdown Menu */}
+                <div className="absolute top-[110%] right-0 w-48 opacity-0 translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition-all duration-300 z-50">
+                  <div className="bg-white/80 backdrop-blur-xl border border-slate-100 rounded-[0.5rem] p-1 shadow-[0_20px_40px_rgba(0,0,0,0.06)] ring-1 ring-stone-900/5">
+                    
+                    {/* Menu Item */}
+                    <button
+                      onClick={handleLogout}
+                      className="group/item flex items-center w-full p-1.5 text-[13px] font-bold text-slate-600 hover:text-red-500 rounded-lg transition-all duration-200 hover:bg-red-50/50"
+                    >
+                      <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-slate-50 text-slate-400 group-hover/item:bg-red-100 group-hover/item:text-red-500 transition-colors mr-3">
+                        <FaSignOutAlt size={12} />
+                      </div>
+                      {t('header.logout')}
+                    </button>               
+                  </div>
                 </div>
               </div>
             )}
@@ -1261,13 +1278,13 @@ export default function Header() {
               initial="hidden"
               animate="visible"
               exit="exit"
-              className="fixed top-0 right-0 h-full w-2/3 max-w-sm bg-white shadow-2xl z-50 lg:hidden overflow-y-auto"
+              className="fixed top-0 right-0 h-full w-1/2 max-w-md bg-white shadow-2xl z-50 lg:hidden overflow-y-auto"
             >
               <div className="flex items-center justify-between p-4">
-                  <LanguageSelector />
                   <button onClick={() => setMobileMenuOpen(false)}>
-                    <X size={22} className="text-gray-700" strokeWidth={2.2} />
+                    <X size={24} className="text-gray-500" strokeWidth={2.2} />
                   </button>
+                  <LanguageSelector />
               </div>
 
               {isLoggedIn ? <LoggedInMobileDrawer /> : <GuestMobileDrawer />}
