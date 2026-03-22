@@ -1327,26 +1327,33 @@ const LoadingState = ({ text }) => (
   </div>
 );
 
-const ErrorState = ({ message }) => (
-  <div className="p-12 text-center">
-    <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-rose-50 text-rose-500 mb-4">
-      !
-    </div>
-    <p className="text-slate-800 font-bold">{t('transactions.errors.title')}</p>
-    <p className="text-slate-500 text-sm mt-1">{message}</p>
-  </div>
-);
+const ErrorState = ({ message }) => {
+  const { t } = useTranslation();
 
-const EmptyState = ({ colSpan }) => (
-  <tr>
-    <td colSpan={colSpan} className="py-20 text-center">
-      <div className="flex flex-col items-center opacity-40">
-        <ShoppingBag className="w-12 h-12 mb-3" />
-        <p className="text-lg font-bold">{t('transactions.noTransactions.title')}</p>
-        <p className="text-sm">{t('transactions.noTransactions.subtitle')}</p>
+  return (
+    <div className="p-12 text-center">
+      <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-rose-50 text-rose-500 mb-4">
+        !
       </div>
-    </td>
-  </tr>
-);
+      <p className="text-slate-800 font-bold">{t('transactions.errors.title')}</p>
+      <p className="text-slate-500 text-sm mt-1">{message}</p>
+    </div>
+  );
+};
 
+const EmptyState = ({ colSpan }) => {
+  const { t } = useTranslation();
+
+  return (
+    <tr>
+      <td colSpan={colSpan} className="py-20 text-center">
+        <div className="flex flex-col items-center opacity-40">
+          <ShoppingBag className="w-12 h-12 mb-3" />
+          <p className="text-lg font-bold">{t('transactions.noTransactions.title')}</p>
+          <p className="text-sm">{t('transactions.noTransactions.subtitle')}</p>
+        </div>
+      </td>
+    </tr>
+  );
+};
 export default UserTransactions;

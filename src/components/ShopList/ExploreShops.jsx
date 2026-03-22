@@ -1088,10 +1088,10 @@ export default function ExploreShops() {
                     transition={{ duration: 0.5 }}
                 >
                     <div className="flex items-center justify-center gap-3 mb-4">
-                        <Loader2 className="w-10 h-10 text-blue-600 animate-spin" />
-                        <span className="text-xl font-bold text-gray-800">{t('explore.loading.title')}</span>
+                        <Loader2 className="w-8 h-8 text-blue-600 animate-spin" />
+                        {/* <span className="text-xl font-bold text-gray-800">{t('explore.loading.title')}</span> */}
                     </div>
-                    <p className="text-gray-500">{t('explore.loading.subtitle')}</p>
+                    {/* <p className="text-gray-500">{t('explore.loading.subtitle')}</p> */}
                 </motion.div>
             </div>
         );

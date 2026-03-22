@@ -555,9 +555,9 @@ export default function UserShopList() {
         >
           <div className="flex items-center justify-center gap-3 mb-4">
             <Loader2 className="w-8 h-8 text-blue-700 animate-spin" />
-            <span className="text-xl font-semibold text-gray-800">{t('userShopList.loading.title')}</span>
+            {/* <span className="text-xl font-semibold text-gray-800">{t('userShopList.loading.title')}</span> */}
           </div>
-          <p className="text-gray-600">{t('userShopList.loading.subtitle')}</p>
+          {/* <p className="text-gray-600">{t('userShopList.loading.subtitle')}</p> */}
         </motion.div>
       </div>
     );
