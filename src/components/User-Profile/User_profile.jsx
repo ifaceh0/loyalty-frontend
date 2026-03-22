@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { FiEdit3, FiSave, FiX, FiUser, FiMail, FiPhone, FiCheckCircle, FiLoader } from "react-icons/fi";
 import { motion, AnimatePresence } from "framer-motion";
+import { Loader2 } from 'lucide-react';
 import { useTranslation } from "react-i18next";
 import { API_BASE_URL } from '../../apiConfig';
 import { fetchWithAuth } from "../../auth/fetchWithAuth";
 
 const ProfileInputField = ({ label, name, value, onChange, disabled, type = 'text', icon: Icon }) => (
   <div className="mb-6 sm:mb-5">
-    <label htmlFor={name} className="block text-base sm:text-sm font-semibold text-gray-700 mb-2.5">
+    <label htmlFor={name} className="block text-base sm:text-sm font-semibold text-slate-700 mb-2.5">
       {label}
     </label>
     <div className="relative">
@@ -22,9 +23,9 @@ const ProfileInputField = ({ label, name, value, onChange, disabled, type = 'tex
         onChange={onChange}
         className={`w-full border ${
           disabled
-            ? 'border-gray-200 bg-gray-50 text-gray-600 cursor-not-allowed'
-            : 'border-gray-300 bg-white text-gray-900 focus:ring-blue-500 focus:border-blue-500 shadow-sm'
-        } rounded-lg py-2.5 px-5 sm:px-4 pl-12 sm:pl-11 text-base sm:text-base transition-all duration-200 ease-in-out placeholder-gray-400 focus:outline-none focus:ring-2`}
+            ? 'border-slate-200 bg-slate-50 text-slate-600 cursor-not-allowed'
+            : 'border-slate-200 bg-white text-slate-900 focus:ring-blue-400 focus:border-blue-500 shadow-sm'
+        } rounded-lg py-2 px-5 sm:px-4 pl-12 sm:pl-11 text-base transition-all duration-200 ease-in-out placeholder-slate-400 focus:outline-none focus:ring-2`}
         placeholder={label}
         disabled={disabled}
         required
@@ -59,7 +60,7 @@ const PhoneInputField = ({ label, name, value, onChange, disabled, icon: Icon = 
 
   return (
     <div className="mb-6 sm:mb-5">
-      <label htmlFor={name} className="block text-base sm:text-sm font-semibold text-gray-700 mb-2.5">
+      <label htmlFor={name} className="block text-base sm:text-sm font-semibold text-slate-700 mb-2.5">
         {label}
       </label>
       <div className="relative">
@@ -78,11 +79,11 @@ const PhoneInputField = ({ label, name, value, onChange, disabled, icon: Icon = 
           inputMode="numeric"
           className={`w-full border ${
             disabled
-              ? 'border-gray-200 bg-gray-50 text-gray-600 cursor-not-allowed'
+              ? 'border-slate-200 bg-slate-50 text-slate-600 cursor-not-allowed'
               : error
-                ? 'border-red-400 bg-white text-gray-900 focus:ring-red-500 focus:border-red-500'
-                : 'border-gray-300 bg-white text-gray-900 focus:ring-blue-500 focus:border-blue-500 shadow-sm'
-          } rounded-lg py-2.5 px-5 sm:px-4 pl-12 sm:pl-11 text-base sm:text-base transition-all duration-200 ease-in-out placeholder-gray-400 focus:outline-none focus:ring-2`}
+                ? 'border-red-400 bg-white text-slate-900 focus:ring-red-500 focus:border-red-500'
+                : 'border-slate-200 bg-white text-slate-900 focus:ring-blue-400 focus:border-blue-500 shadow-sm'
+          } rounded-lg py-2 px-5 sm:px-4 pl-12 sm:pl-11 text-base transition-all duration-200 ease-in-out placeholder-slate-400 focus:outline-none focus:ring-2`}
         />
       </div>
       {error && <p className="mt-2 text-sm text-red-600">{error}</p>}
@@ -241,11 +242,11 @@ const UserProfile = () => {
         className="flex flex-col items-center justify-center min-h-[60vh]"
       >
         <div className="flex flex-col items-center gap-4">
-          <FiLoader className="w-10 h-10 sm:w-12 sm:h-12 text-blue-600 animate-spin" />
-          <span className="text-lg sm:text-lg font-bold text-blue-600">{t('profile.loading.title')}</span>
-          <p className="text-base sm:text-base text-blue-600 font-medium text-center max-w-xs">
+          <Loader2 className="w-8 h-8 text-blue-600 animate-spin" />
+          {/* <span className="text-lg sm:text-lg font-bold text-blue-600">{t('profile.loading.title')}</span> */}
+          {/* <p className="text-base sm:text-base text-blue-600 font-medium text-center max-w-xs">
             {t('profile.loading.message')}
-          </p>
+          </p> */}
         </div>
       </motion.div>
     );
@@ -257,10 +258,10 @@ const UserProfile = () => {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, type: "spring", stiffness: 100 }}
-        className="w-full max-w-xl rounded-xl border-2 border-gray-200 overflow-hidden"
+        className="w-full max-w-xl rounded-xl border-2 border-slate-200 shadow-sm overflow-hidden"
       >
         {/* Header */}
-        <header className="bg-gradient-to-r from-blue-50 to-blue-100 border-b border-gray-200 px-6 py-6 sm:px-8 sm:py-8">
+        <header className="bg-gradient-to-r from-blue-50 to-blue-100 border-b border-slate-200 px-6 py-6 sm:px-8 sm:py-8">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-blue-800 tracking-tight text-center sm:text-left">
             {t('profile.header.welcome', {})} {userData.firstName || t('profile.header.user')}!
           </h2>
