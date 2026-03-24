@@ -42,7 +42,6 @@ const resources = [
   { key: 'dashboardFeatures', Icon: LayoutDashboard, color: 'rose' },
   { key: 'promotions', Icon: Gift, color: 'green' },
 ];
-
 export default function Resources() {
   const { t } = useTranslation();
   const [modalOpen, setModalOpen] = useState(null);
@@ -51,7 +50,7 @@ export default function Resources() {
   const closeModal = () => setModalOpen(null);
 
   const getDetails = (key) => {
-    const data = t(`resources.${key}`, { returnObjects: true });
+    const data = t(`resources.${key}`, { returnObjects: true }) || {};
     const result = [];
     ['steps', 'stats', 'tips', 'rules', 'features', 'promos'].forEach((type) => {
       const singularType = type.slice(0, -1);
@@ -62,18 +61,19 @@ export default function Resources() {
 
   return (
     <>
-      <section className="py-24 px-6 bg-slate-50/50">
-        <div className="max-w-7xl mx-auto">
+      <section className="py-16 md:py-24 px-4 md:px-6">
+        {/* max-w-5xl keeps the resource cards looking elegant and professional on laptops */}
+        <div className="max-w-5xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mb-20"
+            className="text-center mb-12 md:mb-20"
           >
-            <h1 className="text-4xl md:text-5xl font-semibold text-slate-900 mb-6 tracking-tight">
+            <h2 className="text-2xl md:text-4xl font-bold text-slate-900 mb-4 tracking-tight">
               {t('resources.title')}
-            </h1>
-            <p className="text-lg text-slate-500 max-w-2xl mx-auto leading-relaxed">
+            </h2>
+            <p className="text-sm md:text-lg text-slate-500 max-w-xl mx-auto leading-relaxed font-light">
               {t('resources.subtitle')}
             </p>
           </motion.div>
@@ -83,7 +83,7 @@ export default function Resources() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.1 }}
-            className="grid gap-4 md:gap-6 grid-cols-2 lg:grid-cols-3"
+            className="grid gap-4 md:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
           >
             {resources.map((resource, idx) => {
               const Icon = resource.Icon;
@@ -93,25 +93,26 @@ export default function Resources() {
                 <motion.button
                   key={idx}
                   variants={item}
+                  whileHover={{ y: -5 }}
                   onClick={() => openModal({ ...resource, details: getDetails(resource.key) })}
-                  className="group relative text-left bg-white p-6 rounded-[0.5rem] ring-1 ring-slate-200/60 shadow-sm hover:shadow-2xl hover:shadow-emerald-500/5 transition-all duration-500"
+                  className="group relative flex flex-col text-left p-6 md:p-8 bg-white/70 backdrop-blur-sm rounded-2xl md:rounded-[2rem] border border-blue-50 shadow-sm hover:shadow-xl hover:shadow-blue-500/5 transition-all duration-500"
                 >
-                  <div className="mb-8 p-4 w-fit rounded-xl bg-slate-50 group-hover:bg-emerald-50 transition-colors duration-300">
-                    <Icon className="w-6 h-6 text-slate-600 group-hover:text-emerald-600 transition-colors" />
+                  <div className="mb-6 p-4 w-fit rounded-xl bg-blue-50 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300">
+                    <Icon className="w-5 h-5 md:w-6 md:h-6" />
                   </div>
 
-                  <h3 className="text-xl font-bold text-slate-800 mb-3 group-hover:text-emerald-700 transition-colors">
+                  <h3 className="text-lg md:text-xl font-bold text-slate-800 mb-2 group-hover:text-blue-600 transition-colors">
                     {t(`${key}.title`)}
                   </h3>
 
-                  <p className="text-slate-500 text-[0.95rem] leading-relaxed mb-8 line-clamp-2">
+                  <p className="text-slate-500 text-[13px] md:text-sm leading-relaxed mb-6 flex-grow font-medium line-clamp-2">
                     {t(`${key}.desc`)}
                   </p>
 
-                  <div className="flex items-center gap-2 text-emerald-600 font-semibold text-sm">
-                    <span className="relative">
+                  <div className="flex items-center gap-2 text-blue-600 font-bold text-[12px] md:text-sm">
+                    <span className="relative overflow-hidden">
                       {t('resources.readMore')}
-                      <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-emerald-200 transition-all group-hover:w-full" />
+                      <span className="absolute bottom-0 left-0 w-full h-0.5 bg-blue-200 transform translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-300" />
                     </span>
                     <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
                   </div>
@@ -122,56 +123,56 @@ export default function Resources() {
         </div>
       </section>
 
-      {/* MODAL */}
+      {/* REFINED MODAL: Mobile Bottom Sheet / Laptop Center Modal */}
       <AnimatePresence>
         {modalOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4" onClick={closeModal}>
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              onClick={closeModal}
-              className="absolute inset-0 bg-slate-900/40 backdrop-blur-md"
+              className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"
             />
             
             <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="relative max-w-xl lg:max-w-2xl w-full bg-white rounded-[0.5rem] shadow-2xl overflow-hidden"
+              initial={{ opacity: 0, y: 100 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 100 }}
+              transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+              className="relative max-w-xl w-full bg-white rounded-t-[2rem] sm:rounded-[2rem] shadow-2xl overflow-hidden"
               onClick={(e) => e.stopPropagation()}
             >
+              {/* Refined Close Button */}
               <button
                 onClick={closeModal}
-                className="absolute top-6 right-6 z-10 p-2 rounded-full bg-slate-50 hover:bg-slate-100 text-slate-500 transition-all"
+                className="absolute top-5 right-5 z-20 p-2 rounded-full bg-slate-50 hover:bg-slate-100 text-slate-400 hover:text-slate-900 transition-all"
               >
                 <X className="w-5 h-5" />
               </button>
 
-              <div className="p-4 sm:p-8">
-                <div className="flex items-center gap-5 mb-10">
-                  <div className="w-14 h-14 rounded-xl bg-emerald-50 flex items-center justify-center">
-                    <modalOpen.Icon className="w-7 h-7 text-emerald-600" />
+              <div className="p-6 sm:p-10">
+                <div className="flex items-center gap-4 mb-8">
+                  <div className="w-12 h-12 rounded-2xl bg-blue-50 flex items-center justify-center">
+                    <modalOpen.Icon className="w-6 h-6 text-blue-600" />
                   </div>
-                  <h2 className="text-2xl sm:text-3xl font-bold text-slate-800 tracking-tight">
+                  <h2 className="text-xl sm:text-2xl font-bold text-slate-800 tracking-tight">
                     {t(`resources.${modalOpen.key}.title`)}
                   </h2>
                 </div>
 
-                <div className="space-y-4 max-h-[50vh] overflow-y-auto pr-4 custom-scrollbar">
+                <div className="space-y-3 max-h-[50vh] overflow-y-auto pr-2 custom-scrollbar">
                   {modalOpen.details.map((item, i) => (
-                    <div key={i} className={`p-3 rounded-xl transition-all ${
-                      item.type === 'stat' ? 'bg-emerald-50/80 border border-emerald-100' : 
-                      item.type === 'promo' ? 'bg-blue-50/80 border border-blue-100' :
-                      'bg-slate-50 border border-slate-100'
+                    <div key={i} className={`p-4 rounded-xl border transition-all ${
+                      item.type === 'stat' ? 'bg-blue-50/50 border-blue-100' : 
+                      item.type === 'promo' ? 'bg-emerald-50/50 border-emerald-100' :
+                      'bg-slate-50/50 border-slate-100'
                     }`}>
                       <div className="flex gap-4">
-                        {item.type === 'step' && <CheckCircle className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" />}
-                        {item.type === 'rule' && <div className="w-2 h-2 rounded-full bg-rose-400 shrink-0 mt-2" />}
-                        <p className={`text-[0.95rem] ${
+                        {item.type === 'step' && <CheckCircle className="w-5 h-5 text-blue-500 shrink-0" />}
+                        <p className={`text-[13px] md:text-sm leading-relaxed ${
                           item.type === 'tip' ? 'italic text-slate-500' : 
-                          item.type === 'stat' || item.type === 'promo' ? 'font-semibold text-slate-800' : 
-                          'text-slate-700'
+                          item.type === 'stat' ? 'font-bold text-blue-700' : 
+                          'text-slate-700 font-medium'
                         }`}>
                           {item.text}
                         </p>
@@ -180,10 +181,10 @@ export default function Resources() {
                   ))}
                 </div>
 
-                <div className="mt-10 flex justify-end">
+                <div className="mt-8">
                   <button
                     onClick={closeModal}
-                    className="w-auto px-10 py-2 bg-slate-900 text-white font-bold rounded-full hover:bg-emerald-600 transition-all duration-300 shadow-lg active:scale-95"
+                    className="w-full sm:w-auto px-10 py-2 bg-blue-600 text-white font-bold rounded-full hover:bg-blue-700 transition-all shadow-lg shadow-blue-200"
                   >
                     {t('resources.gotIt')}
                   </button>

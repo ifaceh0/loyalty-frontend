@@ -40,11 +40,11 @@ function FloatingInput({
       <label
         htmlFor={name}
         className={`absolute left-0 text-sm font-medium transition-all duration-300 pointer-events-none 
-          ${value ? "text-xs top-1 text-emerald-600" : "text-base top-4 text-gray-500"} `}
+          ${value ? "text-xs top-1 text-blue-600" : "text-base top-4 text-gray-500"} `}
       >
         {label}
       </label>
-      {Icon && <Icon className="absolute left-0 top-8 h-5 w-5 text-emerald-500" />}
+      {Icon && <Icon className="absolute left-0 top-8 h-5 w-5 text-blue-500" />}
       <input
         type={type}
         name={name}
@@ -73,8 +73,8 @@ const DemoFeature = ({ icon: Icon, title, description, delay }) => (
     transition={{ delay, duration: 0.5 }}
     className="flex items-center space-x-5 p-2 rounded-[0.5rem] bg-white/[0.03] hover:bg-white/[0.06] border border-white/[0.05] transition-all duration-300 group"
   >
-    <div className="flex-shrink-0 p-2 bg-gradient-to-br from-emerald-400/20 to-emerald-600/20 rounded-md border border-emerald-500/20 group-hover:scale-110 transition-transform duration-500">
-      <Icon className="w-5 h-5 text-emerald-400" strokeWidth={1.5} />
+    <div className="flex-shrink-0 p-2 bg-gradient-to-br from-blue-400/20 to-blue-600/20 rounded-md border border-blue-500/20 group-hover:scale-110 transition-transform duration-500">
+      <Icon className="w-5 h-5 text-blue-500" strokeWidth={1.5} />
     </div>
     <div>
       <h4 className="text-md font-semibold text-white tracking-wide">{title}</h4>
@@ -105,8 +105,8 @@ const RoleCard = ({ roleInfo, onClick, disabled, isSelected }) => {
         ${disabled
           ? "bg-slate-50 border-slate-100 cursor-not-allowed opacity-50"
           : isSelected
-          ? "bg-white border-emerald-500 shadow-md shadow-emerald-500/10 ring-1 ring-emerald-500/20 scale-[1.02]"
-          : "bg-white border-slate-100 hover:border-emerald-200 hover:shadow-lg hover:shadow-slate-200/50"
+          ? "bg-white border-blue-500 shadow-md shadow-blue-500/10 ring-1 ring-blue-500/20 scale-[1.02]"
+          : "bg-white border-slate-100 hover:border-blue-200 hover:shadow-lg hover:shadow-slate-200/50"
         }
       `}
     >
@@ -114,7 +114,7 @@ const RoleCard = ({ roleInfo, onClick, disabled, isSelected }) => {
         {/* Soft Icon Container */}
         <div className={`
           p-2 rounded-full 
-          ${isSelected ? "bg-emerald-500 text-white" : "bg-slate-50 text-slate-500 group-hover:bg-emerald-50 group-hover:text-emerald-600"}
+          ${isSelected ? "bg-blue-500 text-white" : "bg-slate-50 text-slate-500 group-hover:bg-blue-50 group-hover:text-blue-600"}
         `}>
           <Icon className="w-5 h-5" strokeWidth={isSelected ? 2.5 : 2} />
         </div>
@@ -141,8 +141,8 @@ const RoleCard = ({ roleInfo, onClick, disabled, isSelected }) => {
         <div className={`
           w-5 h-5 rounded-full border-1 flex items-center justify-center
           ${isSelected 
-            ? "bg-emerald-500 border-emerald-500 scale-110" 
-            : "border-slate-200 bg-transparent group-hover:border-emerald-300"
+            ? "bg-blue-500 border-blue-500 scale-110" 
+            : "border-slate-200 bg-transparent group-hover:border-blue-300"
           }
         `}>
           {isSelected && (
@@ -158,7 +158,7 @@ const RoleCard = ({ roleInfo, onClick, disabled, isSelected }) => {
 
       {/* Subtle Glow Effect for Selection */}
       {isSelected && (
-        <div className="absolute inset-0 rounded-lg bg-emerald-500/5 -z-10 animate-pulse" />
+        <div className="absolute inset-0 rounded-lg bg-blue-500/5 -z-10 animate-pulse" />
       )}
     </button>
   );
@@ -217,14 +217,14 @@ const Signin = () => {
 
     ctx.clearRect(0, 0, 120, 40);
     ctx.font = "bold 22px Arial";
-    ctx.fillStyle = "#059669";
+    ctx.fillStyle = "#7a7c7f";
     ctx.save();
     ctx.translate(10, 28);
     ctx.rotate(-0.03 * Math.PI + Math.random() * 0.1 - 0.03);
     ctx.fillText(text, 0, 0);
     ctx.restore();
 
-    ctx.strokeStyle = "#34D399";
+    ctx.strokeStyle = "#7a7c7f";
     ctx.lineWidth = 1;
     for (let i = 0; i < 3; i++) {
       ctx.beginPath();
@@ -426,7 +426,7 @@ const Signin = () => {
         {/* left side */}
         <div className="hidden lg:flex w-6/12 bg-slate-900 p-10 flex-col justify-center relative overflow-hidden">
           {/* Modern Atmospheric Background */}
-          <div className="absolute top-0 -left-20 w-96 h-96 bg-emerald-500/20 rounded-full blur-[120px] animate-pulse" />
+          <div className="absolute top-0 -left-20 w-96 h-96 bg-blue-500/20 rounded-full blur-[120px] animate-pulse" />
           <div className="absolute bottom-0 -right-20 w-96 h-96 bg-sky-500/20 rounded-full blur-[120px]" />
           
           {/* Subtle Grid - Softened */}
@@ -440,7 +440,7 @@ const Signin = () => {
               transition={{ duration: 0.8 }}
               className="space-y-4"
             >
-              <span className="px-4 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-bold uppercase tracking-widest">
+              <span className="px-4 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-500 text-xs font-bold uppercase tracking-widest">
                 {t("signin.hero.tagline")}
               </span>
               <h1 className="text-4xl font-semibold text-white leading-[1.1] tracking-tight">
@@ -510,11 +510,11 @@ const Signin = () => {
 
                 <div className="space-y-4 pt-3">
                   <div className="flex items-center justify-left">
-                    <canvas ref={canvasRef} width={120} height={40} className="border border-slate-300 shadow-sm rounded bg-white mr-4" />
+                    <canvas ref={canvasRef} width={120} height={40} className="border border-slate-300 shadow-sm rounded-xl bg-white mr-4" />
                     <button
                       type="button"
                       onClick={generateCaptcha}
-                      className="flex items-center gap-2 text-sm bg-slate-900 text-white px-2 py-2 rounded-full hover:bg-emerald-600 transition duration-150 shadow-md"
+                      className="flex items-center gap-2 text-sm bg-slate-900 text-white px-2 py-2 rounded-full hover:bg-blue-600 transition duration-150 shadow-md"
                       aria-label={t("signin.refreshCaptcha")}
                     >
                       <RefreshCw className="w-4 h-4" />
@@ -539,7 +539,7 @@ const Signin = () => {
                     transition-all duration-300 overflow-hidden
                     ${loading 
                       ? "bg-slate-100 text-slate-400 cursor-wait" 
-                      : "bg-slate-900 text-white hover:bg-emerald-600 shadow-md shadow-emerald-500/10 active:shadow-inner"
+                      : "bg-slate-900 text-white hover:bg-blue-600 shadow-md shadow-blue-500/10 active:shadow-inner"
                     }
                   `}
                 >
@@ -612,7 +612,7 @@ const Signin = () => {
                       shadow-sm hover:shadow-md active:scale-[0.98]
                       ${!selectedRoleInfo || loading 
                         ? "bg-slate-100 text-slate-400 cursor-not-allowed" 
-                        : "bg-slate-900 text-white hover:bg-emerald-600 shadow-emerald-200"
+                        : "bg-slate-900 text-white hover:bg-blue-600 shadow-blue-200"
                       }
                     `}
                   >
@@ -668,8 +668,8 @@ const Signin = () => {
                           transition-all duration-300 border-2 text-center
                           ${loading ? "opacity-50 cursor-not-allowed" : ""}
                           ${isSelected 
-                            ? "bg-emerald-50/50 border-emerald-500 shadow-xl shadow-emerald-500/10" 
-                            : "bg-white border-slate-100 hover:border-emerald-200 hover:shadow-lg hover:shadow-slate-200/50"
+                            ? "bg-emerald-50/50 border-blue-500 shadow-xl shadow-blue-500/10" 
+                            : "bg-white border-slate-100 hover:border-blue-200 hover:shadow-lg hover:shadow-slate-200/50"
                           }
                         `}
                       >
@@ -677,7 +677,7 @@ const Signin = () => {
                         <div className={`
                           w-16 h-16 sm:w-20 sm:h-20 rounded-lg flex items-center justify-center 
                           bg-white shadow-sm border border-slate-50 overflow-hidden mb-4
-                          ${isSelected ? "ring-2 ring-emerald-100" : ""}
+                          ${isSelected ? "ring-2 ring-blue-100" : ""}
                         `}>
                           {shop.shopLogoBase64 ? (
                             <img
@@ -694,7 +694,7 @@ const Signin = () => {
 
                         {/* Shop Name */}
                         <h4 className={`text-sm font-bold leading-tight transition-colors duration-300
-                          ${isSelected ? "text-emerald-700" : "text-slate-700"}
+                          ${isSelected ? "text-blue-700" : "text-slate-700"}
                         `}> 
                           {shop.displayName}
                         </h4>
@@ -706,7 +706,7 @@ const Signin = () => {
                               initial={{ scale: 0, opacity: 0 }}
                               animate={{ scale: 1, opacity: 1 }}
                               exit={{ scale: 0, opacity: 0 }}
-                              className="absolute top-1 right-3 bg-emerald-500 rounded-full p-1 shadow-md border-2 border-white"
+                              className="absolute top-1 right-3 bg-blue-500 rounded-full p-1 shadow-md border-2 border-white"
                             >
                               <Check className="w-3 h-3 text-white" strokeWidth={4} />
                             </motion.div>
@@ -727,7 +727,7 @@ const Signin = () => {
                       rounded-full text-md font-bold transition-all duration-300
                       ${!selectedRoleInfo || loading 
                         ? "bg-slate-100 text-slate-400 cursor-not-allowed" 
-                        : "bg-slate-900 text-white hover:bg-emerald-600 shadow-sm active:scale-95"
+                        : "bg-slate-900 text-white hover:bg-blue-600 shadow-sm active:scale-95"
                       }
                     `}
                   >

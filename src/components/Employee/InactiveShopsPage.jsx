@@ -295,7 +295,7 @@ export default function InactiveShopsPage() {
       <div className="max-w-7xl mx-auto px-6 py-16">
         
         {/* Modern Soft Header */}
-        <header className="mb-16 text-center max-w-2xl mx-auto">
+        <header className="mb-10 text-center max-w-2xl mx-auto">
           <motion.div 
             initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
             className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-stone-100 text-[10px] font-bold uppercase tracking-widest text-stone-500 mb-6 border border-stone-200"
@@ -339,7 +339,7 @@ export default function InactiveShopsPage() {
 
         {/* Grid */}
         {!loading && !error && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
             <AnimatePresence>
               {inactiveShops.map((shop, idx) => (
                 <motion.div
@@ -350,7 +350,7 @@ export default function InactiveShopsPage() {
                   className="group relative bg-white rounded-[1rem] p-4 border border-stone-100 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)] transition-all hover:shadow-[0_30px_60px_-12px_rgba(0,0,0,0.08)] hover:-translate-y-1"
                 >
                   {/* Logo Well */}
-                  <div className="aspect-square rounded-[1rem] bg-stone-50 mb-6 flex items-center justify-center overflow-hidden border border-stone-100/50">
+                  <div className="aspect-square rounded-[1rem] bg-stone-50 mb-1 flex items-center justify-center overflow-hidden border border-stone-100/50">
                     {shop.shopLogoBase64 ? (
                       <img
                         src={`data:image/png;base64,${shop.shopLogoBase64}`}
@@ -367,11 +367,11 @@ export default function InactiveShopsPage() {
                     <h3 className="text-lg font-bold text-stone-900 truncate mb-1 leading-tight">
                       {shop.shopName}
                     </h3>
-                    <p className="text-xs font-bold text-stone-400 uppercase tracking-widest mb-6">
+                    <p className="text-xs font-bold text-stone-400 uppercase tracking-widest mb-4">
                       {shop.companyName}
                     </p>
 
-                    <div className="space-y-4">
+                    <div className="space-y-2">
                       <div className="flex items-center justify-between text-[11px]">
                         <span className="text-stone-400 font-bold uppercase tracking-tighter">{t('inactiveShops.labels.joined')}</span>
                         <span className="text-stone-900 font-semibold">{formatDate(shop.joinDate)}</span>
@@ -382,7 +382,7 @@ export default function InactiveShopsPage() {
                       </div>
                     </div>
 
-                    <div className="mt-6 pt-6 border-t border-stone-50 space-y-3">
+                    <div className="mt-4 border-t border-stone-50 space-y-2">
                       <div className="flex items-center gap-3 text-stone-500 hover:text-stone-900 transition-colors cursor-pointer">
                         <div className="p-2 rounded-full bg-stone-50 group-hover:bg-white transition-colors">
                           <Mail size={14} />

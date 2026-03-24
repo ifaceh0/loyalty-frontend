@@ -425,7 +425,7 @@ function UserSignup() {
                 type="submit"
                 disabled={loading}
                 className={`w-full bg-slate-900 text-white shadow-md text-white font-bold py-2 rounded-full transition-all duration-300 text-md
-                  ${loading ? "opacity-60 cursor-not-allowed" : "hover:bg-emerald-600"}`}
+                  ${loading ? "opacity-60 cursor-not-allowed" : "hover:bg-blue-600"}`}
               >
                 {loading ? (
                   <span className="flex items-center justify-center gap-2">
@@ -483,7 +483,7 @@ function NextButton({ onClick }) {
       type="button"
       onClick={onClick}
       className="w-full py-2 font-bold rounded-full transition-all duration-300 text-md
-        bg-slate-900 text-white hover:bg-emerald-600 shadow-md"
+        bg-slate-900 text-white hover:bg-blue-600 shadow-md"
     >
       {t("userSignup.next")}
     </motion.button>
