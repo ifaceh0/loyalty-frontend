@@ -157,7 +157,6 @@
 
 
 
-
 import React, { useState } from 'react';
 import { Mail, Send, Facebook, Instagram, Twitter, Linkedin, Check } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
@@ -170,7 +169,6 @@ export default function Footer() {
   const handleSubscribe = (e) => {
     e.preventDefault();
     if (!email || !email.includes('@')) return;
-
     setTimeout(() => {
       setSubscribed(true);
       setEmail('');
@@ -179,70 +177,35 @@ export default function Footer() {
   };
 
   const currentYear = new Date().getFullYear();
-  const rawQuickLinks = t('footer.quickLinks', { returnObjects: true });
-  const rawQuickLink = t('footer.quickLink', { returnObjects: true });
-  const quickLinks = Array.isArray(rawQuickLinks) ? rawQuickLinks : [];
-  const quickLink = Array.isArray(rawQuickLink) ? rawQuickLink : [];
+  const quickLinks = t('footer.quickLinks', { returnObjects: true }) || [];
+  const quickLink = t('footer.quickLink', { returnObjects: true }) || [];
 
   const socialLinks = [
-  { Icon: Facebook,   url: "https://facebook.com" },
-  { Icon: Instagram,  url: "https://instagram.com" },
-  { Icon: Twitter,    url: "https://x.com" },
-  { Icon: Linkedin,   url: "https://linkedin.com" },
-];
+    { Icon: Facebook, url: "https://facebook.com" },
+    { Icon: Instagram, url: "https://instagram.com" },
+    { Icon: Twitter, url: "https://x.com" },
+    { Icon: Linkedin, url: "https://linkedin.com" },
+  ];
 
   return (
-    <footer className="bg-white border border-t text-slate-500 pt-2 pb-6 px-6">
-      <div className="max-w-7xl mx-auto">
+    // Updated Footer Section for Mobile Perfection
+    <footer className="border-t border-blue-100/50 bg-white/40 backdrop-blur-md text-slate-500 pt-12 pb-8 px-6">
+      <div className="max-w-6xl mx-auto">
         
-        {/* Top Section: Newsletter Focus */}
-        {/* <div className="flex flex-col lg:flex-row justify-between items-start gap-12 pb-16 border-b border-slate-100">
-          <div className="max-w-md">
-            <h3 className="text-2xl font-semibold text-slate-900 mb-3 tracking-tight">
-              {t('footer.newsletterTitle')}
-            </h3>
-            <p className="text-sm leading-relaxed">
-              {t('footer.newsletterDesc')}
-            </p>
-          </div>
-
-          <form onSubmit={handleSubscribe} className="w-full lg:w-auto min-w-[320px] sm:min-w-[400px]">
-            <div className="flex p-1 bg-slate-50 rounded-xl border border-slate-100 focus-within:border-blue-500/30 focus-within:bg-white transition-all">
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder={t('footer.newsletterPlaceholder')}
-                className="flex-1 bg-transparent px-4 py-2 text-sm text-slate-900 outline-none placeholder:text-slate-400"
-                required
-              />
-              <button
-                type="submit"
-                disabled={subscribed}
-                className={`px-6 py-2 rounded-lg font-medium text-sm transition-all flex items-center gap-2
-                  ${subscribed 
-                    ? 'bg-emerald-50 text-emerald-600' 
-                    : 'bg-slate-900 text-white hover:bg-blue-600 active:scale-95'
-                  }`}
-              >
-                {subscribed ? <><Check className="w-4 h-4" /> {t('footer.subscribedText')}</> : t('footer.subscribeButton')}
-              </button>
-            </div>
-          </form>
-        </div> */}
-
         {/* Middle Section: Brand & Links */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 py-6">
-          <div className="space-y-6">
-            <div className="flex items-center gap-2.5">
-              <div className="w-7 h-7 bg-blue-600 rounded flex items-center justify-center">
-                <div className="w-2.5 h-2.5 bg-white rounded-full animate-pulse" />
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+          
+          {/* Brand Column: Full width on mobile, 1 column on desktop */}
+          <div className="col-span-2 lg:col-span-1 space-y-5 flex flex-col items-center text-center lg:items-start lg:text-start">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 bg-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/20">
+                <div className="w-2.5 h-2.5 bg-white rounded-full" />
               </div>
-              <span className="text-lg font-bold text-slate-900 tracking-tight">
+              <span className="text-xl font-bold text-slate-900 tracking-tight">
                 {t('footer.brandTitle')}
               </span>
             </div>
-            <p className="text-xs leading-relaxed max-w-[240px]">
+            <p className="text-[13px] leading-relaxed max-w-[280px] text-slate-500/80">
               {t('footer.brandDesc')}
             </p>
             <div className="flex gap-4">
@@ -250,10 +213,7 @@ export default function Footer() {
                 <a 
                   key={i} 
                   href={url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-slate-400 hover:text-blue-600 transition-colors"
-                  aria-label={`Follow us on ${Icon.name || 'social'}`}
+                  className="w-9 h-9 rounded-lg bg-blue-50 flex items-center justify-center text-slate-400 hover:bg-blue-600 hover:text-white transition-all duration-300"
                 >
                   <Icon className="w-4 h-4" />
                 </a>
@@ -261,17 +221,19 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Spacer for layout balance */}
+          {/* Spacer: Only visible on Large screens to keep layout airy */}
           <div className="hidden lg:block lg:col-span-1" />
 
-          <div>
-            <h4 className="text-[11px] font-bold uppercase tracking-[0.2em] text-slate-900 mb-8">
+          {/* Quick Links: Half width on mobile */}
+          <div className="col-span-1">
+            <h4 className="text-[10px] md:text-[11px] font-bold uppercase tracking-[0.15em] text-slate-900 mb-6">
               {t('footer.quickLinksTitle')}
             </h4>
-            <ul className="space-y-3">
-              {quickLinks.slice(0, 4).map((link) => (
+            <ul className="space-y-4 lg:space-y-3">
+              {Array.isArray(quickLinks) && quickLinks.slice(0, 4).map((link) => (
                 <li key={link.to}>
-                  <a href={link.to} className="text-sm hover:text-blue-600 transition-colors">
+                  <a href={link.to} className="text-[13px] hover:text-blue-600 transition-colors flex items-center gap-2 group">
+                    <span className="hidden md:block w-1 h-1 rounded-full bg-blue-200 group-hover:bg-blue-600 transition-colors" />
                     {link.label}
                   </a>
                 </li>
@@ -279,14 +241,16 @@ export default function Footer() {
             </ul>
           </div>
 
-          <div>
-            <h4 className="text-[11px] font-bold uppercase tracking-[0.2em] text-slate-900 mb-8">
+          {/* Support Links: Half width on mobile */}
+          <div className="col-span-1">
+            <h4 className="text-[10px] md:text-[11px] font-bold uppercase tracking-[0.15em] text-slate-900 mb-6">
               {t('footer.support')}
             </h4>
-            <ul className="space-y-3">
-              {quickLink.slice(0,4).map((link) => (
+            <ul className="space-y-4 lg:space-y-3">
+              {Array.isArray(quickLink) && quickLink.slice(0, 4).map((link) => (
                 <li key={link.to}>
-                  <a href={link.to} className="text-sm hover:text-blue-600 transition-colors">
+                  <a href={link.to} className="text-[13px] hover:text-blue-600 transition-colors flex items-center gap-2 group">
+                    <span className="hidden md:block w-1 h-1 rounded-full bg-blue-200 group-hover:bg-blue-600 transition-colors" />
                     {link.label}
                   </a>
                 </li>
@@ -295,14 +259,14 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="pt-4 border-t border-slate-200 flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p className="text-[12px]">
+        {/* Bottom Bar: Stacked on mobile, row on desktop */}
+        <div className="pt-8 border-t border-blue-100/50 flex flex-col md:flex-row justify-between items-center gap-6">
+          <p className="text-[11px] md:text-[12px] text-slate-400 text-center">
             {t('footer.copyright', { year: currentYear })}
           </p>
-          <div className="flex gap-6 text-[12px] font-medium text-slate-400">
-            <a href="/privacy" className="hover:text-slate-900 transition-colors">{t('footer.privacy')}</a>
-            <a href="/terms" className="hover:text-slate-900 transition-colors">{t('footer.terms')}</a>
+          <div className="flex gap-8 text-[11px] md:text-[12px] font-medium">
+            <a href="/privacy" className="text-slate-400 hover:text-blue-600 transition-colors">{t('footer.privacy')}</a>
+            <a href="/terms" className="text-slate-400 hover:text-blue-600 transition-colors">{t('footer.terms')}</a>
           </div>
         </div>
       </div>

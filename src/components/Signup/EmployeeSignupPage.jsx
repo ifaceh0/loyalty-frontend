@@ -380,7 +380,7 @@ export default function EmployeeSignupPage() {
                 type="submit"
                 disabled={loading}
                 className={`w-full bg-slate-900 text-white font-bold py-2 rounded-full shadow-lg transition-all duration-300 text-md
-                  ${loading ? "opacity-60 cursor-not-allowed" : "hover:bg-emerald-600 active:scale-[0.99]"}`}
+                  ${loading ? "opacity-60 cursor-not-allowed" : "hover:bg-blue-600 active:scale-[0.99]"}`}
               >
                 {loading ? (
                   <span className="flex items-center justify-center gap-2">
@@ -404,7 +404,7 @@ export default function EmployeeSignupPage() {
               whileTap="tap"
               type="button"
               onClick={nextStep}
-              className="w-full py-2 font-bold rounded-full shadow-lg transition-all duration-300 text-md bg-slate-900 text-white hover:bg-emerald-600 shadow-md active:scale-[0.99]"
+              className="w-full py-2 font-bold rounded-full shadow-lg transition-all duration-300 text-md bg-slate-900 text-white hover:bg-blue-600 shadow-md active:scale-[0.99]"
             >
               {t("employeeSignup.next")}
             </motion.button>

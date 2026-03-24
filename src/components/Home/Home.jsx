@@ -1396,14 +1396,11 @@ export default function Home() {
   const nextSlide = () => setCurrentIndex((prev) => (prev + 1) % heroImages.length);
 
   return (
-    <div className="min-h-screen">
-
-      {/* HERO CAROUSEL - improved mobile scaling */}
-      {/* <section className="relative h-[65vh] min-h-[360px] xs:h-[70vh] sm:h-[75vh] md:h-[80vh] lg:h-[85vh] overflow-hidden"> */}
-      {/* <section className="relative h-[40vh] min-h-[300px] sm:h-[75vh] md:h-[80vh] lg:h-[85vh] overflow-hidden">
-        <div className="relative w-full h-full"> */}
-      <section className="relative px-2 sm:px-4 lg:px-4 pt-2">
-        <div className="relative h-[40vh] min-h-[300px] sm:h-[75vh] md:h-[80vh] lg:h-[85vh] max-w-full mx-auto rounded-md sm:rounded-lg overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-blue-100 antialiased selection:bg-blue-100 selection:text-blue-700">
+      <section className="relative px-2 pt-2">
+        {/* Added 'relative' and 'group' to help control the buttons */}
+        <div className="relative h-[45vh] min-h-[350px] sm:h-[75vh] lg:h-[80vh] max-w-[1800px] mx-auto rounded-xl sm:rounded-[1rem] overflow-hidden shadow-2xl group">
+          
           {heroImages.map((img, idx) => (
             <motion.div
               key={idx}
@@ -1414,51 +1411,53 @@ export default function Home() {
             >
               <img
                 src={img}
-                alt={t(`home.hero.slides.${idx}`) || `Slide ${idx + 1}`}
+                alt={`Slide ${idx + 1}`}
                 className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/45 to-black/25" />
+              <div className="absolute inset-0 bg-gradient-to-t from-blue-900/80 via-blue-900/40 to-transparent" />
             </motion.div>
           ))}
 
-          <div className="absolute inset-0 flex items-center justify-center text-center px-4 xs:px-5 sm:px-8">
+          {/* CONTENT LAYER: Ensure this doesn't interfere with buttons */}
+          <div className="absolute inset-0 flex items-center justify-center text-center px-6 pointer-events-none">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4, duration: 1 }}
-              className="max-w-4xl w-full"
+              className="max-w-3xl w-full pointer-events-auto"
             >
-              <h1 className="text-4xl xs:text-5xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-white mb-3 xs:mb-4 md:mb-6 drop-shadow-2xl leading-tight">
+              <h1 className="text-3xl xs:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 tracking-tight leading-tight">
                 {t('home.hero.title')}
               </h1>
-              <p className="text-base xs:text-lg sm:text-xl md:text-2xl text-white/90 mb-5 xs:mb-6 md:mb-10 drop-shadow-lg max-w-3xl mx-auto">
+              <p className="text-sm md:text-xl text-blue-50/90 max-w-2xl mx-auto">
                 {t('home.hero.subtitle')}
               </p>
             </motion.div>
           </div>
 
+          {/* LEFT BUTTON: Explicit width/height to stop the stretching */}
           <button
-            onClick={(e) => { e.stopPropagation(); prevSlide(); }}
-            className="absolute left-3 xs:left-4 sm:left-8 top-1/2 -translate-y-1/2 bg-black/40 backdrop-blur-md text-white p-3 xs:p-3 sm:p-3 rounded-full hover:bg-black/60 transition z-10"
+            onClick={(e) => { e.preventDefault(); prevSlide(); }}
+            className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 md:w-14 md:h-14 flex items-center justify-center bg-white/10 backdrop-blur-md text-white rounded-full hover:bg-white/20 border border-white/20 transition-all z-20"
           >
-            <ChevronLeft className="w-6 h-6 xs:w-7 xs:h-7 sm:w-8 sm:h-8" />
-          </button>
-          <button
-            onClick={(e) => { e.stopPropagation(); nextSlide(); }}
-            className="absolute right-3 xs:right-4 sm:right-8 top-1/2 -translate-y-1/2 bg-black/40 backdrop-blur-md text-white p-3 xs:p-3 sm:p-3 rounded-full hover:bg-black/60 transition z-10"
-          >
-            <ChevronRight className="w-6 h-6 xs:w-7 xs:h-7 sm:w-8 sm:h-8" />
+            <ChevronLeft className="w-6 h-6" />
           </button>
 
-          <div className="absolute bottom-4 xs:bottom-6 sm:bottom-10 left-1/2 -translate-x-1/2 flex gap-2.5 xs:gap-3 sm:gap-4 z-10">
+          {/* RIGHT BUTTON: Explicit width/height to stop the stretching */}
+          <button
+            onClick={(e) => { e.preventDefault(); nextSlide(); }}
+            className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 md:w-14 md:h-14 flex items-center justify-center bg-white/10 backdrop-blur-md text-white rounded-full hover:bg-white/20 border border-white/20 transition-all z-20"
+          >
+            <ChevronRight className="w-6 h-6" />
+          </button>
+
+          {/* INDICATORS */}
+          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-20">
             {heroImages.map((_, idx) => (
               <button
                 key={idx}
-                onClick={(e) => { e.stopPropagation(); setCurrentIndex(idx); }}
-                className={`w-2.5 h-2.5 xs:w-3 xs:h-3 sm:w-3.5 sm:h-3.5 rounded-full transition-all ${
-                  idx === currentIndex
-                    ? 'bg-emerald-500 scale-125'
-                    : 'bg-white/70 hover:bg-white hover:scale-125'
+                onClick={() => setCurrentIndex(idx)}
+                className={`h-1.5 transition-all duration-500 rounded-full ${
+                  idx === currentIndex ? 'w-8 bg-emerald-500' : 'w-2 bg-white/40'
                 }`}
               />
             ))}
@@ -1472,19 +1471,20 @@ export default function Home() {
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
         variants={staggerContainer}
-        className="py-10 xs:py-12 md:py-14 px-6 lg:px-8 bg-white"
+        className="py-10 md:py-16 px-4 md:px-8"
       >
-        <div className="max-w-6xl mx-auto">
-          {/* Header: Centered with tight tracking and deep color */}
-          <div className="text-center mb-16 md:mb-20">
-            <h2 className="text-3xl md:text-5xl font-bold text-slate-900 tracking-tight">
+        {/* max-w-5xl for a more compact and premium laptop layout */}
+        <div className="max-w-5xl mx-auto">
+          {/* Header */}
+          <div className="text-center mb-8 md:mb-16">
+            <h2 className="text-2xl md:text-3xl font-bold text-slate-900 tracking-tight">
               {t('home.howItWorks.title')}
             </h2>
-            <div className="mt-4 h-1.5 w-20 bg-emerald-500 mx-auto rounded-full" />
+            <div className="mt-2 h-1 w-10 bg-emerald-500 mx-auto rounded-full" />
           </div>
 
-          {/* Grid: Modern soft cards with distinct character */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
+          {/* Grid: Forced 3 columns on all screens */}
+          <div className="grid grid-cols-3 gap-2 md:gap-8">
             {[
               { 
                 icon: <CheckCircle strokeWidth={1.5} />, 
@@ -1511,23 +1511,25 @@ export default function Home() {
               <motion.div
                 key={i}
                 variants={cardVariants}
-                className="group relative bg-slate-50/50 rounded-[1rem] p-8 md:p-10 border border-slate-100 hover:bg-white hover:border-white hover:shadow-2xl hover:shadow-slate-200 transition-all duration-500 ease-out flex flex-col items-start text-start"
+                // Smaller padding (p-3 mobile / p-7 laptop) for a refined feel
+                className="group relative bg-white rounded-xl md:rounded-[2rem] p-3 md:p-7 border border-slate-100 hover:shadow-xl hover:shadow-slate-200/50 transition-all duration-500 flex flex-col items-center text-center md:items-start md:text-start"
               >
-                {/* Step Number Badge */}
-                <span className="absolute top-6 right-6 text-xs font-bold text-slate-300 group-hover:text-slate-900 transition-colors">
+                {/* Step Number: Hidden on mobile, subtle on laptop */}
+                <span className="hidden lg:block absolute top-6 right-6 text-xs font-black text-slate-100 group-hover:text-slate-200 transition-colors">
                   0{i + 1}
                 </span>
 
-                {/* Icon: Soft circle backdrop with high-contrast icon */}
-                <div className={`mb-8 w-20 h-20 ${step.bg} ${step.color} rounded-lg flex items-center justify-center transform group-hover:scale-110 group-hover:rotate-3 transition-all duration-500`}>
-                  {React.cloneElement(step.icon, { className: "w-10 h-10" })}
+                {/* Icon: Scaled down for laptop (w-12) and mobile (w-9) */}
+                <div className={`mb-2 md:mb-6 w-9 h-9 md:w-12 md:h-12 ${step.bg} ${step.color} rounded-lg md:rounded-xl flex items-center justify-center transform group-hover:scale-110 transition-all duration-500`}>
+                  {React.cloneElement(step.icon, { className: "w-5 h-5 md:w-6 md:h-6" })}
                 </div>
                 
-                <h3 className="text-xl md:text-2xl font-bold text-slate-900 mb-4 tracking-tight">
+                <h3 className="text-[10px] md:text-lg font-bold text-slate-900 mb-1 md:mb-3 tracking-tight leading-tight">
                   {step.title}
                 </h3>
                 
-                <p className="text-slate-600 leading-relaxed text-base md:text-[17px]">
+                {/* Description: Hidden on mobile to keep the 3-column row clean */}
+                <p className="hidden md:block text-slate-500 leading-relaxed text-sm">
                   {step.desc}
                 </p>
               </motion.div>
@@ -1542,66 +1544,72 @@ export default function Home() {
         whileInView="visible"
         viewport={{ once: true }}
         variants={staggerContainer}
-        className="py-10 xs:py-12 md:py-14 px-6 bg-white"
+        className="py-10 md:py-16 px-4 md:px-8"
       >
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl xs:text-4xl font-extrabold text-center text-slate-800 mb-8 xs:mb-10 md:mb-12">
+        {/* max-w-5xl keeps the stats from stretching too wide on laptops */}
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-8 md:mb-12">
+            <h2 className="text-2xl md:text-3xl font-bold text-slate-800 tracking-tight">
               {t('home.stats.title')}
             </h2>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+          {/* Force 3 columns on all screens with a tighter gap on laptop */}
+          <div className="grid grid-cols-3 gap-2 md:gap-4">
             
             {/* Total Users */}
             <motion.div 
               variants={cardVariants} 
-              className="bg-white border-2 border-slate-900 rounded-xl p-8 shadow-[4px_4px_0px_0px_rgba(15,23,42,1)]"
+              className="bg-white border border-slate-100 rounded-xl md:rounded-[2rem] p-3 md:p-6 hover:shadow-xl hover:shadow-slate-200/50 transition-all duration-500 flex flex-col items-center text-center md:items-start md:text-start"
             >
-              <div className="flex items-center justify-between mb-6">
-                <Users className="w-6 h-6 text-emerald-600" strokeWidth={2} />
-                {/* <span className="text-[11px] font-black uppercase tracking-[0.2em] text-slate-400">Community</span> */}
+              <div className="mb-2 md:mb-4">
+                <Users className="w-5 h-5 md:w-6 md:h-6 text-emerald-600" strokeWidth={2} />
               </div>
-              <div className="text-5xl font-black text-slate-900 tracking-tighter">
+              <div className="text-lg sm:text-2xl md:text-4xl font-black text-slate-900 tracking-tighter">
                 {loading ? "···" : <CountUp end={stats.totalUsers} duration={2} separator="," />}
               </div>
-              <p className="text-slate-500 font-medium mt-2">{t('home.stats.items.0.label')}</p>
+              <p className="text-[10px] md:text-sm text-slate-500 font-medium mt-1">
+                {t('home.stats.items.0.label')}
+              </p>
             </motion.div>
 
             {/* Total Shops */}
             <motion.div 
               variants={cardVariants} 
-              className="bg-white border-2 border-slate-900 rounded-xl p-8 shadow-[4px_4px_0px_0px_rgba(15,23,42,1)]"
+              className="bg-white border border-slate-100 rounded-xl md:rounded-[2rem] p-3 md:p-6 hover:shadow-xl hover:shadow-slate-200/50 transition-all duration-500 flex flex-col items-center text-center md:items-start md:text-start"
             >
-              <div className="flex items-center justify-between mb-6">
-                <Store className="w-6 h-6 text-emerald-600" strokeWidth={2} />
-                {/* <span className="text-[11px] font-black uppercase tracking-[0.2em] text-slate-400">Network</span> */}
+              <div className="mb-2 md:mb-4">
+                <Store className="w-5 h-5 md:w-6 md:h-6 text-emerald-600" strokeWidth={2} />
               </div>
-              <div className="text-5xl font-black text-slate-900 tracking-tighter">
+              <div className="text-lg sm:text-2xl md:text-4xl font-black text-slate-900 tracking-tighter">
                 {loading ? "···" : <CountUp end={stats.totalShops} duration={2} separator="," />}
               </div>
-              <p className="text-slate-500 font-medium mt-2">{t('home.stats.items.1.label')}</p>
+              <p className="text-[10px] md:text-sm text-slate-500 font-medium mt-1">
+                {t('home.stats.items.1.label')}
+              </p>
             </motion.div>
 
-            {/* Transactions - Cleaned up currency logic */}
+            {/* Transactions */}
             <motion.div 
               variants={cardVariants} 
-              className="bg-slate-900 rounded-xl p-8 shadow-xl"
+              className="bg-slate-900 rounded-xl md:rounded-[2rem] p-3 md:p-6 hover:shadow-xl hover:shadow-slate-200/50 transition-all duration-500 flex flex-col items-center text-center md:items-start md:text-start"
             >
-              <div className="flex items-center justify-between mb-6">
-                <Banknote className="w-6 h-6 text-emerald-400" strokeWidth={2} />
-                {/* <span className="text-[11px] font-black uppercase tracking-[0.2em] text-slate-400">Volume</span> */}
+              <div className="mb-2 md:mb-4">
+                <Banknote className="w-5 h-5 md:w-6 md:h-6 text-emerald-400" strokeWidth={2} />
               </div>
-              <div className="space-y-1">
-                <div className="text-2xl font-bold text-white flex items-baseline gap-2">
-                  <span className="text-sm text-emerald-400 font-mono">🇺🇸 USA:</span>
-                  {loading ? "···" : `$${new Intl.NumberFormat().format(stats.totalUsaTransactionAmount)}`}
+              <div className="w-full space-y-0.5 md:space-y-1">
+                <div className="text-[10px] sm:text-xs md:text-xl font-bold text-white flex flex-col md:flex-row md:items-baseline md:gap-1.5">
+                  <span className="text-[8px] md:text-[12px] text-emerald-400 font-mono">USA:</span>
+                  {loading ? "···" : `$${new Intl.NumberFormat(undefined, { notation: 'compact' }).format(stats.totalUsaTransactionAmount)}`}
                 </div>
-                <div className="text-2xl font-bold text-white flex items-baseline gap-2 border-t border-slate-800 pt-1">
-                  <span className="text-sm text-emerald-400 font-mono">🇮🇳 India:</span>
-                  {loading ? "···" : `₹${new Intl.NumberFormat().format(stats.totalIndiaTransactionAmount)}`}
+                <div className="text-[10px] sm:text-xs md:text-xl font-bold text-white flex flex-col md:flex-row md:items-baseline md:gap-1.5 border-t border-slate-800 pt-0.5 md:pt-1">
+                  <span className="text-[8px] md:text-[12px] text-emerald-400 font-mono">IND:</span>
+                  {loading ? "···" : `₹${new Intl.NumberFormat(undefined, { notation: 'compact' }).format(stats.totalIndiaTransactionAmount)}`}
                 </div>
               </div>
-              <p className="text-slate-400 font-medium mt-4">{t('home.stats.items.2.label')}</p>
+              <p className="text-[10px] md:text-sm text-slate-400 font-medium mt-2">
+                {t('home.stats.items.2.label')}
+              </p>
             </motion.div>
 
           </div>
@@ -1614,21 +1622,22 @@ export default function Home() {
         whileInView="visible"
         viewport={{ once: true, amount: 0.15 }}
         variants={staggerContainer}
-        className="py-10 xs:py-12 md:py-14 px-6 lg:px-8 bg-white"
+        className="py-10 md:py-16 px-4 md:px-8"
       >
-        <div className="max-w-6xl mx-auto">
-          {/* Header: Strong contrast and personality */}
-          <div className="text-center mb-16 md:mb-20">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight mb-4">
+        {/* max-w-5xl (instead of 6xl) makes the row look smaller and more "premium" on laptops */}
+        <div className="max-w-5xl mx-auto">
+          {/* Header */}
+          <div className="text-center mb-8 md:mb-12">
+            <h2 className="text-2xl md:text-3xl font-bold text-slate-900 tracking-tight mb-2">
               {t('home.categories.title')}
             </h2>
-            <p className="text-slate-500 max-w-xl mx-auto text-base">
+            <p className="text-slate-500 max-w-xl mx-auto text-xs md:text-sm">
               {t('home.categories.subtitle')}
             </p>
           </div>
 
-          {/* Grid: Modern "Squircle" Cards */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6">
+          {/* grid-cols-3 for mobile, lg:grid-cols-6 for laptop */}
+          <div className="grid grid-cols-3 lg:grid-cols-6 gap-2 md:gap-4">
             {[
               { icon: <Coffee />, name: t('home.categories.items.0.name'), count: t('home.categories.items.0.count'), color: 'bg-orange-50 text-orange-600' },
               { icon: <Utensils />, name: t('home.categories.items.1.name'), count: t('home.categories.items.1.count'), color: 'bg-rose-50 text-rose-600' },
@@ -1640,19 +1649,21 @@ export default function Home() {
               <motion.div
                 key={i}
                 variants={cardVariants}
-                className="group flex flex-col items-center p-6 rounded-[1rem] bg-slate-50/50 border border-transparent hover:bg-white hover:border-slate-100 hover:shadow-xl hover:shadow-slate-200/60 transition-all duration-500 cursor-pointer"
+                // p-3 on mobile and p-5 on desktop to keep the "smaller" feel
+                className="group flex flex-col items-center p-3 md:p-5 rounded-xl md:rounded-[1.5rem] bg-white border border-slate-100 hover:shadow-lg hover:shadow-slate-200/50 transition-all duration-500 cursor-pointer"
               >
-                {/* Icon Wrapper: The "Soft Pop" element */}
-                <div className={`w-14 h-14 flex items-center justify-center rounded-lg ${category.color} mb-4 transform group-hover:scale-110 group-hover:-rotate-3 transition-all duration-500 shadow-sm`}>
-                  {React.cloneElement(category.icon, { strokeWidth: 2, className: "w-6 h-6" })}
+                {/* Smaller Icon Wrapper: w-12 for laptop instead of w-14 */}
+                <div className={`w-9 h-9 md:w-12 md:h-12 flex items-center justify-center rounded-xl ${category.color} mb-2 md:mb-3 transform group-hover:scale-110 transition-all duration-500`}>
+                  {React.cloneElement(category.icon, { strokeWidth: 2, className: "w-4 h-4 md:w-5 md:h-5" })}
                 </div>
                 
-                <h4 className="text-sm md:text-base font-bold text-slate-900 text-center">
+                <h4 className="text-[10px] md:text-sm font-bold text-slate-900 text-center leading-tight">
                   {category.name}
                 </h4>
                 
-                <div className="mt-1 px-2.5 py-0.5 rounded-full bg-white border border-slate-100 shadow-sm">
-                  <span className="text-[10px] md:text-xs font-semibold text-slate-400">
+                {/* Subtle Count Badge */}
+                <div className="mt-1 px-1.5 py-0.5 rounded-full bg-slate-50 border border-slate-50">
+                  <span className="text-[8px] md:text-[10px] font-semibold text-slate-400">
                     {category.count}
                   </span>
                 </div>
@@ -1668,19 +1679,21 @@ export default function Home() {
         whileInView="visible"
         viewport={{ once: true, amount: 0.15 }}
         variants={staggerContainer}
-        className="py-10 xs:py-12 md:py-14 px-6 lg:px-8 bg-white"
+        className="py-10 md:py-16 px-4 md:px-8"
       >
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight mb-4">
+        {/* max-w-5xl makes the section slightly more compact on laptops */}
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-10 md:mb-16">
+            <h2 className="text-2xl md:text-3xl font-bold text-slate-900 tracking-tight mb-3">
               {t('home.mobile.title')}
             </h2>
-            <p className="text-slate-500 max-w-2xl mx-auto text-base">
+            <p className="text-slate-500 max-w-xl mx-auto text-sm md:text-base px-4">
               {t('home.mobile.subtitle')}
             </p>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {/* grid-cols-2 for mobile (2 columns), lg:grid-cols-4 for laptop */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
             {[
               { icon: <Smartphone />, title: t('home.mobile.features.0.title'), desc: t('home.mobile.features.0.desc'), color: 'bg-blue-50 text-blue-600' },
               { icon: <Bell />, title: t('home.mobile.features.1.title'), desc: t('home.mobile.features.1.desc'), color: 'bg-indigo-50 text-indigo-600' },
@@ -1690,13 +1703,21 @@ export default function Home() {
               <motion.div
                 key={i}
                 variants={cardVariants}
-                className="group p-8 rounded-[1rem] bg-slate-50/50 border border-transparent hover:bg-white hover:border-slate-100 hover:shadow-2xl hover:shadow-slate-200/60 transition-all duration-500"
+                // p-5 for mobile, p-7 for laptop to keep it smaller than before
+                className="group p-5 md:p-7 rounded-2xl md:rounded-[2rem] bg-white border border-slate-100 hover:shadow-xl hover:shadow-slate-200/60 transition-all duration-500"
               >
-                <div className={`w-14 h-14 rounded-lg ${feature.color} flex items-center justify-center mb-6 transform group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 shadow-sm`}>
-                  {React.cloneElement(feature.icon, { strokeWidth: 2, className: "w-7 h-7" })}
+                {/* Smaller icon wrapper for a "tighter" feel */}
+                <div className={`w-10 h-10 md:w-12 md:h-12 rounded-lg ${feature.color} flex items-center justify-center mb-4 md:mb-6 transform group-hover:scale-110 transition-all duration-500 shadow-sm`}>
+                  {React.cloneElement(feature.icon, { strokeWidth: 2, className: "w-5 h-5 md:w-6 md:h-6" })}
                 </div>
-                <h4 className="font-bold text-slate-900 mb-3 text-lg">{feature.title}</h4>
-                <p className="text-slate-500 text-sm leading-relaxed">{feature.desc}</p>
+                
+                <h4 className="font-bold text-slate-900 mb-2 text-sm md:text-lg leading-tight">
+                  {feature.title}
+                </h4>
+                
+                <p className="text-slate-500 text-[11px] md:text-sm leading-relaxed">
+                  {feature.desc}
+                </p>
               </motion.div>
             ))}
           </div>
@@ -1709,27 +1730,34 @@ export default function Home() {
         whileInView="visible"
         viewport={{ once: true, amount: 0.15 }}
         variants={staggerContainer}
-        className="py-10 xs:py-12 md:py-14 px-6 lg:px-8 bg-white"
+        className="py-10 md:py-16 px-4 md:px-8"
       >
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight">
+        {/* Reduced to max-w-5xl for a more elegant, centered laptop view */}
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-10 md:mb-16">
+            <h2 className="text-2xl md:text-3xl font-bold text-slate-900 tracking-tight">
               {t('home.benefits.title')}
             </h2>
           </div>
 
-          <div className="grid grid-cols-2 xs:grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+          {/* grid-cols-2 for mobile (2 rows if 4 items), lg:grid-cols-4 for laptop */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
             {t('home.benefits.items', { returnObjects: true }).map((benefit, i) => (
               <motion.div
                 key={i}
                 variants={cardVariants}
-                className="group bg-white p-6 rounded-xl border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex items-center space-x-4 md:flex-col md:space-x-0 md:text-center md:justify-center"
+                // Smaller padding (p-5 mobile / p-7 laptop) for a tighter look
+                className="group p-5 md:p-7 rounded-2xl md:rounded-[2rem] bg-white border border-slate-100 hover:bg-white hover:shadow-xl hover:shadow-slate-200/60 transition-all duration-500 flex flex-col items-center text-center md:items-start md:text-start"
               >
-                {/* Soft Glow Star Icon */}
-                <div className="flex-shrink-0 w-10 h-10 md:mb-4 bg-emerald-50 rounded-md flex items-center justify-center group-hover:bg-emerald-500 transition-colors duration-300">
-                  <Star className="w-5 h-5 text-emerald-600 group-hover:text-white transition-colors duration-300" fill="currentColor" />
+                {/* Refined Icon: Balanced for both screen sizes */}
+                <div className="flex-shrink-0 w-10 h-10 md:w-12 md:h-12 mb-4 md:mb-6 bg-emerald-50 rounded-xl flex items-center justify-center group-hover:bg-emerald-500 transition-all duration-300 transform group-hover:scale-110 group-hover:rotate-3">
+                  <Star 
+                    className="w-5 h-5 md:w-6 md:h-6 text-emerald-600 group-hover:text-white transition-colors duration-300" 
+                    fill="currentColor" 
+                  />
                 </div>
-                <p className="font-bold text-slate-800 text-sm md:text-base leading-tight">
+                
+                <p className="font-bold text-slate-800 text-xs md:text-[15px] leading-tight">
                   {benefit}
                 </p>
               </motion.div>
@@ -1744,47 +1772,48 @@ export default function Home() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className="py-10 xs:py-12 md:py-14 px-6 lg:px-8 bg-white"
+        className="py-10 md:py-16 px-4 md:px-8"
       >
-        {/* The Main "Island" Container */}
-        <div className="max-w-5xl mx-auto bg-slate-900 rounded-[1rem] p-8 md:p-16 text-center relative overflow-hidden shadow-2xl shadow-emerald-200/20">
+        {/* Smaller "Island" Container: max-w-5xl and blue gradient */}
+        <div className="max-w-5xl mx-auto bg-gradient-to-br from-blue-600 to-blue-700 rounded-[2rem] p-8 md:p-14 text-center relative overflow-hidden shadow-2xl shadow-blue-200/50">
           
-          {/* Subtle Decorative Background Element */}
-          <div className="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
+          {/* Decorative Elements: Soft light blue glows */}
+          <div className="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 bg-white/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute bottom-0 left-0 -ml-16 -mb-16 w-48 h-48 bg-blue-400/20 rounded-full blur-2xl pointer-events-none" />
 
-          <div className="relative z-10 max-w-3xl mx-auto">
-            <h2 className="text-3xl md:text-5xl font-black text-white tracking-tighter mb-6">
+          <div className="relative z-10 max-w-2xl mx-auto">
+            <h2 className="text-2xl md:text-4xl font-bold text-white tracking-tight mb-4 md:mb-6">
               {t('home.finalCTA.title')}
             </h2>
             
-            <p className="text-slate-400 text-base md:text-lg mb-10 leading-relaxed">
+            <p className="text-blue-100/80 text-sm md:text-base mb-8 md:mb-10 leading-relaxed px-4">
               {t('home.finalCTA.subtitle')}
             </p>
 
-            <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
-              {/* Primary CTA: High Contrast */}
+            {/* Buttons: Fixed height/padding for a "smaller" refined feel */}
+            <div className="flex flex-col sm:flex-row justify-center items-center gap-3 md:gap-4 px-4">
+              {/* Primary CTA */}
               <motion.button
                 whileHover={{ scale: 1.02, y: -2 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => navigate('/signup-user')}
-                className="group flex items-center justify-center gap-3 px-8 py-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-base md:text-lg rounded-full transition-all duration-300 w-full sm:w-auto shadow-lg shadow-emerald-500/20"
+                className="group flex items-center justify-center gap-2 px-7 py-2 bg-white text-blue-700 font-bold text-sm md:text-base rounded-full transition-all duration-300 w-full sm:w-auto shadow-lg shadow-blue-900/20"
               >
                 {t('home.finalCTA.userCTA')}
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </motion.button>
 
-              {/* Secondary CTA: Soft Ghost Style */}
+              {/* Secondary CTA: Soft Glass Style */}
               <motion.a
                 href="https://subscription-frontend-psi.vercel.app/subscription"
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.02, y: -2 }}
                 whileTap={{ scale: 0.98 }}
-                className="group flex items-center justify-center gap-3 px-8 py-2 bg-slate-800 hover:bg-slate-700 text-white font-bold text-base md:text-lg rounded-full transition-all duration-300 w-full sm:w-auto border border-slate-700"
+                className="group flex items-center justify-center gap-2 px-7 py-2 bg-white/10 hover:bg-white/20 text-white font-bold text-sm md:text-base rounded-full transition-all duration-300 w-full sm:w-auto border border-white/20 backdrop-blur-sm"
               >
                 {t('home.finalCTA.businessCTA')}
-                <Store className="w-5 h-5 text-slate-400 group-hover:text-emerald-400 transition-colors" />
+                <Store className="w-4 h-4 text-blue-200 group-hover:text-white transition-colors" />
               </motion.a>
             </div>
           </div>

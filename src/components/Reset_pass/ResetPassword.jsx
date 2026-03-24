@@ -50,11 +50,11 @@ const ResetPassword = () => {
       ctx.fillRect(0, 0, 140, 40);
       
       ctx.font = "bold 24px 'Inter', sans-serif";
-      ctx.fillStyle = "#6d28d9";
+      ctx.fillStyle = "#747275";
       ctx.textAlign = 'center';
       
       for(let i=0; i<3; i++) {
-        ctx.strokeStyle = `rgba(200, 200, 200, 0.6)`;
+        ctx.strokeStyle = `rgba(150, 149, 149, 0.6)`;
         ctx.beginPath();
         ctx.moveTo(Math.random() * 140, Math.random() * 40);
         ctx.lineTo(Math.random() * 140, Math.random() * 40);
@@ -122,7 +122,7 @@ const ResetPassword = () => {
       <div className="w-full max-w-md sm:max-w-md bg-white rounded-xl p-8 shadow-sm border border-slate-200">
         
         <div className="text-center mb-8">
-            <Lock className="h-10 w-10 text-purple-700 mx-auto mb-2" />
+            <Lock className="h-10 w-10 text-blue-700 mx-auto mb-2" />
             <h2 className="text-3xl font-extrabold text-gray-800">
                 {t("resetPassword.title")}
             </h2>
@@ -158,14 +158,14 @@ const ResetPassword = () => {
                 placeholder={t("resetPassword.placeholder.newPassword")}
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
-                className="w-full h-12 px-4 py-2 text-base text-gray-900 bg-gray-100 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-purple-600 transition duration-200 placeholder:text-gray-500"
+                className="w-full h-12 px-4 py-2 text-base text-gray-900 bg-gray-100 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-indigo-600 transition duration-200 placeholder:text-gray-500"
                 required
                 disabled={loading}
             />
             <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-purple-600 transition"
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-blue-600 transition"
                 disabled={loading}
             >
                 {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
@@ -179,14 +179,14 @@ const ResetPassword = () => {
                 placeholder={t("resetPassword.placeholder.confirmPassword")}
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                className="w-full h-12 px-4 py-2 text-base text-gray-900 bg-gray-100 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-purple-600 transition duration-200 placeholder:text-gray-500"
+                className="w-full h-12 px-4 py-2 text-base text-gray-900 bg-gray-100 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-indigo-600 transition duration-200 placeholder:text-gray-500"
                 required
                 disabled={loading}
             />
             <button
                 type="button"
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-purple-600 transition"
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-blue-600 transition"
                 disabled={loading}
             >
                 {showConfirmPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
@@ -206,7 +206,7 @@ const ResetPassword = () => {
                 <button
                     type="button"
                     onClick={generateCaptcha}
-                    className="flex-shrink-0 text-sm text-purple-600 hover:text-purple-700 font-medium flex items-center gap-1 transition-colors disabled:opacity-50"
+                    className="flex-shrink-0 text-sm text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1 transition-colors disabled:opacity-50"
                     disabled={loading}
                 >
                     <RefreshCw className="h-4 w-4" /> {t("resetPassword.captcha.refresh")}
@@ -221,7 +221,7 @@ const ResetPassword = () => {
                 placeholder={t("resetPassword.placeholder.captcha")}
                 value={captchaInput}
                 onChange={(e) => setCaptchaInput(e.target.value)}
-                className="w-full h-12 px-4 py-2 text-base text-gray-900 bg-gray-100 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-purple-600 transition duration-200 placeholder:text-gray-500"
+                className="w-full h-12 px-4 py-2 text-base text-gray-900 bg-gray-100 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-indigo-600 transition duration-200 placeholder:text-gray-500"
                 required
                 disabled={loading}
             />
@@ -233,8 +233,8 @@ const ResetPassword = () => {
             disabled={loading || !!message}
             className={`w-full flex justify-center items-center gap-3 py-2 text-md rounded-full font-bold text-white transition-all duration-300 shadow-md ${
               loading || !!message
-                ? "bg-purple-400 cursor-not-allowed opacity-80"
-                : "bg-purple-700 hover:bg-purple-800 active:scale-[0.99] transform"
+                ? "bg-blue-400 cursor-not-allowed opacity-80"
+                : "bg-blue-700 hover:bg-blue-800 active:scale-[0.99] transform"
             }`}
           >
             {loading ? (
@@ -253,7 +253,7 @@ const ResetPassword = () => {
         
         {/* Return Link */}
         <div className="text-center mt-6 text-sm">
-            <button onClick={() => navigate("/signin")} className="text-purple-600 hover:text-purple-700 font-semibold transition duration-200 hover:underline">
+            <button onClick={() => navigate("/signin")} className="text-blue-600 hover:text-blue-700 font-semibold transition duration-200 hover:underline">
                 {t("resetPassword.footer.returnToSignIn")}
             </button>
         </div>

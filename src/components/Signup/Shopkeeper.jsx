@@ -121,7 +121,7 @@ function Shopkeeper() {
       const ctx = canvas.getContext("2d");
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.font = "bold 22px Arial";
-      ctx.fillStyle = "#0D9488"; 
+      ctx.fillStyle = "#767779"; 
  
       ctx.save();
       ctx.translate(10, 28);
@@ -129,7 +129,7 @@ function Shopkeeper() {
       ctx.fillText(text, 0, 0);
       ctx.restore();
       
-      ctx.strokeStyle = '#34D399'; 
+      ctx.strokeStyle = '#767779'; 
       ctx.lineWidth = 1;
       for (let i = 0; i < 3; i++) {
         ctx.beginPath();
@@ -466,7 +466,7 @@ function Shopkeeper() {
                 type="submit"
                 disabled={loading}
                 className={`w-full bg-slate-900 text-white font-bold py-2 rounded-full shadow-sm transition-all duration-300 text-md
-                ${loading ? "opacity-60 cursor-not-allowed" : "hover:bg-emerald-600 active:scale-[0.99]"}`}
+                ${loading ? "opacity-60 cursor-not-allowed" : "hover:bg-blue-600 active:scale-[0.99]"}`}
               >
                 {loading ? (
                   <span className="flex items-center justify-center gap-2">
@@ -493,7 +493,7 @@ function Shopkeeper() {
               onClick={nextStep}
               disabled={step === 2 && !isEmailVerified}
               className={`w-full py-2 bg-slate-900 text-white font-semibold rounded-full shadow-sm transition-all duration-300 text-base
-              ${(step === 2 && !isEmailVerified) ? "opacity-60 cursor-not-allowed" : "hover:bg-emerald-600 active:scale-[0.99]"}
+              ${(step === 2 && !isEmailVerified) ? "opacity-60 cursor-not-allowed" : "hover:bg-blue-600 active:scale-[0.99]"}
               `}
             >
               {t("shopkeeper.nextStep")} ({step + 1}/3)
@@ -515,7 +515,7 @@ function Shopkeeper() {
           <span className="text-gray-500">{t("shopkeeper.alreadyHaveAccount")} </span>
           <button 
             onClick={() => navigate("/signin")} 
-            className="text-teal-600 hover:text-teal-700 font-medium hover:underline"
+            className="text-blue-600 hover:text-blue-700 font-medium hover:underline"
           >
             {t("shopkeeper.signIn")}
           </button>
