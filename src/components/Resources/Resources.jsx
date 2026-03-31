@@ -63,7 +63,7 @@ export default function Resources() {
     <>
       <section className="py-16 md:py-24 px-4 md:px-6">
         {/* max-w-5xl keeps the resource cards looking elegant and professional on laptops */}
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -95,9 +95,9 @@ export default function Resources() {
                   variants={item}
                   whileHover={{ y: -5 }}
                   onClick={() => openModal({ ...resource, details: getDetails(resource.key) })}
-                  className="group relative flex flex-col text-left p-6 md:p-8 bg-white/70 backdrop-blur-sm rounded-2xl md:rounded-[2rem] border border-blue-50 shadow-sm hover:shadow-xl hover:shadow-blue-500/5 transition-all duration-500"
+                  className="group relative flex flex-col text-left p-6 md:p-8 bg-white/70 backdrop-blur-sm rounded-xl md:rounded-[1rem] border border-blue-50 shadow-sm hover:shadow-xl hover:shadow-blue-500/5 transition-all duration-500"
                 >
-                  <div className="mb-6 p-4 w-fit rounded-xl bg-blue-50 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300">
+                  <div className="mb-6 p-3 w-fit rounded-lg bg-blue-50 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300">
                     <Icon className="w-5 h-5 md:w-6 md:h-6" />
                   </div>
 
@@ -139,7 +139,7 @@ export default function Resources() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 100 }}
               transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-              className="relative max-w-xl w-full bg-white rounded-t-[2rem] sm:rounded-[2rem] shadow-2xl overflow-hidden"
+              className="relative max-w-xl w-full bg-white rounded-t-[1rem] sm:rounded-[1rem] shadow-2xl overflow-hidden"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Refined Close Button */}

@@ -971,10 +971,10 @@ export default function InviteEmployeePage() {
   return (
     <>
       <div className="min-h-screen p-3 sm:p-6 md:p-8">
-        <div className="max-w-6xl mx-auto p-2 space-y-8">
+        <div className="max-w-7xl mx-auto p-2 space-y-8">
 
           {/* Header */}
-          <div className="flex flex-col sm:flex-row justify-between items-center sm:items-center gap-4">
+          <div className="flex flex-col sm:flex-row justify-between items-center sm:items-center gap-4 border-b border-gray-200 pb-4">
             <div>
               <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 flex items-center gap-3">
                 <Users className="w-8 h-8 text-blue-600" />
@@ -984,7 +984,7 @@ export default function InviteEmployeePage() {
             </div>
             <button
               onClick={() => setIsModalOpen(true)}
-              className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-medium px-5 sm:px-3 py-2 rounded-full shadow-lg hover:shadow-xl transition-all"
+              className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-medium px-5 sm:px-3 py-1.5 rounded-full shadow-lg hover:shadow-xl transition-all"
             >
               <Plus className="w-5 h-5" />
               {t('employee.buttons.invite')}
@@ -999,7 +999,7 @@ export default function InviteEmployeePage() {
             <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
               {/* Tabs - Fully Responsive */}
               <div className="border-b border-gray-200">
-                <div className="flex flex-row sm:flex-row">
+                <div className="flex flex-col sm:flex-row">
                   <button
                     onClick={() => setActiveTab('employees')}
                     className={`flex-1 px-4 py-4 sm:px-6 text-sm font-semibold transition-all flex items-center justify-center sm:justify-center gap-2 
@@ -1107,7 +1107,7 @@ export default function InviteEmployeePage() {
                             <button
                               onClick={() => toggleStatus(emp.userId, emp.isActive, shopId)}
                               disabled={loading}
-                              className={`px-3 py-2 rounded-full font-medium text-sm transition-all mt-2 sm:mt-0 sm:w-auto flex items-center justify-center gap-2
+                              className={`px-3 py-1.5 rounded-full font-medium text-sm transition-all mt-2 sm:mt-0 sm:w-auto flex items-center justify-center gap-2
                                 ${emp.isActive 
                                   ? 'bg-red-50 text-red-700 hover:bg-red-100 border border-red-200' 
                                   : 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200'}
@@ -1184,7 +1184,7 @@ export default function InviteEmployeePage() {
                             <div className="flex gap-2 justify-end sm:justify-start">
                               <button
                                 onClick={() => resendInvite(inv.id)}
-                                className="p-2 px-3 bg-violet-600 hover:bg-violet-700 text-white rounded-full transition"
+                                className="p-1.5 px-3 bg-violet-600 hover:bg-violet-700 text-white rounded-full transition"
                                 title={t('employee.buttons.resend')}
                               >
                                 {/* <RefreshCw className="w-4.5 h-4.5" /> */}
@@ -1192,7 +1192,7 @@ export default function InviteEmployeePage() {
                               </button>
                               <button
                                 onClick={() => deleteInvite(inv.id)}
-                                className="p-2 px-3 bg-red-600 hover:bg-red-700 text-white rounded-full transition"
+                                className="p-1.5 px-3 bg-red-600 hover:bg-red-700 text-white rounded-full transition"
                                 title={t('employee.buttons.delete')}
                               >
                                 {/* <Trash2 className="w-4.5 h-4.5" /> */}

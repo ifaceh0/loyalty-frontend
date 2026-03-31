@@ -531,13 +531,13 @@ import { API_BASE_URL } from '../../apiConfig';
 import { fetchWithAuth } from "../../auth/fetchWithAuth";
 
 const inputStyle = (isEditing) => 
-  `w-full px-3 sm:px-4 py-2.5 sm:py-3 border rounded-lg outline-none transition duration-200 shadow-sm text-gray-800 text-sm sm:text-base ${
+  `w-full px-3 sm:px-4 py-2 border rounded-lg outline-none transition duration-200 shadow-sm text-gray-800 text-sm sm:text-base ${
     isEditing ? "border-blue-400 focus:ring-2 focus:ring-blue-500/50" : "border-gray-200 bg-gray-100 cursor-default"
   }`;
 
 const SectionWrapper = ({ title, children, icon, className = "" }) => (
-  <div className={`bg-white p-4 sm:p-6 rounded-xl border border-gray-200 ${className}`}>
-    <h3 className="text-lg sm:text-xl font-bold text-blue-700 border-b pb-2 sm:pb-3 mb-3 sm:mb-4 flex items-center gap-2">
+  <div className={`bg-white p-6 sm:p-8 rounded-xl border border-slate-100 ${className}`}>
+    <h3 className="text-lg sm:text-xl font-bold text-slate-900 pb-2 sm:pb-3 mb-3 sm:mb-4 flex items-center gap-2">
       {icon} {title}
     </h3>
     <div className="space-y-4">
@@ -794,17 +794,17 @@ const ShopkeeperProfile = () => {
     return (
       <div className="flex flex-col items-center justify-center h-64 p-4">
         <FiLoader className="w-10 h-10 sm:w-12 sm:h-12 text-blue-600 animate-spin" />
-        <p className="mt-3 sm:mt-4 text-sm sm:text-base text-blue-600 font-medium">
+        {/* <p className="mt-3 sm:mt-4 text-sm sm:text-base text-blue-600 font-medium">
           {t("shopProfile.loading")}
-        </p>
+        </p> */}
       </div>
     );
   }
 
   return (
-    <div className="max-w-6xl mx-auto rounded-xl shadow-md border border-gray-200 overflow-hidden mt-2 p-3 sm:p-0">
+    <div className="max-w-7xl mx-auto rounded-xl shadow-sm border border-slate-100 overflow-hidden mt-2 p-3 sm:p-0">
       {/* Header/Navigation */}
-      <nav className="bg-white rounded-t-xl text-blue-600 px-4 sm:px-8 py-3 flex flex-row sm:flex-row justify-between items-start sm:items-center gap-3">
+      <nav className="bg-white text-slate-900 px-4 sm:px-8 py-4 flex flex-row justify-between items-start gap-3">
         <h2 className="text-xl sm:text-2xl font-extrabold flex items-center gap-2">
           {/* <FiUser className="w-5 h-5 sm:w-6 sm:h-6"/> */}
            {t("shopProfile.header.title")}
@@ -813,7 +813,7 @@ const ShopkeeperProfile = () => {
             {isEditing && (
                 <button
                 type="button"
-                className="bg-red-500 hover:bg-red-600 text-white px-3 sm:px-4 py-2 rounded-full transition duration-200 flex items-center gap-1.5 sm:gap-2 font-semibold text-sm"
+                className="bg-red-500 hover:bg-red-600 text-white px-3 sm:px-4 py-1.5 rounded-full transition duration-200 flex items-center gap-1.5 sm:gap-2 font-semibold text-sm"
                 onClick={handleCancel}
                 disabled={isSubmitting}
                 >
@@ -826,7 +826,7 @@ const ShopkeeperProfile = () => {
                 <button
                 type="submit"
                 form="profile-form"
-                className={`text-white px-4 sm:px-5 py-2 rounded-full transition duration-200 flex items-center gap-1.5 sm:gap-2 font-semibold text-sm ${
+                className={`text-white px-4 sm:px-5 py-1.5 rounded-full transition duration-200 flex items-center gap-1.5 sm:gap-2 font-semibold text-sm ${
                     isSubmitting ? 'bg-green-400 cursor-not-allowed' : 'bg-green-500 hover:bg-green-600'
                 }`}
                 disabled={isSubmitting}
@@ -848,7 +848,7 @@ const ShopkeeperProfile = () => {
             {!isEditing && (
                 <button
                 type="button"
-                className="bg-blue-600 hover:bg-blue-700 text-white px-4 sm:px-5 py-2 rounded-full transition duration-200 flex items-center gap-1.5 sm:gap-2 font-semibold text-sm"
+                className="bg-slate-900 hover:bg-blue-600 text-white px-4 sm:px-5 py-1.5 rounded-full transition duration-200 flex items-center gap-1.5 sm:gap-2 font-semibold text-sm"
                 onClick={() => setIsEditing(true)}
                 >
                 {/* <FiEdit3 className="w-4 h-4 sm:w-5 sm:h-5" /> */}
@@ -859,7 +859,7 @@ const ShopkeeperProfile = () => {
       </nav>
 
       {/* Main Content Area */}
-      <div className="p-2 sm:p-4 space-y-6 sm:space-y-8">
+      <div className="bg-white p-2 sm:p-4 space-y-6 sm:space-y-8">
         <form onSubmit={handleSubmit} id="profile-form" className="space-y-6 sm:space-y-8">
           
           {/* Section 1: Logo and Shop Name */}
@@ -894,7 +894,7 @@ const ShopkeeperProfile = () => {
                             type="file"
                             accept="image/jpeg,image/png"
                             onChange={handleFileChange}
-                            className="w-full text-xs sm:text-sm file:mr-3 sm:file:mr-4 file:py-1.5 sm:file:py-2 file:px-3 sm:file:px-4 file:rounded-full file:border-0 file:text-xs sm:file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                            className="w-full text-xs sm:text-sm file:mr-3 sm:file:mr-4 file:py-1.5 sm:file:py-1.5 file:px-3 sm:file:px-4 file:rounded-full file:border-0 file:text-xs sm:file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
                         />
                         
                         <div className="flex flex-col sm:flex-row gap-2">
@@ -903,7 +903,7 @@ const ShopkeeperProfile = () => {
                                     type="button"
                                     onClick={uploadImage}
                                     disabled={isUploading}
-                                    className={`flex-1 bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-full flex items-center justify-center gap-1 text-xs sm:text-sm transition ${isUploading ? "opacity-50 cursor-not-allowed" : ""}`}
+                                    className={`flex-1 bg-green-600 hover:bg-green-700 text-white px-3 py-1.5 rounded-full flex items-center justify-center gap-1 text-xs sm:text-sm transition ${isUploading ? "opacity-50 cursor-not-allowed" : ""}`}
                                 >
                                     {isUploading ? t("shopProfile.logo.uploading") : t("shopProfile.logo.upload")}
                                 </button>
@@ -913,7 +913,7 @@ const ShopkeeperProfile = () => {
                                     type="button"
                                     onClick={removeImage}
                                     disabled={isRemoving}
-                                    className={`bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-full flex items-center justify-center gap-1 text-xs sm:text-sm transition ${isRemoving ? "opacity-50 cursor-not-allowed" : ""}`}
+                                    className={`bg-red-500 hover:bg-red-600 text-white px-3 py-1.5 rounded-full flex items-center justify-center gap-1 text-xs sm:text-sm transition ${isRemoving ? "opacity-50 cursor-not-allowed" : ""}`}
                                 >
                                     <FiTrash2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                                     {isRemoving ? t("shopProfile.logo.removing") : t("shopProfile.logo.remove")}

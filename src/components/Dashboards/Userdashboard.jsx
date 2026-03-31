@@ -485,8 +485,8 @@ const Userdashboard = () => {
     <div className="flex min-h-screen font-sans text-slate-900">
       {/* Sidebar */}
       <aside
-        className={`fixed inset-y-0 left-0 z-50 bg-white border-r border-slate-200 shadow-sm transition-all duration-300 ease-in-out
-          ${sidebarOpen ? "translate-x-0 w-64" : "-translate-x-full lg:translate-x-0"} 
+        className={`fixed inset-y-0 left-0 z-50 bg-white rounded-r-[1.5rem] border-r border-slate-100 shadow-sm transition-all duration-300 ease-in-out
+          ${sidebarOpen ? "translate-x-0 w-[85%] max-w-xs" : "-translate-x-full lg:translate-x-0"} 
           ${isExpanded ? "lg:w-64" : "lg:w-18"}
         `}
       >
@@ -514,7 +514,7 @@ const Userdashboard = () => {
           </div>
 
           {/* Navigation */}
-          <nav className="flex-1 space-y-5 sm:space-y-3">
+          <nav className="flex-1 space-y-5 sm:space-y-3 mt-4">
             {menuItems.map(({ tab, icon, label }) => {
               const isActive = activeTab === tab;
               const showText = isExpanded || sidebarOpen;

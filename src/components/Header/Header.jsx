@@ -442,7 +442,7 @@ export default function Header() {
         </div>
       </motion.div>
 
-      <motion.div variants={itemVariants} className="mt-auto">
+      <motion.div variants={itemVariants} className="mt-4">
         <NavLink to="/signin" className="w-full py-2 bg-blue-600 text-white font-bold rounded-full shadow-xl shadow-blue-500/20 text-center block">
           {t('header.signIn')}
         </NavLink>
@@ -475,7 +475,7 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-slate-100">
-      <nav className="max-w-8xl mx-auto px-4 sm:px-8 py-4 flex items-center justify-between">
+      <nav className="max-w-8xl mx-auto px-3 sm:px-8 py-4 flex items-center justify-between">
         
         {/* Left: Logo Area */}
         <div className="flex items-center">
@@ -485,8 +485,24 @@ export default function Header() {
             </button>
           )}
           {!isLoggedIn && (
-            <Link to="/" className="flex items-center transition-opacity hover:opacity-80">
-              <img src={logo} alt="LoyaltyHub" className="h-9 sm:h-11 w-auto" />
+            // <Link to="/" className="flex items-center gap-1 group">
+            //   <span className="text-2xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-blue-500">
+            //     LOYALTY
+            //   </span>
+            //   <span className="text-2xl font-light tracking-tight text-slate-800">
+            //     HUB
+            //   </span>
+            //   <span className="h-2 w-2 rounded-full bg-indigo-600 animate-pulse mt-3"></span>
+            // </Link>
+            <Link to="/" className="flex items-center gap-3 group">
+              <div className="bg-slate-900 text-white font-bold px-2 py-1 rounded-lg transform group-hover:rotate-12 transition-transform duration-300">
+                <span className="text-xl">L</span>
+                <span className="text-xl text-blue-500">H</span>
+              </div>
+              <div className="flex flex-col">
+                <span className="text-lg font-bold leading-none text-slate-900 tracking-wide">LOYALTY</span>
+                <span className="text-xs font-medium uppercase tracking-[0.2em] text-slate-500">Platform</span>
+              </div>
             </Link>
           )}
         </div>
@@ -528,7 +544,7 @@ export default function Header() {
           ) : (
             <div className="hidden lg:block relative group">
               <button className="flex items-center gap-3 pl-2 pr-4 py-1 rounded-full border border-slate-100 hover:bg-slate-50 transition-all">
-                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 text-white flex items-center justify-center font-bold text-xs shadow-inner shadow-white/20">
+                <div className="w-6 h-6 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 text-white flex items-center justify-center font-bold text-xs shadow-inner shadow-white/20">
                   {userName?.charAt(0).toUpperCase() || 'U'}
                 </div>
                 <span className="text-sm font-bold text-slate-700">{userName}</span>
@@ -548,14 +564,14 @@ export default function Header() {
             className="lg:hidden active:scale-90 transition-transform"
           >
             {mobileMenuOpen ? (
-              <div className="w-11 h-11 flex items-center justify-center rounded-2xl bg-slate-100 text-slate-900 border border-slate-200 shadow-sm">
+              <div className="w-11 h-11 flex items-center justify-center rounded-full bg-slate-100 text-slate-900 border border-slate-200 shadow-sm">
                 <X size={24} />
               </div>
             ) : isLoggedIn ? (
               <UserOnlineIcon />
             ) : (
-              <div className="w-9 h-9 flex items-center justify-center rounded-full bg-slate-900 text-white shadow-lg">
-                <List size={22} />
+              <div className="w-10 h-10 flex items-center justify-center rounded-lg bg-slate-900 text-white shadow-lg">
+                <List size={24} />
               </div>
             )}
           </button>
@@ -567,9 +583,16 @@ export default function Header() {
         {mobileMenuOpen && (
           <>
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-40 lg:hidden" onClick={() => setMobileMenuOpen(false)} />
-            <motion.div variants={menuVariants} initial="closed" animate="opened" exit="closed" className="fixed top-0 right-0 h-screen w-[85%] max-w-xs bg-white shadow-2xl z-50 lg:hidden overflow-y-auto rounded-l-[1.5rem] flex flex-col">
+            <motion.div variants={menuVariants} initial="closed" animate="opened" exit="closed" className="fixed top-0 right-0 h-screen w-[85%] max-w-sm bg-white shadow-2xl z-50 lg:hidden overflow-y-auto rounded-l-[1.5rem] flex flex-col">
               <div className="p-4 flex items-center justify-between border-b border-slate-50">
-                <img src={logo} alt="Logo" className="h-8" />
+                {/* <img src={logo} alt="Logo" className="h-8" /> */}
+                <div className="relative group">
+                  <span className="text-xl font-extrabold text-slate-800 tracking-tight">
+                    Loyalty<span className="text-blue-500 underline decoration-2 decoration-blue-200 underline-offset-4">Hub</span>
+                  </span>
+                  {/* A small dot for flair */}
+                  <span className="absolute -top-1 -right-2 h-1.5 w-1.5 rounded-full bg-blue-500"></span>
+                </div>
                 {/* Language Selector added to Mobile Top */}
                 <div className="flex items-center gap-2">
                   <LanguageSelector />

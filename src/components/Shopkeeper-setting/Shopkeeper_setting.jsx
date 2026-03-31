@@ -570,8 +570,8 @@ const inputStyle =
   "w-full px-3 sm:px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition duration-200 text-sm sm:text-base";
 
 const SectionWrapper = ({ title, children, isEditMode }) => (
-  <div className={`p-4 sm:p-6 rounded-xl border-2 ${isEditMode ? 'border-blue-200 bg-white' : 'border-gray-100 bg-gray-50 shadow-inner'} space-y-3 sm:space-y-4 transition-colors duration-300`}>
-    <h3 className="text-lg sm:text-xl font-bold text-blue-700 border-b pb-2">{title}</h3>
+  <div className={`p-6 sm:p-8 rounded-xl border-2 ${isEditMode ? 'border-blue-100 bg-white' : 'border-gray-100 bg-gray-50 shadow-inner'} space-y-3 sm:space-y-4 transition-colors duration-300`}>
+    <h3 className="text-lg sm:text-xl font-bold text-slate-900 pb-2">{title}</h3>
     {children}
   </div>
 );
@@ -791,17 +791,17 @@ const ShopkeeperSetting = () => {
     return (
       <div className="flex flex-col items-center justify-center h-64 p-4">
         <FiLoader className="w-10 h-10 sm:w-12 sm:h-12 text-blue-600 animate-spin" />
-        <p className="mt-3 text-sm sm:text-base text-blue-600 font-medium">
+        {/* <p className="mt-3 text-sm sm:text-base text-blue-600 font-medium">
           {t("shopSettings.loading")}
-        </p>
+        </p> */}
       </div>
     );
   }
 
   return (
-    <div className="max-w-6xl mx-auto rounded-xl shadow-md border border-gray-200 overflow-hidden my-2 p-3 sm:p-0">
+    <div className="max-w-7xl mx-auto rounded-xl shadow-sm border border-slate-100 overflow-hidden my-2 p-3 sm:p-0">
       {/* Header */}
-      <nav className="bg-white text-blue-600 rounded-t-xl px-4 sm:px-6 py-3 flex flex-row sm:flex-row justify-between items-start sm:items-center gap-3">
+      <nav className="bg-white text-slate-900 rounded-t-xl px-4 sm:px-6 py-4 flex flex-row sm:flex-row justify-between items-start sm:items-center gap-3">
         <h2 className="text-xl sm:text-2xl font-extrabold flex items-center gap-2">
           {/* <FiSettings className="w-5 h-5 sm:w-6 sm:h-6"/> */}
           {t("shopSettings.header.title")}
@@ -811,7 +811,7 @@ const ShopkeeperSetting = () => {
           {isEditMode && (
              <button
                 onClick={handleCancelEdit}
-                className="bg-red-500 hover:bg-red-600 text-white px-3 sm:px-4 py-2 rounded-full transition duration-200 flex items-center gap-1 font-medium sm:font-semibold text-sm"
+                className="bg-red-500 hover:bg-red-600 text-white px-3 sm:px-4 py-1.5 rounded-full transition duration-200 flex items-center gap-1 font-medium sm:font-semibold text-sm"
                 disabled={isSaving}
             >
                 {/* <FiX className="w-4 h-4 sm:w-5 sm:h-5" /> */}
@@ -822,7 +822,7 @@ const ShopkeeperSetting = () => {
           <button
             onClick={handleSubmit}
             disabled={isSaving}
-            className={`text-white px-4 sm:px-5 py-2 rounded-full transition duration-200 flex items-center gap-1.5 sm:gap-2 font-medium sm:font-semibold text-sm ${
+            className={`text-white px-4 sm:px-5 py-1.5 rounded-full transition duration-200 flex items-center gap-1.5 sm:gap-2 font-medium sm:font-semibold text-sm ${
               isEditMode
                 ? (isSaving ? 'bg-green-400 cursor-not-allowed' : 'bg-green-500 hover:bg-green-600')
                 : 'bg-blue-600 hover:bg-blue-700'
@@ -849,7 +849,7 @@ const ShopkeeperSetting = () => {
       </nav>
 
       {/* Main Content */}
-      <div className="p-2 sm:p-4 space-y-6 sm:space-y-8">
+      <div className="bg-white p-2 sm:p-4 space-y-6 sm:space-y-8">
         <form onSubmit={handleSubmit} className="space-y-6 sm:space-y-8">
           {/* Section 1: Basic Point Mechanics */}
           <SectionWrapper title={t("shopSettings.sections.basic")} isEditMode={isEditMode}>

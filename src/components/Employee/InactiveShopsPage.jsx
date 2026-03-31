@@ -347,15 +347,15 @@ export default function InactiveShopsPage() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: idx * 0.05 }}
-                  className="group relative bg-white rounded-[1rem] p-4 border border-stone-100 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)] transition-all hover:shadow-[0_30px_60px_-12px_rgba(0,0,0,0.08)] hover:-translate-y-1"
+                  className="group relative bg-white rounded-xl p-2 border border-slate-200 hover:border-slate-300 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)] transition-all hover:shadow-[0_30px_60px_-12px_rgba(0,0,0,0.08)] hover:-translate-y-1"
                 >
                   {/* Logo Well */}
-                  <div className="aspect-square rounded-[1rem] bg-stone-50 mb-1 flex items-center justify-center overflow-hidden border border-stone-100/50">
+                  <div className="h-44 rounded-xl bg-stone-50 mb-1 flex items-center justify-center overflow-hidden border border-stone-100/50">
                     {shop.shopLogoBase64 ? (
                       <img
                         src={`data:image/png;base64,${shop.shopLogoBase64}`}
                         alt={shop.shopName}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        className="w-full h-44 object-cover transition-transform duration-700 group-hover:scale-110"
                       />
                     ) : (
                       <Store className="w-12 h-12 text-stone-200" />
