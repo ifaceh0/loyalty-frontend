@@ -1,1303 +1,13 @@
-// import React, { useState, useEffect } from 'react';
-// import { useNavigate } from 'react-router-dom';
-// import CountUp from 'react-countup';
-// import {
-//   ChevronLeft,
-//   ChevronRight,
-//   Users,
-//   Store,
-//   DollarSign,
-//   Gift,
-//   Star,
-//   ArrowRight,
-//   CheckCircle,
-//   Crown,
-//   Zap,
-//   Heart,
-//   Coffee,
-//   ShoppingBag,
-//   Utensils,
-//   Car,
-//   Gamepad2,
-//   Smartphone,
-//   Bell,
-//   TrendingUp,
-//   Award,
-//   UserPlus,
-//   Calendar,
-//   MapPin,
-// } from 'lucide-react';
-
-// // Import your local images
-// import carousel1 from '../../assets/carousel1.jpg';
-// import carousel2 from '../../assets/carousel2.jpg';
-// import carousel3 from '../../assets/carousel3.jpg';
-// import carousel4 from '../../assets/carousel4.jpg';
-// import carousel5 from '../../assets/carousel5.jpg';
-
-// const heroImages = [carousel1, carousel2, carousel3, carousel4, carousel5];
-
-// export default function Home() {
-//   const navigate = useNavigate();
-
-//   const [currentIndex, setCurrentIndex] = useState(0);
-//   const [stats, setStats] = useState({
-//     totalUsers: 0,
-//     totalShops: 0,
-//     totalTransactionAmount: 0,
-//   });
-//   const [loading, setLoading] = useState(true);
-
-//   // Fetch data from backend
-//   useEffect(() => {
-//     const fetchSummary = async () => {
-//       try {
-//         const response = await fetch(
-//           'https://loyalty-backend-java.onrender.com/api/loyalty_homePage/summary'
-//         );
-//         const data = await response.json();
-//         setStats({
-//           totalUsers: data.totalUsers || 0,
-//           totalShops: data.totalShops || 0,
-//           totalTransactionAmount: data.totalTransactionAmount || 0,
-//         });
-//       } catch (error) {
-//         console.error('Failed to fetch summary:', error);
-//       } finally {
-//         setLoading(false);
-//       }
-//     };
-//     fetchSummary();
-//   }, []);
-
-//   // Auto-slide
-//   useEffect(() => {
-//     const timer = setInterval(() => {
-//       setCurrentIndex((prev) => (prev + 1) % heroImages.length);
-//     }, 5000);
-//     return () => clearInterval(timer);
-//   }, []);
-
-//   const prevSlide = () => setCurrentIndex((prev) => (prev === 0 ? heroImages.length - 1 : prev - 1));
-//   const nextSlide = () => setCurrentIndex((prev) => (prev + 1) % heroImages.length);
-
-//   return (
-//     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
-//       {/* HERO CAROUSEL */}
-//       <section className="relative h-[600px] overflow-hidden">
-//         <div className="relative w-full h-full">
-//           {heroImages.map((img, idx) => (
-//             <div
-//               key={idx}
-//               className={`absolute inset-0 transition-opacity duration-1000 ${
-//                 idx === currentIndex ? 'opacity-100' : 'opacity-0'
-//               }`}
-//             >
-//               <img
-//                 src={img}
-//                 alt={`Slide ${idx + 1}`}
-//                 className="w-full h-full object-cover"
-//               />
-//               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-black/20" />
-//             </div>
-//           ))}
-
-//           {/* Content */}
-//           <div className="absolute inset-0 flex items-center justify-center text-center px-6">
-//             <div className="max-w-4xl">
-//               <h1 className="text-4xl md:text-6xl font-extrabold text-white mb-4 drop-shadow-xl">
-//                 Earn Rewards on Every Purchase
-//               </h1>
-//               <p className="text-lg md:text-xl text-white/90 mb-8 drop-shadow-md max-w-2xl mx-auto">
-//                 Join thousands of shoppers earning points at local stores. Redeem for gifts, discounts, and more.
-//               </p>
-//               <button
-//                 onClick={() => navigate('/signup-user')}
-//                 className="inline-flex items-center gap-2 px-8 py-4 bg-emerald-600 text-white font-bold rounded-xl shadow-lg hover:bg-emerald-700 hover:scale-105 transition-all duration-300"
-//               >
-//                 Start Earning Free
-//                 <ArrowRight className="w-5 h-5" />
-//               </button>
-//             </div>
-//           </div>
-
-//           {/* Navigation */}
-//           <button
-//             onClick={(e) => {
-//               e.stopPropagation();
-//               prevSlide();
-//             }}
-//             className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/20 backdrop-blur-sm text-white p-3 rounded-full hover:bg-white/40 transition"
-//           >
-//             <ChevronLeft className="w-6 h-6" />
-//           </button>
-//           <button
-//             onClick={(e) => {
-//               e.stopPropagation();
-//               nextSlide();
-//             }}
-//             className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/20 backdrop-blur-sm text-white p-3 rounded-full hover:bg-white/40 transition"
-//           >
-//             <ChevronRight className="w-6 h-6" />
-//           </button>
-
-//           {/* Dots */}
-//           <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2">
-//             {heroImages.map((_, idx) => (
-//               <button
-//                 key={idx}
-//                 onClick={(e) => {
-//                   e.stopPropagation();
-//                   setCurrentIndex(idx);
-//                 }}
-//                 className={`w-3 h-3 rounded-full transition ${
-//                   idx === currentIndex ? 'bg-emerald-500 w-8' : 'bg-white/60 hover:bg-white'
-//                 }`}
-//               />
-//             ))}
-//           </div>
-//         </div>
-//       </section>
-
-//       {/* MEMBERSHIP TIERS */}
-//       {/* <section className="py-20 px-4 bg-gradient-to-br from-emerald-50 to-blue-50">
-//         <div className="max-w-6xl mx-auto text-center">
-//           <h2 className="text-4xl font-extrabold bg-gradient-to-r from-emerald-600 to-blue-700 bg-clip-text text-transparent mb-4">
-//             Membership Levels
-//           </h2>
-//           <p className="text-gray-600 mb-12 max-w-2xl mx-auto">
-//             The more you shop, the more you earn! Unlock exclusive benefits as you level up.
-//           </p>
-//           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-//             {[
-//               {
-//                 tier: 'Bronze',
-//                 color: 'from-orange-400 to-orange-600',
-//                 bgColor: 'bg-orange-50',
-//                 borderColor: 'border-orange-200',
-//                 icon: <Star className="w-8 h-8" />,
-//                 points: '1x Points',
-//                 perks: ['Basic rewards', 'Birthday bonus', 'Welcome gift'],
-//                 requirement: 'Join for free',
-//               },
-//               {
-//                 tier: 'Silver',
-//                 color: 'from-gray-400 to-gray-600',
-//                 bgColor: 'bg-gray-50',
-//                 borderColor: 'border-gray-200',
-//                 icon: <Award className="w-8 h-8" />,
-//                 points: '1.5x Points',
-//                 perks: ['Faster point earning', 'Exclusive deals', 'Priority support'],
-//                 requirement: '$500 spent',
-//                 popular: false,
-//               },
-//               {
-//                 tier: 'Gold',
-//                 color: 'from-yellow-400 to-yellow-600',
-//                 bgColor: 'bg-yellow-50',
-//                 borderColor: 'border-yellow-200',
-//                 icon: <Crown className="w-8 h-8" />,
-//                 points: '2x Points',
-//                 perks: ['Double points', 'VIP events', 'Free delivery', 'Personal shopper'],
-//                 requirement: '$1000 spent',
-//                 popular: true,
-//               },
-//             ].map((tier, i) => (
-//               <div
-//                 key={i}
-//                 className={`relative ${tier.bgColor} rounded-xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border-2 ${tier.borderColor} ${
-//                   tier.popular ? 'scale-105 ring-2 ring-yellow-300' : ''
-//                 }`}
-//               >
-//                 {tier.popular && (
-//                   <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-yellow-400 to-yellow-600 text-white text-sm font-bold px-4 py-1 rounded-full">
-//                     Most Popular
-//                   </div>
-//                 )}
-//                 <div className={`inline-flex p-3 rounded-full bg-gradient-to-r ${tier.color} text-white mb-4`}>
-//                   {tier.icon}
-//                 </div>
-//                 <h3 className="text-2xl font-bold text-gray-800 mb-2">{tier.tier}</h3>
-//                 <p className="text-3xl font-extrabold bg-gradient-to-r from-emerald-600 to-blue-600 bg-clip-text text-transparent mb-1">
-//                   {tier.points}
-//                 </p>
-//                 <p className="text-sm text-gray-600 mb-6">{tier.requirement}</p>
-//                 <ul className="space-y-2 mb-6">
-//                   {tier.perks.map((perk, j) => (
-//                     <li key={j} className="flex items-center text-sm text-gray-700">
-//                       <CheckCircle className="w-4 h-4 text-emerald-500 mr-2 flex-shrink-0" />
-//                       {perk}
-//                     </li>
-//                   ))}
-//                 </ul>
-//               </div>
-//             ))}
-//           </div>
-//         </div>
-//       </section> */}
-
-//       {/* HOW IT WORKS */}
-//       <section className="py-20 px-4">
-//         <div className="max-w-6xl mx-auto text-center">
-//           <h2 className="text-4xl font-extrabold bg-gradient-to-r from-emerald-600 to-teal-700 bg-clip-text text-transparent mb-12">
-//             How It Works
-//           </h2>
-//           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-//             {[
-//               {
-//                 icon: <CheckCircle className="w-12 h-12 text-emerald-600" />,
-//                 title: 'Sign Up',
-//                 desc: 'Create your free account in under 60 seconds.',
-//               },
-//               {
-//                 icon: <Store className="w-12 h-12 text-teal-600" />,
-//                 title: 'Shop & Earn',
-//                 desc: 'Scan your QR code at any partner store to earn points.',
-//               },
-//               {
-//                 icon: <Gift className="w-12 h-12 text-indigo-600" />,
-//                 title: 'Redeem Rewards',
-//                 desc: 'Turn points into vouchers, gifts, or cashback instantly.',
-//               },
-//             ].map((step, i) => (
-//               <div
-//                 key={i}
-//                 className="group bg-white rounded-xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100"
-//               >
-//                 <div className="mb-6 flex justify-center">{step.icon}</div>
-//                 <h3 className="text-xl font-bold text-gray-800 mb-3 group-hover:text-emerald-700 transition">
-//                   {step.title}
-//                 </h3>
-//                 <p className="text-gray-600">{step.desc}</p>
-//               </div>
-//             ))}
-//           </div>
-//         </div>
-//       </section>
-
-//       {/* PARTNER STORE CATEGORIES */}
-//       <section className="py-20 px-4 bg-white">
-//         <div className="max-w-6xl mx-auto text-center">
-//           <h2 className="text-4xl font-extrabold bg-gradient-to-r from-emerald-600 to-teal-700 bg-clip-text text-transparent mb-4">
-//             Shop at Your Favorite Places
-//           </h2>
-//           <p className="text-gray-600 mb-12 max-w-2xl mx-auto">
-//             Earn points at thousands of partner stores across multiple categories
-//           </p>
-//           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6">
-//             {[
-//               { icon: <Coffee className="w-8 h-8" />, name: 'Cafés', count: '120+' },
-//               { icon: <Utensils className="w-8 h-8" />, name: 'Restaurants', count: '250+' },
-//               { icon: <ShoppingBag className="w-8 h-8" />, name: 'Retail', count: '180+' },
-//               { icon: <Car className="w-8 h-8" />, name: 'Gas Stations', count: '90+' },
-//               { icon: <Heart className="w-8 h-8" />, name: 'Beauty', count: '75+' },
-//               { icon: <Gamepad2 className="w-8 h-8" />, name: 'Entertainment', count: '60+' },
-//             ].map((category, i) => (
-//               <div
-//                 key={i}
-//                 className="group bg-gradient-to-br from-emerald-50 to-teal-50 p-6 rounded-xl border-2 border-emerald-100 hover:border-emerald-300 hover:shadow-lg transition-all duration-300 cursor-pointer"
-//               >
-//                 <div className="text-emerald-600 flex justify-center mb-3 group-hover:scale-110 transition-transform">
-//                   {category.icon}
-//                 </div>
-//                 <h4 className="font-bold text-emerald-900 mb-1">{category.name}</h4>
-//                 <p className="text-sm text-emerald-700">{category.count} stores</p>
-//               </div>
-//             ))}
-//           </div>
-//         </div>
-//       </section>
-
-//       {/* LIVE STATS */}
-//       <section className="py-20 bg-gradient-to-r from-emerald-50 to-teal-50">
-//         <div className="max-w-6xl mx-auto px-4 text-center">
-//           <h2 className="text-4xl font-extrabold text-emerald-800 mb-12">
-//             Trusted by Thousands
-//           </h2>
-//           <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-//             {[
-//               { Icon: Users, label: 'Active Members', value: stats.totalUsers, prefix: '' },
-//               { Icon: Store, label: 'Partner Stores', value: stats.totalShops, prefix: '' },
-//               {
-//                 Icon: DollarSign,
-//                 label: 'Rewards Redeemed',
-//                 value: stats.totalTransactionAmount,
-//                 prefix: '$',
-//                 suffix: '',
-//               },
-//             ].map((stat, i) => (
-//               <div
-//                 key={i}
-//                 className="bg-white rounded-xl p-8 shadow-xl border border-emerald-100"
-//               >
-//                 <stat.Icon className="w-12 h-12 text-emerald-600 mx-auto mb-4" />
-//                 <div className="text-3xl font-extrabold text-emerald-700">
-//                   {loading ? (
-//                     'Loading...'
-//                   ) : (
-//                     <CountUp
-//                       end={stat.value}
-//                       duration={2.5}
-//                       separator=","
-//                       prefix={stat.prefix}
-//                       suffix={stat.suffix}
-//                     />
-//                   )}
-//                 </div>
-//                 <p className="text-gray-600 mt-2">{stat.label}</p>
-//               </div>
-//             ))}
-//           </div>
-//         </div>
-//       </section>
-
-//       {/* MOBILE APP FEATURES */}
-//       <section className="py-20 px-4 bg-gradient-to-br from-blue-50 to-indigo-50">
-//         <div className="max-w-6xl mx-auto">
-//           <div className="text-center mb-12">
-//             <h2 className="text-4xl font-extrabold bg-gradient-to-r from-blue-600 to-indigo-700 bg-clip-text text-transparent mb-4">
-//               Mobile App Features
-//             </h2>
-//             <p className="text-gray-600 max-w-2xl mx-auto">
-//               Take your rewards with you everywhere. Our mobile app makes earning and redeeming points easier than ever.
-//             </p>
-//           </div>
-//           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-//             {[
-//               {
-//                 icon: <Smartphone className="w-8 h-8" />,
-//                 title: 'Digital QR Code',
-//                 desc: 'Never forget your card again with built-in QR scanning',
-//               },
-//               {
-//                 icon: <Bell className="w-8 h-8" />,
-//                 title: 'Smart Notifications',
-//                 desc: 'Get alerts for nearby deals and bonus point opportunities',
-//               },
-//               {
-//                 icon: <MapPin className="w-8 h-8" />,
-//                 title: 'Store Locator',
-//                 desc: 'Find partner stores near you with GPS integration',
-//               },
-//               {
-//                 icon: <TrendingUp className="w-8 h-8" />,
-//                 title: 'Progress Tracking',
-//                 desc: 'Monitor your points, tier progress, and spending history',
-//               },
-//             ].map((feature, i) => (
-//               <div
-//                 key={i}
-//                 className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-blue-100"
-//               >
-//                 <div className="text-blue-600 mb-4">{feature.icon}</div>
-//                 <h4 className="font-bold text-blue-900 mb-2">{feature.title}</h4>
-//                 <p className="text-sm text-gray-600">{feature.desc}</p>
-//               </div>
-//             ))}
-//           </div>
-//         </div>
-//       </section>
-
-//       {/* REFERRAL PROGRAM */}
-//       {/* <section className="py-20 px-4 bg-white">
-//         <div className="max-w-6xl mx-auto text-center">
-//           <h2 className="text-4xl font-extrabold bg-gradient-to-r from-emerald-600 to-teal-700 bg-clip-text text-transparent mb-4">
-//             Refer Friends, Earn More
-//           </h2>
-//           <p className="text-gray-600 mb-12 max-w-2xl mx-auto">
-//             Share the love and get rewarded! Both you and your friends earn bonus points when they join.
-//           </p>
-//           <div className="bg-gradient-to-r from-emerald-500 to-teal-600 rounded-2xl p-8 text-white mb-8">
-//             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
-//               <div>
-//                 <UserPlus className="w-12 h-12 mx-auto mb-4" />
-//                 <h4 className="text-xl font-bold mb-2">Invite Friends</h4>
-//                 <p className="text-emerald-100">Share your unique referral code</p>
-//               </div>
-//               <div>
-//                 <Gift className="w-12 h-12 mx-auto mb-4" />
-//                 <h4 className="text-xl font-bold mb-2">They Get 500 Points</h4>
-//                 <p className="text-emerald-100">Welcome bonus for new members</p>
-//               </div>
-//               <div>
-//                 <Star className="w-12 h-12 mx-auto mb-4" />
-//                 <h4 className="text-xl font-bold mb-2">You Get 1000 Points</h4>
-//                 <p className="text-emerald-100">Referral bonus for you</p>
-//               </div>
-//             </div>
-//           </div>
-//         </div>
-//       </section> */}
-
-//       {/* SEASONAL PROMOTIONS */}
-//       <section className="py-20 px-4 bg-gradient-to-r from-purple-50 to-pink-50">
-//         <div className="max-w-6xl mx-auto text-center">
-//           <h2 className="text-4xl font-extrabold bg-gradient-to-r from-purple-600 to-pink-700 bg-clip-text text-transparent mb-12">
-//             Limited Time Offers
-//           </h2>
-
-//           {/* Only 3 Demo Promotions — Always Visible */}
-//           {(() => {
-//             const demoBonuses = [
-//               {
-//                 name: "Black Friday Triple Points",
-//                 dollartoPointsMapping: "15",
-//                 startDate: "2025-11-28",
-//                 endDate: "2025-12-01",
-//               },
-//               {
-//                 name: "Weekend Double Points Blast",
-//                 dollartoPointsMapping: "10",
-//                 startDate: "2025-11-21",
-//                 endDate: "2025-11-23",
-//               },
-//               {
-//                 name: "New Year 5X Points Week",
-//                 dollartoPointsMapping: "25",
-//                 startDate: "2025-12-30",
-//                 endDate: "2026-01-05",
-//               },
-//               {
-//                 name: "Holiday Shopping Spree",
-//                 dollartoPointsMapping: "20",
-//                 startDate: "2025-12-20",
-//                 endDate: "2025-12-25",
-//               },
-//             ];
-
-//             return (
-//               <div className="grid grid-cols-1 md:grid-cols-4 gap-8 max-w-8xl mx-auto">
-//                 {demoBonuses.map((bonus, index) => (
-//                   <div
-//                     key={index}
-//                     className="bg-white rounded-xl p-8 shadow-lg border-2 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
-//                     style={{
-//                       borderColor:
-//                         index === 0
-//                           ? "#10b981"
-//                           : index % 3 === 0
-//                           ? "#c084fc"
-//                           : index % 3 === 1
-//                           ? "#f472b6"
-//                           : "#8b5cf6",
-//                     }}
-//                   >
-//                     <div className="flex items-center justify-center mb-4">
-//                       {bonus.isChallenge ? (
-//                         <Zap className="w-9 h-9 text-emerald-600 mr-2 animate-pulse" />
-//                       ) : (
-//                         <Calendar className="w-9 h-9 text-purple-600 mr-2" />
-//                       )}
-//                       <span
-//                         className={`text-sm px-4 py-1.5 rounded-full font-bold tracking-wider ${
-//                           bonus.isChallenge
-//                             ? "bg-emerald-100 text-emerald-800"
-//                             : index === 0
-//                             ? "bg-purple-100 text-purple-800"
-//                             : "bg-pink-100 text-pink-800"
-//                         }`}
-//                       >
-//                         {new Date(bonus.startDate).toLocaleDateString("en-US", {
-//                           month: "short",
-//                           day: "numeric",
-//                         })}{" "}
-//                         –{" "}
-//                         {new Date(bonus.endDate).toLocaleDateString("en-US", {
-//                           month: "short",
-//                           day: "numeric",
-//                         })}
-//                       </span>
-//                     </div>
-
-//                     <h4 className="text-2xl font-bold text-gray-900 mb-3">
-//                       {bonus.name}
-//                     </h4>
-
-//                     <p className="text-gray-600 mb-6 leading-relaxed">
-//                       {bonus.isChallenge
-//                         ? "Shop at 5+ stores and unlock a huge bonus!"
-//                         : `Earn ${bonus.dollartoPointsMapping} points per $1 spent`}
-//                     </p>
-
-//                     <div className="text-4xl font-extrabold">
-//                       {bonus.isChallenge ? (
-//                         <span className="text-emerald-600">
-//                           +{bonus.bonusPoints.toLocaleString()} PTS
-//                         </span>
-//                       ) : (
-//                         <span className={index === 0 ? "text-purple-600" : "text-pink-600"}>
-//                           {bonus.dollartoPointsMapping}X POINTS
-//                         </span>
-//                       )}
-//                     </div>
-
-//                     {!bonus.isChallenge && (
-//                       <p className="text-sm text-gray-500 mt-3">
-//                         Normal rate: 5 points per $1
-//                       </p>
-//                     )}
-//                   </div>
-//                 ))}
-//               </div>
-//             );
-//           })()}
-
-//           <div className="mt-16">
-//             <p className="text-lg text-gray-700 font-medium">
-//               More offers coming soon — stay loyal!
-//             </p>
-//           </div>
-//         </div>
-//       </section>
-//       {/* BENEFITS */}
-//       <section className="py-20 px-4 bg-white">
-//         <div className="max-w-6xl mx-auto text-center">
-//           <h2 className="text-4xl font-extrabold bg-gradient-to-r from-emerald-600 to-teal-700 bg-clip-text text-transparent mb-12">
-//             Why Members Love Us
-//           </h2>
-//           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-//             {[
-//               'No Fees Ever',
-//               'Nationwide Stores',
-//               'Instant Rewards',
-//               'Easy Referral Bonus',
-//             ].map((benefit, i) => (
-//               <div
-//                 key={i}
-//                 className="bg-gradient-to-br from-emerald-50 to-teal-50 p-6 rounded-xl text-center border border-emerald-200 hover:shadow-lg transition"
-//               >
-//                 <Star className="w-8 h-8 text-emerald-600 mx-auto mb-3" />
-//                 <p className="font-semibold text-emerald-900">{benefit}</p>
-//               </div>
-//             ))}
-//           </div>
-//         </div>
-//       </section>
-
-//       {/* CUSTOMER TESTIMONIALS */}
-//       <section className="py-20 px-4 bg-gray-50">
-//         <div className="max-w-6xl mx-auto text-center">
-//           <h2 className="text-4xl font-extrabold text-emerald-800 mb-12">
-//             What Our Members Say
-//           </h2>
-//           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-//             {[
-//               {
-//                 name: 'Sarah Johnson',
-//                 location: 'New York',
-//                 review: 'I\'ve earned over $200 in rewards just from my regular shopping. The app is so easy to use!',
-//                 rating: 5,
-//                 points: '15,420 points earned',
-//               },
-//               {
-//                 name: 'Mike Chen',
-//                 location: 'California',
-//                 review: 'Love discovering new local businesses through the app. The rewards are just a bonus!',
-//                 rating: 5,
-//                 points: '8,750 points earned',
-//               },
-//               {
-//                 name: 'Emily Davis',
-//                 location: 'Texas',
-//                 review: 'The referral program is amazing! I\'ve invited 10 friends and we all benefit.',
-//                 rating: 5,
-//                 points: '22,100 points earned',
-//               },
-//             ].map((testimonial, i) => (
-//               <div
-//                 key={i}
-//                 className="bg-white rounded-xl p-6 shadow-lg border border-gray-200"
-//               >
-//                 <div className="flex justify-center mb-3">
-//                   {[...Array(testimonial.rating)].map((_, j) => (
-//                     <Star key={j} className="w-5 h-5 text-yellow-400 fill-current" />
-//                   ))}
-//                 </div>
-//                 <p className="text-gray-700 italic mb-4">"{testimonial.review}"</p>
-//                 <div className="border-t pt-4">
-//                   <h5 className="font-bold text-emerald-900">{testimonial.name}</h5>
-//                   <p className="text-sm text-gray-600">{testimonial.location}</p>
-//                   <p className="text-sm text-emerald-600 font-semibold mt-1">{testimonial.points}</p>
-//                 </div>
-//               </div>
-//             ))}
-//           </div>
-//         </div>
-//       </section>
-
-//       {/* LEADERBOARD */}
-//       <section className="py-20 bg-gray-50 px-4">
-//         <div className="max-w-4xl mx-auto text-center">
-//           <h2 className="text-4xl font-extrabold text-emerald-800 mb-12">
-//             Top Referrers This Month
-//           </h2>
-//           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-//             {[
-//               { rank: 1, name: 'Emma', points: 890 },
-//               { rank: 2, name: 'Jacob', points: 765 },
-//               { rank: 3, name: 'Sophia', points: 702 },
-//             ].map((user) => (
-//               <div
-//                 key={user.rank}
-//                 className={`relative bg-white rounded-xl p-6 shadow-lg border-2 ${
-//                   user.rank === 1 ? 'border-yellow-400' : 'border-emerald-200'
-//                 }`}
-//               >
-//                 {user.rank === 1 && (
-//                   <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-yellow-400 text-white text-xs font-bold px-3 py-1 rounded-full">
-//                     #1
-//                   </div>
-//                 )}
-//                 <h3 className="text-xl font-bold text-emerald-700">{user.name}</h3>
-//                 <p className="text-3xl font-extrabold text-emerald-600 mt-2">
-//                   {user.points}
-//                 </p>
-//                 <p className="text-sm text-gray-600">Referral Points</p>
-//               </div>
-//             ))}
-//           </div>
-//         </div>
-//       </section>
-
-//       {/* FAQ ACCORDION */}
-//       <section className="py-20 px-4 bg-white">
-//         <div className="max-w-5xl mx-auto">
-//           <h2 className="text-4xl font-extrabold text-center text-emerald-800 mb-12">
-//             Common Questions
-//           </h2>
-//           <div className="space-y-3">
-//             {[
-//               {
-//                 q: 'How do I earn points?',
-//                 a: 'Shop at any partner store and scan your QR code at checkout. Points are added instantly.',
-//               },
-//               {
-//                 q: 'Where can I redeem rewards?',
-//                 a: 'Redeem in your dashboard, at checkout in stores, or via the mobile app.',
-//               },
-//               {
-//                 q: 'Is it free to join?',
-//                 a: 'Yes! 100% free for all users – no membership fees or hidden charges.',
-//               },
-//               {
-//                 q: 'Do my points expire?',
-//                 a: 'Points remain active as long as you make at least one purchase every 12 months.',
-//               },
-//               {
-//                 q: 'How do I check my points balance?',
-//                 a: 'Log in to your dashboard or open the mobile app – your balance is shown on the home screen.',
-//               },
-//               {
-//                 q: 'What if I lose my QR code?',
-//                 a: 'No problem! Regenerate your QR code anytime from your profile settings.',
-//               },
-//               {
-//                 q: 'Can I use points at any store?',
-//                 a: 'Points work at all participating partner stores. Look for the Loyalty Rewards sign!',
-//               },
-//               {
-//                 q: 'How does the referral program work?',
-//                 a: 'Share your unique referral code with friends. They get 500 points when they join and make their first purchase, and you get 1000 points!',
-//               },
-//             ].map((faq, i) => (
-//               <details
-//                 key={i}
-//                 className="group bg-gray-50 rounded-xl overflow-hidden border border-gray-200 shadow-sm"
-//               >
-//                 <summary className="flex justify-between items-center p-5 font-semibold text-emerald-800 cursor-pointer hover:bg-emerald-50 transition">
-//                   {faq.q}
-//                   <ChevronRight className="w-5 h-5 text-emerald-600 group-open:rotate-90 transition-transform" />
-//                 </summary>
-//                 <div className="px-5 pb-5 text-gray-700 leading-relaxed">
-//                   {faq.a}
-//                 </div>
-//               </details>
-//             ))}
-//           </div>
-//         </div>
-//       </section>
-
-//       {/* FINAL CTA */}
-//       <section className="py-14 bg-gradient-to-r from-emerald-500 to-teal-600 text-white text-center px-4">
-//         <div className="max-w-4xl mx-auto">
-//           <h2 className="text-4xl md:text-5xl font-extrabold mb-6">
-//             Start Earning Rewards Today
-//           </h2>
-//           <p className="text-xl mb-8 opacity-90">
-//             Join 10,000+ members already saving with every purchase.
-//           </p>
-//           <div className="flex flex-col sm:flex-row justify-center items-center gap-4">
-//             <button
-//               onClick={() => navigate('/signup-user')}
-//               className="inline-flex items-center gap-3 px-8 py-4 bg-white text-emerald-700 font-bold text-lg rounded-sm shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 w-full sm:w-auto justify-center"
-//             >
-//               Join Free Now
-//               <ArrowRight className="w-6 h-6" />
-//             </button>
-//             <button
-//               onClick={() => navigate('/signup-business')}
-//               className="inline-flex items-center gap-3 px-8 py-4 bg-transparent border-2 border-white text-white font-bold text-lg rounded-sm shadow-xl hover:bg-white/10 hover:scale-105 transition-all duration-300 w-full sm:w-auto justify-center"
-//             >
-//               Partner Your Business
-//               <Store className="w-6 h-6" />
-//             </button>
-//           </div>
-//         </div>
-//       </section>
-//     </div>
-//   );
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-
-// //translate
-// import React, { useState, useEffect } from 'react';
-// import { useNavigate } from 'react-router-dom';
-// import CountUp from 'react-countup';
-// import { useTranslation } from 'react-i18next';
-// import { motion } from 'framer-motion';
-// import {
-//   ChevronLeft,
-//   ChevronRight,
-//   Users,
-//   Store,
-//   DollarSign,
-//   Gift,
-//   Star,
-//   ArrowRight,
-//   CheckCircle,
-//   Crown,
-//   Zap,
-//   Heart,
-//   Coffee,
-//   ShoppingBag,
-//   Utensils,
-//   Car,
-//   Gamepad2,
-//   Smartphone,
-//   Bell,
-//   TrendingUp,
-//   Award,
-//   UserPlus,
-//   Calendar,
-//   MapPin,
-//   Banknote,
-// } from 'lucide-react';
-// import { API_BASE_URL } from '../../apiConfig';
-
-// import carousel1 from '../../assets/carousel1.jpg';
-// import carousel2 from '../../assets/carousel2.jpg';
-// import carousel3 from '../../assets/carousel3.jpg';
-// import carousel4 from '../../assets/carousel4.jpg';
-// import carousel5 from '../../assets/carousel5.jpg';
-
-// const heroImages = [carousel1, carousel2, carousel3, carousel4, carousel5];
-
-// // Animation variants
-// const fadeInUp = {
-//   hidden: { opacity: 0, y: 30 },
-//   visible: { opacity: 1, y: 0, transition: { duration: 0.7 } }
-// };
-
-// const staggerContainer = {
-//   hidden: { opacity: 0 },
-//   visible: {
-//     opacity: 1,
-//     transition: { staggerChildren: 0.12 }
-//   }
-// };
-
-// const cardVariants = {
-//   hidden: { opacity: 0, y: 20, scale: 0.96 },
-//   visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.6 } }
-// };
-
-// export default function Home() {
-//   const { t } = useTranslation();
-//   const navigate = useNavigate();
-
-//   const [currentIndex, setCurrentIndex] = useState(0);
-//   const [stats, setStats] = useState({
-//     totalUsers: 0,
-//     totalShops: 0,
-//     totalUsaTransactionAmount: 0,
-//     totalIndiaTransactionAmount: 0,
-//   });
-//   const [loading, setLoading] = useState(true);
-
-//   useEffect(() => {
-//     const fetchSummary = async () => {
-//       try {
-//         const response = await fetch(`${API_BASE_URL}/api/loyalty_homePage/summary`);
-//         const data = await response.json();
-//         setStats({
-//           totalUsers: data.totalUsers || 0,
-//           totalShops: data.totalShops || 0,
-//           totalUsaTransactionAmount: data.totalUsaTransactionAmount || 0,
-//           totalIndiaTransactionAmount: data.totalIndiaTransactionAmount || 0,
-//         });
-//       } catch (error) {
-//         console.error('Failed to fetch summary:', error);
-//       } finally {
-//         setLoading(false);
-//       }
-//     };
-//     fetchSummary();
-//   }, []);
-
-//   useEffect(() => {
-//     const timer = setInterval(() => {
-//       setCurrentIndex((prev) => (prev + 1) % heroImages.length);
-//     }, 5000);
-//     return () => clearInterval(timer);
-//   }, []);
-
-//   const prevSlide = () => setCurrentIndex((prev) => (prev === 0 ? heroImages.length - 1 : prev - 1));
-//   const nextSlide = () => setCurrentIndex((prev) => (prev + 1) % heroImages.length);
-
-//   return (
-//     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
-
-//       {/* HERO CAROUSEL - FIXED FOR MOBILE */}
-//       <section className="relative h-[70vh] min-h-[380px] sm:h-[75vh] md:h-[80vh] lg:h-[85vh] overflow-hidden">
-//         <div className="relative w-full h-full">
-//           {heroImages.map((img, idx) => (
-//             <motion.div
-//               key={idx}
-//               initial={{ opacity: 0 }}
-//               animate={{ opacity: idx === currentIndex ? 1 : 0 }}
-//               transition={{ duration: 1.2 }}
-//               className="absolute inset-0"
-//             >
-//               <img
-//                 src={img}
-//                 alt={t(`home.hero.slides.${idx}`) || `Slide ${idx + 1}`}
-//                 className="w-full h-full object-cover"
-//               />
-//               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/45 to-black/25" />
-//             </motion.div>
-//           ))}
-
-//           <div className="absolute inset-0 flex items-center justify-center text-center px-5 sm:px-8">
-//             <motion.div
-//               initial={{ opacity: 0, y: 30 }}
-//               animate={{ opacity: 1, y: 0 }}
-//               transition={{ delay: 0.4, duration: 1 }}
-//               className="max-w-4xl w-full"
-//             >
-//               <h1 className="text-4xl xs:text-5xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-white mb-4 md:mb-6 drop-shadow-2xl leading-tight">
-//                 {t('home.hero.title')}
-//               </h1>
-//               <p className="text-lg xs:text-xl sm:text-xl md:text-2xl text-white/90 mb-6 md:mb-10 drop-shadow-lg max-w-3xl mx-auto">
-//                 {t('home.hero.subtitle')}
-//               </p>
-//             </motion.div>
-//           </div>
-
-//           <button
-//             onClick={(e) => { e.stopPropagation(); prevSlide(); }}
-//             className="absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 bg-black/40 backdrop-blur-md text-white p-4 sm:p-5 rounded-full hover:bg-black/60 transition z-10"
-//           >
-//             <ChevronLeft className="w-7 h-7 sm:w-8 sm:h-8" />
-//           </button>
-//           <button
-//             onClick={(e) => { e.stopPropagation(); nextSlide(); }}
-//             className="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 bg-black/40 backdrop-blur-md text-white p-4 sm:p-5 rounded-full hover:bg-black/60 transition z-10"
-//           >
-//             <ChevronRight className="w-7 h-7 sm:w-8 sm:h-8" />
-//           </button>
-
-//           <div className="absolute bottom-6 sm:bottom-10 left-1/2 -translate-x-1/2 flex gap-3 sm:gap-4 z-10">
-//             {heroImages.map((_, idx) => (
-//               <button
-//                 key={idx}
-//                 onClick={(e) => { e.stopPropagation(); setCurrentIndex(idx); }}
-//                 className={`w-3 h-3 sm:w-3.5 sm:h-3.5 rounded-full transition-all ${
-//                   idx === currentIndex
-//                     ? 'bg-emerald-500 scale-125'
-//                     : 'bg-white/70 hover:bg-white hover:scale-125'
-//                 }`}
-//               />
-//             ))}
-//           </div>
-//         </div>
-//       </section>
-
-//       {/* HOW IT WORKS */}
-//       <motion.section
-//         initial="hidden"
-//         whileInView="visible"
-//         viewport={{ once: true, amount: 0.2 }}
-//         variants={staggerContainer}
-//         className="py-16 md:py-20 px-5 sm:px-6 lg:px-8"
-//       >
-//         <div className="max-w-6xl mx-auto text-center">
-//           <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-emerald-600 to-teal-700 bg-clip-text text-transparent mb-10 md:mb-14">
-//             {t('home.howItWorks.title')}
-//           </h2>
-//           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 lg:gap-10">
-//             {[
-//               { icon: <CheckCircle className="w-14 h-14 text-emerald-600" />, title: t('home.howItWorks.steps.0.title'), desc: t('home.howItWorks.steps.0.desc') },
-//               { icon: <Store className="w-14 h-14 text-teal-600" />, title: t('home.howItWorks.steps.1.title'), desc: t('home.howItWorks.steps.1.desc') },
-//               { icon: <Gift className="w-14 h-14 text-indigo-600" />, title: t('home.howItWorks.steps.2.title'), desc: t('home.howItWorks.steps.2.desc') },
-//             ].map((step, i) => (
-//               <motion.div
-//                 key={i}
-//                 variants={cardVariants}
-//                 className="group bg-white rounded-xl p-7 sm:p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100"
-//               >
-//                 <div className="mb-6 flex justify-center transform group-hover:scale-110 transition-transform">
-//                   {step.icon}
-//                 </div>
-//                 <h3 className="text-xl sm:text-2xl font-bold text-gray-800 mb-4 group-hover:text-emerald-700 transition">
-//                   {step.title}
-//                 </h3>
-//                 <p className="text-gray-600 text-base">{step.desc}</p>
-//               </motion.div>
-//             ))}
-//           </div>
-//         </div>
-//       </motion.section>
-
-//       {/* PARTNER STORE CATEGORIES */}
-//       <motion.section
-//         initial="hidden"
-//         whileInView="visible"
-//         viewport={{ once: true, amount: 0.15 }}
-//         variants={staggerContainer}
-//         className="py-16 md:py-20 px-5 sm:px-6 lg:px-8 bg-white"
-//       >
-//         <div className="max-w-6xl mx-auto text-center">
-//           <h2 className="text-3xl sm:text-4xl font-extrabold bg-gradient-to-r from-emerald-600 to-teal-700 bg-clip-text text-transparent mb-6">
-//             {t('home.categories.title')}
-//           </h2>
-//           <p className="text-gray-600 mb-10 md:mb-12 max-w-3xl mx-auto text-base">
-//             {t('home.categories.subtitle')}
-//           </p>
-//           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-5 sm:gap-6">
-//             {[
-//               { icon: <Coffee className="w-10 h-10 sm:w-12 sm:h-12" />, name: t('home.categories.items.0.name'), count: t('home.categories.items.0.count') },
-//               { icon: <Utensils className="w-10 h-10 sm:w-12 sm:h-12" />, name: t('home.categories.items.1.name'), count: t('home.categories.items.1.count') },
-//               { icon: <ShoppingBag className="w-10 h-10 sm:w-12 sm:h-12" />, name: t('home.categories.items.2.name'), count: t('home.categories.items.2.count') },
-//               { icon: <Car className="w-10 h-10 sm:w-12 sm:h-12" />, name: t('home.categories.items.3.name'), count: t('home.categories.items.3.count') },
-//               { icon: <Heart className="w-10 h-10 sm:w-12 sm:h-12" />, name: t('home.categories.items.4.name'), count: t('home.categories.items.4.count') },
-//               { icon: <Gamepad2 className="w-10 h-10 sm:w-12 sm:h-12" />, name: t('home.categories.items.5.name'), count: t('home.categories.items.5.count') },
-//             ].map((category, i) => (
-//               <motion.div
-//                 key={i}
-//                 variants={cardVariants}
-//                 className="group bg-gradient-to-br from-emerald-50 to-teal-50 p-6 rounded-xl border-2 border-emerald-100 hover:border-emerald-300 hover:shadow-lg transition-all duration-300 cursor-pointer"
-//               >
-//                 <div className="text-emerald-600 flex justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
-//                   {category.icon}
-//                 </div>
-//                 <h4 className="font-bold text-emerald-900 mb-1 text-base sm:text-lg">{category.name}</h4>
-//                 <p className="text-sm text-emerald-700">
-//                   {category.count} {t('home.categories.stores')}
-//                 </p>
-//               </motion.div>
-//             ))}
-//           </div>
-//         </div>
-//       </motion.section>
-
-//       {/* LIVE STATS */}
-//       <motion.section
-//         initial="hidden"
-//         whileInView="visible"
-//         viewport={{ once: true }}
-//         variants={staggerContainer}
-//         className="py-16 md:py-20 bg-gradient-to-r from-emerald-50 to-teal-50 px-5 sm:px-6 lg:px-8"
-//       >
-//         <div className="max-w-6xl mx-auto text-center">
-//           <h2 className="text-3xl sm:text-4xl font-extrabold text-emerald-800 mb-10 md:mb-12">
-//             {t('home.stats.title')}
-//           </h2>
-//           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 md:gap-8">
-//             <motion.div
-//               variants={cardVariants}
-//               className="bg-white rounded-xl p-7 sm:p-8 shadow-xl border border-emerald-100 text-center"
-//             >
-//               <Users className="w-12 h-12 text-emerald-600 mx-auto mb-5" />
-//               <div className="text-3xl sm:text-4xl font-extrabold text-emerald-700">
-//                 {loading ? '.....' : <CountUp end={stats.totalUsers} duration={2.5} separator="," />}
-//               </div>
-//               <p className="text-gray-600 mt-3 text-base">
-//                 {t('home.stats.items.0.label')}
-//               </p>
-//             </motion.div>
-
-//             <motion.div
-//               variants={cardVariants}
-//               className="bg-white rounded-xl p-7 sm:p-8 shadow-xl border border-emerald-100 text-center"
-//             >
-//               <Store className="w-12 h-12 text-emerald-600 mx-auto mb-5" />
-//               <div className="text-3xl sm:text-4xl font-extrabold text-emerald-700">
-//                 {loading ? '.....' : <CountUp end={stats.totalShops} duration={2.5} separator="," />}
-//               </div>
-//               <p className="text-gray-600 mt-3 text-base">
-//                 {t('home.stats.items.1.label')}
-//               </p>
-//             </motion.div>
-
-//             <motion.div
-//               variants={cardVariants}
-//               className="bg-white rounded-xl p-7 sm:p-8 shadow-xl border border-emerald-100 text-center"
-//             >
-//               <Banknote className="w-12 h-12 text-emerald-600 mx-auto mb-5" />
-
-//               {loading ? (
-//                 "....."
-//               ) : (
-//                 <div className="space-y-3 text-xl sm:text-2xl font-bold text-emerald-700">
-//                   <div>🇺🇸 USA : ${new Intl.NumberFormat().format(stats.totalUsaTransactionAmount)}</div>
-//                   <div>🇮🇳 India : ₹{new Intl.NumberFormat().format(stats.totalIndiaTransactionAmount)}</div>
-//                 </div>
-//               )}
-
-//               <p className="text-gray-600 mt-4 text-base">
-//                 {t('home.stats.items.2.label')}
-//               </p>
-//             </motion.div>
-//           </div>
-//         </div>
-//       </motion.section>
-
-//       {/* MOBILE APP FEATURES */}
-//       <motion.section
-//         initial="hidden"
-//         whileInView="visible"
-//         viewport={{ once: true, amount: 0.15 }}
-//         variants={staggerContainer}
-//         className="py-16 md:py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-blue-50 to-indigo-50"
-//       >
-//         <div className="max-w-6xl mx-auto">
-//           <div className="text-center mb-10 md:mb-12">
-//             <h2 className="text-3xl sm:text-4xl font-extrabold bg-gradient-to-r from-blue-600 to-indigo-700 bg-clip-text text-transparent mb-4">
-//               {t('home.mobile.title')}
-//             </h2>
-//             <p className="text-gray-600 max-w-2xl mx-auto text-sm sm:text-base">
-//               {t('home.mobile.subtitle')}
-//             </p>
-//           </div>
-//           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-//             {[
-//               { icon: <Smartphone className="w-8 h-8 sm:w-10 sm:h-10" />, title: t('home.mobile.features.0.title'), desc: t('home.mobile.features.0.desc') },
-//               { icon: <Bell className="w-8 h-8 sm:w-10 sm:h-10" />, title: t('home.mobile.features.1.title'), desc: t('home.mobile.features.1.desc') },
-//               { icon: <MapPin className="w-8 h-8 sm:w-10 sm:h-10" />, title: t('home.mobile.features.2.title'), desc: t('home.mobile.features.2.desc') },
-//               { icon: <TrendingUp className="w-8 h-8 sm:w-10 sm:h-10" />, title: t('home.mobile.features.3.title'), desc: t('home.mobile.features.3.desc') },
-//             ].map((feature, i) => (
-//               <motion.div
-//                 key={i}
-//                 variants={cardVariants}
-//                 className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-blue-100"
-//               >
-//                 <div className="text-blue-600 mb-4 flex justify-center">{feature.icon}</div>
-//                 <h4 className="font-bold text-blue-900 mb-2 text-base sm:text-lg">{feature.title}</h4>
-//                 <p className="text-sm text-gray-600">{feature.desc}</p>
-//               </motion.div>
-//             ))}
-//           </div>
-//         </div>
-//       </motion.section>
-
-//       {/* BENEFITS */}
-//       <motion.section
-//         initial="hidden"
-//         whileInView="visible"
-//         viewport={{ once: true, amount: 0.15 }}
-//         variants={staggerContainer}
-//         className="py-16 md:py-20 px-4 sm:px-6 lg:px-8 bg-white"
-//       >
-//         <div className="max-w-6xl mx-auto text-center">
-//           <h2 className="text-3xl sm:text-4xl font-extrabold bg-gradient-to-r from-emerald-600 to-teal-700 bg-clip-text text-transparent mb-10 md:mb-12">
-//             {t('home.benefits.title')}
-//           </h2>
-//           <div className="grid grid-cols-2 md:grid-cols-4 gap-5 sm:gap-6">
-//             {t('home.benefits.items', { returnObjects: true }).map((benefit, i) => (
-//               <motion.div
-//                 key={i}
-//                 variants={cardVariants}
-//                 className="bg-gradient-to-br from-emerald-50 to-teal-50 p-5 sm:p-6 rounded-xl text-center border border-emerald-200 hover:shadow-lg transition"
-//               >
-//                 <Star className="w-8 h-8 sm:w-9 sm:h-9 text-emerald-600 mx-auto mb-3" />
-//                 <p className="font-semibold text-emerald-900 text-sm sm:text-base">{benefit}</p>
-//               </motion.div>
-//             ))}
-//           </div>
-//         </div>
-//       </motion.section>
-
-//       {/* CUSTOMER TESTIMONIALS */}
-//       <motion.section
-//         initial="hidden"
-//         whileInView="visible"
-//         viewport={{ once: true, amount: 0.15 }}
-//         variants={staggerContainer}
-//         className="py-16 md:py-20 px-4 sm:px-6 lg:px-8 bg-gray-50"
-//       >
-//         <div className="max-w-6xl mx-auto text-center">
-//           <h2 className="text-3xl sm:text-4xl font-extrabold text-emerald-800 mb-10 md:mb-12">
-//             {t('home.testimonials.title')}
-//           </h2>
-//           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-//             {t('home.testimonials.items', { returnObjects: true }).map((testimonial, i) => (
-//               <motion.div
-//                 key={i}
-//                 variants={cardVariants}
-//                 className="bg-white rounded-xl p-6 shadow-lg border border-gray-200"
-//               >
-//                 <div className="flex justify-center mb-4">
-//                   {[...Array(testimonial.rating)].map((_, j) => (
-//                     <Star key={j} className="w-5 h-5 text-yellow-400 fill-current" />
-//                   ))}
-//                 </div>
-//                 <p className="text-gray-700 italic mb-4 text-sm sm:text-base">"{testimonial.review}"</p>
-//                 <div className="border-t pt-4">
-//                   <h5 className="font-bold text-emerald-900">{testimonial.name}</h5>
-//                   <p className="text-sm text-gray-600">{testimonial.location}</p>
-//                   <p className="text-sm text-emerald-600 font-semibold mt-1">{testimonial.points}</p>
-//                 </div>
-//               </motion.div>
-//             ))}
-//           </div>
-//         </div>
-//       </motion.section>
-
-//       {/* LEADERBOARD */}
-//       <motion.section
-//         initial="hidden"
-//         whileInView="visible"
-//         viewport={{ once: true, amount: 0.15 }}
-//         variants={staggerContainer}
-//         className="py-16 md:py-20 bg-gray-50 px-4 sm:px-6 lg:px-8"
-//       >
-//         <div className="max-w-4xl mx-auto text-center">
-//           <h2 className="text-3xl sm:text-4xl font-extrabold text-emerald-800 mb-10 md:mb-12">
-//             {t('home.leaderboard.title')}
-//           </h2>
-//           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-//             {t('home.leaderboard.items', { returnObjects: true }).map((user) => (
-//               <motion.div
-//                 key={user.rank}
-//                 variants={cardVariants}
-//                 className={`relative bg-white rounded-xl p-6 shadow-lg border-2 ${
-//                   user.rank === 1 ? 'border-yellow-400' : 'border-emerald-200'
-//                 }`}
-//               >
-//                 {user.rank === 1 && (
-//                   <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-yellow-400 text-white text-xs font-bold px-3 py-1 rounded-full">
-//                     #1
-//                   </div>
-//                 )}
-//                 <h3 className="text-xl font-bold text-emerald-700">{user.name}</h3>
-//                 <p className="text-3xl font-extrabold text-emerald-600 mt-2">{user.points}</p>
-//                 <p className="text-sm text-gray-600">{t('home.leaderboard.points')}</p>
-//               </motion.div>
-//             ))}
-//           </div>
-//         </div>
-//       </motion.section>
-
-//       {/* FAQ ACCORDION */}
-//       <motion.section
-//         initial="hidden"
-//         whileInView="visible"
-//         viewport={{ once: true, amount: 0.15 }}
-//         variants={staggerContainer}
-//         className="py-16 md:py-20 px-4 sm:px-6 lg:px-8 bg-white"
-//       >
-//         <div className="max-w-5xl mx-auto">
-//           <h2 className="text-3xl sm:text-4xl font-extrabold text-center text-emerald-800 mb-10 md:mb-12">
-//             {t('home.faq.title')}
-//           </h2>
-//           <div className="space-y-3">
-//             {t('home.faq.items', { returnObjects: true }).map((faq, i) => (
-//               <motion.details
-//                 key={i}
-//                 variants={cardVariants}
-//                 className="group bg-gray-50 rounded-xl overflow-hidden border border-gray-200 shadow-sm"
-//               >
-//                 <summary className="flex justify-between items-center p-5 font-semibold text-emerald-800 cursor-pointer hover:bg-emerald-50 transition">
-//                   {faq.q}
-//                   <ChevronRight className="w-5 h-5 text-emerald-600 group-open:rotate-90 transition-transform" />
-//                 </summary>
-//                 <div className="px-5 pb-5 text-gray-700 leading-relaxed text-sm sm:text-base">
-//                   {faq.a}
-//                 </div>
-//               </motion.details>
-//             ))}
-//           </div>
-//         </div>
-//       </motion.section>
-
-//       {/* FINAL CTA */}
-//       <motion.section
-//         initial={{ opacity: 0, y: 40 }}
-//         whileInView={{ opacity: 1, y: 0 }}
-//         viewport={{ once: true }}
-//         transition={{ duration: 0.9 }}
-//         className="py-16 md:py-20 bg-gradient-to-r from-emerald-500 to-teal-600 text-white text-center px-5 sm:px-8"
-//       >
-//         <div className="max-w-4xl mx-auto">
-//           <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-5 md:mb-6">
-//             {t('home.finalCTA.title')}
-//           </h2>
-//           <p className="text-lg sm:text-xl mb-8 md:mb-10 opacity-90 max-w-3xl mx-auto">
-//             {t('home.finalCTA.subtitle')}
-//           </p>
-//           <div className="flex flex-col sm:flex-row justify-center items-center gap-4 md:gap-6">
-//             <motion.button
-//               whileHover={{ scale: 1.05, y: -3 }}
-//               whileTap={{ scale: 0.97 }}
-//               onClick={() => navigate('/signup-user')}
-//               className="inline-flex items-center gap-3 px-7 sm:px-8 py-4 bg-white text-emerald-700 font-bold text-base sm:text-lg rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 w-full sm:w-auto justify-center"
-//             >
-//               {t('home.finalCTA.userCTA')}
-//               <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6" />
-//             </motion.button>
-//             <motion.a
-//               href="https://subscription-frontend-psi.vercel.app/subscription"
-//               target="_blank"
-//               rel="noopener noreferrer"
-//               whileHover={{ scale: 1.05, y: -3 }}
-//               whileTap={{ scale: 0.97 }}
-//               className="inline-flex items-center gap-3 px-7 sm:px-8 py-4 bg-transparent border-2 border-white text-white font-bold text-base sm:text-lg rounded-full shadow-xl hover:bg-white/10 transition-all duration-300 w-full sm:w-auto justify-center"
-//             >
-//               {t('home.finalCTA.businessCTA')}
-//               <Store className="w-5 h-5 sm:w-6 sm:h-6" />
-//             </motion.a>
-//           </div>
-//         </div>
-//       </motion.section>
-//     </div>
-//   );
-// }
-
-
-
-
-
-
-
-// mobile view
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import CountUp from 'react-countup';
 import { useTranslation } from 'react-i18next';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+import LoyaltyShowcase from './LoyaltyShowcase';
+
+
 import {
-  ChevronLeft,
+  Globe,
   ChevronRight,
   Users,
   Store,
@@ -1306,7 +16,7 @@ import {
   Star,
   ArrowRight,
   CheckCircle,
-  Crown,
+  Sparkles,
   Zap,
   Heart,
   Coffee,
@@ -1368,27 +78,21 @@ export default function Home() {
   useEffect(() => {
     const fetchSummary = async () => {
       try {
-        const response = await fetch(`${API_BASE_URL}/api/loyalty_homePage/summary`);
-        const data = await response.json();
+        const res = await fetch(`${API_BASE_URL}/api/loyalty_homePage/summary`);
+        const data = await res.json();
         setStats({
           totalUsers: data.totalUsers || 0,
           totalShops: data.totalShops || 0,
-          totalUsaTransactionAmount: data.totalUsaTransactionAmount || 0,
-          totalIndiaTransactionAmount: data.totalIndiaTransactionAmount || 0,
+          totalUsa: data.totalUsaTransactionAmount || 0,
+          totalInd: data.totalIndiaTransactionAmount || 0,
         });
-      } catch (error) {
-        console.error('Failed to fetch summary:', error);
-      } finally {
-        setLoading(false);
-      }
+      } catch (e) { console.error(e); } finally { setLoading(false); }
     };
     fetchSummary();
   }, []);
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % heroImages.length);
-    }, 5000);
+    const timer = setInterval(() => setCurrentIndex(prev => (prev + 1) % heroImages.length), 5000);
     return () => clearInterval(timer);
   }, []);
 
@@ -1396,71 +100,99 @@ export default function Home() {
   const nextSlide = () => setCurrentIndex((prev) => (prev + 1) % heroImages.length);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-blue-100 antialiased selection:bg-blue-100 selection:text-blue-700">
-      <section className="relative px-2 pt-2">
-        {/* Added 'relative' and 'group' to help control the buttons */}
-        <div className="relative h-[45vh] min-h-[350px] sm:h-[75vh] lg:h-[80vh] max-w-[1800px] mx-auto rounded-xl sm:rounded-[1rem] overflow-hidden shadow-2xl group">
+    <div className="bg-white text-slate-900 selection:bg-blue-100 selection:text-blue-700">
+
+      <section className="pt-10 pb-12 px-6">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6">
           
-          {heroImages.map((img, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: idx === currentIndex ? 1 : 0 }}
-              transition={{ duration: 1.2 }}
-              className="absolute inset-0"
-            >
-              <img
-                src={img}
-                alt={`Slide ${idx + 1}`}
+          {/* Main Copy Area */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+            className="lg:col-span-7 p-8 md:p-16 rounded-[1.5rem] bg-slate-100 border border-slate-100 flex flex-col justify-center relative overflow-hidden"
+          >
+            <div className="absolute -top-24 -left-24 w-64 h-64 bg-blue-100/50 blur-[100px] rounded-full" />
+            
+            <div className="relative z-10">
+              <span className="inline-block px-4 py-1 rounded-full bg-blue-600 text-white text-[10px] font-bold uppercase tracking-widest mb-6">
+                {t("home.hero.badge")}
+              </span>
+              <h1 className="text-5xl md:text-7xl font-black tracking-tight leading-[1] mb-8 text-slate-900">
+                {t("home.hero.titleLine1")} <br/> 
+                <span className="text-blue-600">{t("home.hero.titleHighlight")}</span>
+              </h1>
+              <p className="text-slate-500 text-lg md:text-xl max-w-md mb-10 leading-relaxed font-medium">
+                {t("home.hero.description")}
+              </p>
+              <div className="flex flex-wrap gap-4">
+                <button onClick={() => navigate('/signup-user')} className="px-10 py-2 bg-slate-900 text-white rounded-full font-bold hover:bg-blue-600 transition-all shadow-xl shadow-slate-200 flex items-center gap-2 group">
+                  {t("home.hero.cta")} <ArrowRight size={18} className="group-hover:translate-x-1 transition-all" />
+                </button>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Carousel Block */}
+          <div className="lg:col-span-5 h-[400px] lg:h-auto rounded-[1.5rem] overflow-hidden border border-slate-100 relative shadow-2xl shadow-slate-100">
+            <AnimatePresence mode="wait">
+              <motion.img
+                key={currentIndex}
+                src={heroImages[currentIndex]}
+                initial={{ opacity: 0, scale: 1.1 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 1 }}
                 className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-blue-900/80 via-blue-900/40 to-transparent" />
-            </motion.div>
-          ))}
+            </AnimatePresence>
+            <div className="absolute bottom-8 left-8 flex gap-2">
+              {heroImages.map((_, i) => (
+                <button 
+                  key={i} onClick={() => setCurrentIndex(i)}
+                  className={`h-1.5 rounded-full transition-all ${currentIndex === i ? 'w-10 bg-white' : 'w-2 bg-white/40'}`} 
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
 
-          {/* CONTENT LAYER: Ensure this doesn't interfere with buttons */}
-          <div className="absolute inset-0 flex items-center justify-center text-center px-6 pointer-events-none">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="max-w-3xl w-full pointer-events-auto"
-            >
-              <h1 className="text-3xl xs:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 tracking-tight leading-tight">
-                {t('home.hero.title')}
-              </h1>
-              <p className="text-sm md:text-xl text-blue-50/90 max-w-2xl mx-auto">
-                {t('home.hero.subtitle')}
-              </p>
-            </motion.div>
+      {/* 2. SOFT STATS GRID */}
+      <section className="pb-12 px-6">
+        <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6">
+          
+          <div className="p-10 rounded-[1rem] bg-white border border-slate-100 shadow-sm hover:shadow-md transition-all">
+            <Users className="text-blue-600 mb-6" size={24} />
+            <h2 className="text-4xl font-bold tracking-tighter text-slate-900">
+              {loading ? "..." : <CountUp end={stats.totalUsers} separator="," />}
+            </h2>
+            <p className="text-slate-400 text-[10px] font-bold uppercase tracking-widest mt-2">{t('home.stats.items.0.label')}</p>
           </div>
 
-          {/* LEFT BUTTON: Explicit width/height to stop the stretching */}
-          <button
-            onClick={(e) => { e.preventDefault(); prevSlide(); }}
-            className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 md:w-14 md:h-14 flex items-center justify-center bg-white/10 backdrop-blur-md text-white rounded-full hover:bg-white/20 border border-white/20 transition-all z-20"
-          >
-            <ChevronLeft className="w-6 h-6" />
-          </button>
+          <div className="p-10 rounded-[1rem] bg-white border border-slate-100 shadow-sm hover:shadow-md transition-all">
+            <Store className="text-indigo-600 mb-6" size={24} />
+            <h2 className="text-4xl font-bold tracking-tighter text-slate-900">
+              {loading ? "..." : <CountUp end={stats.totalShops} separator="," />}
+            </h2>
+            <p className="text-slate-400 text-[10px] font-bold uppercase tracking-widest mt-2">{t('home.stats.items.1.label')}</p>
+          </div>
 
-          {/* RIGHT BUTTON: Explicit width/height to stop the stretching */}
-          <button
-            onClick={(e) => { e.preventDefault(); nextSlide(); }}
-            className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 md:w-14 md:h-14 flex items-center justify-center bg-white/10 backdrop-blur-md text-white rounded-full hover:bg-white/20 border border-white/20 transition-all z-20"
-          >
-            <ChevronRight className="w-6 h-6" />
-          </button>
-
-          {/* INDICATORS */}
-          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-20">
-            {heroImages.map((_, idx) => (
-              <button
-                key={idx}
-                onClick={() => setCurrentIndex(idx)}
-                className={`h-1.5 transition-all duration-500 rounded-full ${
-                  idx === currentIndex ? 'w-8 bg-emerald-500' : 'w-2 bg-white/40'
-                }`}
-              />
-            ))}
+          {/* Market Volume (USA/IND) */}
+          <div className="col-span-2 p-10 rounded-[1rem] bg-slate-900 text-white flex flex-col md:flex-row justify-between items-center relative overflow-hidden group">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/20 blur-3xl" />
+            <div className="relative z-10 w-full md:w-auto mb-6 md:mb-0">
+              <p className="text-blue-400 text-[10px] font-bold uppercase tracking-widest mb-4">{t('home.stats.items.2.label')}</p>
+              <div className="flex gap-12">
+                <div>
+                  <span className="text-xs text-slate-400">USA</span>
+                  <h4 className="text-2xl font-bold">{loading ? "..." : `$${new Intl.NumberFormat().format(stats.totalUsa)}`}</h4>
+                </div>
+                <div>
+                  <span className="text-xs text-slate-400">IND</span>
+                  <h4 className="text-2xl font-bold">{loading ? "..." : `₹${new Intl.NumberFormat().format(stats.totalInd)}`}</h4>
+                </div>
+              </div>
+            </div>
+            <Globe className="text-slate-700 group-hover:text-blue-500 transition-colors" size={64} strokeWidth={1} />
           </div>
         </div>
       </section>
@@ -1471,16 +203,16 @@ export default function Home() {
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
         variants={staggerContainer}
-        className="py-10 md:py-16 px-4 md:px-8"
+        className="py-10 md:py-16 px-6"
       >
         {/* max-w-5xl for a more compact and premium laptop layout */}
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-7xl mx-auto">
           {/* Header */}
-          <div className="text-center mb-8 md:mb-16">
+          <div className="mb-8 md:mb-16">
             <h2 className="text-2xl md:text-3xl font-bold text-slate-900 tracking-tight">
               {t('home.howItWorks.title')}
             </h2>
-            <div className="mt-2 h-1 w-10 bg-emerald-500 mx-auto rounded-full" />
+            <div className="mt-2 h-1 w-10 bg-emerald-500 rounded-full" />
           </div>
 
           {/* Grid: Forced 3 columns on all screens */}
@@ -1512,7 +244,7 @@ export default function Home() {
                 key={i}
                 variants={cardVariants}
                 // Smaller padding (p-3 mobile / p-7 laptop) for a refined feel
-                className="group relative bg-white rounded-xl md:rounded-[2rem] p-3 md:p-7 border border-slate-100 hover:shadow-xl hover:shadow-slate-200/50 transition-all duration-500 flex flex-col items-center text-center md:items-start md:text-start"
+                className="group relative bg-white rounded-xl md:rounded-[1rem] p-3 md:p-7 border border-slate-100 hover:shadow-xl hover:shadow-slate-200/50 transition-all duration-500 flex flex-col items-center text-center md:items-start md:text-start"
               >
                 {/* Step Number: Hidden on mobile, subtle on laptop */}
                 <span className="hidden lg:block absolute top-6 right-6 text-xs font-black text-slate-100 group-hover:text-slate-200 transition-colors">
@@ -1538,100 +270,22 @@ export default function Home() {
         </div>
       </motion.section>
 
-      {/* LIVE STATS */}
-      <motion.section
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-        variants={staggerContainer}
-        className="py-10 md:py-16 px-4 md:px-8"
-      >
-        {/* max-w-5xl keeps the stats from stretching too wide on laptops */}
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-8 md:mb-12">
-            <h2 className="text-2xl md:text-3xl font-bold text-slate-800 tracking-tight">
-              {t('home.stats.title')}
-            </h2>
-          </div>
-
-          {/* Force 3 columns on all screens with a tighter gap on laptop */}
-          <div className="grid grid-cols-3 gap-2 md:gap-4">
-            
-            {/* Total Users */}
-            <motion.div 
-              variants={cardVariants} 
-              className="bg-white border border-slate-100 rounded-xl md:rounded-[2rem] p-3 md:p-6 hover:shadow-xl hover:shadow-slate-200/50 transition-all duration-500 flex flex-col items-center text-center md:items-start md:text-start"
-            >
-              <div className="mb-2 md:mb-4">
-                <Users className="w-5 h-5 md:w-6 md:h-6 text-emerald-600" strokeWidth={2} />
-              </div>
-              <div className="text-lg sm:text-2xl md:text-4xl font-black text-slate-900 tracking-tighter">
-                {loading ? "···" : <CountUp end={stats.totalUsers} duration={2} separator="," />}
-              </div>
-              <p className="text-[10px] md:text-sm text-slate-500 font-medium mt-1">
-                {t('home.stats.items.0.label')}
-              </p>
-            </motion.div>
-
-            {/* Total Shops */}
-            <motion.div 
-              variants={cardVariants} 
-              className="bg-white border border-slate-100 rounded-xl md:rounded-[2rem] p-3 md:p-6 hover:shadow-xl hover:shadow-slate-200/50 transition-all duration-500 flex flex-col items-center text-center md:items-start md:text-start"
-            >
-              <div className="mb-2 md:mb-4">
-                <Store className="w-5 h-5 md:w-6 md:h-6 text-emerald-600" strokeWidth={2} />
-              </div>
-              <div className="text-lg sm:text-2xl md:text-4xl font-black text-slate-900 tracking-tighter">
-                {loading ? "···" : <CountUp end={stats.totalShops} duration={2} separator="," />}
-              </div>
-              <p className="text-[10px] md:text-sm text-slate-500 font-medium mt-1">
-                {t('home.stats.items.1.label')}
-              </p>
-            </motion.div>
-
-            {/* Transactions */}
-            <motion.div 
-              variants={cardVariants} 
-              className="bg-slate-900 rounded-xl md:rounded-[2rem] p-3 md:p-6 hover:shadow-xl hover:shadow-slate-200/50 transition-all duration-500 flex flex-col items-center text-center md:items-start md:text-start"
-            >
-              <div className="mb-2 md:mb-4">
-                <Banknote className="w-5 h-5 md:w-6 md:h-6 text-emerald-400" strokeWidth={2} />
-              </div>
-              <div className="w-full space-y-0.5 md:space-y-1">
-                <div className="text-[10px] sm:text-xs md:text-xl font-bold text-white flex flex-col md:flex-row md:items-baseline md:gap-1.5">
-                  <span className="text-[8px] md:text-[12px] text-emerald-400 font-mono">USA:</span>
-                  {loading ? "···" : `$${new Intl.NumberFormat(undefined, { notation: 'compact' }).format(stats.totalUsaTransactionAmount)}`}
-                </div>
-                <div className="text-[10px] sm:text-xs md:text-xl font-bold text-white flex flex-col md:flex-row md:items-baseline md:gap-1.5 border-t border-slate-800 pt-0.5 md:pt-1">
-                  <span className="text-[8px] md:text-[12px] text-emerald-400 font-mono">IND:</span>
-                  {loading ? "···" : `₹${new Intl.NumberFormat(undefined, { notation: 'compact' }).format(stats.totalIndiaTransactionAmount)}`}
-                </div>
-              </div>
-              <p className="text-[10px] md:text-sm text-slate-400 font-medium mt-2">
-                {t('home.stats.items.2.label')}
-              </p>
-            </motion.div>
-
-          </div>
-        </div>
-      </motion.section>
-
       {/* PARTNER STORE CATEGORIES */}
       <motion.section
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.15 }}
         variants={staggerContainer}
-        className="py-10 md:py-16 px-4 md:px-8"
+        className="py-10 md:py-16 px-6"
       >
         {/* max-w-5xl (instead of 6xl) makes the row look smaller and more "premium" on laptops */}
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-7xl mx-auto">
           {/* Header */}
-          <div className="text-center mb-8 md:mb-12">
+          <div className="mb-8 md:mb-12">
             <h2 className="text-2xl md:text-3xl font-bold text-slate-900 tracking-tight mb-2">
               {t('home.categories.title')}
             </h2>
-            <p className="text-slate-500 max-w-xl mx-auto text-xs md:text-sm">
+            <p className="text-slate-500 max-w-xl text-xs md:text-sm">
               {t('home.categories.subtitle')}
             </p>
           </div>
@@ -1650,7 +304,7 @@ export default function Home() {
                 key={i}
                 variants={cardVariants}
                 // p-3 on mobile and p-5 on desktop to keep the "smaller" feel
-                className="group flex flex-col items-center p-3 md:p-5 rounded-xl md:rounded-[1.5rem] bg-white border border-slate-100 hover:shadow-lg hover:shadow-slate-200/50 transition-all duration-500 cursor-pointer"
+                className="group flex flex-col items-center p-3 md:p-5 rounded-xl md:rounded-[1rem] bg-white border border-slate-100 hover:shadow-lg hover:shadow-slate-200/50 transition-all duration-500 cursor-pointer"
               >
                 {/* Smaller Icon Wrapper: w-12 for laptop instead of w-14 */}
                 <div className={`w-9 h-9 md:w-12 md:h-12 flex items-center justify-center rounded-xl ${category.color} mb-2 md:mb-3 transform group-hover:scale-110 transition-all duration-500`}>
@@ -1679,15 +333,15 @@ export default function Home() {
         whileInView="visible"
         viewport={{ once: true, amount: 0.15 }}
         variants={staggerContainer}
-        className="py-10 md:py-16 px-4 md:px-8"
+        className="py-10 md:py-16 px-6"
       >
         {/* max-w-5xl makes the section slightly more compact on laptops */}
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-10 md:mb-16">
+        <div className="max-w-7xl mx-auto">
+          <div className="mb-10 md:mb-16">
             <h2 className="text-2xl md:text-3xl font-bold text-slate-900 tracking-tight mb-3">
               {t('home.mobile.title')}
             </h2>
-            <p className="text-slate-500 max-w-xl mx-auto text-sm md:text-base px-4">
+            <p className="text-slate-500 max-w-xl text-sm md:text-base">
               {t('home.mobile.subtitle')}
             </p>
           </div>
@@ -1704,7 +358,7 @@ export default function Home() {
                 key={i}
                 variants={cardVariants}
                 // p-5 for mobile, p-7 for laptop to keep it smaller than before
-                className="group p-5 md:p-7 rounded-2xl md:rounded-[2rem] bg-white border border-slate-100 hover:shadow-xl hover:shadow-slate-200/60 transition-all duration-500"
+                className="group p-5 md:p-7 rounded-2xl md:rounded-[1rem] bg-white border border-slate-100 hover:shadow-xl hover:shadow-slate-200/60 transition-all duration-500"
               >
                 {/* Smaller icon wrapper for a "tighter" feel */}
                 <div className={`w-10 h-10 md:w-12 md:h-12 rounded-lg ${feature.color} flex items-center justify-center mb-4 md:mb-6 transform group-hover:scale-110 transition-all duration-500 shadow-sm`}>
@@ -1724,47 +378,7 @@ export default function Home() {
         </div>
       </motion.section>
 
-      {/* BENEFITS - increased readability */}
-      <motion.section
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.15 }}
-        variants={staggerContainer}
-        className="py-10 md:py-16 px-4 md:px-8"
-      >
-        {/* Reduced to max-w-5xl for a more elegant, centered laptop view */}
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-10 md:mb-16">
-            <h2 className="text-2xl md:text-3xl font-bold text-slate-900 tracking-tight">
-              {t('home.benefits.title')}
-            </h2>
-          </div>
-
-          {/* grid-cols-2 for mobile (2 rows if 4 items), lg:grid-cols-4 for laptop */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
-            {t('home.benefits.items', { returnObjects: true }).map((benefit, i) => (
-              <motion.div
-                key={i}
-                variants={cardVariants}
-                // Smaller padding (p-5 mobile / p-7 laptop) for a tighter look
-                className="group p-5 md:p-7 rounded-2xl md:rounded-[2rem] bg-white border border-slate-100 hover:bg-white hover:shadow-xl hover:shadow-slate-200/60 transition-all duration-500 flex flex-col items-center text-center md:items-start md:text-start"
-              >
-                {/* Refined Icon: Balanced for both screen sizes */}
-                <div className="flex-shrink-0 w-10 h-10 md:w-12 md:h-12 mb-4 md:mb-6 bg-emerald-50 rounded-xl flex items-center justify-center group-hover:bg-emerald-500 transition-all duration-300 transform group-hover:scale-110 group-hover:rotate-3">
-                  <Star 
-                    className="w-5 h-5 md:w-6 md:h-6 text-emerald-600 group-hover:text-white transition-colors duration-300" 
-                    fill="currentColor" 
-                  />
-                </div>
-                
-                <p className="font-bold text-slate-800 text-xs md:text-[15px] leading-tight">
-                  {benefit}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </motion.section>
+      <LoyaltyShowcase/>
 
       {/* FINAL CTA */}
       <motion.section
@@ -1772,48 +386,55 @@ export default function Home() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className="py-10 md:py-16 px-4 md:px-8"
+        className="py-10 md:py-16 px-6"
       >
-        {/* Smaller "Island" Container: max-w-5xl and blue gradient */}
-        <div className="max-w-5xl mx-auto bg-gradient-to-br from-blue-600 to-blue-700 rounded-[2rem] p-8 md:p-14 text-center relative overflow-hidden shadow-2xl shadow-blue-200/50">
+        {/* Modern "White Island" Container: Pure white with soft slate border */}
+        <div className="max-w-7xl mx-auto bg-white border border-slate-100 rounded-[1rem] p-8 md:p-10 text-center relative overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.04)]">
           
-          {/* Decorative Elements: Soft light blue glows */}
-          <div className="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 bg-white/10 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute bottom-0 left-0 -ml-16 -mb-16 w-48 h-48 bg-blue-400/20 rounded-full blur-2xl pointer-events-none" />
+          {/* Decorative Elements: Ultra-soft grey/indigo glows instead of blue */}
+          <div className="absolute top-0 right-0 -mr-16 -mt-16 w-80 h-80 bg-slate-50 rounded-full blur-3xl pointer-events-none opacity-50" />
+          <div className="absolute bottom-0 left-0 -ml-16 -mb-16 w-64 h-64 bg-indigo-50/30 rounded-full blur-2xl pointer-events-none" />
 
           <div className="relative z-10 max-w-2xl mx-auto">
-            <h2 className="text-2xl md:text-4xl font-bold text-white tracking-tight mb-4 md:mb-6">
+            {/* Small Badge */}
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-50 border border-slate-100 text-slate-500 text-[10px] font-bold uppercase tracking-[0.15em] mb-6">
+              <Sparkles className="w-3 h-3 text-indigo-500" />
+              {t('home.finalCTA.topTitle')}
+            </div>
+
+            <h2 className="text-3xl md:text-5xl font-black text-slate-900 tracking-tight mb-4 md:mb-6">
               {t('home.finalCTA.title')}
             </h2>
             
-            <p className="text-blue-100/80 text-sm md:text-base mb-8 md:mb-10 leading-relaxed px-4">
+            <p className="text-slate-500 text-sm md:text-lg mb-8 md:mb-10 leading-relaxed px-4 font-medium">
               {t('home.finalCTA.subtitle')}
             </p>
 
-            {/* Buttons: Fixed height/padding for a "smaller" refined feel */}
+            {/* Buttons: High-contrast Minimalist Style */}
             <div className="flex flex-col sm:flex-row justify-center items-center gap-3 md:gap-4 px-4">
-              {/* Primary CTA */}
+              
+              {/* Primary CTA: Solid Slate/Black for impact */}
               <motion.button
                 whileHover={{ scale: 1.02, y: -2 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => navigate('/signup-user')}
-                className="group flex items-center justify-center gap-2 px-7 py-2 bg-white text-blue-700 font-bold text-sm md:text-base rounded-full transition-all duration-300 w-full sm:w-auto shadow-lg shadow-blue-900/20"
+                className="group flex items-center justify-center gap-2 px-8 py-2 bg-slate-900 text-white font-bold text-sm md:text-base rounded-full transition-all duration-300 w-full sm:w-auto shadow-xl shadow-slate-200"
               >
                 {t('home.finalCTA.userCTA')}
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform text-white/70" />
               </motion.button>
 
-              {/* Secondary CTA: Soft Glass Style */}
+              {/* Secondary CTA: Soft Ghost/Border Style */}
               <motion.a
                 href="https://subscription-frontend-psi.vercel.app/subscription"
                 target="_blank"
                 rel="noopener noreferrer"
-                whileHover={{ scale: 1.02, y: -2 }}
+                whileHover={{ scale: 1.02, y: -2, backgroundColor: '#f8fafc' }}
                 whileTap={{ scale: 0.98 }}
-                className="group flex items-center justify-center gap-2 px-7 py-2 bg-white/10 hover:bg-white/20 text-white font-bold text-sm md:text-base rounded-full transition-all duration-300 w-full sm:w-auto border border-white/20 backdrop-blur-sm"
+                className="group flex items-center justify-center gap-2 px-8 py-2 bg-white text-slate-600 font-bold text-sm md:text-base rounded-full transition-all duration-300 w-full sm:w-auto border border-slate-200"
               >
                 {t('home.finalCTA.businessCTA')}
-                <Store className="w-4 h-4 text-blue-200 group-hover:text-white transition-colors" />
+                <Store className="w-4 h-4 text-slate-400 group-hover:text-slate-600 transition-colors" />
               </motion.a>
             </div>
           </div>

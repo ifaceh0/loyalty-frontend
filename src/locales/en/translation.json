@@ -18,8 +18,12 @@
     "hero": {
       "title": "Earn Rewards on Every Purchase",
       "subtitle": "Join thousands of shoppers earning points at local stores. Redeem for gifts, discounts, and more.",
-      "cta": "Start Earning Free",
-      "slides": ["Slide 1", "Slide 2", "Slide 3", "Slide 4", "Slide 5"]
+      "slides": ["Slide 1", "Slide 2", "Slide 3", "Slide 4", "Slide 5"],
+      "badge": "Next-Gen Loyalty",
+      "titleLine1": "Your Brand,",
+      "titleHighlight": "Everywhere.",
+      "description": "The minimalist loyalty engine for shops that value customer experience over complexity.",
+      "cta": "Get Started"
     },
     "howItWorks": {
       "title": "How It Works",
@@ -112,10 +116,61 @@
       ]
     },
     "finalCTA": {
+      "topTitle": "Join the Network",
       "title": "Start Earning Rewards Today",
       "subtitle": "Join 10,000+ members already saving with every purchase.",
       "userCTA": "Join Free Now",
       "businessCTA": "Partner Your Business"
+    },
+
+    "rewardLibrary": {
+      "title": "Reward Library",
+      "subtitle": "Pre-built loyalty blueprints. Choose a strategy and launch it in one click.",
+      "scrollHint": "Scroll to explore",
+      "preview": "Preview Template"
+    },
+    "modal": {
+      "howItWorks": "How this works for your business:",
+      "customerView": "Customer View",
+      "scanSuccess": "Scan successful!",
+      "pointsAdded": "Points Added to Wallet",
+      "features": {
+        "sms": "Instant delivery via SMS/Email",
+        "analytics": "Real-time analytics tracking",
+        "fraud": "Anti-fraud verification active"
+      }
+    },
+    "loyalty": {
+      "welcome": {
+        "title": "Welcome Bonus",
+        "desc": "Instantly reward new customers just for joining your circle.",
+        "points": "+50 pts"
+      },
+      "daily": {
+        "title": "Daily Grind",
+        "desc": "Perfect for cafes. Every 10th coffee is on the house.",
+        "points": "10% Back"
+      },
+      "refer": {
+        "title": "Refer-a-Friend",
+        "desc": "Grow your shop organically by rewarding word-of-mouth.",
+        "points": "+200 pts"
+      },
+      "birthday": {
+        "title": "Birthday Treat",
+        "desc": "Automated rewards sent to customers on their special day.",
+        "points": "Free Gift"
+      },
+      "vip": {
+        "title": "VIP Gold Tier",
+        "desc": "Higher rewards for your top 5% of spenders.",
+        "points": "2x Multiplier"
+      },
+      "flash": {
+        "title": "Flash Sale",
+        "desc": "Boost slow Tuesdays with double point events.",
+        "points": "Limited Time"
+      }
     }
   },
 
@@ -356,7 +411,8 @@
     "subscribedSuccess": "You're in! Check your email.",
     "copyright": "© {{year}} LoyaltyHub. All rights reserved.",
     "privacy": "Privacy Policy",
-    "terms": "Terms of Service"
+    "terms": "Terms of Service",
+    "connect": "Connect with us"
   },
 
   "signin": {
@@ -1015,6 +1071,30 @@
       "redeemPoints": "Redeem Points",
       "redeemedAmount": "Redeemed Amount",
       "time": "Time"
+    },
+    "dailyInsights": {
+      "title": "Daily Insights",
+      "points": {
+        "tracking": "Real-time tracking of all daily transactions and activities.",
+        "metrics": "Automatic calculations of revenue and growth metrics.",
+        "security": "Secure data retrieval with instant performance audits."
+      }
+    },
+    "dailyReports": {
+      "title": "Why use Daily Reports?",
+      "tips": {
+        "compare": {
+          "title": "Compare Performance",
+          "desc": "Select previous dates to see how your store is trending over time."
+        },
+        "export": {
+          "title": "Export Ready",
+          "desc": "Reports generated are optimized for digital storage and tax auditing."
+        }
+      }
+    },
+    "report": {
+      "previewPlaceholder": "Report preview will appear here"
     }
   },
 
@@ -1110,38 +1190,42 @@
 
   "explore": {
     "title": "Explore New Loyalty Partners",
+    "subtitle": "Manage and discover partner shops within the loyalty network. Find new places to earn and redeem points!",
+    "partners": "Partners",
+    "contact":"Contact",
     "searchPlaceholder": "Search shops by name...",
     "loading": {
       "title": "Discovering Shops...",
       "subtitle": "Connecting you to the loyalty network."
     },
     "filter": {
-      "title": "Filter Shops",
+      "title": "Location Settings",
       "open": "Filter",
       "close": "Close",
       "country": "Country",
       "city": "City",
       "allCountries": "All Countries",
       "allCities": "All Cities",
-      "reset": "Reset Filters",
-      "done": "Done"
+      "reset": "Reset",
+      "done": "Apply"
     },
     "noResults": {
-      "oops": "Oops!",
+      "oops": "No results found",
       "message": "No shops found matching your current search or location filters. Try broadening your search!"
     },
     "qr": {
-      "button": "QR Code",
+      "button": "Get QR",
       "generating": "Generating..."
     },
     "pagination": {
-      "previous": "Previous",
-      "next": "Next"
+      "previous": "Showing page",
+      "next": "of"
     }
   },
 
   "userShopList": {
     "title": "Your Registered Loyalty Hubs",
+    "subtitle": "Manage your frequently visited partners and rewards.",
     "searchPlaceholder": "Search your registered shops...",
     "loading": {
       "title": "Loading Shops...",
@@ -1151,7 +1235,7 @@
       "oops": "Oops!",
       "message": "No registered shops found matching your search. Try broadening your search!"
     },
-    "visitedBadge": "Registered Shop",
+    "visitedBadge": "Visited",
     "qr": {
       "button": "QR Code",
       "generating": "Generating..."
@@ -1278,6 +1362,35 @@
       "title": "Something went wrong",
       "fetchFailed": "Failed to fetch transactions",
       "loadFailed": "Failed to load transaction data."
+    }
+  },
+
+  "shopDetails": {
+    "notFound": {
+      "title": "Shop not found",
+      "back": "Return to Home"
+    },
+    "header": {
+      "back": "Back to Explore"
+    },
+    "meta": {
+      "phone": "Phone"
+    },
+    "applications": {
+      "title": "Installed Applications",
+      "subtitle": "This shop is actively using the following applications to enhance customer experience, increase engagement, and grow their business.",
+      "loading": "Loading applications...",
+      "active": "Active • Installed",
+      "launch": "Launch App"
+    },
+    "appDescriptions": {
+      "loyalty": "Reward your loyal customers with points, tiers, and exclusive benefits to increase repeat visits.",
+      "referral": "Turn happy customers into brand advocates through a powerful refer-a-friend program.",
+      "coupons": "Boost sales with smart discount codes, flash sales, and targeted coupon campaigns."
+    },
+    "footer": {
+      "title": "Why these applications?",
+      "description": "By installing these apps, {{shopName}} is committed to providing a better shopping experience through loyalty rewards, customer referrals, and smart promotions. These tools help them build stronger relationships with customers and grow sustainably."
     }
   },
 

@@ -39,6 +39,7 @@ import AdminSupportInbox from './components/Contact/AdminSupportInbox.jsx';
 import PrivacyPolicy from './components/policy/PrivacyPolicy.jsx';
 import TermsOfService from './components/policy/TermsOfService.jsx';
 import FAQPage from './components/policy/FAQPage.jsx';
+import ShopDetails from './components/ShopList/ShopDetails.jsx';
 
 import './i18n';
 
@@ -109,6 +110,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute allowedRoles={["USER"]}>
             <Userdashboard />
+          </ProtectedRoute>
+        )
+      },
+      {
+        path:"/user/dashboard/:shopId",
+        element: (
+          <ProtectedRoute allowedRoles={["USER"]}>
+            <ShopDetails />
           </ProtectedRoute>
         )
       },

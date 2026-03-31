@@ -18,7 +18,11 @@
     "hero": {
       "title": "Gana Recompensas en Cada Compra",
       "subtitle": "Únete a miles de clientes ganando puntos en tiendas locales. Canjea por regalos, descuentos y mucho más.",
-      "cta": "Empieza a Ganar Gratis",
+      "badge": "Fidelización de Nueva Generación",
+      "titleLine1": "Tu marca,",
+      "titleHighlight": "en todas partes.",
+      "description": "El motor de fidelización minimalista para negocios que valoran la experiencia del cliente por encima de la complejidad.",
+      "cta": "Comenzar",
       "slides": ["Diapositiva 1", "Diapositiva 2", "Diapositiva 3", "Diapositiva 4", "Diapositiva 5"]
     },
     "howItWorks": {
@@ -117,10 +121,61 @@
       ]
     },
     "finalCTA": {
+      "topTitle": "Únete a la Red",
       "title": "Empieza a Ganar Recompensas Hoy",
       "subtitle": "Únete a más de 10,000 miembros que ya ahorran con cada compra.",
       "userCTA": "Únete Gratis Ahora",
       "businessCTA": "Asocia Tu Negocio"
+    },
+
+    "rewardLibrary": {
+      "title": "Biblioteca de Recompensas",
+      "subtitle": "Plantillas de fidelización listas. Elige una estrategia y lánzala con un clic.",
+      "scrollHint": "Desliza para explorar",
+      "preview": "Ver plantilla"
+    },
+    "modal": {
+      "howItWorks": "Cómo funciona para tu negocio:",
+      "customerView": "Vista del cliente",
+      "scanSuccess": "¡Escaneo exitoso!",
+      "pointsAdded": "Puntos añadidos a la cartera",
+      "features": {
+        "sms": "Entrega instantánea por SMS/Correo",
+        "analytics": "Seguimiento analítico en tiempo real",
+        "fraud": "Verificación antifraude activa"
+      }
+    },
+    "loyalty": {
+      "welcome": {
+        "title": "Bono de Bienvenida",
+        "desc": "Recompensa al instante a nuevos clientes por unirse.",
+        "points": "+50 pts"
+      },
+      "daily": {
+        "title": "Rutina Diaria",
+        "desc": "Perfecto para cafeterías. Cada 10º café es gratis.",
+        "points": "10% de vuelta"
+      },
+      "refer": {
+        "title": "Invita a un amigo",
+        "desc": "Haz crecer tu negocio con recomendaciones.",
+        "points": "+200 pts"
+      },
+      "birthday": {
+        "title": "Regalo de Cumpleaños",
+        "desc": "Recompensas automáticas en su día especial.",
+        "points": "Regalo Gratis"
+      },
+      "vip": {
+        "title": "Nivel Oro VIP",
+        "desc": "Más beneficios para tus mejores clientes.",
+        "points": "2x multiplicador"
+      },
+      "flash": {
+        "title": "Venta Flash",
+        "desc": "Impulsa días lentos con puntos dobles.",
+        "points": "Tiempo limitado"
+      }
     }
 
   },
@@ -414,7 +469,8 @@
     "subscribedSuccess": "¡Estás dentro! Revisa tu correo.",
     "copyright": "© {{year}} LoyaltyHub. Todos los derechos reservados.",
     "privacy": "Política de Privacidad",
-    "terms": "Términos de Servicio"
+    "terms": "Términos de Servicio",
+    "connect": "Conéctate con nosotros"
   },
 
   "signin": {
@@ -1073,6 +1129,30 @@
       "redeemPoints": "Puntos Redimidos",
       "redeemedAmount": "Monto Redimido",
       "time": "Hora"
+    },
+    "report": {
+      "previewPlaceholder": "La vista previa del informe aparecerá aquí"
+    },
+    "dailyInsights": {
+      "title": "Información diaria",
+      "points": {
+        "tracking": "Seguimiento en tiempo real de todas las transacciones y actividades diarias.",
+        "metrics": "Cálculo automático de ingresos y métricas de crecimiento.",
+        "security": "Recuperación segura de datos con auditorías de rendimiento instantáneas."
+      }
+    },
+    "dailyReports": {
+      "title": "¿Por qué usar informes diarios?",
+      "tips": {
+        "compare": {
+          "title": "Comparar rendimiento",
+          "desc": "Selecciona fechas anteriores para ver cómo evoluciona tu tienda con el tiempo."
+        },
+        "export": {
+          "title": "Listo para exportar",
+          "desc": "Los informes generados están optimizados para almacenamiento digital y auditorías fiscales."
+        }
+      }
     }
   },
 
@@ -1186,38 +1266,42 @@
 
   "explore": {
     "title": "Explora Nuevos Socios de Fidelidad",
+    "subtitle": "Administra y descubre tiendas asociadas dentro de la red de lealtad. ¡Encuentra nuevos lugares para ganar y canjear puntos!",
+    "partners": "Socios",
+    "contact":"Contacto",
     "searchPlaceholder": "Buscar tiendas por nombre...",
     "loading": {
       "title": "Descubriendo Tiendas...",
       "subtitle": "Conectándote a la red de fidelidad."
     },
     "filter": {
-      "title": "Filtrar Tiendas",
+      "title": "Configuración de ubicación",
       "open": "Filtrar",
       "close": "Cerrar",
       "country": "País",
       "city": "Ciudad",
       "allCountries": "Todos los Países",
       "allCities": "Todas las Ciudades",
-      "reset": "Restablecer Filtros",
-      "done": "Listo"
+      "reset": "Restablecer",
+      "done": "Aplicar"
     },
     "noResults": {
-      "oops": "¡Ups!",
+      "oops": "No se encontraron resultados",
       "message": "No se encontraron tiendas que coincidan con tu búsqueda o filtros. ¡Intenta ampliar la búsqueda!"
     },
     "qr": {
-      "button": "Código QR",
+      "button": "Obtener QR",
       "generating": "Generando..."
     },
     "pagination": {
-      "previous": "Anterior",
-      "next": "Siguiente"
+      "previous": "Mostrando página",
+      "next": "de"
     }
   },
 
   "userShopList": {
     "title": "Tus Tiendas Registradas",
+    "subtitle": "Administra tus socios frecuentes y recompensas.",
     "searchPlaceholder": "Buscar en tus tiendas registradas...",
     "loading": {
       "title": "Cargando Tiendas...",
@@ -1227,7 +1311,7 @@
       "oops": "¡Ups!",
       "message": "No se encontraron tiendas registradas que coincidan con tu búsqueda. ¡Intenta ampliar la búsqueda!"
     },
-    "visitedBadge": "Tienda Registrada",
+    "visitedBadge": "Visitada",
     "qr": {
       "button": "Código QR",
       "generating": "Generando..."
@@ -1354,6 +1438,35 @@
       "title": "Algo salió mal",
       "fetchFailed": "No se pudieron obtener las transacciones",
       "loadFailed": "Error al cargar los datos de transacciones."
+    }
+  },
+
+  "shopDetails": {
+    "notFound": {
+      "title": "Tienda no encontrada",
+      "back": "Volver al inicio"
+    },
+    "header": {
+      "back": "Volver a explorar"
+    },
+    "meta": {
+      "phone": "Teléfono"
+    },
+    "applications": {
+      "title": "Aplicaciones Instaladas",
+      "subtitle": "Esta tienda utiliza activamente las siguientes aplicaciones para mejorar la experiencia del cliente, aumentar la participación y hacer crecer su negocio.",
+      "loading": "Cargando aplicaciones...",
+      "active": "Activo • Instalado",
+      "launch": "Abrir aplicación"
+    },
+    "appDescriptions": {
+      "loyalty": "Recompensa a tus clientes leales con puntos, niveles y beneficios exclusivos para aumentar las visitas repetidas.",
+      "referral": "Convierte a clientes satisfechos en promotores de tu marca mediante un potente programa de referidos.",
+      "coupons": "Impulsa las ventas con códigos de descuento inteligentes, ofertas flash y campañas de cupones dirigidas."
+    },
+    "footer": {
+      "title": "¿Por qué estas aplicaciones?",
+      "description": "Al instalar estas aplicaciones, {{shopName}} se compromete a ofrecer una mejor experiencia de compra mediante recompensas de fidelidad, referencias de clientes y promociones inteligentes. Estas herramientas ayudan a construir relaciones más sólidas con los clientes y a crecer de forma sostenible."
     }
   },
 

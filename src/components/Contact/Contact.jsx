@@ -109,24 +109,24 @@ export default function ContactUs() {
   };
 
   return (
-    <section className="py-20 px-6 bg-white min-h-screen">
-      <div className="max-w-6xl mx-auto">
+    <section className="py-20 px-6 min-h-screen">
+      <div className="max-w-7xl mx-auto">
         
         {/* Header */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-16 space-y-4"
+          className="text-left mb-10 space-y-4"
         >
           <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-slate-900">
             {t('contact.header')} <span className="text-blue-600">{t('contact.headerHighlight')}</span>
           </h2>
-          <p className="text-lg text-slate-500 max-w-2xl mx-auto font-light">
+          <p className="text-lg text-slate-500 max-w-2xl font-light">
             {t('contact.subtitle')}
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-12 gap-0 overflow-hidden rounded-[2rem] bg-white border border-slate-100 shadow-2xl shadow-blue-500/5">
+        <div className="grid lg:grid-cols-12 gap-0 overflow-hidden rounded-[1rem] bg-white border border-slate-100 shadow-2xl shadow-blue-500/5">
           
           {/* Sidebar - Visual Dark Mode */}
           <div className="lg:col-span-4 bg-slate-900 p-12 text-white flex flex-col justify-between relative overflow-hidden">
@@ -142,7 +142,7 @@ export default function ContactUs() {
                   { icon: <Headphones className="text-indigo-400" />, title: t('contact.support'), desc: t('contact.alwaysHere') }
                 ].map((item, idx) => (
                   <div key={idx} className="flex gap-5 group">
-                    <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center border border-white/10 group-hover:bg-blue-500/20 transition-all">
+                    <div className="w-12 h-12 rounded-lg bg-white/5 flex items-center justify-center border border-white/10 group-hover:bg-blue-500/20 transition-all">
                       {item.icon}
                     </div>
                     <div>
@@ -166,7 +166,7 @@ export default function ContactUs() {
                   initial={{ opacity: 0, height: 0 }} 
                   animate={{ opacity: 1, height: 'auto' }} 
                   exit={{ opacity: 0, height: 0 }}
-                  className="mb-8 p-3 bg-blue-50 border border-blue-100 rounded-2xl text-blue-700 font-bold flex items-center gap-3"
+                  className="mb-8 p-3 bg-blue-50 border border-blue-100 rounded-xl text-blue-700 font-bold flex items-center gap-3"
                 >
                   <CheckCircle size={20} className="text-blue-600" /> {t('contact.success')}
                 </motion.div>
@@ -187,7 +187,7 @@ export default function ContactUs() {
                       value={formData.fullName}
                       onChange={handleChange}
                       readOnly={isLoggedIn}
-                      className={`w-full px-5 py-2 rounded-xl border transition-all outline-none font-medium ${isLoggedIn ? 'bg-slate-50 text-slate-400 border-slate-100 cursor-default' : 'focus:ring-4 focus:ring-blue-500/5 focus:border-blue-500 border-slate-200 text-slate-700'}`}
+                      className={`w-full px-5 py-2 rounded-lg border transition-all outline-none font-medium ${isLoggedIn ? 'bg-slate-50 text-slate-400 border-slate-100 cursor-default' : 'focus:ring-4 focus:ring-blue-500/5 focus:border-blue-500 border-slate-200 text-slate-700'}`}
                       required
                     />
                     {isLoggedIn && <Info size={14} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-300" />}
@@ -205,7 +205,7 @@ export default function ContactUs() {
                     value={formData.email}
                     onChange={handleChange}
                     readOnly={isLoggedIn}
-                    className={`w-full px-5 py-2 rounded-xl border transition-all outline-none font-medium ${isLoggedIn ? 'bg-slate-50 text-slate-400 border-slate-100 cursor-default' : 'focus:ring-4 focus:ring-blue-500/5 focus:border-blue-500 border-slate-200 text-slate-700'}`}
+                    className={`w-full px-5 py-2 rounded-lg border transition-all outline-none font-medium ${isLoggedIn ? 'bg-slate-50 text-slate-400 border-slate-100 cursor-default' : 'focus:ring-4 focus:ring-blue-500/5 focus:border-blue-500 border-slate-200 text-slate-700'}`}
                     required
                   />
                 </div>
@@ -221,7 +221,7 @@ export default function ContactUs() {
                   value={formData.subject}
                   onChange={handleChange}
                   placeholder={t('contact.subjectPlaceholder')}
-                  className="w-full px-5 py-2 rounded-xl border border-slate-200 focus:ring-4 focus:ring-blue-500/5 focus:border-blue-500 outline-none transition-all font-medium text-slate-700"
+                  className="w-full px-5 py-3 rounded-lg border border-slate-200 focus:ring-4 focus:ring-blue-500/5 focus:border-blue-500 outline-none transition-all font-medium text-slate-700"
                   required
                 />
               </div>
@@ -237,15 +237,15 @@ export default function ContactUs() {
                   value={formData.message}
                   onChange={handleChange}
                   placeholder={t('contact.messagePlaceholder')}
-                  className="w-full px-5 py-2 rounded-xl border border-slate-200 focus:ring-4 focus:ring-blue-500/5 focus:border-blue-500 outline-none transition-all resize-none font-medium text-slate-700"
+                  className="w-full px-5 py-4 rounded-lg border border-slate-200 focus:ring-4 focus:ring-blue-500/5 focus:border-blue-500 outline-none transition-all resize-none font-medium text-slate-700"
                   required
                 />
               </div>
 
               {/* Captcha Section */}
-              <div className="p-5 bg-slate-50/50 rounded-3xl border border-slate-100 flex flex-col md:flex-row items-center gap-6">
+              <div className="p-5 bg-slate-50/50 rounded-xl border border-slate-100 flex flex-col md:flex-row items-center gap-6">
                 <div className="relative shrink-0">
-                  <canvas ref={canvasRef} width={150} height={50} className="rounded-xl border border-slate-200 bg-white" />
+                  <canvas ref={canvasRef} width={150} height={50} className="rounded-lg border border-slate-200 bg-white" />
                   <button 
                     type="button" 
                     onClick={generateCaptcha} 
@@ -259,7 +259,7 @@ export default function ContactUs() {
                   value={formData.captchaInput}
                   onChange={handleChange}
                   placeholder={t('contact.captchaPlaceholder')}
-                  className="w-full px-5 py-2.5 rounded-xl border border-slate-200 focus:ring-4 focus:ring-blue-500/5 focus:border-blue-500 outline-none font-bold text-slate-700"
+                  className="w-full px-5 py-2.5 rounded-lg border border-slate-200 focus:ring-4 focus:ring-blue-500/5 focus:border-blue-500 outline-none font-bold text-slate-700"
                   required
                 />
               </div>

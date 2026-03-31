@@ -78,7 +78,7 @@ export default function Features() {
     <>
       <section className="py-16 md:py-24 px-4 md:px-6">
         {/* max-w-5xl makes the grid look much more premium on laptop screens */}
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-7xl mx-auto">
           {/* Header Section */}
           <motion.div
             initial={{ opacity: 0, y: 10 }}
@@ -112,12 +112,12 @@ export default function Features() {
                   variants={item}
                   whileHover={{ y: -5 }}
                   onClick={() => openModal(feature)}
-                  className="group relative flex flex-col text-left p-5 md:p-7 bg-white/70 backdrop-blur-sm rounded-2xl md:rounded-[1.5rem] border border-slate-100 shadow-sm hover:shadow-xl hover:shadow-blue-500/5 transition-all duration-500"
+                  className="group relative flex flex-col text-left p-5 md:p-7 bg-white/70 backdrop-blur-sm rounded-xl md:rounded-[1rem] border border-slate-100 shadow-sm hover:shadow-xl hover:shadow-blue-500/5 transition-all duration-500"
                 >
                   {/* Soft Background Accent */}
                   <div className={`absolute top-0 right-0 w-24 h-24 bg-gradient-to-br ${feature.gradient} opacity-[0.03] rounded-bl-[3rem] group-hover:opacity-[0.07] transition-opacity`} />
 
-                  <div className="mb-6 p-3 w-fit rounded-xl bg-blue-50 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300">
+                  <div className="mb-6 p-3 w-fit rounded-lg bg-blue-50 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300">
                     <Icon className="w-5 h-5 md:w-6 md:h-6" strokeWidth={2} />
                   </div>
 
@@ -161,7 +161,7 @@ export default function Features() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 100 }}
               transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-              className="relative max-w-lg w-full bg-white rounded-t-[2rem] sm:rounded-[2rem] shadow-2xl overflow-hidden"
+              className="relative max-w-lg w-full bg-white rounded-t-[1rem] sm:rounded-[1rem] shadow-2xl overflow-hidden"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Close Button: Optimized for thumb reach on mobile */}
