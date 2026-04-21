@@ -495,9 +495,9 @@ export default function Header() {
             //   <span className="h-2 w-2 rounded-full bg-indigo-600 animate-pulse mt-3"></span>
             // </Link>
             <Link to="/" className="flex items-center gap-3 group">
-              <div className="bg-slate-900 text-white font-bold px-2 py-1 rounded-lg transform group-hover:rotate-12 transition-transform duration-300">
-                <span className="text-xl">L</span>
-                <span className="text-xl text-blue-500">H</span>
+              <div className="bg-slate-900 text-white font-bold px-2 py-1.5 rounded-full transform group-hover:rotate-12 transition-transform duration-300">
+                <span className="text-lg">L</span>
+                <span className="text-lg text-blue-500">H</span>
               </div>
               <div className="flex flex-col">
                 <span className="text-lg font-bold leading-none text-slate-900 tracking-wide">LOYALTY</span>
@@ -570,7 +570,7 @@ export default function Header() {
             ) : isLoggedIn ? (
               <UserOnlineIcon />
             ) : (
-              <div className="w-10 h-10 flex items-center justify-center rounded-lg bg-slate-900 text-white shadow-lg">
+              <div className="w-10 h-10 flex items-center justify-center rounded-full bg-slate-900 text-white shadow-lg">
                 <List size={24} />
               </div>
             )}

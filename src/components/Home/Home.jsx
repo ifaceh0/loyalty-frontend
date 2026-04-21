@@ -205,7 +205,6 @@ export default function Home() {
         variants={staggerContainer}
         className="py-10 md:py-16 px-6"
       >
-        {/* max-w-5xl for a more compact and premium laptop layout */}
         <div className="max-w-7xl mx-auto">
           {/* Header */}
           <div className="mb-8 md:mb-16">
@@ -215,8 +214,8 @@ export default function Home() {
             <div className="mt-2 h-1 w-10 bg-emerald-500 rounded-full" />
           </div>
 
-          {/* Grid: Forced 3 columns on all screens */}
-          <div className="grid grid-cols-3 gap-2 md:gap-8">
+          {/* Grid: 2 columns on mobile (with 3rd spanning full), 3 columns on laptop */}
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-8">
             {[
               { 
                 icon: <CheckCircle strokeWidth={1.5} />, 
@@ -243,25 +242,28 @@ export default function Home() {
               <motion.div
                 key={i}
                 variants={cardVariants}
-                // Smaller padding (p-3 mobile / p-7 laptop) for a refined feel
-                className="group relative bg-white rounded-xl md:rounded-[1rem] p-3 md:p-7 border border-slate-100 hover:shadow-xl hover:shadow-slate-200/50 transition-all duration-500 flex flex-col items-center text-center md:items-start md:text-start"
+                /* Logic: First two take 1 col each, third takes 2 cols on mobile. All take 1 on md+ */
+                className={`group relative bg-white rounded-xl md:rounded-[1rem] p-5 md:p-7 border border-slate-100 hover:shadow-xl hover:shadow-slate-200/50 transition-all duration-500 flex flex-col items-start text-start ${
+                  i === 2 ? "col-span-2 md:col-span-1" : "col-span-1"
+                }`}
               >
-                {/* Step Number: Hidden on mobile, subtle on laptop */}
-                <span className="hidden lg:block absolute top-6 right-6 text-xs font-black text-slate-100 group-hover:text-slate-200 transition-colors">
+                {/* Step Number: Removed 'hidden' so it shows on mobile too */}
+                <span className="absolute top-4 right-4 md:top-6 md:right-6 text-[10px] md:text-xs font-black text-slate-200 group-hover:text-slate-300 transition-colors">
                   0{i + 1}
                 </span>
 
-                {/* Icon: Scaled down for laptop (w-12) and mobile (w-9) */}
-                <div className={`mb-2 md:mb-6 w-9 h-9 md:w-12 md:h-12 ${step.bg} ${step.color} rounded-lg md:rounded-xl flex items-center justify-center transform group-hover:scale-110 transition-all duration-500`}>
+                {/* Icon: Slightly larger on mobile for better visibility */}
+                <div className={`mb-4 md:mb-6 w-10 h-10 md:w-12 md:h-12 ${step.bg} ${step.color} rounded-lg md:rounded-xl flex items-center justify-center transform group-hover:scale-110 transition-all duration-500`}>
                   {React.cloneElement(step.icon, { className: "w-5 h-5 md:w-6 md:h-6" })}
                 </div>
                 
-                <h3 className="text-[10px] md:text-lg font-bold text-slate-900 mb-1 md:mb-3 tracking-tight leading-tight">
+                {/* Title: Increased size from text-[10px] to text-sm/base for readability */}
+                <h3 className="text-sm md:text-lg font-bold text-slate-900 mb-2 md:mb-3 tracking-tight leading-tight">
                   {step.title}
                 </h3>
                 
-                {/* Description: Hidden on mobile to keep the 3-column row clean */}
-                <p className="hidden md:block text-slate-500 leading-relaxed text-sm">
+                {/* Description: Removed 'hidden md:block' so it's visible on mobile */}
+                <p className="text-slate-500 leading-relaxed text-xs md:text-sm">
                   {step.desc}
                 </p>
               </motion.div>
@@ -278,7 +280,6 @@ export default function Home() {
         variants={staggerContainer}
         className="py-10 md:py-16 px-6"
       >
-        {/* max-w-5xl (instead of 6xl) makes the row look smaller and more "premium" on laptops */}
         <div className="max-w-7xl mx-auto">
           {/* Header */}
           <div className="mb-8 md:mb-12">
@@ -290,7 +291,7 @@ export default function Home() {
             </p>
           </div>
 
-          {/* grid-cols-3 for mobile, lg:grid-cols-6 for laptop */}
+          {/* Grid: 2 columns on mobile, lg:6 on laptop. Increased gap for better spacing */}
           <div className="grid grid-cols-3 lg:grid-cols-6 gap-2 md:gap-4">
             {[
               { icon: <Coffee />, name: t('home.categories.items.0.name'), count: t('home.categories.items.0.count'), color: 'bg-orange-50 text-orange-600' },
@@ -303,21 +304,22 @@ export default function Home() {
               <motion.div
                 key={i}
                 variants={cardVariants}
-                // p-3 on mobile and p-5 on desktop to keep the "smaller" feel
-                className="group flex flex-col items-center p-3 md:p-5 rounded-xl md:rounded-[1rem] bg-white border border-slate-100 hover:shadow-lg hover:shadow-slate-200/50 transition-all duration-500 cursor-pointer"
+                /* Increased mobile padding to p-5 for a more premium feel */
+                className="group flex flex-col items-center p-5 md:p-5 rounded-xl md:rounded-[1rem] bg-white border border-slate-100 hover:shadow-lg hover:shadow-slate-200/50 transition-all duration-500 cursor-pointer"
               >
-                {/* Smaller Icon Wrapper: w-12 for laptop instead of w-14 */}
-                <div className={`w-9 h-9 md:w-12 md:h-12 flex items-center justify-center rounded-xl ${category.color} mb-2 md:mb-3 transform group-hover:scale-110 transition-all duration-500`}>
-                  {React.cloneElement(category.icon, { strokeWidth: 2, className: "w-4 h-4 md:w-5 md:h-5" })}
+                {/* Icon Wrapper: Increased mobile size to w-11 */}
+                <div className={`w-11 h-11 md:w-12 md:h-12 flex items-center justify-center rounded-xl ${category.color} mb-3 transform group-hover:scale-110 transition-all duration-500`}>
+                  {React.cloneElement(category.icon, { strokeWidth: 2, className: "w-5 h-5 md:w-5 md:h-5" })}
                 </div>
                 
-                <h4 className="text-[10px] md:text-sm font-bold text-slate-900 text-center leading-tight">
+                {/* Title: Increased mobile font from 10px to text-sm */}
+                <h4 className="text-sm md:text-sm font-bold text-slate-900 text-center leading-tight">
                   {category.name}
                 </h4>
                 
-                {/* Subtle Count Badge */}
-                <div className="mt-1 px-1.5 py-0.5 rounded-full bg-slate-50 border border-slate-50">
-                  <span className="text-[8px] md:text-[10px] font-semibold text-slate-400">
+                {/* Count Badge: Increased font from 8px to 10px */}
+                <div className="mt-2 px-2 py-0.5 rounded-full bg-slate-50 border border-slate-100">
+                  <span className="text-[10px] font-semibold text-slate-400">
                     {category.count}
                   </span>
                 </div>
