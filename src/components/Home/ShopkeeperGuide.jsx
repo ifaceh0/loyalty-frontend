@@ -201,7 +201,7 @@ export default function ShopkeeperFullFlowDemo() {
         </div>
 
         {/* Support Section */}
-        <div className="text-center bg-slate-50 rounded-3xl p-10 border border-slate-100">
+        <div className="text-center bg-slate-50 rounded-xl p-10 border border-slate-100">
           <p className="text-slate-600 mb-6 font-medium">{t("flow.support.text")}</p>
           <a href="/contact" className="inline-flex items-center gap-2 px-8 py-2 bg-slate-900 text-white font-bold rounded-full hover:bg-blue-600 transition-all shadow-xl shadow-slate-200">
             <Mail className="w-5 h-5" /> {t("flow.support.button")}
@@ -219,7 +219,7 @@ function StepCard({ step, align, isLeft }) {
     <motion.div 
       initial={{ opacity: 0, scale: 0.95 }} 
       whileInView={{ opacity: 1, scale: 1 }}
-      className={`p-6 rounded-2xl md:rounded-3xl border ${step.border} ${step.bg} backdrop-blur-md shadow-sm flex flex-col`}
+      className={`p-6 rounded-xl md:rounded-xl border ${step.border} ${step.bg} backdrop-blur-md shadow-sm flex flex-col`}
     >
       <div className={`flex ${isLeft ? 'justify-start' : 'justify-end'} mb-4`}>
         <div className="p-3 bg-white rounded-xl shadow-sm border border-slate-100">

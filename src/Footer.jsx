@@ -40,22 +40,31 @@ export default function Footer() {
           {/* Brand & Newsletter Section */}
           <div className="lg:col-span-5 space-y-8">
             <div className="flex flex-col items-start gap-4">
-              <div className="flex items-center gap-3 group cursor-default">
-                <div className="bg-slate-900 text-white font-bold px-2 py-1 rounded-lg transform group-hover:rotate-12 transition-transform duration-300">
-                  <span className="text-xl">L</span>
-                  <span className="text-xl text-blue-500">H</span>
+              <div className="flex items-center gap-2.5 group cursor-pointer">
+                {/* Abstract Icon */}
+                <div className="w-9 h-9 rounded-full border-2 border-slate-900 flex items-center justify-center group-hover:bg-slate-900 transition-all duration-300">
+                  <span className="text-lg font-black text-slate-900 group-hover:text-white transition-colors duration-300">
+                    LH
+                  </span>
                 </div>
-                <span className="text-2xl font-black text-slate-900 tracking-tight italic">
-                  {t('footer.brandTitle')}
-                </span>
+
+                {/* Typography: All caps for a "brand" feel */}
+                <div className="flex flex-col leading-none">
+                  <span className="text-lg font-extrabold text-slate-900 tracking-widest uppercase">
+                    Loyalty
+                  </span>
+                  <span className="text-[10px] font-bold text-blue-600 tracking-[0.2em] uppercase">
+                    Hub Platform
+                  </span>
+                </div>
               </div>
-              <p className="text-[15px] leading-relaxed text-slate-500 max-w-sm">
+              <p className="text-[15px] leading-relaxed text-slate-500 w-full max-auto sm:max-w-sm">
                 {t('footer.brandDesc')}
               </p>
             </div>
 
             {/* Newsletter Input - Modern SaaS Style */}
-            <div className="max-w-sm">
+            <div className="w-full max-auto sm:max-w-sm">
               <form onSubmit={handleSubscribe} className="relative group">
                 <div className={`relative flex items-center p-1.5 rounded-lg border transition-all duration-300 ${subscribed ? 'border-emerald-500 bg-emerald-50/30' : 'border-slate-200 bg-slate-50/50 group-focus-within:border-indigo-500 group-focus-within:bg-white group-focus-within:shadow-xl group-focus-within:shadow-indigo-100'}`}>
                   <div className="pl-3 text-slate-400">
@@ -72,9 +81,13 @@ export default function Footer() {
                   <button 
                     type="submit"
                     disabled={subscribed}
-                    className={`flex items-center justify-center w-9 h-9 rounded-full transition-all duration-300 ${subscribed ? 'bg-emerald-500 text-white' : 'bg-indigo-600 text-white hover:bg-indigo-700 active:scale-95 shadow-md shadow-indigo-200'}`}
+                    className={`flex items-center justify-center w-9 h-9 rounded-full transition-all duration-300 
+                      ${subscribed 
+                        ? 'text-emerald-500'
+                        : 'text-indigo-600 hover:text-indigo-700 hover:bg-slate-50 active:scale-95'
+                      }`}
                   >
-                    {subscribed ? <Check size={18} /> : <Send size={18} />}
+                    {subscribed ? <Check size={20} /> : <Send size={20} />}
                   </button>
                 </div>
                 <AnimatePresence>
