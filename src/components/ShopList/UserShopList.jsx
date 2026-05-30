@@ -766,8 +766,8 @@ export default function UserShopList() {
                                     <div className="p-5 flex flex-col flex-1">
                                         <div className="space-y-3 mb-6">
                                             <div className="flex items-center justify-between text-[11px] font-bold text-slate-400 uppercase tracking-widest">
+                                                <span className="flex items-center gap-1.5"><MapPin className="w-3 h-3" /> {shop.state ? `${shop.city}, ${shop.state}` : shop.city || 'N/A'}</span>
                                                 <span className="flex items-center gap-1.5"><Globe className="w-3 h-3" /> {shop.country || 'Global'}</span>
-                                                <span className="flex items-center gap-1.5"><MapPin className="w-3 h-3" /> {shop.city || 'N/A'}</span>
                                             </div>
                                             <div className="flex items-center gap-2 text-slate-500 border-t border-slate-50 pt-3">
                                                 <Phone className="w-3.5 h-3.5 text-slate-400" />
