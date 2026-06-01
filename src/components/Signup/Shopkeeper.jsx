@@ -653,8 +653,9 @@ function Shopkeeper() {
   const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);
   const [zipcodes, setZipcodes] = useState([]);
+  const [successMessage, setSuccessMessage] = useState("");
 
-  useEffect(() => { if (step === 3) generateCaptcha(); }, [step]);
+  useEffect(() => { if (step === 2) generateCaptcha(); }, [step]);
 
   useEffect(() => {
 
@@ -818,7 +819,15 @@ function Shopkeeper() {
   };
 
   const handleSubmit = async (e) => {
+    setError("");
+    setSuccessMessage("");
     e.preventDefault();
+    if (!formData.shopName.trim())
+      return setError("Shop name is required");
+    if (!validateEmail(formData.email))
+      return setError(t("shopkeeper.error.invalidEmail"));
+    if (formData.phone.length !== 10)
+      return setError(t("shopkeeper.error.phone10Digits"));
     if (formData.password !== formData.confirmPassword)
       return setError(t("shopkeeper.error.passwordMismatch"));
     if (formData.captchaInput.trim().toUpperCase() !== captchaText.toUpperCase())
@@ -834,6 +843,7 @@ function Shopkeeper() {
       });
       const contentType = res.headers.get("content-type");
       if (res.ok) {
+        const data = await res.json();
         setFormData({
           shopName: "", companyName: "", companyEmail: "", companyAddress: "",
           companyPhone: "", email: "", phone: "", password: "",
@@ -842,6 +852,10 @@ function Shopkeeper() {
         setIsEmailVerified(false);
         generateCaptcha();
         setSuccess(true);
+        setSuccessMessage(
+          data.message || "Shop registered successfully!"
+        );
+
         if (audioRef.current) audioRef.current.play();
         setTimeout(() => navigate("/signin"), 7000);
       } else {
@@ -854,33 +868,79 @@ function Shopkeeper() {
     } finally { setLoading(false); }
   };
 
+  // const nextStep = () => {
+  //   let currentFields = [];
+  //   if (step === 1) currentFields = [
+  //     "shopName", "email", "phone"
+  //     // , "city", "country"
+  //   ];
+  //   if (step === 2) currentFields = [
+  //     "companyName", "companyEmail", "companyPhone", "companyAddress",
+  //     "country", "state", "city", "zipcode"
+  //   ];
+  //   const miss = currentFields.filter((field) =>
+  //     !String(formData[field] || "").trim());
+  //   if (miss.length > 0) {
+  //     setMissingFields(miss);
+  //     setError(t("shopkeeper.error.fillAllFields"));
+  //     return;
+  //   }
+  //   if ((step === 1 && !validateEmail(formData.email)) ||
+  //     (step === 2 && !validateEmail(formData.companyEmail)))
+  //     return setError(t("shopkeeper.error.invalidEmail"));
+  //   if ((step === 1 && formData.phone.length !== 10) ||
+  //       (step === 2 && formData.companyPhone.length !== 10))
+  //     return setError(t("shopkeeper.error.phone10Digits"));
+  //   if (step === 2 && !isEmailVerified)
+  //     return setError(t("shopkeeper.error.verifyEmailFirst"));
+  //   setStep((prev) => prev + 1);
+  //   setMissingFields([]); setError("");
+  // };
   const nextStep = () => {
+
     let currentFields = [];
-    if (step === 1) currentFields = [
-      "shopName", "email", "phone"
-      // , "city", "country"
-    ];
-    if (step === 2) currentFields = [
-      "companyName", "companyEmail", "companyPhone", "companyAddress",
-      "country", "state", "city", "zipcode"
-    ];
-    const miss = currentFields.filter((field) =>
-      !String(formData[field] || "").trim());
+
+    if (step === 1) {
+      currentFields = [
+        "companyName",
+        "companyEmail",
+        "companyPhone",
+        "companyAddress",
+        "country",
+        "state",
+        "city",
+        "zipcode"
+      ];
+    }
+
+    const miss = currentFields.filter(
+      field => !String(formData[field] || "").trim()
+    );
+
     if (miss.length > 0) {
       setMissingFields(miss);
       setError(t("shopkeeper.error.fillAllFields"));
       return;
     }
-    if ((step === 1 && !validateEmail(formData.email)) ||
-      (step === 2 && !validateEmail(formData.companyEmail)))
-      return setError(t("shopkeeper.error.invalidEmail"));
-    if ((step === 1 && formData.phone.length !== 10) ||
-        (step === 2 && formData.companyPhone.length !== 10))
-      return setError(t("shopkeeper.error.phone10Digits"));
-    if (step === 2 && !isEmailVerified)
-      return setError(t("shopkeeper.error.verifyEmailFirst"));
-    setStep((prev) => prev + 1);
-    setMissingFields([]); setError("");
+
+    if (!validateEmail(formData.companyEmail)) {
+      setError(t("shopkeeper.error.invalidEmail"));
+      return;
+    }
+
+    if (formData.companyPhone.length !== 10) {
+      setError(t("shopkeeper.error.phone10Digits"));
+      return;
+    }
+
+    if (!isEmailVerified) {
+      setError(t("shopkeeper.error.verifyEmailFirst"));
+      return;
+    }
+
+    setStep(2);
+    setMissingFields([]);
+    setError("");
   };
 
   return (
@@ -897,14 +957,14 @@ function Shopkeeper() {
           {t("shopkeeper.title")}
         </h2>
         <p className="text-center text-gray-500 text-sm sm:text-base mb-5 sm:mb-6">
-          {t("shopkeeper.step")} {step} {t("shopkeeper.of")} 3
+          {t("shopkeeper.step")} {step} {t("shopkeeper.of")} 2
         </p>
         
         <div className="w-full h-2 bg-gray-200 rounded-full mb-6 sm:mb-8 overflow-hidden">
           <motion.div
             className="h-full bg-gradient-to-r from-white to-green-500 rounded-full"
             initial={{ width: 0 }}
-            animate={{ width: `${(step / 3) * 100}%` }}
+            animate={{ width: `${(step / 2) * 100}%` }}
             transition={{ duration: 0.6, ease: "easeOut" }}
           />
         </div>
@@ -916,11 +976,49 @@ function Shopkeeper() {
           </div>
         )}
 
+        {successMessage && (
+          <div
+            className="flex items-center p-3 mb-5 sm:mb-6 text-sm sm:text-base
+                      text-green-800 rounded bg-green-50 border border-green-200"
+          >
+            <CheckCircle className="flex-shrink-0 w-5 h-5 mr-2" />
+            <span className="font-medium">
+              {successMessage}
+            </span>
+          </div>
+        )}
+
         <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-6">
-          {step === 1 && (
+          {step === 2 && (
             <>
               <FlatInput label={t("shopkeeper.shopName")} name="shopName" value={formData.shopName} onChange={handleChange} Icon={Store} />
-              <FlatInput label={t("shopkeeper.personalEmail")} name="email" type="email" value={formData.email} onChange={handleChange} Icon={Mail} />
+              {/* <FlatInput label={t("shopkeeper.personalEmail")} name="email" type="email" value={formData.email} onChange={handleChange} Icon={Mail} /> */}
+              <div className="flex flex-col space-y-1">
+                <label className="text-sm sm:text-base font-semibold text-gray-700 ml-1 flex items-center gap-2">
+                  {t("shopkeeper.personalEmail")}
+                  <div className="relative group">
+                    <FaInfoCircle className="text-gray-500 cursor-pointer w-4 h-4" />
+                    <div className="absolute left-6 top-1/2 -translate-y-1/2 w-64
+                                    bg-gray-900 text-white text-xs px-3 py-2 rounded-lg
+                                    opacity-0 invisible group-hover:opacity-100 group-hover:visible
+                                    transition-all duration-200 z-50">
+                      {t("shopkeeper.personalEmailTooltip")}
+                    </div>
+                  </div>
+                </label>
+
+                <div className="flex items-center w-full h-10 bg-white border border-slate-300 rounded">
+                  <Mail className="ml-3 h-5 w-5 text-gray-400" />
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    className="w-full h-full px-3 outline-none"
+                    required
+                  />
+                </div>
+              </div>
               
               <div className="flex flex-col space-y-1">
                 <label className="text-sm sm:text-base font-semibold text-gray-700 ml-1">{t("shopkeeper.personalPhone")}</label>
@@ -963,7 +1061,7 @@ function Shopkeeper() {
             </>
           )}
 
-          {step === 2 && (
+          {step === 1 && (
             <>
               <FlatInput label={t("shopkeeper.companyName")} name="companyName" value={formData.companyName} onChange={handleChange} Icon={Building2} />
               
@@ -984,9 +1082,21 @@ function Shopkeeper() {
                       required
                     />
                   </div>
-                  <div className="absolute right-1 sm:right-1 top-1/2 -translate-y-1/2 group">
+                  {/* <div className="absolute right-1 sm:right-1 top-1/2 -translate-y-1/2 group">
                     <FaInfoCircle className="text-gray-500 cursor-pointer w-4 h-4 sm:w-5 sm:h-5" />
                     <div className="absolute right-0 top-full mb-1 w-60 sm:w-70 text-xs sm:text-sm text-white bg-black/80 px-3 py-2 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10 pointer-events-none">
+                      {t("shopkeeper.companyEmailTooltip")}
+                    </div>
+                  </div> */}
+                  <div className="absolute right-1 top-1/2 -translate-y-1/2 group z-50">
+                    <FaInfoCircle className="text-gray-500 cursor-pointer w-5 h-5" />
+
+                    <div className="absolute right-7 top-1/2 -translate-y-1/2 w-72
+                                    bg-gray-900 text-white text-xs
+                                    px-3 py-2 rounded-lg shadow-lg
+                                    opacity-0 invisible
+                                    group-hover:opacity-100 group-hover:visible
+                                    transition-all duration-200">
                       {t("shopkeeper.companyEmailTooltip")}
                     </div>
                   </div>
@@ -1034,7 +1144,7 @@ function Shopkeeper() {
               <div className="flex flex-col space-y-1">
 
                 <label className="text-sm font-semibold text-gray-700 ml-1">
-                  Country
+                  {t("shopkeeper.country")}
                 </label>
 
                 <Select
@@ -1045,6 +1155,7 @@ function Shopkeeper() {
                   )}
 
                   onChange={(selected) => {
+                     if (!selected) return;
 
                     setFormData(prev => ({
                       ...prev,
@@ -1061,7 +1172,7 @@ function Shopkeeper() {
                     loadStates(selected.value);
                   }}
 
-                  placeholder="Search country..."
+                  placeholder={t("shopkeeper.searchCountry")}
                   isSearchable
                 />
               </div>
@@ -1069,7 +1180,7 @@ function Shopkeeper() {
               <div className="flex flex-col space-y-1">
 
                 <label className="text-sm font-semibold text-gray-700 ml-1">
-                  State
+                  {t("shopkeeper.state")}
                 </label>
 
                 <Select
@@ -1097,7 +1208,7 @@ function Shopkeeper() {
                     );
                   }}
 
-                  placeholder="Search state..."
+                  placeholder={t("shopkeeper.searchState")}
                   isSearchable
                   isDisabled={!formData.country}
                 />
@@ -1106,7 +1217,7 @@ function Shopkeeper() {
               <div className="flex flex-col space-y-1">
 
                 <label className="text-sm font-semibold text-gray-700 ml-1">
-                  City
+                  {t("shopkeeper.city")}
                 </label>
 
                 <Select
@@ -1130,7 +1241,7 @@ function Shopkeeper() {
                     );
                   }}
 
-                  placeholder="Search city..."
+                  placeholder={t("shopkeeper.searchCity")}
                   isSearchable
                   isDisabled={!formData.state}
                 />
@@ -1139,7 +1250,7 @@ function Shopkeeper() {
               <div className="flex flex-col space-y-1">
 
                 <label className="text-sm font-semibold text-gray-700 ml-1">
-                  Zipcode
+                  {t("shopkeeper.zipcode")}
                 </label>
 
                 <Select
@@ -1157,7 +1268,7 @@ function Shopkeeper() {
                     }));
                   }}
 
-                  placeholder="Select zipcode..."
+                  placeholder={t("shopkeeper.selectZipcode")}
                   isSearchable
                   isDisabled={!formData.city}
                 />
@@ -1165,9 +1276,9 @@ function Shopkeeper() {
             </>
           )}
 
-          {step === 3 && (
+          {step === 2 && (
             <>
-              <FlatInput 
+              {/* <FlatInput 
                 label={t("shopkeeper.password")} 
                 name="password" 
                 type={showPassword ? "text" : "password"} 
@@ -1176,7 +1287,19 @@ function Shopkeeper() {
                 Icon={Lock} 
                 ToggleIcon={showPassword ? EyeOff : Eye} 
                 onToggle={() => setShowPassword(!showPassword)} 
-              />
+              /> */}
+              <div className="relative">
+                <FlatInput
+                  label={t("shopkeeper.password")}
+                  name="password"
+                  type={showPassword ? "text" : "password"}
+                  value={formData.password}
+                  onChange={handleChange}
+                  Icon={Lock}
+                  ToggleIcon={showPassword ? EyeOff : Eye}
+                  onToggle={() => setShowPassword(!showPassword)}
+                />
+              </div>
               <FlatInput 
                 label={t("shopkeeper.confirmPassword")} 
                 name="confirmPassword" 
@@ -1232,26 +1355,29 @@ function Shopkeeper() {
 
         {/* Navigation Buttons */}
         <div className="mt-6 sm:mt-10 space-y-3 sm:space-y-4">
-          {step < 3 && (
+          {step < 2 && (
             <motion.button
               variants={buttonVariants}
               whileHover="hover"
               whileTap="tap"
               type="button"
               onClick={nextStep}
-              disabled={step === 2 && !isEmailVerified}
+              // disabled={step === 2 && !isEmailVerified}
+              disabled={!isEmailVerified}
               className={`w-full py-2 bg-slate-900 text-white font-semibold rounded-full shadow-sm transition-all duration-300 text-base
-              ${(step === 2 && !isEmailVerified) ? "opacity-60 cursor-not-allowed" : "hover:bg-blue-600 active:scale-[0.99]"}
+              ${(!isEmailVerified) ? "opacity-60 cursor-not-allowed" : "hover:bg-blue-600 active:scale-[0.99]"}
               `}
             >
-              {t("shopkeeper.nextStep")} ({step + 1}/3)
+              {/* {t("shopkeeper.nextStep")} ({step + 1}/3) */}
+              {t("shopkeeper.nextStep")} (2/2)
             </motion.button>
           )}
 
           {step > 1 && (
             <button
               type="button"
-              onClick={() => { setStep((p) => p - 1); if (step === 2) setIsEmailVerified(false); }}
+              // onClick={() => { setStep((p) => p - 1); if (step === 2) setIsEmailVerified(false); }}
+              onClick={() => setStep((p) => p - 1)}
               className="w-full py-2 bg-gray-200 hover:bg-gray-300 active:scale-[0.99] text-gray-700 font-semibold rounded-full transition-all duration-300 text-base"
             >
               {t("shopkeeper.back")}
