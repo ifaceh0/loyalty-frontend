@@ -524,26 +524,32 @@
     "successTitle": "¡Cuenta creada con éxito!",
     "passwordNotice": "Esta contraseña se utilizará para iniciar sesión en todos sus roles.",
     "redirecting": "Redirigiendo al inicio de sesión...",
-    "title": "Registro de Comerciante",
+    "title": "Activa tu programa de fidelización",
     "step": "Paso",
     "of": "de",
-    "shopName": "Nombre de la Tienda",
-    "personalEmail": "Tu Correo Personal",
-    "personalPhone": "Teléfono Personal",
+    "shopName": "Nombre del propietario",
+    "personalEmail": "Correo electrónico de inicio de sesión",
+    "personalPhone": "Teléfono del propietario",
     "phonePlaceholder": "Número móvil de 10 dígitos",
-    "city": "Ciudad",
     "country": "País",
+    "state": "Estado",
+    "city": "Ciudad",
+    "zipcode": "Código Postal",
+    "searchCountry": "Buscar país...",
+    "searchState": "Buscar estado...",
+    "searchCity": "Buscar ciudad...",
+    "selectZipcode": "Seleccionar código postal...",
     "companyName": "Nombre de la Empresa",
-    "companyEmail": "Correo de la Empresa",
+    "companyEmail": "Correo electrónico empresarial",
     "companyEmailTooltip": "Este correo es necesario para verificar tu suscripción activa. Debe estar vinculado a una suscripción válida.",
-    "companyPhone": "Teléfono de la Empresa",
-    "companyAddress": "Dirección de la Empresa",
+    "companyPhone": "Teléfono comercial",
+    "companyAddress": "Dirección comercial",
     "password": "Contraseña",
     "confirmPassword": "Confirmar Contraseña",
     "enterCaptcha": "Ingresa el Código CAPTCHA",
-    "completeRegistration": "Completar Registro",
+    "completeRegistration": "Comenzar",
     "signingUp": "Registrando...",
-    "nextStep": "Siguiente Paso",
+    "nextStep": "Siguiente",
     "back": "Atrás",
     "alreadyHaveAccount": "¿Ya tienes una cuenta?",
     "signIn": "Iniciar Sesión",
@@ -562,7 +568,9 @@
       "signupFailed": "¡Registro fallido!",
       "networkError": "Algo salió mal. Intenta de nuevo.",
       "exactly10Digits": "Se requieren exactamente 10 dígitos"
-    }
+    },
+    "personalEmailTooltip": "Este correo se utilizará para iniciar sesión en tu cuenta.",
+    "passwordTooltip": "Esta contraseña se utilizará para iniciar sesión en todos tus roles."
   },
 
   "userSignup": {
@@ -782,6 +790,8 @@
       "companyEmail": "Email de la Empresa (facturas/recibos)",
       "city": "Ciudad",
       "country": "País",
+      "state": "Estado",
+      "zipcode": "Código Postal",
       "address": "Dirección Completa",
       "addressPlaceholder": "Calle, número, apartamento, etc."
     },
@@ -917,7 +927,7 @@
       "processedTitle": "¡COMPRA PROCESADA!",
       "claimedMessage": "Compra neta: {{currency}}{{net}}. \nDescuento de {{currency}}{{claimed}} aplicado. \nPuntos ganados: {{points}}. \nNuevo saldo Puntos: {{balance}}.",
       "normalMessage": "Compra neta: {{currency}}{{amount}}. \nPuntos Ganados: {{points}}{{signupBonusText}}. \nNuevo saldo Puntos: {{balance}}.",
-      "signupBonusText": "{{#if signupBonus}} + Bono de registro: {{signupBonus}}{{/if}}"
+      "signupBonusText": " + Bono de registro: {{signupBonus}}"
     },
     "error": { "title": "Operación Fallida", "generic": "Ocurrió un error." },
     "claim": {
@@ -1323,7 +1333,7 @@
   },
 
   "qrModal": {
-    "title": "Código QR para",
+    "title": "Código QR de usuario para",
     "downloadButton": "Descargar Código QR de Fidelidad",
     "accountDetails": "Detalles de la Cuenta",
     "use": "Cómo usar",

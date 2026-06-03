@@ -10,16 +10,18 @@
 //     FiUser,
 //     FiBriefcase
 // } from "react-icons/fi";
+// import { useTranslation } from "react-i18next";
+// import { API_BASE_URL } from '../../apiConfig';
+// import { fetchWithAuth } from "../../auth/fetchWithAuth";
 
-// // --- Custom Components & Styles ---
 // const inputStyle = (isEditing) => 
-//   `w-full px-3 sm:px-4 py-2.5 sm:py-3 border rounded-md outline-none transition duration-200 shadow-sm text-gray-800 text-sm sm:text-base ${
+//   `w-full px-3 sm:px-4 py-2 border rounded-lg outline-none transition duration-200 shadow-sm text-gray-800 text-sm sm:text-base ${
 //     isEditing ? "border-blue-400 focus:ring-2 focus:ring-blue-500/50" : "border-gray-200 bg-gray-100 cursor-default"
 //   }`;
 
 // const SectionWrapper = ({ title, children, icon, className = "" }) => (
-//   <div className={`bg-white p-4 sm:p-6 rounded-md border border-gray-200 shadow-lg ${className}`}>
-//     <h3 className="text-lg sm:text-xl font-bold text-blue-700 border-b pb-2 sm:pb-3 mb-3 sm:mb-4 flex items-center gap-2">
+//   <div className={`bg-white p-6 sm:p-8 rounded-xl border border-slate-100 ${className}`}>
+//     <h3 className="text-lg sm:text-xl font-bold text-slate-900 pb-2 sm:pb-3 mb-3 sm:mb-4 flex items-center gap-2">
 //       {icon} {title}
 //     </h3>
 //     <div className="space-y-4">
@@ -30,7 +32,9 @@
 
 // const InputField = ({ label, name, value, onChange, type = "text", disabled = false, required = false, pattern }) => (
 //   <div>
-//     <label className="block text-xs sm:text-sm font-semibold mb-1 text-gray-700">{label}{required && <span className="text-red-500"> *</span>}</label>
+//     <label className="block text-xs sm:text-sm font-semibold mb-1 text-gray-700">
+//       {label}{required && <span className="text-red-500"> *</span>}
+//     </label>
 //     <input
 //       type={type}
 //       name={name}
@@ -45,16 +49,16 @@
 //   </div>
 // );
 
-// // --- NEW: Phone Input with 10-digit Validation ---
 // const PhoneInputField = ({ label, name, value, onChange, disabled = false, required = false }) => {
+//   const { t } = useTranslation();
 //   const [error, setError] = useState("");
 
 //   const validatePhone = (val) => {
 //     const digitsOnly = val.replace(/\D/g, "");
 //     if (val && !/^\d{0,10}$/.test(val)) {
-//       setError("Only digits allowed (0-9)");
+//       setError(t("shopProfile.phone.onlyDigits"));
 //     } else if (digitsOnly.length > 0 && digitsOnly.length !== 10) {
-//       setError("Phone must be exactly 10 digits");
+//       setError(t("shopProfile.phone.mustBe10"));
 //     } else {
 //       setError("");
 //     }
@@ -82,7 +86,7 @@
 //         onChange={handleInputChange}
 //         disabled={disabled}
 //         required={required}
-//         placeholder="Enter 10-digit mobile number"
+//         placeholder={t("shopProfile.phone.placeholder")}
 //         maxLength={10}
 //         className={`${inputStyle(!disabled)} ${
 //           error ? "border-red-400 focus:ring-2 focus:ring-red-500/50" : ""
@@ -90,14 +94,15 @@
 //       />
 //       {error && <p className="mt-1 text-xs text-red-600">{error}</p>}
 //       {value && value.length === 10 && !error && (
-//         <p className="mt-1 text-xs text-green-600">Valid 10-digit number</p>
+//         <p className="mt-1 text-xs text-green-600">{t("shopProfile.phone.valid")}</p>
 //       )}
 //     </div>
 //   );
 // };
 
-// // --- Main Component ---
 // const ShopkeeperProfile = () => {
+//   const { t } = useTranslation();
+
 //   const [formData, setFormData] = useState({
 //     shopId: "",
 //     shopName: "",
@@ -120,17 +125,18 @@
 //   const [isRemoving, setIsRemoving] = useState(false);
 //   const [isSubmitting, setIsSubmitting] = useState(false);
 
-//   // --- Data Fetching ---
 //   const fetchProfile = async () => {
 //     const storedId = localStorage.getItem("id");
 //     if (!storedId) {
-//       alert("Warning: Shop ID not found. Please log in again.");
+//       alert(t("shopProfile.alerts.noId"));
 //       return;
 //     }
 
 //     setLoading(true);
 //     try {
-//       const res = await fetch(`https://loyalty-backend-java.onrender.com/api/shop/get-profile?shopId=${storedId}`);
+//       const res = await fetchWithAuth(`${API_BASE_URL}/api/shop/get-profile?shopId=${storedId}`, {
+//         credentials: "include"
+//       });
 //       if (!res.ok) throw new Error("Failed to fetch profile");
       
 //       const data = await res.json();
@@ -140,7 +146,7 @@
 //       setOriginalData(dataWithDefaults);
 //     } catch (err) {
 //       console.error("Error loading profile", err);
-//       alert("Warning: Failed to load profile. Please try refreshing.");
+//       alert(t("shopProfile.alerts.loadFailed"));
 //     } finally {
 //       setLoading(false);
 //     }
@@ -150,7 +156,6 @@
 //     fetchProfile();
 //   }, []);
 
-//   // --- Handlers ---
 //   const handleChange = (e) => {
 //     if (!isEditing) return;
 //     const { name, value } = e.target;
@@ -173,22 +178,23 @@
 //     formDataUpload.append("file", selectedFile);
 
 //     try {
-//       const res = await fetch("https://loyalty-backend-java.onrender.com/api/shop/upload-image", {
+//       const res = await fetchWithAuth(`${API_BASE_URL}/api/shop/upload-image`, {
+//         credentials: "include",
 //         method: "POST",
 //         body: formDataUpload,
 //       });
 //       const data = await res.json();
 
 //       if (res.ok && data.status === "success") {
-//         alert("Logo updated successfully!");
+//         alert(t("shopProfile.alerts.logoSuccess"));
 //         fetchProfile(); 
 //         setSelectedFile(null);
 //       } else {
-//         alert("Failed: " + (data.message || "Failed to upload logo"));
+//         alert(t("shopProfile.alerts.logoFailed") + (data.message || ""));
 //       }
 //     } catch (err) {
 //       console.error("Upload error", err);
-//       alert("Warning: Network error during image upload or reduce the image size.");
+//       alert(t("shopProfile.alerts.uploadError"));
 //     } finally {
 //       setIsUploading(false);
 //     }
@@ -196,44 +202,42 @@
 
 //   const removeImage = async () => {
 //     const storedId = localStorage.getItem("id");
-//     if (!storedId || !window.confirm("Are you sure you want to remove the shop logo?")) return;
+//     if (!storedId || !window.confirm(t("shopProfile.confirm.removeLogo"))) return;
 
 //     setIsRemoving(true);
 //     try {
-//       const res = await fetch(`https://loyalty-backend-java.onrender.com/api/shop/remove-image?shopId=${storedId}`, {
+//       const res = await fetchWithAuth(`${API_BASE_URL}/api/shop/remove-image?shopId=${storedId}`, {
+//         credentials: "include",
 //         method: "DELETE",
 //       });
 //       const data = await res.json();
 
 //       if (res.ok && data.status === "success") {
-//         alert("Logo removed!");
+//         alert(t("shopProfile.alerts.logoRemoved"));
 //         fetchProfile(); 
 //       } else {
-//         alert("Failed: " + (data.message || "Failed to remove logo"));
+//         alert(t("shopProfile.alerts.removeFailed") + (data.message || ""));
 //       }
 //     } catch (err) {
 //       console.error("Remove error", err);
-//       alert("Warning: Network error during logo removal");
+//       alert(t("shopProfile.alerts.removeError"));
 //     } finally {
 //       setIsRemoving(false);
 //     }
 //   };
 
-//   // --- UPDATED: handleSubmit with 10-digit phone validation ---
 //   const handleSubmit = async (e) => {
 //     e.preventDefault();
 
-//     // Validate Personal Phone (required)
 //     const phoneDigits = (formData.phone || "").replace(/\D/g, "");
 //     if (formData.phone && phoneDigits.length !== 10) {
-//       alert("Error: Personal phone must be exactly 10 digits.");
+//       alert(t("shopProfile.validation.personalPhone"));
 //       return;
 //     }
 
-//     // Validate Company Phone (optional, but if entered → must be 10 digits)
 //     const companyPhoneDigits = (formData.companyPhone || "").replace(/\D/g, "");
 //     if (formData.companyPhone && companyPhoneDigits.length > 0 && companyPhoneDigits.length !== 10) {
-//       alert("Error: Company phone must be exactly 10 digits.");
+//       alert(t("shopProfile.validation.companyPhone"));
 //       return;
 //     }
 
@@ -242,22 +246,23 @@
 //     const { logoImage, ...submitData } = formData;
     
 //     try {
-//       const res = await fetch("https://loyalty-backend-java.onrender.com/api/shop/update-profile", {
+//       const res = await fetchWithAuth(`${API_BASE_URL}/api/shop/update-profile`, {
+//         credentials: "include",
 //         method: "PUT",
 //         headers: { "Content-Type": "application/json" },
 //         body: JSON.stringify(submitData),
 //       });
 
 //       if (res.ok) {
-//         alert("Profile updated successfully!");
+//         alert(t("shopProfile.alerts.profileSuccess"));
 //         setOriginalData(formData);
 //         setIsEditing(false);
 //       } else {
-//         alert("Failed: Failed to update profile. Check server logs.");
+//         alert(t("shopProfile.alerts.profileFailed"));
 //       }
 //     } catch (err) {
 //       console.error("Submit error", err);
-//       alert("Warning: Network error: Could not connect to server.");
+//       alert(t("shopProfile.alerts.networkError"));
 //     } finally {
 //       setIsSubmitting(false);
 //     }
@@ -269,34 +274,35 @@
 //     setSelectedFile(null); 
 //   };
 
-//   // --- Loading State ---
 //   if (loading) {
 //     return (
 //       <div className="flex flex-col items-center justify-center h-64 p-4">
 //         <FiLoader className="w-10 h-10 sm:w-12 sm:h-12 text-blue-600 animate-spin" />
-//         <p className="mt-3 sm:mt-4 text-sm sm:text-base text-blue-600 font-medium">Loading Shopkeeper Profile...</p>
+//         {/* <p className="mt-3 sm:mt-4 text-sm sm:text-base text-blue-600 font-medium">
+//           {t("shopProfile.loading")}
+//         </p> */}
 //       </div>
 //     );
 //   }
 
-//   // --- Render ---
 //   return (
-//     <div className="max-w-full mx-auto bg-gray-50 rounded-md shadow-2xl overflow-hidden mt-2 p-3 sm:p-0">
+//     <div className="max-w-7xl mx-auto rounded-xl shadow-sm border border-slate-100 overflow-hidden mt-2 p-3 sm:p-0">
 //       {/* Header/Navigation */}
-//       <nav className="bg-blue-600 text-white px-4 sm:px-8 py-3 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+//       <nav className="bg-white text-slate-900 px-4 sm:px-8 py-4 flex flex-row justify-between items-start gap-3">
 //         <h2 className="text-xl sm:text-2xl font-extrabold flex items-center gap-2">
-//           <FiUser className="w-5 h-5 sm:w-6 sm:h-6"/> Shop Profile & Branding
+//           {/* <FiUser className="w-5 h-5 sm:w-6 sm:h-6"/> */}
+//            {t("shopProfile.header.title")}
 //         </h2>
-//         <div className="flex flex-wrap items-center gap-2">
+//         <div className="flex flex-row items-center gap-2">
 //             {isEditing && (
 //                 <button
 //                 type="button"
-//                 className="bg-red-500 hover:bg-red-600 text-white px-3 sm:px-4 py-2 rounded-sm transition duration-200 flex items-center gap-1.5 sm:gap-2 font-semibold shadow-md text-sm"
+//                 className="bg-red-500 hover:bg-red-600 text-white px-3 sm:px-4 py-1.5 rounded-full transition duration-200 flex items-center gap-1.5 sm:gap-2 font-semibold text-sm"
 //                 onClick={handleCancel}
 //                 disabled={isSubmitting}
 //                 >
-//                 <FiX className="w-4 h-4 sm:w-5 sm:h-5" />
-//                 <span>Cancel</span>
+//                 {/* <FiX className="w-4 h-4 sm:w-5 sm:h-5" /> */}
+//                 <span>{t("shopProfile.buttons.cancel")}</span>
 //                 </button>
 //             )}
 
@@ -304,7 +310,7 @@
 //                 <button
 //                 type="submit"
 //                 form="profile-form"
-//                 className={`text-white px-4 sm:px-5 py-2 rounded-sm transition duration-200 flex items-center gap-1.5 sm:gap-2 font-semibold shadow-md text-sm ${
+//                 className={`text-white px-4 sm:px-5 py-1.5 rounded-full transition duration-200 flex items-center gap-1.5 sm:gap-2 font-semibold text-sm ${
 //                     isSubmitting ? 'bg-green-400 cursor-not-allowed' : 'bg-green-500 hover:bg-green-600'
 //                 }`}
 //                 disabled={isSubmitting}
@@ -312,12 +318,12 @@
 //                 {isSubmitting ? (
 //                     <>
 //                     <FiLoader className="w-4 h-4 sm:w-5 sm:h-5 animate-spin" />
-//                     <span>Saving...</span>
+//                     <span>{t("shopProfile.buttons.saving")}</span>
 //                     </>
 //                 ) : (
 //                     <>
-//                     <FiSave className="w-4 h-4 sm:w-5 sm:h-5" />
-//                     <span>Save Profile</span>
+//                     {/* <FiSave className="w-4 h-4 sm:w-5 sm:h-5" /> */}
+//                     <span>{t("shopProfile.buttons.save")}</span>
 //                     </>
 //                 )}
 //                 </button>
@@ -326,40 +332,42 @@
 //             {!isEditing && (
 //                 <button
 //                 type="button"
-//                 className="bg-blue-700 hover:bg-blue-800 text-white px-4 sm:px-5 py-2 rounded-sm transition duration-200 flex items-center gap-1.5 sm:gap-2 font-semibold shadow-md text-sm"
+//                 className="bg-slate-900 hover:bg-blue-600 text-white px-4 sm:px-5 py-1.5 rounded-full transition duration-200 flex items-center gap-1.5 sm:gap-2 font-semibold text-sm"
 //                 onClick={() => setIsEditing(true)}
 //                 >
-//                 <FiEdit3 className="w-4 h-4 sm:w-5 sm:h-5" />
-//                 <span>Edit</span>
+//                 {/* <FiEdit3 className="w-4 h-4 sm:w-5 sm:h-5" /> */}
+//                 <span>{t("shopProfile.buttons.edit")}</span>
 //                 </button>
 //             )}
 //         </div>
 //       </nav>
 
 //       {/* Main Content Area */}
-//       <div className="p-4 sm:p-8 space-y-6 sm:space-y-8">
+//       <div className="bg-white p-2 sm:p-4 space-y-6 sm:space-y-8">
 //         <form onSubmit={handleSubmit} id="profile-form" className="space-y-6 sm:space-y-8">
           
 //           {/* Section 1: Logo and Shop Name */}
 //           <SectionWrapper 
-//             title="Branding & Visual Identity" 
+//             title={t("shopProfile.sections.branding")} 
 //             icon={<FiUploadCloud className="w-5 h-5 sm:w-6 sm:h-6"/>}
 //           >
 //             {/* Logo Management */}
-//             <div className="mb-4 sm:mb-0 bg-gray-100 p-3 sm:p-4 rounded-md border-2 border-dashed border-gray-300">
-//                 <label className="block text-xs sm:text-sm font-bold mb-2 sm:mb-3 text-blue-700">Shop Logo / Icon</label>
+//             <div className="mb-4 sm:mb-0 bg-gray-100 p-3 sm:p-4 rounded-xl border-2 border-dashed border-gray-300">
+//                 <label className="block text-xs sm:text-sm font-bold mb-2 sm:mb-3 text-blue-700">
+//                   {t("shopProfile.logo.label")}
+//                 </label>
                 
 //                 <div className="flex items-center gap-3 mb-3">
 //                     {formData.logoImage ? (
 //                     <img
 //                         src={`data:image/jpeg;base64,${formData.logoImage}`}
 //                         alt="Shop Logo"
-//                         className="w-20 h-20 sm:w-24 sm:h-24 object-contain p-1 bg-white rounded-md border-2 border-gray-300 shadow-md"
+//                         className="w-20 h-20 sm:w-24 sm:h-24 object-contain bg-white rounded-full border-2 border-gray-300"
 //                     />
 //                     ) : (
-//                     <div className="w-20 h-20 sm:w-24 sm:h-24 bg-gray-200 rounded-md flex flex-col items-center justify-center text-gray-500 text-xs border border-gray-400 p-2">
+//                     <div className="w-20 h-20 sm:w-24 sm:h-24 bg-gray-200 rounded-full flex flex-col items-center justify-center text-gray-500 text-xs border border-gray-400 p-2">
 //                         <FiAlertCircle className="w-5 h-5 sm:w-6 sm:h-6 mb-1"/>
-//                         <span>No Logo Set</span>
+//                         <span>{t("shopProfile.logo.noLogo")}</span>
 //                     </div>
 //                     )}
 //                 </div>
@@ -370,7 +378,7 @@
 //                             type="file"
 //                             accept="image/jpeg,image/png"
 //                             onChange={handleFileChange}
-//                             className="w-full text-xs sm:text-sm file:mr-3 sm:file:mr-4 file:py-1.5 sm:file:py-2 file:px-3 sm:file:px-4 file:rounded-sm file:border-0 file:text-xs sm:file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+//                             className="w-full text-xs sm:text-sm file:mr-3 sm:file:mr-4 file:py-1.5 sm:file:py-1.5 file:px-3 sm:file:px-4 file:rounded-full file:border-0 file:text-xs sm:file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
 //                         />
                         
 //                         <div className="flex flex-col sm:flex-row gap-2">
@@ -379,9 +387,9 @@
 //                                     type="button"
 //                                     onClick={uploadImage}
 //                                     disabled={isUploading}
-//                                     className={`flex-1 bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-sm flex items-center justify-center gap-1 text-xs sm:text-sm transition ${isUploading ? "opacity-50 cursor-not-allowed" : ""}`}
+//                                     className={`flex-1 bg-green-600 hover:bg-green-700 text-white px-3 py-1.5 rounded-full flex items-center justify-center gap-1 text-xs sm:text-sm transition ${isUploading ? "opacity-50 cursor-not-allowed" : ""}`}
 //                                 >
-//                                     {isUploading ? "Uploading..." : "Upload New Logo"}
+//                                     {isUploading ? t("shopProfile.logo.uploading") : t("shopProfile.logo.upload")}
 //                                 </button>
 //                             )}
 //                             {formData.logoImage && (
@@ -389,22 +397,22 @@
 //                                     type="button"
 //                                     onClick={removeImage}
 //                                     disabled={isRemoving}
-//                                     className={`bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-sm flex items-center justify-center gap-1 text-xs sm:text-sm transition ${isRemoving ? "opacity-50 cursor-not-allowed" : ""}`}
+//                                     className={`bg-red-500 hover:bg-red-600 text-white px-3 py-1.5 rounded-full flex items-center justify-center gap-1 text-xs sm:text-sm transition ${isRemoving ? "opacity-50 cursor-not-allowed" : ""}`}
 //                                 >
 //                                     <FiTrash2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-//                                     {isRemoving ? "Removing..." : "Remove"}
+//                                     {isRemoving ? t("shopProfile.logo.removing") : t("shopProfile.logo.remove")}
 //                                 </button>
 //                             )}
 //                         </div>
-//                         {selectedFile && <p className="text-xs text-gray-600">File ready: <strong>{selectedFile.name}</strong></p>}
+//                         {selectedFile && <p className="text-xs text-gray-600">{t("shopProfile.logo.fileReady")}: <strong>{selectedFile.name}</strong></p>}
 //                     </div>
 //                 )}
 //             </div>
 
 //             {/* Shop Details */}
-//             <div className="grid grid-cols-1 gap-3 sm:gap-4">
+//             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
 //                 <InputField
-//                   label="Shop Display Name"
+//                   label={t("shopProfile.fields.shopName")}
 //                   name="shopName"
 //                   value={formData.shopName}
 //                   onChange={handleChange}
@@ -412,9 +420,8 @@
 //                   required
 //                 />
 
-//                 {/* CHANGED: Personal Phone → PhoneInputField */}
 //                 <PhoneInputField
-//                   label="Personal Contact Phone"
+//                   label={t("shopProfile.fields.personalPhone")}
 //                   name="phone"
 //                   value={formData.phone}
 //                   onChange={handleChange}
@@ -423,7 +430,7 @@
 //                 />
 
 //                 <InputField
-//                   label="Personal Login Email"
+//                   label={t("shopProfile.fields.email")}
 //                   name="email"
 //                   value={formData.email}
 //                   onChange={handleChange}
@@ -435,19 +442,21 @@
 //           </SectionWrapper>
 
 //           {/* Section 2: Company/Legal Information */}
-//           <SectionWrapper title="Business & Address Details" icon={<FiBriefcase className="w-5 h-5 sm:w-6 sm:h-6"/>}>
-//             <div className="grid grid-cols-1 gap-3 sm:gap-4">
+//           <SectionWrapper 
+//             title={t("shopProfile.sections.business")} 
+//             icon={<FiBriefcase className="w-5 h-5 sm:w-6 sm:h-6"/>}
+//           >
+//             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
 //                 <InputField
-//                   label="Legal Company Name"
+//                   label={t("shopProfile.fields.companyName")}
 //                   name="companyName"
 //                   value={formData.companyName}
 //                   onChange={handleChange}
 //                   disabled={!isEditing}
 //                 />
 
-//                 {/* CHANGED: Company Phone → PhoneInputField */}
 //                 <PhoneInputField
-//                   label="Company Contact Phone"
+//                   label={t("shopProfile.fields.companyPhone")}
 //                   name="companyPhone"
 //                   value={formData.companyPhone}
 //                   onChange={handleChange}
@@ -455,7 +464,7 @@
 //                 />
 
 //                 <InputField
-//                   label="Company Email (for receipts/invoices)"
+//                   label={t("shopProfile.fields.companyEmail")}
 //                   name="companyEmail"
 //                   value={formData.companyEmail}
 //                   onChange={handleChange}
@@ -463,27 +472,36 @@
 //                   type="email"
 //                 />
 //                 <InputField
-//                   label="City"
+//                   label={t("shopProfile.fields.city")}
 //                   name="city"
 //                   value={formData.city}
 //                   onChange={handleChange}
 //                   disabled={!isEditing}
 //                 />
-//                 <InputField
-//                   label="Country"
+//                 {/* <InputField
+//                   label={t("shopProfile.fields.country")}
 //                   name="country"
 //                   value={formData.country}
 //                   onChange={handleChange}
 //                   disabled={!isEditing}
+//                 /> */}
+//                 <InputField
+//                   label={t("shopProfile.fields.country")}
+//                   name="country"
+//                   value={formData.country}
+//                   onChange={() => {}} 
+//                   disabled
 //                 />
 //                 <div>
-//                     <label className="block text-xs sm:text-sm font-semibold mb-1 text-gray-700">Full Business Address</label>
+//                     <label className="block text-xs sm:text-sm font-semibold mb-1 text-gray-700">
+//                       {t("shopProfile.fields.address")}
+//                     </label>
 //                     <textarea
 //                     name="companyAddress"
 //                     value={formData.companyAddress}
 //                     onChange={handleChange}
 //                     disabled={!isEditing}
-//                     placeholder="Street Address, P.O. Box, etc."
+//                     placeholder={t("shopProfile.fields.addressPlaceholder")}
 //                     rows={3}
 //                     className={inputStyle(isEditing) + " resize-none"}
 //                     />
@@ -509,11 +527,7 @@
 
 
 
-
-
-
-
-//translated code
+import Select from "react-select";
 import React, { useEffect, useState } from "react";
 import { 
     FiTrash2, 
@@ -531,8 +545,8 @@ import { API_BASE_URL } from '../../apiConfig';
 import { fetchWithAuth } from "../../auth/fetchWithAuth";
 
 const inputStyle = (isEditing) => 
-  `w-full px-3 sm:px-4 py-2 border rounded-lg outline-none transition duration-200 shadow-sm text-gray-800 text-sm sm:text-base ${
-    isEditing ? "border-blue-400 focus:ring-2 focus:ring-blue-500/50" : "border-gray-200 bg-gray-100 cursor-default"
+  `w-full px-3 sm:px-4 py-1.5 border rounded outline-none transition duration-200 shadow-sm text-gray-800 text-sm sm:text-base ${
+    isEditing ? "border-gray-300 focus:ring-2 focus:ring-gray-500/50" : "border-gray-200 bg-gray-50 cursor-default"
   }`;
 
 const SectionWrapper = ({ title, children, icon, className = "" }) => (
@@ -630,6 +644,8 @@ const ShopkeeperProfile = () => {
     companyPhone: "",
     city: "",
     country: "",
+    state: "",
+    zipcode: "",
     logoImage: null, 
   });
 
@@ -640,6 +656,75 @@ const ShopkeeperProfile = () => {
   const [isUploading, setIsUploading] = useState(false);
   const [isRemoving, setIsRemoving] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const [countries, setCountries] = useState([]);
+  const [states, setStates] = useState([]);
+  const [cities, setCities] = useState([]);
+  const [zipcodes, setZipcodes] = useState([]);
+
+  useEffect(() => {
+
+    fetch(`${API_BASE_URL}/api/location/countries`)
+      .then(res => res.json())
+      .then(data => {
+
+        const formatted = data.map(country => ({
+          value: country,
+          label: country
+        }));
+
+        setCountries(formatted);
+      });
+
+  }, []);
+
+  const loadStates = async (country) => {
+
+    const response = await fetch(
+      `${API_BASE_URL}/api/location/states?country=${country}`
+    );
+
+    const data = await response.json();
+
+    const formatted = data.map(state => ({
+      value: state,
+      label: state
+    }));
+
+    setStates(formatted);
+  };
+
+  const loadCities = async (country, state) => {
+
+    const response = await fetch(
+      `${API_BASE_URL}/api/location/cities?country=${country}&state=${state}`
+    );
+
+    const data = await response.json();
+
+    const formatted = data.map(city => ({
+      value: city,
+      label: city
+    }));
+
+    setCities(formatted);
+  };
+
+  const loadZipcodes = async (country, state, city) => {
+
+    const response = await fetch(
+      `${API_BASE_URL}/api/location/zipcodes?country=${country}&state=${state}&city=${city}`
+    );
+
+    const data = await response.json();
+
+    const formatted = data.map(zip => ({
+      value: zip,
+      label: zip
+    }));
+
+    setZipcodes(formatted);
+  };
 
   const fetchProfile = async () => {
     const storedId = localStorage.getItem("id");
@@ -659,6 +744,21 @@ const ShopkeeperProfile = () => {
       const dataWithDefaults = { ...data, companyEmail: data.companyEmail || data.email };
 
       setFormData(dataWithDefaults);
+      if (data.country) {
+        await loadStates(data.country);
+      }
+
+      if (data.country && data.state) {
+        await loadCities(data.country, data.state);
+      }
+
+      if (data.country && data.state && data.city) {
+        await loadZipcodes(
+          data.country,
+          data.state,
+          data.city
+        );
+      }
       setOriginalData(dataWithDefaults);
     } catch (err) {
       console.error("Error loading profile", err);
@@ -987,27 +1087,149 @@ const ShopkeeperProfile = () => {
                   disabled={!isEditing}
                   type="email"
                 />
-                <InputField
+                {/* <InputField
                   label={t("shopProfile.fields.city")}
                   name="city"
                   value={formData.city}
                   onChange={handleChange}
                   disabled={!isEditing}
                 />
-                {/* <InputField
-                  label={t("shopProfile.fields.country")}
-                  name="country"
-                  value={formData.country}
-                  onChange={handleChange}
-                  disabled={!isEditing}
-                /> */}
+                
                 <InputField
                   label={t("shopProfile.fields.country")}
                   name="country"
                   value={formData.country}
                   onChange={() => {}} 
                   disabled
-                />
+                /> */}
+                <div>
+                  <label className="block text-xs sm:text-sm font-semibold mb-1 text-gray-700">
+                    {t("shopProfile.fields.country")}
+                    {/* Country */}
+                  </label>
+
+                  <Select
+                    options={countries}
+
+                    value={countries.find(
+                      c => c.value === formData.country
+                    )}
+
+                    onChange={(selected) => {
+
+                      setFormData(prev => ({
+                        ...prev,
+                        country: selected.value,
+                        state: "",
+                        city: "",
+                        zipcode: ""
+                      }));
+
+                      setStates([]);
+                      setCities([]);
+                      setZipcodes([]);
+
+                      loadStates(selected.value);
+                    }}
+
+                    isDisabled={!isEditing}
+                    isSearchable
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs sm:text-sm font-semibold mb-1 text-gray-700">
+                    {t("shopProfile.fields.state")}
+                    {/* State */}
+                  </label>
+
+                  <Select
+                    options={states}
+
+                    value={states.find(
+                      s => s.value === formData.state
+                    )}
+
+                    onChange={(selected) => {
+
+                      setFormData(prev => ({
+                        ...prev,
+                        state: selected.value,
+                        city: "",
+                        zipcode: ""
+                      }));
+
+                      setCities([]);
+                      setZipcodes([]);
+
+                      loadCities(
+                        formData.country,
+                        selected.value
+                      );
+                    }}
+
+                    isDisabled={!isEditing || !formData.country}
+                    isSearchable
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs sm:text-sm font-semibold mb-1 text-gray-700">
+                    {t("shopProfile.fields.city")}
+                    {/* City */}
+                  </label>
+
+                  <Select
+                    options={cities}
+
+                    value={cities.find(
+                      c => c.value === formData.city
+                    )}
+
+                    onChange={(selected) => {
+
+                      setFormData(prev => ({
+                        ...prev,
+                        city: selected.value
+                      }));
+
+                      loadZipcodes(
+                        formData.country,
+                        formData.state,
+                        selected.value
+                      );
+                    }}
+
+                    isDisabled={!isEditing || !formData.state}
+                    isSearchable
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs sm:text-sm font-semibold mb-1 text-gray-700">
+                    {t("shopProfile.fields.zipcode")}
+                    {/* Zipcode */}
+                  </label>
+
+                  <Select
+                    options={zipcodes}
+
+                    value={zipcodes.find(
+                      z => z.value === formData.zipcode
+                    )}
+
+                    onChange={(selected) => {
+
+                      setFormData(prev => ({
+                        ...prev,
+                        zipcode: selected.value
+                      }));
+                    }}
+
+                    isDisabled={!isEditing || !formData.city}
+                    isSearchable
+                  />
+                </div>
                 <div>
                     <label className="block text-xs sm:text-sm font-semibold mb-1 text-gray-700">
                       {t("shopProfile.fields.address")}
@@ -1018,7 +1240,7 @@ const ShopkeeperProfile = () => {
                     onChange={handleChange}
                     disabled={!isEditing}
                     placeholder={t("shopProfile.fields.addressPlaceholder")}
-                    rows={3}
+                    rows={2}
                     className={inputStyle(isEditing) + " resize-none"}
                     />
                 </div>
