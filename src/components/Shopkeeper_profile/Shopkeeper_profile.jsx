@@ -1104,7 +1104,8 @@ const ShopkeeperProfile = () => {
                 /> */}
                 <div>
                   <label className="block text-xs sm:text-sm font-semibold mb-1 text-gray-700">
-                    Country
+                    {t("shopProfile.fields.country")}
+                    {/* Country */}
                   </label>
 
                   <Select
@@ -1138,7 +1139,8 @@ const ShopkeeperProfile = () => {
 
                 <div>
                   <label className="block text-xs sm:text-sm font-semibold mb-1 text-gray-700">
-                    State
+                    {t("shopProfile.fields.state")}
+                    {/* State */}
                   </label>
 
                   <Select
@@ -1173,7 +1175,8 @@ const ShopkeeperProfile = () => {
 
                 <div>
                   <label className="block text-xs sm:text-sm font-semibold mb-1 text-gray-700">
-                    City
+                    {t("shopProfile.fields.city")}
+                    {/* City */}
                   </label>
 
                   <Select
@@ -1204,7 +1207,8 @@ const ShopkeeperProfile = () => {
 
                 <div>
                   <label className="block text-xs sm:text-sm font-semibold mb-1 text-gray-700">
-                    Zipcode
+                    {t("shopProfile.fields.zipcode")}
+                    {/* Zipcode */}
                   </label>
 
                   <Select

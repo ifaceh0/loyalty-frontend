@@ -610,7 +610,7 @@ function PhoneInputField({ label, value, onChange }) {
       </div>
       {error && <p className="absolute -bottom-6 left-0 text-xs text-red-500">{error}</p>}
       {value.length === 10 && !error && (
-        <p className="absolute -bottom-6 left-0 text-xs text-green-600">{t("userSignup.validPhone")}</p>
+        <p className="absolute -bottom-5 left-0 text-xs text-green-600">{t("userSignup.validPhone")}</p>
       )}
     </div>
   );
@@ -730,6 +730,11 @@ function UserSignup() {
       return;
     }
 
+    if (!validateEmail(formData.email)) {
+      setError(t("userSignup.error.invalidEmail"));
+      return;
+    }
+
     if (!formData.password.trim()) {
       setError(t("userSignup.error.fillAllFields"));
       return;
@@ -842,17 +847,17 @@ function UserSignup() {
         !formData.firstName.trim() ||
         !formData.lastName.trim() ||
         !formData.phoneNumber.trim() ||
-        !formData.email.trim() ||
+        // !formData.email.trim() ||
         !formData.country
       ) {
         setError(t("userSignup.error.fillAllFields"));
         return;
       }
 
-      if (!validateEmail(formData.email)) {
-        setError(t("userSignup.error.invalidEmail"));
-        return;
-      }
+      // if (!validateEmail(formData.email)) {
+      //   setError(t("userSignup.error.invalidEmail"));
+      //   return;
+      // }
 
       const phoneDigits = formData.phoneNumber.replace(/\D/g, "");
 
@@ -934,14 +939,6 @@ function UserSignup() {
                 />
               </div>
 
-              <UnderlineInput
-                label={t("userSignup.email")}
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                Icon={Mail}
-              />
-
               <PhoneInputField
                 label={t("userSignup.phoneNumber")}
                 value={formData.phoneNumber}
@@ -979,6 +976,14 @@ function UserSignup() {
 
           {step === 2 && (
             <div className="space-y-6 sm:space-y-8">
+              <UnderlineInput
+                label={t("userSignup.email")}
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                Icon={Mail}
+              />
+
               <UnderlineInput
                 label={t("userSignup.password")}
                 name="password"

@@ -953,7 +953,7 @@ function Shopkeeper() {
         animate="visible"
         className="w-full max-w-md sm:max-w-lg bg-white shadow-sm border border-slate-200 rounded-xl sm:rounded-xl p-8"
       >
-        <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 text-center mb-1 sm:mb-2">
+        <h2 className="text-2xl font-extrabold text-slate-900 text-center mb-1 sm:mb-2">
           {t("shopkeeper.title")}
         </h2>
         <p className="text-center text-gray-500 text-sm sm:text-base mb-5 sm:mb-6">
@@ -1369,7 +1369,7 @@ function Shopkeeper() {
               `}
             >
               {/* {t("shopkeeper.nextStep")} ({step + 1}/3) */}
-              {t("shopkeeper.nextStep")} (2/2)
+              {t("shopkeeper.nextStep")}
             </motion.button>
           )}
 
