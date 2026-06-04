@@ -944,14 +944,141 @@ function Shopkeeper() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-16">
+    // <div className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-16">
+    <div className="min-h-screen grid grid-cols-1 lg:grid-cols-2 bg-gradient-to-br from-slate-50 to-blue-50">
+    
+    <div className="hidden lg:flex flex-col justify-between bg-gradient-to-b from-amber-50/60 to-orange-50/40 p-16 relative overflow-hidden border-r border-orange-100">
+  
+      {/* Modern Architectural & Playful Background Elements */}
+      <div className="absolute top-[-20%] right-[-10%] w-[32rem] h-[32rem] bg-orange-200/40 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-[-10%] left-[-10%] w-[28rem] h-[28rem] bg-amber-200/30 rounded-full blur-3xl pointer-events-none" />
+
+      {/* 1. BRAND HEADER */}
+      <div className="relative z-10 flex items-center justify-between w-full">
+        <div className="flex items-center gap-2.5">
+          <span className="text-2xl">🏪</span>
+          <span className="font-extrabold tracking-tight text-slate-800 text-lg">
+            Shopkeeper<span className="text-orange-500">Hub</span>
+          </span>
+        </div>
+        <div className="bg-orange-500/10 text-orange-700 text-[10px] font-bold px-2.5 py-1 rounded-md border border-orange-200 uppercase tracking-wider">
+          Merchant Portal
+        </div>
+      </div>
+
+      {/* 2. THE VISUAL CENTERPIECE: Isometric Shop Mockup */}
+      <div className="relative z-10 my-auto w-full max-w-sm mx-auto flex flex-col items-center">
+        
+        {/* Dynamic Storefront Art */}
+        <div className="relative w-72 h-48 bg-white rounded-3xl shadow-xl shadow-orange-900/5 border border-slate-100 p-6 flex flex-col justify-between mb-8 transform -rotate-1 hover:rotate-0 transition-transform duration-300">
+          {/* Awning */}
+          <div className="absolute -top-3 left-6 right-6 h-6 flex rounded-t-md overflow-hidden shadow-md">
+            <div className="flex-1 bg-orange-500"></div>
+            <div className="flex-1 bg-white"></div>
+            <div className="flex-1 bg-orange-500"></div>
+            <div className="flex-1 bg-white"></div>
+            <div className="flex-1 bg-orange-500"></div>
+            <div className="flex-1 bg-white"></div>
+          </div>
+          
+          {/* Window & Door elements */}
+          <div className="flex justify-between items-end mt-4 h-full gap-4">
+            {/* Big Glass Window */}
+            <div className="flex-1 h-20 bg-sky-50 border border-slate-200 rounded-xl relative p-2 overflow-hidden flex items-center justify-center">
+              <div className="absolute top-0 left-0 right-0 h-1/2 bg-white/40 transform -skew-y-12"></div>
+              <span className="text-xl filter drop-shadow">🎒</span>
+              <span className="text-xl filter drop-shadow">👕</span>
+            </div>
+            {/* Shop Door */}
+            <div className="w-14 h-24 bg-amber-800 rounded-t-lg border border-amber-900 p-1 relative flex items-start justify-end">
+              <div className="w-1.5 h-1.5 rounded-full bg-yellow-400 mt-10 mr-0.5"></div>
+              <div className="absolute top-1.5 left-1.5 right-1.5 h-8 bg-sky-100 rounded-sm"></div>
+            </div>
+          </div>
+
+          {/* Floating Welcome Tag */}
+          <div className="absolute -right-4 top-12 bg-emerald-500 text-white text-[10px] font-bold px-2.5 py-1 rounded-full shadow-md uppercase tracking-wider">
+            Setup Active
+          </div>
+        </div>
+
+        {/* Header & Typography */}
+        <div className="text-center space-y-2 mb-6">
+          <h1 className="text-2xl font-black text-slate-800 tracking-tight leading-tight">
+            {t("shopkeeper.title", "Launch Your Shop Online")}
+          </h1>
+          <p className="text-slate-600 text-xs leading-relaxed max-w-xs mx-auto">
+            Your registration unlocks an all-in-one management suite tailored for local retail growth.
+          </p>
+        </div>
+
+        {/* NEW INFORMATIVE HUB: Feature Matrix Cards */}
+        <div className="w-full space-y-2.5">
+          
+          {/* Feature 1 */}
+          <div className="flex items-start gap-3 bg-white/80 backdrop-blur-sm p-3 rounded-xl border border-slate-200/60 shadow-sm">
+            <span className="text-lg p-1.5 bg-amber-100 rounded-lg shrink-0">📦</span>
+            <div>
+              <h4 className="text-xs font-bold text-slate-800 uppercase tracking-wide">Live Inventory Grid</h4>
+              <p className="text-[11px] text-slate-500 mt-0.5 font-medium">Track local stock counts, variants, and price adjustments instantly with automatic low-supply warnings.</p>
+            </div>
+          </div>
+
+          {/* Feature 2 */}
+          <div className="flex items-start gap-3 bg-white/80 backdrop-blur-sm p-3 rounded-xl border border-slate-200/60 shadow-sm">
+            <span className="text-lg p-1.5 bg-orange-100 rounded-lg shrink-0">📈</span>
+            <div>
+              <h4 className="text-xs font-bold text-slate-800 uppercase tracking-wide">Neighborhood Analytics</h4>
+              <p className="text-[11px] text-slate-500 mt-0.5 font-medium">See daily sales metrics, pinpoint peak shopping hours, and capture digital customer data charts cleanly.</p>
+            </div>
+          </div>
+
+          {/* Feature 3 */}
+          <div className="flex items-start gap-3 bg-white/80 backdrop-blur-sm p-3 rounded-xl border border-slate-200/60 shadow-sm">
+            <span className="text-lg p-1.5 bg-emerald-100 rounded-lg shrink-0">📍</span>
+            <div>
+              <h4 className="text-xs font-bold text-slate-800 uppercase tracking-wide">Local Search Discovery</h4>
+              <p className="text-[11px] text-slate-500 mt-0.5 font-medium">Your store gets mapped automatically, allowing nearby shoppers to find items and reserve them online.</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      {/* 3. FOOTER */}
+      <div className="relative z-10 flex items-center justify-between border-t border-orange-200/40 pt-4 text-slate-400 text-xs">
+        <p className="font-medium">Designed with ❤️ for local business.</p>
+        <div className="flex items-center gap-1 text-[11px] font-bold text-emerald-600">
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+          SSL Encrypted
+        </div>
+      </div>
+
+    </div>
+    
+
+    {/* RIGHT SIDE: Your Form */}
+    <div className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-16 bg-gradient-to-br from-slate-50 via-gray-100 to-blue-50 overflow-hidden">
+    
+    {/* --- BACKGROUND DECORATIONS --- */}
+    
+    <div className="hidden md:block absolute top-12 left-12 text-6xl animate-bounce duration-1000 select-none opacity-40">🛍️</div>
+    <div className="hidden md:block absolute bottom-16 left-20 text-5xl animate-pulse select-none opacity-30">🏬</div>
+    <div className="hidden md:block absolute top-1/3 right-16 text-6xl animate-bounce select-none opacity-40">📦</div>
+    <div className="hidden md:block absolute bottom-12 right-24 text-5xl animate-pulse select-none opacity-30">✨</div>
+    
+    
+    <div className="absolute top-[-10%] left-[-10%] w-[30rem] h-[30rem] rounded-full bg-blue-200/30 blur-3xl pointer-events-none" />
+    <div className="absolute bottom-[-10%] right-[-10%] w-[35rem] h-[35rem] rounded-full bg-emerald-200/20 blur-3xl pointer-events-none" />
+    
       {success && <Confetti recycle={false} numberOfPieces={300} />}
 
       <motion.div
         variants={formVariants}
         initial="hidden"
         animate="visible"
-        className="w-full max-w-md sm:max-w-lg bg-white shadow-sm border border-slate-200 rounded-xl sm:rounded-xl p-8"
+        className="relative z-10 w-full max-w-md sm:max-w-lg bg-white/95 backdrop-blur-sm shadow-xl border border-slate-200 rounded-xl p-8"
       >
         <h2 className="text-2xl font-extrabold text-slate-900 text-center mb-1 sm:mb-2">
           {t("shopkeeper.title")}
@@ -992,6 +1119,31 @@ function Shopkeeper() {
           {step === 2 && (
             <>
               <FlatInput label={t("shopkeeper.shopName")} name="shopName" value={formData.shopName} onChange={handleChange} Icon={Store} />
+
+              <div className="flex flex-col space-y-1">
+                <label className="text-sm sm:text-base font-semibold text-gray-700 ml-1">{t("shopkeeper.personalPhone")}</label>
+                <div className="relative">
+                  <div className={`flex items-center w-full h-10 bg-white border rounded transition-all duration-200 focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-200 ${
+                    formData.phone && formData.phone.length !== 10 ? 'border-red-300' : 'border-slate-300'
+                  }`}>
+                    <Smartphone className="flex-shrink-0 ml-3 sm:ml-4 h-5 w-5 text-gray-400" />
+                    <input
+                      type="text"
+                      inputMode="numeric"
+                      value={formData.phone}
+                      onChange={handlePhoneChange('phone')}
+                      placeholder={t("shopkeeper.phonePlaceholder")}
+                      maxLength={10}
+                      className="w-full h-full text-base sm:text-lg text-gray-900 bg-transparent px-3 outline-none"
+                      required
+                    />
+                  </div>
+                  {formData.phone && formData.phone.length !== 10 && (
+                    <p className="absolute -bottom-7 sm:-bottom-8 left-0 text-xs text-red-600">{t("shopkeeper.error.exactly10Digits")}</p>
+                  )}
+                </div>
+              </div>
+
               {/* <FlatInput label={t("shopkeeper.personalEmail")} name="email" type="email" value={formData.email} onChange={handleChange} Icon={Mail} /> */}
               <div className="flex flex-col space-y-1">
                 <label className="text-sm sm:text-base font-semibold text-gray-700 ml-1 flex items-center gap-2">
@@ -1017,30 +1169,6 @@ function Shopkeeper() {
                     className="w-full h-full px-3 outline-none"
                     required
                   />
-                </div>
-              </div>
-              
-              <div className="flex flex-col space-y-1">
-                <label className="text-sm sm:text-base font-semibold text-gray-700 ml-1">{t("shopkeeper.personalPhone")}</label>
-                <div className="relative">
-                  <div className={`flex items-center w-full h-10 bg-white border rounded transition-all duration-200 focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-200 ${
-                    formData.phone && formData.phone.length !== 10 ? 'border-red-300' : 'border-slate-300'
-                  }`}>
-                    <Smartphone className="flex-shrink-0 ml-3 sm:ml-4 h-5 w-5 text-gray-400" />
-                    <input
-                      type="text"
-                      inputMode="numeric"
-                      value={formData.phone}
-                      onChange={handlePhoneChange('phone')}
-                      placeholder={t("shopkeeper.phonePlaceholder")}
-                      maxLength={10}
-                      className="w-full h-full text-base sm:text-lg text-gray-900 bg-transparent px-3 outline-none"
-                      required
-                    />
-                  </div>
-                  {formData.phone && formData.phone.length !== 10 && (
-                    <p className="absolute -bottom-7 sm:-bottom-8 left-0 text-xs text-red-600">{t("shopkeeper.error.exactly10Digits")}</p>
-                  )}
                 </div>
               </div>
 
@@ -1397,6 +1525,7 @@ function Shopkeeper() {
 
         <audio ref={audioRef} src="/sounds/correct.mp3" preload="auto" />
       </motion.div>
+    </div>
     </div>
   );
 }

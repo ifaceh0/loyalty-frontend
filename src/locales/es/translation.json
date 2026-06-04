@@ -491,7 +491,7 @@
     },
     "emailLabel": "Dirección de Email",
     "passwordLabel": "Contraseña",
-    "captchaLabel": "Ingresa el CAPTCHA",
+    "captchaLabel": "Introduzca el código de seguridad (mostrado arriba)",
     "refreshCaptcha": "Actualizar CAPTCHA",
     "forgotPassword": "¿Olvidaste tu contraseña?",
     "signInButton": "Iniciar Sesión",
@@ -835,7 +835,7 @@
     "sections": {
       "basic": "Mecánica Básica de Puntos",
       "advanced": "Ganancias y Recompensas Avanzadas",
-      "campaigns": "Campañas de Bonos Temporales"
+      "campaigns": "Campañas de Bonos Temporales (Este valor reemplaza el valor ingresado en la sección 'Puntos por cantidad gastada' de arriba)"
     },
     "basic": {
       "signupBonus": {
@@ -850,7 +850,7 @@
         "desc": "Tasa base para ganar puntos (ej. 5 puntos por cada {{currency}}1 gastado)."
       },
       "minAmount": {
-        "label": "Monto Mínimo de Compra para Recompensas ({{currency}})",
+        "label": "Monto mínimo de compra para canjear recompensas ({{currency}})",
         "prefix": "Gasto Mínimo:",
         "suffix": "para Calificar",
         "placeholder": "ej. 10.00",

@@ -874,16 +874,113 @@ function UserSignup() {
   const getProgress = () => (step / 2) * 100;
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-8">
+    // <div className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-8">
+    <div className="min-h-screen grid grid-cols-1 lg:grid-cols-2 bg-gradient-to-br from-slate-50 to-indigo-50/50">
       {/* {success && <Confetti recycle={false} numberOfPieces={300} />} */}
+      
+      {/* LEFT SIDE: Beautiful Interactive Creative Welcome Panel (Hidden on Mobile) */}
+      <div className="hidden lg:flex flex-col justify-between bg-slate-900 p-10 text-white relative overflow-hidden border-r border-slate-800 min-h-[480px]">
+
+        {/* Grid pattern */}
+        <div className="absolute inset-0 opacity-35 pointer-events-none rounded-xl"
+          style={{
+            backgroundImage: 'linear-gradient(#1e293b 1px, transparent 1px), linear-gradient(90deg, #1e293b 1px, transparent 1px)',
+            backgroundSize: '48px 48px',
+            maskImage: 'radial-gradient(ellipse 70% 60% at 50% 50%, black 60%, transparent 100%)'
+          }}
+        />
+
+        {/* Glow orbs */}
+        <div className="absolute -top-20 -right-16 w-72 h-72 pointer-events-none"
+          style={{ background: 'radial-gradient(circle, rgba(99,102,241,0.22) 0%, transparent 70%)' }}
+        />
+        <div className="absolute -bottom-20 -left-16 w-64 h-64 pointer-events-none"
+          style={{ background: 'radial-gradient(circle, rgba(16,185,129,0.12) 0%, transparent 70%)' }}
+        />
+
+        {/* Header */}
+        <div className="relative z-10 flex items-center gap-2.5">
+          <div className="w-7 h-7 rounded-full bg-gradient-to-br from-indigo-500 to-violet-500 flex items-center justify-center">
+            <svg className="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M5 3l14 9-14 9V3z" />
+            </svg>
+          </div>
+          <span className="text-[11px] font-medium tracking-widest text-slate-500 uppercase">Join us</span>
+        </div>
+
+        {/* Center content */}
+        <div className="relative z-10 my-auto py-8 space-y-7">
+
+          {/* Badge */}
+          <div className="inline-flex items-center gap-2 bg-indigo-500/10 border border-indigo-500/30 rounded-full px-3.5 py-1.5">
+            <svg className="w-3.5 h-3.5 text-indigo-400" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+            <span className="text-xs text-indigo-400 font-medium">Start for free</span>
+          </div>
+
+          {/* Heading */}
+          <h1 className="text-[2.4rem] font-medium leading-tight text-slate-50 max-w-xs">
+            Build something{' '}
+            <span className="text-indigo-400">{t('userSignup.title')}</span>{' '}
+            today
+          </h1>
+
+          {/* Description */}
+          <p className="text-sm text-slate-500 leading-relaxed max-w-[300px]">
+            Create your profile to unlock customized preferences, save secure configurations, and manage your account instantly.
+          </p>
+
+          {/* Feature list */}
+          <ul className="space-y-2.5">
+            {[
+              'Secure & private configurations',
+              'Personalized preferences',
+              'Instant account management',
+            ].map((item) => (
+              <li key={item} className="flex items-center gap-2.5">
+                <div className="w-5 h-5 rounded-full bg-emerald-500/15 flex items-center justify-center flex-shrink-0">
+                  <svg className="w-3 h-3 text-emerald-400" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <span className="text-[13px] text-slate-400">{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Footer */}
+        {/* <div className="relative z-10 flex items-center justify-between">
+          <p className="text-[11px] text-slate-600">© 2026 Your Platform. All rights reserved.</p>
+          <div className="flex items-center gap-1.5 text-slate-600">
+            <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+            </svg>
+            <span className="text-[11px]">SOC 2 compliant</span>
+          </div>
+        </div> */}
+      </div>
+      {/* RIGHT SIDE: Your Signup Form Container */}
+      {/* <div className="flex items-center justify-center px-4 sm:px-6 lg:px-8 py-8">   */}
+      <div className="relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-16 bg-gradient-to-br from-slate-50 via-gray-100 to-blue-50 overflow-hidden">
+
+        <div className="hidden md:block absolute top-12 left-12 text-6xl animate-bounce duration-1000 select-none opacity-40">🛍️</div>
+        <div className="hidden md:block absolute bottom-16 left-20 text-5xl animate-pulse select-none opacity-30">🏬</div>
+        <div className="hidden md:block absolute top-1/3 right-16 text-6xl animate-bounce select-none opacity-40">📦</div>
+        <div className="hidden md:block absolute bottom-12 right-24 text-5xl animate-pulse select-none opacity-30">✨</div>
+        
+        
+        <div className="absolute top-[-10%] left-[-10%] w-[30rem] h-[30rem] rounded-full bg-blue-200/30 blur-3xl pointer-events-none" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[35rem] h-[35rem] rounded-full bg-emerald-200/20 blur-3xl pointer-events-none" />
 
       <motion.div
         variants={formVariants}
         initial="hidden"
         animate="visible"
-        className="w-full max-w-md sm:max-w-lg bg-white rounded-xl p-8 shadow-sm border border-slate-200"
+        className="relative z-10 w-full max-w-md sm:max-w-lg bg-white/95 backdrop-blur-sm shadow-xl border border-slate-200 rounded-xl p-8"
       >
-        <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 text-center mb-2 sm:mb-3">
+        <h2 className="text-2xl font-extrabold text-slate-900 text-center mb-2 sm:mb-3">
           {t("userSignup.title")}
         </h2>
         <p className="text-center text-gray-500 text-sm sm:text-base mb-5 sm:mb-6">
@@ -1082,6 +1179,7 @@ function UserSignup() {
 
         <audio ref={audioRef} src="/sounds/correct.mp3" preload="auto" />
       </motion.div>
+      </div>
     </div>
   );
 }

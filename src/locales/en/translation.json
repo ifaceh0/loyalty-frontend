@@ -433,7 +433,7 @@
     },
     "emailLabel": "Email Address",
     "passwordLabel": "Password",
-    "captchaLabel": "Enter CAPTCHA",
+    "captchaLabel": "Enter Security Code (Displayed above)",
     "refreshCaptcha": "Refresh CAPTCHA",
     "forgotPassword": "Forgot Password?",
     "signInButton": "Sign In",
@@ -777,7 +777,7 @@
     "sections": {
       "basic": "Basic Point Mechanics",
       "advanced": "Advanced Earning & Rewards",
-      "campaigns": "Event & Temporary Bonus Campaigns"
+      "campaigns": "Event & Temporary Bonus Campaigns (It supersedes value entered in 'Points per Amount Spent section above')"
     },
     "basic": {
       "signupBonus": {
@@ -792,7 +792,7 @@
         "desc": "The base rate for earning points (e.g., 5 points for every {{currency}}1 spent)."
       },
       "minAmount": {
-        "label": "Minimum Purchase Amount for Rewards ({{currency}})",
+        "label": "Minimum Purchase Required to Redeem Rewards ({{currency}})",
         "prefix": "Min. Spend:",
         "suffix": "to Qualify",
         "placeholder": "e.g., 10.00",
