@@ -44,7 +44,7 @@ export default function Footer() {
                 {/* Abstract Icon */}
                 <div className="w-9 h-9 rounded-full border-2 border-slate-900 flex items-center justify-center group-hover:bg-slate-900 transition-all duration-300">
                   <span className="text-lg font-black text-slate-900 group-hover:text-white transition-colors duration-300">
-                    LH
+                    LP
                   </span>
                 </div>
 
@@ -54,7 +54,7 @@ export default function Footer() {
                     Loyalty
                   </span>
                   <span className="text-[10px] font-bold text-blue-600 tracking-[0.2em] uppercase">
-                    Hub Platform
+                    Platform
                   </span>
                 </div>
               </div>
@@ -64,7 +64,7 @@ export default function Footer() {
             </div>
 
             {/* Newsletter Input - Modern SaaS Style */}
-            <div className="w-full max-auto sm:max-w-sm">
+            {/* <div className="w-full max-auto sm:max-w-sm">
               <form onSubmit={handleSubscribe} className="relative group">
                 <div className={`relative flex items-center p-1.5 rounded-lg border transition-all duration-300 ${subscribed ? 'border-emerald-500 bg-emerald-50/30' : 'border-slate-200 bg-slate-50/50 group-focus-within:border-indigo-500 group-focus-within:bg-white group-focus-within:shadow-xl group-focus-within:shadow-indigo-100'}`}>
                   <div className="pl-3 text-slate-400">
@@ -98,7 +98,7 @@ export default function Footer() {
                   )}
                 </AnimatePresence>
               </form>
-            </div>
+            </div> */}
           </div>
 
           {/* Quick Links Column */}

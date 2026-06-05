@@ -495,9 +495,9 @@ export default function Header() {
             //   <span className="h-2 w-2 rounded-full bg-indigo-600 animate-pulse mt-3"></span>
             // </Link>
             <Link to="/" className="flex items-center gap-3 group">
-              <div className="bg-slate-900 text-white font-bold px-2 py-1.5 rounded-full transform group-hover:rotate-12 transition-transform duration-300">
+              <div className="bg-slate-900 text-white font-bold px-2 py-1 rounded-full transform group-hover:rotate-12 transition-transform duration-300">
                 <span className="text-lg">L</span>
-                <span className="text-lg text-blue-500">H</span>
+                <span className="text-lg text-blue-500">P</span>
               </div>
               <div className="flex flex-col">
                 <span className="text-lg font-bold leading-none text-slate-900 tracking-wide">LOYALTY</span>
@@ -588,7 +588,7 @@ export default function Header() {
                 {/* <img src={logo} alt="Logo" className="h-8" /> */}
                 <div className="relative group">
                   <span className="text-xl font-extrabold text-slate-800 tracking-tight">
-                    Loyalty<span className="text-blue-500 underline decoration-2 decoration-blue-200 underline-offset-4">Hub</span>
+                    Loyalty<span className="text-blue-500 underline decoration-2 decoration-blue-200 underline-offset-4">Platform</span>
                   </span>
                   {/* A small dot for flair */}
                   <span className="absolute -top-1 -right-2 h-1.5 w-1.5 rounded-full bg-blue-500"></span>
