@@ -400,73 +400,85 @@ export default function Header() {
     </div>
   );
 
-  const GuestMobileDrawer = () => (
-    <div className="flex flex-col gap-8 p-8 mt-4 flex-1 h-full">
-      <motion.div variants={itemVariants} className="flex flex-col gap-4">
-        {['home', 'features', 'resources'].map((item) => (
-          <NavLink key={item} to={item === 'home' ? '/' : `/${item}`} className="font-black text-slate-800" onClick={() => setMobileMenuOpen(false)}>
-            {t(`header.${item}`)}
+  const GuestMobileDrawer = () => {
+    const linkStyles = "font-black text-slate-800 relative block w-max after:content-[''] after:absolute after:left-0 after:bottom-[-2px] after:w-full after:h-[2px] after:bg-slate-800 after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-left";
+
+    return (
+      <div className="flex flex-col gap-8 p-8 mt-4 flex-1 h-full">
+        <motion.div variants={itemVariants} className="flex flex-col gap-4">
+          {['home', 'features', 'resources'].map((item) => (
+            <NavLink 
+              key={item} 
+              to={item === 'home' ? '/' : `/${item}`} 
+              className={linkStyles} 
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              {t(`header.${item}`)}
+            </NavLink>
+          ))}
+          
+          <a 
+            href="https://subscription-frontend-psi.vercel.app/subscription" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className={`${linkStyles} flex items-center gap-2`} 
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            {t('header.subscription')} <CreditCard size={20} />
+          </a>
+
+          <NavLink 
+            to="/onboarding-guide" 
+            className={linkStyles} 
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            {t('header.faq')}
           </NavLink>
-        ))}
-        <a href="https://subscription-frontend-psi.vercel.app/subscription" target="_blank" rel="noopener noreferrer" className="font-black text-slate-800 flex items-center gap-2" onClick={() => setMobileMenuOpen(false)}>
-          {t('header.subscription')} <CreditCard size={20} />
-        </a>
-        {/* {['faq', 'contact'].map((item) => (
-          <NavLink key={item} to={`/${item}`} className="text-lg font-black text-slate-800" onClick={() => setMobileMenuOpen(false)}>
-            {t(`header.${item}`)}
+
+          {/* Contact Link */}
+          <NavLink 
+            to="/contact" 
+            className={linkStyles} 
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            {t('header.contact')}
           </NavLink>
-        ))} */}
-        <NavLink 
-          to="/onboarding-guide" 
-          className="font-black text-slate-800" 
-          onClick={() => setMobileMenuOpen(false)}
-        >
-          {t('header.faq')}
-        </NavLink>
+        </motion.div>
 
-        {/* Contact Link */}
-        <NavLink 
-          to="/contact" 
-          className="font-black text-slate-800" 
-          onClick={() => setMobileMenuOpen(false)}
-        >
-          {t('header.contact')}
-        </NavLink>
-      </motion.div>
+        <motion.div variants={itemVariants} className="space-y-4 pt-4 border-t border-slate-50">
+          <p className="text-xs font-black uppercase tracking-[0.2em] text-slate-400">{t('header.signUp')}</p>
+          <div className="grid gap-3">
+            <a href="https://subscription-frontend-psi.vercel.app/subscription" className="w-full py-2 bg-slate-50 hover:bg-slate-200 text-slate-700 font-bold rounded-full border border-slate-100 text-center">{t('header.signUpShopkeeper')}</a>
+            <NavLink to="/signup-user" className="w-full py-2 bg-slate-50 hover:bg-slate-200 text-slate-700 font-bold rounded-full border border-slate-100 text-center">{t('header.signUpUser')}</NavLink>
+          </div>
+        </motion.div>
 
-      <motion.div variants={itemVariants} className="space-y-4 pt-4 border-t border-slate-50">
-        <p className="text-xs font-black uppercase tracking-[0.2em] text-slate-400">{t('header.signUp')}</p>
-        <div className="grid gap-3">
-          <a href="https://subscription-frontend-psi.vercel.app/subscription" className="w-full py-2 bg-slate-50 text-slate-700 font-bold rounded-full border border-slate-100 text-center">{t('header.signUpShopkeeper')}</a>
-          <NavLink to="/signup-user" className="w-full py-2 bg-slate-50 text-slate-700 font-bold rounded-full border border-slate-100 text-center">{t('header.signUpUser')}</NavLink>
-        </div>
-      </motion.div>
-
-      <motion.div variants={itemVariants} className="mt-4">
-        <NavLink to="/signin" className="w-full py-2 bg-blue-600 text-white font-bold rounded-full shadow-xl shadow-blue-500/20 text-center block">
-          {t('header.signIn')}
-        </NavLink>
-      </motion.div>
-    </div>
-  );
+        <motion.div variants={itemVariants} className="mt-4">
+          <NavLink to="/signin" className="w-full py-2 bg-slate-900 hover:bg-blue-600 text-white font-bold rounded-full shadow-xl shadow-blue-500/20 text-center block">
+            {t('header.signIn')}
+          </NavLink>
+        </motion.div>
+      </div>
+    );
+  };
 
   const LoggedInMobileDrawer = () => (
     <div className="flex flex-col gap-8 p-6 mt-4">
-      <motion.div variants={itemVariants} className="flex items-center gap-4 p-5 bg-blue-50/50 rounded-[1rem] border border-blue-100/50">
-        <div className="w-10 h-10 rounded-full bg-slate-900  shadow-sm flex items-center justify-center text-white border border-white font-black text-xl">
+      <motion.div variants={itemVariants} className="flex items-center gap-4 p-3 bg-blue-50/50 rounded-[0.5rem] border border-blue-100/50">
+        <div className="w-10 h-10 rounded-full bg-blue-600  shadow-sm flex items-center justify-center text-white border border-white font-black text-xl">
           {userName?.charAt(0).toUpperCase()}
         </div>
         <div>
           <p className="text-lg font-black text-slate-900 leading-tight">{userName || 'User'}</p>
-          <span className="text-[10px] font-black text-blue-600 uppercase tracking-widest bg-white px-2 py-0.5 rounded-full border border-blue-100">Online Now</span>
+          <span className="text-[8px] font-black text-blue-600 uppercase tracking-widest bg-white px-2 py-0.5 rounded-full border border-blue-100">Online Now</span>
         </div>
       </motion.div>
 
       <motion.div variants={itemVariants} className="flex flex-col gap-3">
-        <button onClick={() => { setSidebarOpen(true); setMobileMenuOpen(false); }} className="flex items-center gap-4 p-2.5 bg-slate-900 text-white font-bold rounded-xl shadow-lg shadow-slate-200">
+        <button onClick={() => { setSidebarOpen(true); setMobileMenuOpen(false); }} className="flex items-center gap-4 p-2 bg-slate-900 hover:bg-blue-600 text-white font-bold rounded-md shadow-lg shadow-slate-200">
           <LayoutDashboard size={20} /> {t('header.openDashboard')}
         </button>
-        <button onClick={handleLogout} className="flex items-center gap-4 p-2.5 text-red-500 font-bold bg-red-50 rounded-xl">
+        <button onClick={handleLogout} className="flex items-center gap-4 p-2 text-red-500 font-bold bg-red-50 hover:bg-red-100 rounded-md">
           <LogOut size={20} /> {t('header.logout')}
         </button>
       </motion.div>
@@ -474,37 +486,72 @@ export default function Header() {
   );
 
   return (
-    <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-slate-100">
-      <nav className="max-w-8xl mx-auto px-3 sm:px-8 py-4 flex items-center justify-between">
+    <header className="sticky top-0 z-50 bg-white border-b border-slate-100">
+      <nav className="max-w-8xl mx-auto px-4 sm:px-14 py-2.5 sm:py-2.5 shadow-md flex items-center justify-between">
         
         {/* Left: Logo Area */}
-        <div className="flex items-center">
+        {/* <div className="flex items-center">
           {isLoggedIn && (
-            <button onClick={() => setSidebarOpen(true)} className="p-3 bg-slate-50 rounded-full text-slate-600 hover:bg-slate-100 transition-colors lg:hidden">
-              <Menu size={24} />
+            <button onClick={() => setSidebarOpen(true)} className="p-2 rounded-md text-white bg-slate-900 hover:bg-slate-700 transition-colors lg:hidden">
+              <Menu size={20} />
             </button>
           )}
           {!isLoggedIn && (
-            // <Link to="/" className="flex items-center gap-1 group">
-            //   <span className="text-2xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-blue-500">
-            //     LOYALTY
-            //   </span>
-            //   <span className="text-2xl font-light tracking-tight text-slate-800">
-            //     HUB
-            //   </span>
-            //   <span className="h-2 w-2 rounded-full bg-indigo-600 animate-pulse mt-3"></span>
-            // </Link>
-            <Link to="/" className="flex items-center gap-3 group">
-              <div className="bg-slate-900 text-white font-bold px-2 py-1 rounded-full transform group-hover:rotate-12 transition-transform duration-300">
-                <span className="text-lg">L</span>
-                <span className="text-lg text-blue-500">P</span>
-              </div>
-              <div className="flex flex-col">
-                <span className="text-lg font-bold leading-none text-slate-900 tracking-wide">LOYALTY</span>
-                <span className="text-xs font-medium uppercase tracking-[0.2em] text-slate-500">Platform</span>
-              </div>
-            </Link>
+            <div className="flex flex-col items-start gap-0.5">
+              
+              <Link to="/" className="relative group block select-none">
+                <span className="text-md sm:text-lg font-extrabold text-slate-800 tracking-tight transition-colors group-hover:text-slate-900">
+                  Loyalty<span className="text-blue-500 underline decoration-2 decoration-blue-200 underline-offset-4 group-hover:decoration-blue-400 transition-colors">Platform</span>
+                </span>
+                
+                <span className="absolute -top-1 -right-2 h-1.5 w-1.5 rounded-full bg-blue-500 transition-transform group-hover:scale-125"></span>
+              </Link>
+
+              <span className="text-[8px] sm:text-[9px] font-small text-slate-400 tracking-wider uppercase pl-0.5">
+                powered by <span className="font-bold text-slate-500">interfacehub</span>
+              </span>
+            </div>
           )}
+        </div> */}
+
+        <div className="flex items-center gap-3">
+          {isLoggedIn && (
+            <button
+              onClick={() => setSidebarOpen(true)}
+              className="p-2 rounded-md text-white bg-slate-900 hover:bg-slate-700 transition-colors lg:hidden"
+            >
+              <Menu size={20} />
+            </button>
+          )}
+
+          {/* Logo always visible */}
+          <div className="flex flex-col items-start gap-0.5">
+            {isLoggedIn ? (
+              <div className="relative group block select-none cursor-default">
+                <span className="text-sm sm:text-md font-extrabold text-slate-800 tracking-tight transition-colors group-hover:text-slate-900">
+                  Loyalty
+                  <span className="text-blue-500 underline decoration-2 decoration-blue-200 underline-offset-4 group-hover:decoration-blue-400 transition-colors">
+                    Platform
+                  </span>
+                </span>
+                <span className="absolute -top-1 -right-2 h-1.5 w-1.5 rounded-full bg-blue-500"></span>
+              </div>
+            ) : (
+              <Link to="/" className="relative group block select-none">
+                <span className="text-sm sm:text-md font-extrabold text-slate-800 tracking-tight transition-colors group-hover:text-slate-900">
+                  Loyalty
+                  <span className="text-blue-500 underline decoration-2 decoration-blue-200 underline-offset-4 group-hover:decoration-blue-400 transition-colors">
+                    Platform
+                  </span>
+                </span>
+                <span className="absolute -top-1 -right-2 h-1.5 w-1.5 rounded-full bg-blue-500 transition-transform group-hover:scale-125"></span>
+              </Link>
+            )}
+
+            <span className="text-[7px] sm:text-[8px] text-slate-400 tracking-wider uppercase">
+              powered by <span className="font-bold text-slate-500">interfacehub</span>
+            </span>
+          </div>
         </div>
 
         {/* Center: Desktop Nav Pill */}
@@ -570,7 +617,7 @@ export default function Header() {
             ) : isLoggedIn ? (
               <UserOnlineIcon />
             ) : (
-              <div className="w-10 h-10 flex items-center justify-center rounded-full bg-slate-900 text-white shadow-lg">
+              <div className="w-9 h-9 flex items-center justify-center text-slate-900">
                 <List size={24} />
               </div>
             )}
@@ -582,16 +629,20 @@ export default function Header() {
       <AnimatePresence>
         {mobileMenuOpen && (
           <>
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-40 lg:hidden" onClick={() => setMobileMenuOpen(false)} />
-            <motion.div variants={menuVariants} initial="closed" animate="opened" exit="closed" className="fixed top-0 right-0 h-screen w-[85%] max-w-sm bg-white shadow-2xl z-50 lg:hidden overflow-y-auto rounded-l-[1.5rem] flex flex-col">
-              <div className="p-4 flex items-center justify-between border-b border-slate-50">
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 backdrop-blur-sm z-40 lg:hidden" onClick={() => setMobileMenuOpen(false)} />
+            <motion.div variants={menuVariants} initial="closed" animate="opened" exit="closed" className="fixed top-0 right-0 h-screen w-[85%] max-w-sm bg-white shadow-md z-50 lg:hidden overflow-y-auto rounded-l-[1.5rem] border-l border-slate-100 flex flex-col">
+              <div className="px-3 py-2.5 flex items-center justify-between border-b border-slate-100 shadow-md">
                 {/* <img src={logo} alt="Logo" className="h-8" /> */}
-                <div className="relative group">
-                  <span className="text-xl font-extrabold text-slate-800 tracking-tight">
-                    Loyalty<span className="text-blue-500 underline decoration-2 decoration-blue-200 underline-offset-4">Platform</span>
-                  </span>
-                  {/* A small dot for flair */}
-                  <span className="absolute -top-1 -right-2 h-1.5 w-1.5 rounded-full bg-blue-500"></span>
+                <div className="flex items-center gap-3 group select-none">
+                  <div className="w-1 h-8 bg-blue-500 rounded-full group-hover:h-10 transition-all duration-300 origin-center"></div>
+                  <div className="flex flex-col -space-y-1">
+                    <span className="text-md font-black text-slate-800 tracking-tight">
+                      Loyalty
+                    </span>
+                    <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-blue-500">
+                      Platform
+                    </span>
+                  </div>
                 </div>
                 {/* Language Selector added to Mobile Top */}
                 <div className="flex items-center gap-2">
@@ -600,7 +651,7 @@ export default function Header() {
                   {/* THE CLOSE BUTTON */}
                   <button 
                     onClick={() => setMobileMenuOpen(false)} 
-                    className="p-3 bg-slate-50 rounded-full text-slate-400 active:bg-slate-100 transition-colors"
+                    className="p-3 bg-slate-50 rounded-full text-slate-500 active:bg-slate-100 transition-colors"
                   >
                     <X size={20} />
                   </button>

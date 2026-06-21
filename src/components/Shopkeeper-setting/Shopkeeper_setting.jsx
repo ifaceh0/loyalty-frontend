@@ -799,9 +799,9 @@ const ShopkeeperSetting = () => {
   }
 
   return (
-    <div className="max-w-7xl mx-auto rounded-xl shadow-sm border border-slate-100 overflow-hidden my-2 p-3 sm:p-0">
+    <div className="max-w-8xl mx-auto rounded-xl shadow-md border border-slate-200 overflow-hidden my-2 p-3 sm:p-0">
       {/* Header */}
-      <nav className="bg-white text-slate-900 rounded-t-xl px-4 sm:px-6 py-4 flex flex-row sm:flex-row justify-between items-start sm:items-center gap-3">
+      <nav className="bg-white text-slate-900 rounded-t-xl border-b border-slate-200 px-4 sm:px-6 py-4 flex flex-row sm:flex-row justify-between items-start sm:items-center gap-3">
         <h2 className="text-xl sm:text-2xl font-extrabold flex items-center gap-2">
           {/* <FiSettings className="w-5 h-5 sm:w-6 sm:h-6"/> */}
           {t("shopSettings.header.title")}
@@ -825,7 +825,7 @@ const ShopkeeperSetting = () => {
             className={`text-white px-4 sm:px-5 py-1.5 rounded-full transition duration-200 flex items-center gap-1.5 sm:gap-2 font-medium sm:font-semibold text-sm ${
               isEditMode
                 ? (isSaving ? 'bg-green-400 cursor-not-allowed' : 'bg-green-500 hover:bg-green-600')
-                : 'bg-blue-600 hover:bg-blue-700'
+                : 'bg-slate-900 hover:bg-blue-600'
             }`}
           >
             {isSaving ? (

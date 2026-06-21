@@ -523,12 +523,12 @@ const Shopdashboard = () => {
 
   const menuItems = [
     { tab: "user_stats", icon: faChartBar, label: t("shopdashboard.sidebar.dashboard") },
+    { tab: "interactions", icon: faUsers, label: t("shopdashboard.sidebar.interactions") },
+    { tab: "daily_transaction_report", icon: faFileInvoiceDollar, label: t("shopdashboard.sidebar.transactions") },
     { tab: "shopkeeper", icon: faUser, label: t("shopdashboard.sidebar.profile") },
     { tab: "shopkeeper_setting", icon: faCog, label: t("shopdashboard.sidebar.settings") },
-    { tab: "interactions", icon: faUsers, label: t("shopdashboard.sidebar.interactions") },
-    { tab: "subscription", icon: faCreditCard, label: t("shopdashboard.sidebar.subscription") },
     { tab: "employee_management", icon: faUserTie, label: t("shopdashboard.sidebar.employees") },
-    { tab: "daily_transaction_report", icon: faFileInvoiceDollar, label: t("shopdashboard.sidebar.transactions") },
+    { tab: "subscription", icon: faCreditCard, label: t("shopdashboard.sidebar.subscription") },
     { tab: "contact_support", icon: faEnvelope, label: t("shopdashboard.sidebar.contactUs") },
   ];
 
@@ -536,9 +536,9 @@ const Shopdashboard = () => {
     <div className="flex min-h-screen font-sans text-slate-900">
       {/* Sidebar */}
       <aside
-        className={`fixed inset-y-0 left-0 z-50 bg-white rounded-r-[1.5rem] border-r border-slate-100 shadow-sm transition-all duration-300 ease-in-out
+          className={`fixed top-[56px] left-0 bottom-0 z-40 bg-white rounded-r-[0rem] border-r shadow-md transition-all duration-300 ease-in-out
           ${sidebarOpen ? "translate-x-0 w-[85%] max-w-xs" : "-translate-x-full lg:translate-x-0"} 
-          ${isExpanded ? "lg:w-64" : "lg:w-18"}
+          ${isExpanded ? "lg:w-64" : "lg:w-16"}
         `}
       >
         <div className="flex flex-col h-full p-4">
@@ -579,7 +579,7 @@ const Shopdashboard = () => {
                     setActiveTab(tab);
                     if (sidebarOpen) setSidebarOpen(false);
                   }}
-                  className={`flex items-center w-full p-3 hover:shadow-inner hover:rounded-full transition-all group relative
+                  className={`flex items-center w-full p-3 transition-all group relative
                     ${isActive 
                       ? "bg-white text-slate-600 hover:bg-slate-50 hover:text-blue-600" 
                       : "text-slate-600 hover:bg-slate-50 hover:text-blue-600"}
@@ -608,13 +608,13 @@ const Shopdashboard = () => {
       `}>
         <main className="p-4 sm:p-6 overflow-x-hidden w-full">
           {activeTab === "user_stats" ? (
-            <div className="space-y-10">
+            <div className="space-y-6">
                 {/* Top Chart Section */}
                 <UserPurchaseChart />
 
                 {/* Sales Trend Section */}
                 <section className="mb-8">
-                  <div className="bg-white rounded-xl p-6 border border-gray-50 shadow-sm transition-all duration-300 hover:shadow-md">
+                  <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm transition-all duration-300 hover:shadow-md">
                     {/* Header Section */}
                     <div className="flex flex-col mb-8">
                       <h3 className="text-lg font-bold text-gray-900 tracking-tight">
@@ -684,7 +684,7 @@ const Shopdashboard = () => {
                 </section>
 
               <section className="mb-8">
-                <div className="bg-white rounded-xl p-6 border border-gray-50 shadow-sm transition-all duration-300 hover:shadow-md">
+                <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm transition-all duration-300 hover:shadow-md">
                   {/* Header Section */}
                   <div className="flex flex-col mb-8">
                     <h3 className="text-lg font-bold text-gray-900 tracking-tight">
@@ -764,7 +764,7 @@ const Shopdashboard = () => {
               {/* Tables Section */}
               <Row gutter={[24, 24]}>
                 <Col xs={24} lg={12}>
-                  <div className="bg-white rounded-xl p-4 shadow-sm border border-slate-100 h-full overflow-x-auto">
+                  <div className="bg-white rounded-xl p-4 shadow-sm border border-slate-200 h-full overflow-x-auto">
                     <h4 className="text-lg font-bold text-slate-800 mb-6">{t("shopdashboard.cards.mostVisitors")}</h4>
                     <Table 
                       columns={mostVisitorsColumns} 
@@ -777,7 +777,7 @@ const Shopdashboard = () => {
                   </div>
                 </Col>
                 <Col xs={24} lg={12}>
-                  <div className="bg-white rounded-xl p-4 shadow-sm border border-slate-100 h-full overflow-x-auto">
+                  <div className="bg-white rounded-xl p-4 shadow-sm border border-slate-200 h-full overflow-x-auto">
                     <h4 className="text-lg font-bold text-slate-800 mb-6">{t("shopdashboard.cards.topRevenue")}</h4>
                     <Table 
                       columns={topRevenueColumns} 
@@ -809,8 +809,8 @@ const Shopdashboard = () => {
 
       {/* Mobile Overlay */}
       {sidebarOpen && (
-        <div 
-          className="fixed inset-0 bg-slate-900/20 backdrop-blur-sm z-40 lg:hidden"
+        <div
+          className="fixed top-[56px] left-0 right-0 bottom-0 bg-slate-900/20 backdrop-blur-sm z-30 lg:hidden"
           onClick={() => setSidebarOpen(false)}
         />
       )}

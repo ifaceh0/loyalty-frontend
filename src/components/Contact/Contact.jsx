@@ -109,7 +109,7 @@ export default function ContactUs() {
   };
 
   return (
-    <section className="py-20 px-6 min-h-screen">
+    <section className="py-10 px-6 min-h-screen">
       <div className="max-w-7xl mx-auto">
         
         {/* Header */}
@@ -126,7 +126,7 @@ export default function ContactUs() {
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-12 gap-0 overflow-hidden rounded-[1rem] bg-white border border-slate-100 shadow-2xl shadow-blue-500/5">
+        <div className="grid lg:grid-cols-12 gap-0 overflow-hidden rounded-[1rem] bg-white border border-slate-100 shadow-lg shadow-blue-500/50">
           
           {/* Sidebar - Visual Dark Mode */}
           <div className="lg:col-span-4 bg-slate-900 p-12 text-white flex flex-col justify-between relative overflow-hidden">

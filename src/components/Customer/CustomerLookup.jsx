@@ -1353,9 +1353,9 @@ const CustomerLookup = () => {
       <motion.div 
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="flex justify-center mt-12 mb-10 px-4"
+        className="flex justify-center mt-2 mb-10 px-3 md:px-0"
       >
-        <div className="relative group max-w-6xl w-full">
+        <div className="relative group max-w-8xl w-full">
           {/* Subtle Background Glow */}
           <div className="absolute -inset-1 bg-gradient-to-r from-blue-500/10 to-indigo-500/10 rounded-[0.5rem] blur-2xl opacity-0 group-hover:opacity-100 transition duration-1000"></div>
           
@@ -1392,7 +1392,7 @@ const CustomerLookup = () => {
         </div>
       </motion.div>
 
-      <div className="grid grid-cols-1 gap-4 md:gap-6 md:grid-cols-2 max-w-6xl mx-auto px-3 md:px-0">
+      <div className="grid grid-cols-1 gap-4 md:gap-6 md:grid-cols-4 max-w-8xl mx-auto px-3 md:px-0">
         {/* QR Scanner */}
         
 

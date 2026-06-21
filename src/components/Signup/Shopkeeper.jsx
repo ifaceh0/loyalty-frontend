@@ -1082,19 +1082,10 @@ function Shopkeeper() {
       </div>
 
       {/* Footer */}
-      <div className="mt-10 bg-slate-50 rounded-xl top-8 left-8 flex items-center gap-3 p-2 w-full max-w-xl border">
-        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-pink-500 via-orange-500 to-blue-500 flex items-center justify-center text-white font-bold text-lg shadow-lg">
-          IH
-        </div>
-        <div>
-          <h4 className="font-semibold text-sm text-slate-800">
-            Powered by Interface Hub
-          </h4>
-
-          <p className="text-gray-500 text-xs mt-1">
-            Secure • Reliable • Built for Seamless Loyalty Experiences
+      <div className="mt-10 bg-slate-50 rounded-xl top-8 left-8 flex items-center gap-3 p-4 w-full max-w-md border">
+          <p className="text-gray-500 text-sm mt-1">
+            • Secure • Reliable • Built for Seamless Loyalty Experiences
           </p>
-        </div>
       </div>
 
     </div>

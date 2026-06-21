@@ -38,7 +38,7 @@ const SubscriptionDashboard = () => {
       <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-400/10 rounded-full blur-[120px] animate-pulse" />
       <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-indigo-400/10 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: '2s' }} />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 py-12 md:py-20 flex flex-col items-center">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 py-12 md:py-12 flex flex-col items-center">
         
         {/* Header Section */}
         <motion.div 

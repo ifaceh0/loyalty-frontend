@@ -421,7 +421,7 @@ const Signin = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center py-16">
-      <div className="w-full max-w-md md:max-w-xl lg:max-w-5xl flex bg-white shadow-sm border border-slate-100 rounded-xl overflow-hidden animate-fade-in-up">
+      <div className="w-full max-w-md md:max-w-xl lg:max-w-5xl flex bg-white shadow-md border border-slate-100 rounded-xl overflow-hidden animate-fade-in-up">
       
         {/* left side */}
         <div className="hidden lg:flex w-6/12 bg-slate-900 p-10 flex-col justify-center relative overflow-hidden">
@@ -431,7 +431,7 @@ const Signin = () => {
           
           {/* Subtle Grid - Softened */}
           <div className="absolute inset-0 opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] brightness-100" />
-          <div className="absolute inset-0 opacity-[0.05] bg-[linear-gradient(to_right,#fff_1px,transparent_1px),linear-gradient(to_bottom,#fff_1px,transparent_1px)] bg-[size:40px_40px]"></div>
+          {/* <div className="absolute inset-0 opacity-[0.05] bg-[linear-gradient(to_right,#fff_1px,transparent_1px),linear-gradient(to_bottom,#fff_1px,transparent_1px)] bg-[size:40px_40px]"></div> */}
 
           <div className="relative z-10 space-y-10">
             <motion.div
@@ -508,9 +508,9 @@ const Signin = () => {
                   onToggle={() => setShowPassword(!showPassword)}
                 />
 
-                <div className="space-y-4 pt-3">
+                <div className="space-y-4 pt-1">
                   <div className="flex items-center justify-left">
-                    <canvas ref={canvasRef} width={120} height={40} className="border border-slate-300 shadow-sm rounded-xl bg-white mr-4" />
+                    <canvas ref={canvasRef} width={120} height={40} className="border border-slate-300 shadow-sm rounded-md bg-white mr-4" />
                     <button
                       type="button"
                       onClick={generateCaptcha}
