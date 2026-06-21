@@ -902,9 +902,9 @@ const ShopkeeperProfile = () => {
   }
 
   return (
-    <div className="max-w-7xl mx-auto rounded-xl shadow-sm border border-slate-100 overflow-hidden mt-2 p-3 sm:p-0">
+    <div className="max-w-8xl mx-auto rounded-xl shadow-md border border-slate-200 overflow-hidden mt-2 p-3 sm:p-0">
       {/* Header/Navigation */}
-      <nav className="bg-white text-slate-900 px-4 sm:px-8 py-4 flex flex-row justify-between items-start gap-3">
+      <nav className="bg-white text-slate-900 px-4 sm:px-8 py-4 flex flex-row border-b border-slate-200 justify-between items-start gap-3">
         <h2 className="text-xl sm:text-2xl font-extrabold flex items-center gap-2">
           {/* <FiUser className="w-5 h-5 sm:w-6 sm:h-6"/> */}
            {t("shopProfile.header.title")}
@@ -1026,7 +1026,7 @@ const ShopkeeperProfile = () => {
             </div>
 
             {/* Shop Details */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
                 <InputField
                   label={t("shopProfile.fields.shopName")}
                   name="shopName"
@@ -1062,7 +1062,7 @@ const ShopkeeperProfile = () => {
             title={t("shopProfile.sections.business")} 
             icon={<FiBriefcase className="w-5 h-5 sm:w-6 sm:h-6"/>}
           >
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
                 <InputField
                   label={t("shopProfile.fields.companyName")}
                   name="companyName"
@@ -1087,21 +1087,6 @@ const ShopkeeperProfile = () => {
                   disabled={!isEditing}
                   type="email"
                 />
-                {/* <InputField
-                  label={t("shopProfile.fields.city")}
-                  name="city"
-                  value={formData.city}
-                  onChange={handleChange}
-                  disabled={!isEditing}
-                />
-                
-                <InputField
-                  label={t("shopProfile.fields.country")}
-                  name="country"
-                  value={formData.country}
-                  onChange={() => {}} 
-                  disabled
-                /> */}
                 <div>
                   <label className="block text-xs sm:text-sm font-semibold mb-1 text-gray-700">
                     {t("shopProfile.fields.country")}

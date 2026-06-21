@@ -386,9 +386,9 @@ const EmployeeDashboard = () => {
     <div className="flex min-h-screen font-sans text-slate-900">
       {/* Sidebar */}
       <aside
-        className={`fixed inset-y-0 left-0 z-50 bg-white rounded-r-[1.5rem] border-r border-slate-100 shadow-sm transition-all duration-300 ease-in-out
+          className={`fixed top-[56px] left-0 bottom-0 z-40 bg-white rounded-r-[0rem] border-r shadow-md transition-all duration-300 ease-in-out
           ${sidebarOpen ? "translate-x-0 w-[85%] max-w-xs" : "-translate-x-full lg:translate-x-0"} 
-          ${isExpanded ? "lg:w-64" : "lg:w-18"}
+          ${isExpanded ? "lg:w-64" : "lg:w-16"}
         `}
       >
         <div className="flex flex-col h-full p-4">
@@ -429,7 +429,7 @@ const EmployeeDashboard = () => {
                     setActiveTab(tab);
                     if (sidebarOpen) setSidebarOpen(false);
                   }}
-                  className={`flex items-center w-full p-3 hover:shadow-inner hover:rounded-full transition-all group relative
+                  className={`flex items-center w-full p-3 transition-all group relative
                     ${isActive 
                       ? "bg-white text-slate-600 hover:bg-slate-50 hover:text-blue-600" 
                       : "text-slate-600 hover:bg-slate-50 hover:text-blue-600"}
@@ -468,8 +468,8 @@ const EmployeeDashboard = () => {
 
       {/* Mobile Overlay */}
       {sidebarOpen && (
-        <div 
-          className="fixed inset-0 bg-slate-900/20 backdrop-blur-sm z-40 lg:hidden"
+        <div
+          className="fixed top-[56px] left-0 right-0 bottom-0 bg-slate-900/20 backdrop-blur-sm z-30 lg:hidden"
           onClick={() => setSidebarOpen(false)}
         />
       )}

@@ -292,7 +292,7 @@ export default function InactiveShopsPage() {
 
   return (
     <div className="min-h-screen bg-[#FAFAFA] text-stone-800 font-sans antialiased">
-      <div className="max-w-7xl mx-auto px-6 py-16">
+      <div className="max-w-7xl mx-auto px-6 py-10">
         
         {/* Modern Soft Header */}
         <header className="mb-10 text-center max-w-2xl mx-auto">

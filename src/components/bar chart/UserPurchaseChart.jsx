@@ -250,7 +250,7 @@ const UserPurchaseChart = () => {
 
   return (
     <section className="mb-6">
-      <div className="bg-white rounded-xl p-6 border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+      <div className="bg-white rounded-xl p-6 border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
         <header className="flex justify-between items-end mb-6">
           <div>
             <h3 className="text-lg font-bold text-gray-800 tracking-tight">

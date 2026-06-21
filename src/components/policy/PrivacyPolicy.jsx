@@ -64,7 +64,7 @@ const PrivacyPolicy = () => {
               ))}
             </nav>
             
-            <div className="mt-10 p-6 bg-blue-600 rounded-[2rem] text-white shadow-xl shadow-blue-200">
+            <div className="mt-10 p-6 bg-blue-600 rounded-[1rem] text-white shadow-xl shadow-blue-200">
               <h4 className="font-bold mb-2">Have questions?</h4>
               <p className="text-xs text-blue-100 leading-relaxed mb-4">
                 Our team is here to help with any privacy concerns.
@@ -85,7 +85,7 @@ const PrivacyPolicy = () => {
               </h2>
               <div className="space-y-4 text-slate-500 leading-relaxed">
                 <p>
-                  To provide the <strong>LoyaltyHub</strong> experience, we collect information that identifies you or relates to your activity on our platform.
+                  To provide the <strong>LoyaltyPlatform</strong> experience, we collect information that identifies you or relates to your activity on our platform.
                 </p>
                 <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <li className="p-4 bg-white border border-slate-100 rounded-2xl shadow-sm">
@@ -124,7 +124,7 @@ const PrivacyPolicy = () => {
               <p>
                 We do not sell, rent, or trade your personal information. Your data is only shared with:
               </p>
-              <div className="p-6 bg-slate-900 rounded-[2rem] text-slate-300 border border-slate-800">
+              <div className="p-6 bg-slate-900 rounded-[1rem] text-slate-300 border border-slate-800">
                 <p className="text-sm">
                   <strong className="text-white">Participating Merchants:</strong> Only the stores you explicitly join as a member will have access to your loyalty stats for that specific business. They cannot see your activity at other unrelated shops.
                 </p>
