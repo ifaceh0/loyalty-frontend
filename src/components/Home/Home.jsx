@@ -272,6 +272,57 @@ export default function Home() {
         </div>
       </motion.section>
 
+      {/* MOBILE APP FEATURES */}
+      <motion.section
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.15 }}
+        variants={staggerContainer}
+        className="py-10 md:py-16 px-6"
+      >
+        {/* max-w-5xl makes the section slightly more compact on laptops */}
+        <div className="max-w-7xl mx-auto">
+          <div className="mb-10 md:mb-16">
+            <h2 className="text-2xl md:text-3xl font-bold text-slate-900 tracking-tight mb-3">
+              {t('home.mobile.title')}
+            </h2>
+            <p className="text-slate-500 max-w-xl text-sm md:text-base">
+              {t('home.mobile.subtitle')}
+            </p>
+          </div>
+
+          {/* grid-cols-2 for mobile (2 columns), lg:grid-cols-4 for laptop */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
+            {[
+              { icon: <Smartphone />, title: t('home.mobile.features.0.title'), desc: t('home.mobile.features.0.desc'), color: 'bg-blue-50 text-blue-600' },
+              { icon: <Bell />, title: t('home.mobile.features.1.title'), desc: t('home.mobile.features.1.desc'), color: 'bg-indigo-50 text-indigo-600' },
+              { icon: <MapPin />, title: t('home.mobile.features.2.title'), desc: t('home.mobile.features.2.desc'), color: 'bg-violet-50 text-violet-600' },
+              { icon: <TrendingUp />, title: t('home.mobile.features.3.title'), desc: t('home.mobile.features.3.desc'), color: 'bg-sky-50 text-sky-600' },
+            ].map((feature, i) => (
+              <motion.div
+                key={i}
+                variants={cardVariants}
+                // p-5 for mobile, p-7 for laptop to keep it smaller than before
+                className="group p-5 md:p-7 rounded-2xl md:rounded-[1rem] bg-white border border-slate-100 hover:shadow-xl hover:shadow-slate-200/60 transition-all duration-500"
+              >
+                {/* Smaller icon wrapper for a "tighter" feel */}
+                <div className={`w-10 h-10 md:w-12 md:h-12 rounded-lg ${feature.color} flex items-center justify-center mb-4 md:mb-6 transform group-hover:scale-110 transition-all duration-500 shadow-sm`}>
+                  {React.cloneElement(feature.icon, { strokeWidth: 2, className: "w-5 h-5 md:w-6 md:h-6" })}
+                </div>
+                
+                <h4 className="font-bold text-slate-900 mb-2 text-sm md:text-lg leading-tight">
+                  {feature.title}
+                </h4>
+                
+                <p className="text-slate-500 text-[11px] md:text-sm leading-relaxed">
+                  {feature.desc}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </motion.section>
+
       {/* PARTNER STORE CATEGORIES */}
       <motion.section
         initial="hidden"
@@ -323,57 +374,6 @@ export default function Home() {
                     {category.count}
                   </span>
                 </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </motion.section>
-
-      {/* MOBILE APP FEATURES */}
-      <motion.section
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.15 }}
-        variants={staggerContainer}
-        className="py-10 md:py-16 px-6"
-      >
-        {/* max-w-5xl makes the section slightly more compact on laptops */}
-        <div className="max-w-7xl mx-auto">
-          <div className="mb-10 md:mb-16">
-            <h2 className="text-2xl md:text-3xl font-bold text-slate-900 tracking-tight mb-3">
-              {t('home.mobile.title')}
-            </h2>
-            <p className="text-slate-500 max-w-xl text-sm md:text-base">
-              {t('home.mobile.subtitle')}
-            </p>
-          </div>
-
-          {/* grid-cols-2 for mobile (2 columns), lg:grid-cols-4 for laptop */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
-            {[
-              { icon: <Smartphone />, title: t('home.mobile.features.0.title'), desc: t('home.mobile.features.0.desc'), color: 'bg-blue-50 text-blue-600' },
-              { icon: <Bell />, title: t('home.mobile.features.1.title'), desc: t('home.mobile.features.1.desc'), color: 'bg-indigo-50 text-indigo-600' },
-              { icon: <MapPin />, title: t('home.mobile.features.2.title'), desc: t('home.mobile.features.2.desc'), color: 'bg-violet-50 text-violet-600' },
-              { icon: <TrendingUp />, title: t('home.mobile.features.3.title'), desc: t('home.mobile.features.3.desc'), color: 'bg-sky-50 text-sky-600' },
-            ].map((feature, i) => (
-              <motion.div
-                key={i}
-                variants={cardVariants}
-                // p-5 for mobile, p-7 for laptop to keep it smaller than before
-                className="group p-5 md:p-7 rounded-2xl md:rounded-[1rem] bg-white border border-slate-100 hover:shadow-xl hover:shadow-slate-200/60 transition-all duration-500"
-              >
-                {/* Smaller icon wrapper for a "tighter" feel */}
-                <div className={`w-10 h-10 md:w-12 md:h-12 rounded-lg ${feature.color} flex items-center justify-center mb-4 md:mb-6 transform group-hover:scale-110 transition-all duration-500 shadow-sm`}>
-                  {React.cloneElement(feature.icon, { strokeWidth: 2, className: "w-5 h-5 md:w-6 md:h-6" })}
-                </div>
-                
-                <h4 className="font-bold text-slate-900 mb-2 text-sm md:text-lg leading-tight">
-                  {feature.title}
-                </h4>
-                
-                <p className="text-slate-500 text-[11px] md:text-sm leading-relaxed">
-                  {feature.desc}
-                </p>
               </motion.div>
             ))}
           </div>

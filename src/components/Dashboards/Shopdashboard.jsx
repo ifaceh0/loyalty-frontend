@@ -545,9 +545,22 @@ const Shopdashboard = () => {
           {/* Header Area */}
           <div className={`flex items-center mb-8 h-10 ${isExpanded || sidebarOpen ? "justify-between" : "justify-center"}`}>
             {(isExpanded || sidebarOpen) && (
-              <span className="font-bold text-xl text-blue-600 ml-2 tracking-tight">
-                {t("shopdashboard.sidebar.title")}
-              </span>
+              <div className="flex items-center gap-2.5 ml-2 animate-fade-in">
+                <div className="w-8 h-8 rounded-md bg-indigo-600 flex items-center justify-center text-white shadow-sm shadow-indigo-600/20 shrink-0">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                </div>
+                
+                <div className="flex flex-col min-w-0">
+                  <span className="font-black text-md text-zinc-900 tracking-tight leading-none">
+                    {t("shopdashboard.sidebar.title", { defaultValue: "LoyaltyHub" })}
+                  </span>
+                  {/* <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider mt-0.5 leading-none">
+                    Enterprise
+                  </span> */}
+                </div>
+              </div>
             )}
             
             {/* Desktop Toggle Button */}
@@ -609,6 +622,32 @@ const Shopdashboard = () => {
         <main className="p-4 sm:p-6 overflow-x-hidden w-full">
           {activeTab === "user_stats" ? (
             <div className="space-y-6">
+                
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-6 mb-4 pb-6 border-b border-zinc-200/80">
+                  <div>
+                    <div className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-indigo-600 mb-0.5">
+                      <span>Operational Command</span>
+                    </div>
+                    <h1 className="text-xl md:text-2xl font-extrabold text-zinc-900 tracking-tight">
+                      {t("shopdashboard.header.title", { defaultValue: "Merchant Command" })}
+                    </h1>
+                    <p className="text-zinc-500 text-xs font-medium mt-0.5">
+                      Monitor live monthly sales, top revenue generators, and customer comparison .
+                    </p>
+                  </div>
+                  
+                  {/* Live Session Pill Counter */}
+                  <div className="flex items-center gap-2 bg-white border border-zinc-200 shadow-sm px-4 py-1 rounded-full self-start sm:self-auto">
+                    <span className="relative flex h-2 w-2">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-600"></span>
+                    </span>
+                    <span className="text-xs font-bold uppercase tracking-wider text-zinc-500 font-mono">
+                      Terminal Sync Active
+                    </span>
+                  </div>
+                </div>
+                
                 {/* Top Chart Section */}
                 <UserPurchaseChart />
 
