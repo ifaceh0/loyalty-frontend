@@ -376,27 +376,20 @@ export default function Header() {
   };
 
   const navLinkClasses = ({ isActive }) =>
-    `relative px-4 py-2 text-sm font-bold tracking-tight transition-all duration-300 rounded-full
+    `relative px-4 py-1.5 text-sm font-bold tracking-tight transition-all duration-300 rounded-full
      ${isActive ? 'text-blue-600 bg-blue-50/50' : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'}`;
-
-  const menuVariants = {
-    closed: { x: "100%", transition: { type: "spring", stiffness: 400, damping: 40 } },
-    opened: { x: 0, transition: { type: "spring", stiffness: 400, damping: 40, staggerChildren: 0.08 } }
-  };
 
   const itemVariants = {
     closed: { opacity: 0, x: 20 },
     opened: { opacity: 1, x: 0 }
   };
 
-  // --- SUB-COMPONENTS ---
-
   const UserOnlineIcon = () => (
     <div className="relative">
-      <div className="w-9 h-9 rounded-full bg-slate-900 flex items-center justify-center text-white shadow-lg">
+      <div className="w-8 h-8 rounded-full bg-gray-600 flex items-center justify-center text-white shadow-lg">
         <User size={20} />
       </div>
-      <span className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-green-500 rounded-full border-2 border-white animate-pulse"></span>
+      <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-green-500 rounded-full border-2 border-white animate-pulse"></span>
     </div>
   );
 
@@ -454,7 +447,7 @@ export default function Header() {
         </motion.div>
 
         <motion.div variants={itemVariants} className="mt-4">
-          <NavLink to="/signin" className="w-full py-2 bg-slate-900 hover:bg-blue-600 text-white font-bold rounded-full shadow-xl shadow-blue-500/20 text-center block">
+          <NavLink to="/signin" className="w-full py-2 bg-slate-900 hover:bg-blue-600 text-white font-bold rounded-full shadow-md text-center block">
             {t('header.signIn')}
           </NavLink>
         </motion.div>
@@ -465,7 +458,7 @@ export default function Header() {
   const LoggedInMobileDrawer = () => (
     <div className="flex flex-col gap-8 p-6 mt-4">
       <motion.div variants={itemVariants} className="flex items-center gap-4 p-3 bg-blue-50/50 rounded-[0.5rem] border border-blue-100/50">
-        <div className="w-10 h-10 rounded-full bg-blue-600  shadow-sm flex items-center justify-center text-white border border-white font-black text-xl">
+        <div className="w-9 h-9 rounded-full bg-blue-600  shadow-sm flex items-center justify-center text-white border border-white font-black text-xl">
           {userName?.charAt(0).toUpperCase()}
         </div>
         <div>
@@ -487,40 +480,15 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 bg-white border-b border-slate-100">
-      <nav className="max-w-8xl mx-auto px-4 sm:px-14 py-2.5 sm:py-2.5 shadow-md flex items-center justify-between">
-        
-        {/* Left: Logo Area */}
-        {/* <div className="flex items-center">
-          {isLoggedIn && (
-            <button onClick={() => setSidebarOpen(true)} className="p-2 rounded-md text-white bg-slate-900 hover:bg-slate-700 transition-colors lg:hidden">
-              <Menu size={20} />
-            </button>
-          )}
-          {!isLoggedIn && (
-            <div className="flex flex-col items-start gap-0.5">
-              
-              <Link to="/" className="relative group block select-none">
-                <span className="text-md sm:text-lg font-extrabold text-slate-800 tracking-tight transition-colors group-hover:text-slate-900">
-                  Loyalty<span className="text-blue-500 underline decoration-2 decoration-blue-200 underline-offset-4 group-hover:decoration-blue-400 transition-colors">Platform</span>
-                </span>
-                
-                <span className="absolute -top-1 -right-2 h-1.5 w-1.5 rounded-full bg-blue-500 transition-transform group-hover:scale-125"></span>
-              </Link>
-
-              <span className="text-[8px] sm:text-[9px] font-small text-slate-400 tracking-wider uppercase pl-0.5">
-                powered by <span className="font-bold text-slate-500">interfacehub</span>
-              </span>
-            </div>
-          )}
-        </div> */}
+      <nav className="max-w-8xl mx-auto px-4 sm:px-8 py-2.5 sm:py-2 shadow-md flex items-center justify-between">
 
         <div className="flex items-center gap-3">
           {isLoggedIn && (
             <button
               onClick={() => setSidebarOpen(true)}
-              className="p-2 rounded-md text-white bg-slate-900 hover:bg-slate-700 transition-colors lg:hidden"
+              className="lg:hidden text-slate-900"
             >
-              <Menu size={20} />
+              <Menu size={24} />
             </button>
           )}
 
@@ -555,13 +523,13 @@ export default function Header() {
         </div>
 
         {/* Center: Desktop Nav Pill */}
-        <div className="hidden lg:flex items-center bg-slate-100 rounded-full p-1 border border-slate-100 ring-4 ring-slate-50/30">
+        <div className="hidden lg:flex items-center bg-slate-100 rounded-full p-0.5 border border-slate-100 ring-4 ring-slate-50/30">
           {!isLoggedIn && (
             <>
               <NavLink to="/" className={navLinkClasses}>{t('header.home')}</NavLink>
               <NavLink to="/features" className={navLinkClasses}>{t('header.features')}</NavLink>
               <NavLink to="/resources" className={navLinkClasses}>{t('header.resources')}</NavLink>
-              <a href="https://subscription-frontend-psi.vercel.app/subscription" target="_blank" rel="noopener noreferrer" className="px-4 py-2 text-sm font-bold tracking-tight text-slate-500 hover:text-slate-900 hover:bg-slate-50 rounded-full transition-colors">
+              <a href="https://subscription-frontend-psi.vercel.app/subscription" target="_blank" rel="noopener noreferrer" className="px-4 py-1.5 text-sm font-bold tracking-tight text-slate-500 hover:text-slate-900 hover:bg-slate-50 rounded-full transition-colors">
                 {t('header.subscription')}
               </a>
               <NavLink to="/onboarding-guide" className={navLinkClasses}>{t('header.faq')}</NavLink>
@@ -582,24 +550,24 @@ export default function Header() {
               <NavLink to="/signin" className="text-sm font-bold text-slate-500 hover:text-blue-600 transition-colors">{t('header.signIn')}</NavLink>
               <div className="relative group">
                 <button className="bg-slate-900 text-white px-6 py-2 rounded-full text-sm font-bold hover:bg-blue-600 transition-all shadow-lg active:scale-95">{t('header.signUp')}</button>
-                <div className="absolute right-0 mt-3 w-52 bg-white border border-slate-100 rounded-xl shadow-2xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 translate-y-2 group-hover:translate-y-0 z-50 ring-1 ring-black/5">
-                  <a href="https://subscription-frontend-psi.vercel.app/subscription" target="_blank" rel="noopener noreferrer" className="block px-5 py-2 text-sm font-bold text-slate-600 hover:bg-blue-50 hover:text-blue-600 border-b border-slate-50">{t('header.signUpShopkeeper')}</a>
-                  <NavLink to="/signup-user" className="block px-5 py-2 text-sm font-bold text-slate-600 hover:bg-blue-50 hover:text-blue-600">{t('header.signUpUser')}</NavLink>
+                <div className="absolute right-0 mt-3 w-52 bg-white border border-slate-100 rounded-md shadow-2xl py-1.5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 translate-y-2 group-hover:translate-y-0 z-50 ring-1 ring-black/5">
+                  <a href="https://subscription-frontend-psi.vercel.app/subscription" target="_blank" rel="noopener noreferrer" className="block px-5 py-1.5 text-sm font-bold text-slate-600 hover:bg-blue-50 hover:text-blue-600 border-b border-slate-50">{t('header.signUpShopkeeper')}</a>
+                  <NavLink to="/signup-user" className="block px-5 py-1.5 text-sm font-bold text-slate-600 hover:bg-blue-50 hover:text-blue-600">{t('header.signUpUser')}</NavLink>
                 </div>
               </div>
             </div>
           ) : (
             <div className="hidden lg:block relative group">
-              <button className="flex items-center gap-3 pl-2 pr-4 py-1 rounded-full border border-slate-100 hover:bg-slate-50 transition-all">
-                <div className="w-6 h-6 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 text-white flex items-center justify-center font-bold text-xs shadow-inner shadow-white/20">
+              <button className="flex items-center gap-3 pl-2 pr-4 py-0.5 rounded-full border border-slate-50 hover:bg-slate-50 transition-all">
+                <div className="w-5 h-5 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 text-white flex items-center justify-center font-bold text-xs shadow-inner shadow-white/20">
                   {userName?.charAt(0).toUpperCase() || 'U'}
                 </div>
                 <span className="text-sm font-bold text-slate-700">{userName}</span>
                 <FaChevronDown size={10} className="text-slate-400 transition-transform group-hover:rotate-180" />
               </button>
-              <div className="absolute right-0 mt-2 w-48 bg-white border border-slate-100 rounded-lg shadow-2xl py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 translate-y-2 group-hover:translate-y-0 z-50">
-                <button onClick={handleLogout} className="w-full flex items-center gap-3 px-4 py-3 text-sm font-bold text-red-500 hover:bg-red-50 transition-colors">
-                  <LogOut size={16} /> {t('header.logout')}
+              <div className="absolute right-0 mt-2 w-42 bg-white border border-slate-100 rounded-lg shadow-2xl py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 translate-y-2 group-hover:translate-y-0 z-50">
+                <button onClick={handleLogout} className="w-full flex items-center gap-3 px-4 py-2 text-sm font-bold text-red-500 hover:bg-red-50 transition-colors">
+                  <LogOut size={14} /> {t('header.logout')}
                 </button>
               </div>
             </div>
@@ -611,7 +579,7 @@ export default function Header() {
             className="lg:hidden active:scale-90 transition-transform"
           >
             {mobileMenuOpen ? (
-              <div className="w-11 h-11 flex items-center justify-center rounded-full bg-slate-100 text-slate-900 border border-slate-200 shadow-sm">
+              <div className="w-9 h-9 flex items-center justify-center text-slate-900 border border-slate-200 shadow-sm">
                 <X size={24} />
               </div>
             ) : isLoggedIn ? (
@@ -626,15 +594,14 @@ export default function Header() {
       </nav>
 
       {/* Mobile Drawer */}
-      <AnimatePresence>
         {mobileMenuOpen && (
           <>
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 backdrop-blur-sm z-40 lg:hidden" onClick={() => setMobileMenuOpen(false)} />
-            <motion.div variants={menuVariants} initial="closed" animate="opened" exit="closed" className="fixed top-0 right-0 h-screen w-[85%] max-w-sm bg-white shadow-md z-50 lg:hidden overflow-y-auto rounded-l-[1.5rem] border-l border-slate-100 flex flex-col">
-              <div className="px-3 py-2.5 flex items-center justify-between border-b border-slate-100 shadow-md">
+            <div className="fixed inset-0 bg-black/30 z-40 lg:hidden" onClick={() => setMobileMenuOpen(false)}/>
+            <div className="fixed top-0 right-0 h-screen w-[85%] max-w-sm bg-white shadow-md z-50 lg:hidden overflow-y-auto rounded-l-[1rem] border-l border-slate-100 flex flex-col">
+              <div className="px-3 py-2.5 sm:py-2 flex items-center justify-between border-b border-slate-100 shadow-md">
                 {/* <img src={logo} alt="Logo" className="h-8" /> */}
                 <div className="flex items-center gap-3 group select-none">
-                  <div className="w-1 h-8 bg-blue-500 rounded-full group-hover:h-10 transition-all duration-300 origin-center"></div>
+                  <div className="w-1 h-6 bg-blue-500 rounded-full group-hover:h-8 transition-all duration-300 origin-center"></div>
                   <div className="flex flex-col -space-y-1">
                     <span className="text-md font-black text-slate-800 tracking-tight">
                       Loyalty
@@ -651,18 +618,17 @@ export default function Header() {
                   {/* THE CLOSE BUTTON */}
                   <button 
                     onClick={() => setMobileMenuOpen(false)} 
-                    className="p-3 bg-slate-50 rounded-full text-slate-500 active:bg-slate-100 transition-colors"
+                    className="text-slate-600 transition-colors"
                   >
-                    <X size={20} />
+                    <X size={24} />
                   </button>
                 </div>
               </div>
               
               {isLoggedIn ? <LoggedInMobileDrawer /> : <GuestMobileDrawer />}
-            </motion.div>
+            </div>
           </>
         )}
-      </AnimatePresence>
     </header>
   );
 }

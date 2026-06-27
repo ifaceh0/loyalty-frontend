@@ -25,7 +25,7 @@ export default function LanguageSelector() {
         onClick={() => setOpen(v => !v)}
         className="
           flex items-center gap-2 bg-white border border-gray-300 
-          text-gray-700 text-sm font-semibold rounded-full px-3 py-1
+          text-gray-700 text-sm font-semibold rounded-full px-3 py-0.5
           focus:outline-none focus:ring-2 focus:ring-gray-400
           cursor-pointer
         "
@@ -47,7 +47,7 @@ export default function LanguageSelector() {
               type="button"
               onClick={() => changeLanguage(lang.code)}
               className={`
-                w-full flex items-center px-4 py-2 text-left text-sm
+                w-full flex items-center px-4 py-1 text-left text-sm
                 hover:bg-violet-50 focus:bg-violet-100 focus:outline-none
                 ${i18n.resolvedLanguage === lang.code ? 'bg-violet-50 font-medium' : ''}
               `}

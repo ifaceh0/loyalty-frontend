@@ -1084,7 +1084,7 @@ const CustomerLookup = () => {
               className="bg-white rounded-[0.5rem] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] w-full max-h-[90vh] flex flex-col z-10 overflow-hidden border border-slate-100"
             >
               {/* Clean Header */}
-              <nav className="bg-white/80 backdrop-blur-md px-8 py-3 flex justify-between items-center sticky top-0 z-20 border-b border-slate-50">
+              <nav className="bg-white/80 backdrop-blur-md px-8 py-3 flex justify-between items-center sticky top-0 z-20 border-b border-slate-100 shadow-md">
                 <div className="flex items-center gap-3">
                   <div className={`w-2 h-8 rounded-full bg-${PRIMARY_COLOR}`} />
                   <h2 className="text-2xl font-bold text-slate-800 tracking-tight">
@@ -1093,7 +1093,7 @@ const CustomerLookup = () => {
                 </div>
                 <button
                   onClick={resetAll}
-                  className="group bg-slate-50 text-slate-400 p-2.5 rounded-2xl hover:bg-rose-50 hover:text-rose-500 transition-all duration-300"
+                  className="group bg-slate-50 text-slate-400 p-2 rounded-full hover:bg-rose-50 hover:text-rose-500 transition-all duration-300"
                   aria-label={t("customerLookup.buttons.close")}
                 >
                   <FontAwesomeIcon icon={faXmark} className="w-5 h-5 transition-transform group-hover:rotate-90" />
@@ -1353,16 +1353,17 @@ const CustomerLookup = () => {
       <motion.div 
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="flex justify-center mt-2 mb-10 px-3 md:px-0"
+        className="flex justify-center mt-2 mb-8 sm:mb-20 px-3 md:px-0"
       >
-        <div className="relative group max-w-8xl w-full">
+        <div className="relative group max-w-7xl w-full">
           {/* Subtle Background Glow */}
           <div className="absolute -inset-1 bg-gradient-to-r from-blue-500/10 to-indigo-500/10 rounded-[0.5rem] blur-2xl opacity-0 group-hover:opacity-100 transition duration-1000"></div>
           
-          <div className="relative bg-white/80 backdrop-blur-md ring-1 ring-slate-200/60 rounded-xl p-6 shadow-sm flex flex-col md:flex-row items-center justify-center gap-4 border border-white/50">
+          {/* <div className="relative bg-white/80 backdrop-blur-md ring-1 ring-slate-200/60 rounded-xl p-6 shadow-sm flex flex-col md:flex-row items-center justify-center gap-4 border border-white/50"> */}
+          <div className="relative backdrop-blur-md p-6 shadow-sm flex flex-col md:flex-row items-center justify-center gap-4 border border-white/50">
             
             {/* Shop Icon / Avatar */}
-            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-50 to-indigo-50 flex items-center justify-center shadow-inner">
+            <div className="w-12 h-12 rounded-md bg-gradient-to-br from-blue-50 to-indigo-50 flex items-center justify-center shadow-inner">
               <Store className="w-6 h-6 text-blue-500" strokeWidth={1.5} />
             </div>
 
@@ -1370,7 +1371,7 @@ const CustomerLookup = () => {
               <p className="text-[10px] uppercase tracking-[0.2em] text-slate-400 font-bold">
                 {t("customerLookup.currentlyManaging") || "Currently Managing"}
               </p>
-              <h1 className="text-2xl md:text-3xl font-bold text-slate-800 tracking-tight">
+              <h1 className="text-xl md:text-2xl font-bold text-slate-800 tracking-tight">
                 {t("customerLookup.shopName")}:{" "}
                 <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
                   {shopName || t("customerLookup.defaultShopName")}
@@ -1384,7 +1385,7 @@ const CustomerLookup = () => {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
               </span>
-              <span className="text-[11px] font-bold text-emerald-700 uppercase tracking-wider">
+              <span className="text-[10px] font-bold text-emerald-700 uppercase tracking-wider">
                 {t("customerLookup.statusActive") || "Active Session"}
               </span>
             </div>
@@ -1392,7 +1393,7 @@ const CustomerLookup = () => {
         </div>
       </motion.div>
 
-      <div className="grid grid-cols-1 gap-4 md:gap-6 md:grid-cols-4 max-w-8xl mx-auto px-3 md:px-0">
+      <div className="grid grid-cols-1 gap-4 md:gap-6 md:grid-cols-4 max-w-7xl mx-auto px-3 md:px-0">
         {/* QR Scanner */}
         
 
@@ -1410,7 +1411,7 @@ const CustomerLookup = () => {
 
           {/* Icon Container */}
           <div className="mt-6 mb-4 relative">
-            <div className="w-16 h-16 mx-auto bg-blue-50 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-500 group-hover:rotate-3">
+            <div className="w-16 h-16 mx-auto bg-blue-50 rounded-md flex items-center justify-center group-hover:scale-110 transition-transform duration-500 group-hover:rotate-3">
               <QrCode className="text-blue-600" size={40} strokeWidth={1.5} />
             </div>
             {/* Decorative Soft Glow behind icon */}
@@ -1443,7 +1444,7 @@ const CustomerLookup = () => {
         >
           {/* Card Header */}
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-md bg-indigo-50 flex items-center justify-center">
               <Phone className="w-5 h-5 text-indigo-600" strokeWidth={2} />
             </div>
             <h2 className="text-xl font-bold text-slate-800 tracking-tight">
@@ -1465,7 +1466,7 @@ const CustomerLookup = () => {
                 placeholder={t("customerLookup.cards.phone.placeholder")}
                 maxLength={10}
                 className={`
-                  w-full px-6 py-2.5 rounded-xl bg-slate-100 shadow-inner border-2 transition-all duration-300
+                  w-full px-6 py-2.5 rounded-md bg-slate-100 shadow-inner border-2 transition-all duration-300
                   placeholder:text-slate-400 text-slate-700 font-medium focus:outline-none
                   ${phone && phone.length !== 10 
                     ? "border-rose-100 bg-rose-50/30 focus:border-rose-400" 
@@ -1534,7 +1535,7 @@ const CustomerLookup = () => {
         >
           {/* Card Header */}
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl bg-sky-50 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-md bg-sky-50 flex items-center justify-center">
               <Mail className="w-5 h-5 text-sky-600" strokeWidth={2} />
             </div>
             <h2 className="text-xl font-bold text-slate-800 tracking-tight">
@@ -1549,7 +1550,7 @@ const CustomerLookup = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder={t("customerLookup.cards.email.placeholder")}
-                className="w-full px-6 py-2.5 rounded-xl bg-slate-100 shadow-inner border-2 border-transparent transition-all duration-300 placeholder:text-slate-400 text-slate-700 font-medium focus:outline-none focus:bg-white focus:border-sky-400 focus:shadow-lg focus:shadow-sky-500/10"
+                className="w-full px-6 py-2.5 rounded-md bg-slate-100 shadow-inner border-2 border-transparent transition-all duration-300 placeholder:text-slate-400 text-slate-700 font-medium focus:outline-none focus:bg-white focus:border-sky-400 focus:shadow-lg focus:shadow-sky-500/10"
               />
             </div>
 
@@ -1592,7 +1593,7 @@ const CustomerLookup = () => {
         >
           {/* Card Header */}
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl bg-violet-50 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-md bg-violet-50 flex items-center justify-center">
               <Send className="w-5 h-5 text-violet-600 -rotate-12 translate-x-0.5" strokeWidth={2} />
             </div>
             <h2 className="text-xl font-bold text-slate-800 tracking-tight">
@@ -1607,7 +1608,7 @@ const CustomerLookup = () => {
                 value={inviteEmail}
                 onChange={(e) => setInviteEmail(e.target.value)}
                 placeholder={t("customerLookup.cards.invite.placeholder")}
-                className="w-full px-6 py-2.5 rounded-xl bg-slate-100 shadow-inner border-2 border-transparent transition-all duration-300 placeholder:text-slate-400 text-slate-700 font-medium focus:outline-none focus:bg-white focus:border-violet-400 focus:shadow-lg focus:shadow-violet-500/10"
+                className="w-full px-6 py-2.5 rounded-md bg-slate-100 shadow-inner border-2 border-transparent transition-all duration-300 placeholder:text-slate-400 text-slate-700 font-medium focus:outline-none focus:bg-white focus:border-violet-400 focus:shadow-lg focus:shadow-violet-500/10"
               />
             </div>
 

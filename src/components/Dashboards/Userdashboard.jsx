@@ -494,7 +494,19 @@ const Userdashboard = () => {
           {/* Header Area */}
           <div className={`flex items-center mb-8 h-10 ${isExpanded || sidebarOpen ? "justify-between" : "justify-center"}`}>
             {(isExpanded || sidebarOpen) && (
-              <span className="font-bold text-xl text-blue-600 ml-2 tracking-tight">{t("userDashboard.sidebar.title")}</span>
+              <div className="flex items-center gap-3 ml-2 animate-fade-in">
+                {/* Clean Geometric Ring Emblem */}
+                <div className="w-8 h-8 rounded-md bg-indigo-50 border border-indigo-100 text-indigo-600 flex items-center justify-center shrink-0 shadow-sm">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+                  </svg>
+                </div>
+                
+                {/* Clean Typography Title */}
+                <span className="font-extrabold text-md text-zinc-900 tracking-tight">
+                  {t("userDashboard.sidebar.title", { defaultValue: "My Rewards" })}
+                </span>
+              </div>
             )}
             
             <button

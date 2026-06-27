@@ -40,6 +40,8 @@ import PrivacyPolicy from './components/policy/PrivacyPolicy.jsx';
 import TermsOfService from './components/policy/TermsOfService.jsx';
 import FAQPage from './components/policy/FAQPage.jsx';
 import ShopDetails from './components/ShopList/ShopDetails.jsx';
+import UserProfilePage from './components/Customer/UserProfilePage.jsx';
+import DailyTransactionsPage from './components/Customer/DailyTransactionsPage.jsx';
 
 import './i18n';
 
@@ -102,6 +104,22 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute allowedRoles={["SHOPKEEPER"]}>
             <DailyTransactionReport/>
+          </ProtectedRoute>
+        )
+      },
+      {
+        path:"/shopkeeper/dashboard/daily-transactions/:date",
+        element:(
+          <ProtectedRoute allowedRoles={["SHOPKEEPER"]}>
+            <DailyTransactionsPage/>
+          </ProtectedRoute>
+        )
+      },
+      {
+        path:"/shopkeeper/dashboard/user-profile/:userId",
+        element:(
+          <ProtectedRoute allowedRoles={["SHOPKEEPER"]}>
+            <UserProfilePage/>
           </ProtectedRoute>
         )
       },
