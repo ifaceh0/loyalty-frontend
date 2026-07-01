@@ -455,10 +455,6 @@ export default function ExploreShops() {
 
     const checkAuth = () => {
         const userId = localStorage.getItem('id');
-        if (!userId) {
-            navigate('/signin');
-            return false;
-        }
         return userId;
     };
 
