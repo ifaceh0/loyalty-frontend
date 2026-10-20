@@ -383,7 +383,9 @@ import {
   faUserTie, 
   faFileInvoiceDollar,
   faChevronRight,
-  faChevronLeft 
+  faChevronLeft,
+  faGift, 
+  faTicketAlt 
 } from "@fortawesome/free-solid-svg-icons";
 import { useTranslation } from "react-i18next";
 
@@ -436,6 +438,12 @@ const Shopdashboard = () => {
 
     loadData();
   }, [navigate]);
+
+  const allowedApps = JSON.parse(localStorage.getItem("allowedApplications") || "[]")
+    .map(a => a.toLowerCase());
+
+  const hasReferral = allowedApps.includes("referral");
+  const hasCoupon   = allowedApps.includes("coupon");
 
   // --- DATA FETCHING FUNCTIONS ---
   const fetchDashboardData = async (shopId) => {
@@ -532,6 +540,33 @@ const Shopdashboard = () => {
     { tab: "contact_support", icon: faEnvelope, label: t("shopdashboard.sidebar.contactUs") },
   ];
 
+  const goToOtherApp = async (appName) => {
+    try {
+      const res = await fetchWithAuth(`${API_BASE_URL}/api/auth/generate-transfer-token`, {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+      });
+
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error || "Failed to generate transfer token");
+      }
+
+      const data = await res.json();
+      const transferToken = data.transferToken;
+
+      const baseUrl = import.meta.env.VITE_REFERRAL_FRONTEND_URL;
+      // Both Referral and Coupon currently live on the same frontend
+      const targetUrl = `${baseUrl}/sso-login?token=${transferToken}&app=${appName}`;
+      window.location.href = targetUrl;
+
+    } catch (err) {
+      console.error(err);
+      alert(err.message || "Unable to switch application");
+    }
+  };
+
   return (
     <div className="flex min-h-screen font-sans text-slate-900">
       {/* Sidebar */}
@@ -611,6 +646,48 @@ const Shopdashboard = () => {
                 </button>
               );
             })}
+
+            {(hasReferral || hasCoupon) && (
+              <div className={`pt-4 mt-4 border-t border-slate-200 ${!isExpanded && !sidebarOpen ? "px-0" : ""}`}>
+                {hasReferral && (
+                  <button
+                    onClick={() => goToOtherApp("referral")}
+                    className={`flex items-center w-full p-3 text-slate-600 hover:bg-indigo-50 hover:text-indigo-700 transition-all group relative
+                      ${!isExpanded && !sidebarOpen ? "justify-center" : "justify-start"}
+                    `}
+                  >
+                    <FontAwesomeIcon icon={faGift} className={`text-lg ${isExpanded || sidebarOpen ? "mr-4 w-5" : ""}`} />
+                    {(isExpanded || sidebarOpen) && (
+                      <span className="font-small whitespace-nowrap text-sm">Switch to Referral</span>
+                    )}
+                    {!isExpanded && !sidebarOpen && (
+                      <div className="absolute left-full ml-4 px-2 py-1 bg-slate-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 pointer-events-none z-[60]">
+                        Switch to Referral
+                      </div>
+                    )}
+                  </button>
+                )}
+
+                {hasCoupon && (
+                  <button
+                    onClick={() => goToOtherApp("coupon")}
+                    className={`flex items-center w-full p-3 text-slate-600 hover:bg-orange-50 hover:text-orange-700 transition-all group relative
+                      ${!isExpanded && !sidebarOpen ? "justify-center" : "justify-start"}
+                    `}
+                  >
+                    <FontAwesomeIcon icon={faTicketAlt} className={`text-lg ${isExpanded || sidebarOpen ? "mr-4 w-5" : ""}`} />
+                    {(isExpanded || sidebarOpen) && (
+                      <span className="font-small whitespace-nowrap text-sm">Switch to Coupon</span>
+                    )}
+                    {!isExpanded && !sidebarOpen && (
+                      <div className="absolute left-full ml-4 px-2 py-1 bg-slate-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 pointer-events-none z-[60]">
+                        Switch to Coupon
+                      </div>
+                    )}
+                  </button>
+                )}
+              </div>
+            )}
           </nav>
         </div>
       </aside>

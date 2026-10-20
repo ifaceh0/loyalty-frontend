@@ -20,6 +20,7 @@ import ForgotPassword from './components/Forget_pass/ForgotPassword.jsx'
 import ResetPassword from './components/Reset_pass/ResetPassword.jsx'
 
 import Signin from './components/Signin/Signin.jsx'
+import SsoLogin from './components/Signin/SsoLogin.jsx';
 import Shopkeeper from './components/Signup/Shopkeeper.jsx'
 import User from './components/Signup/User.jsx'
 import Shopdashboard from './components/Dashboards/Shopdashboard.jsx'
@@ -163,6 +164,7 @@ const router = createBrowserRouter([
           </PublicRoute>
         )
       },
+      {path:"sso-login",element: <SsoLogin />},
       {path:"/employee/signup",element:<EmployeeSignupPage/>},
       {path:"/forgot-password",element:<ForgotPassword/>},
       {path:"/reset-password",element:<ResetPassword/>},
