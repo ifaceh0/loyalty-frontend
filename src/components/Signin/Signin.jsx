@@ -400,6 +400,10 @@ const Signin = () => {
     localStorage.setItem("email", data.email || "");
     localStorage.setItem("country", data.country || "");
 
+    if (data.allowedApplications) {
+      localStorage.setItem("allowedApplications", JSON.stringify(data.allowedApplications));
+    }
+
     if (loginRole === "EMPLOYEE" && data.userId) {
       localStorage.setItem("employeeUserId", data.userId);
     }

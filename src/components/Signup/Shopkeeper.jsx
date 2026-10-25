@@ -633,7 +633,7 @@ function Shopkeeper() {
   const [formData, setFormData] = useState({
     shopName: "", companyName: "", companyEmail: "", companyAddress: "",
     companyPhone: "", email: "", phone: "", password: "",
-    confirmPassword: "", captchaInput: "", city: "", country: "", state: "", zipcode: ""
+    confirmPassword: "", captchaInput: "", city: "", country: "", state: "", zipcode: "", tenantId: null
   });
 
   const [error, setError] = useState("");
@@ -793,6 +793,12 @@ function Shopkeeper() {
       if (data.message && data.message.includes("successfully")) {
         setIsEmailVerified(true); 
         setError(""); 
+        if (data.tenantId) {
+          setFormData(prev => ({
+            ...prev,
+            tenantId: data.tenantId
+          }));
+        }
       }
       else { 
         setIsEmailVerified(false); 
@@ -807,7 +813,11 @@ function Shopkeeper() {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-    if (name === "companyEmail") setIsEmailVerified(false);
+    // if (name === "companyEmail") setIsEmailVerified(false);
+    if (name === "companyEmail") {
+      setIsEmailVerified(false);
+      setFormData(prev => ({ ...prev, tenantId: null }));
+    }
     if (missingFields.includes(name) && value.trim() !== "")
       setMissingFields((prev) => prev.filter((f) => f !== name));
   };
