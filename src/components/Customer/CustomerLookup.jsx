@@ -773,6 +773,7 @@ const CustomerLookup = () => {
   const [previewData, setPreviewData] = useState(null);
   const [isCheckingEligibility, setIsCheckingEligibility] = useState(false);
   const [showConfirmClaimPopup, setShowConfirmClaimPopup] = useState(false);
+  const [allowedApps, setAllowedApps] = useState([]);
   const country = localStorage.getItem("country");
   const currencySymbol = getCurrencySymbol(country);
 
@@ -781,6 +782,17 @@ const CustomerLookup = () => {
     const name = localStorage.getItem("name");
     if (id) setShopId(Number(id));
     if (name) setShopName(name);
+    try {
+      const stored = localStorage.getItem("allowedApplications");
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed)) {
+          setAllowedApps(parsed.map((a) => String(a).toLowerCase().trim()));
+        }
+      }
+    } catch (_) {
+      // ignore bad JSON
+    }
   }, []);
 
   const playBeep = () => {
@@ -1040,6 +1052,34 @@ const CustomerLookup = () => {
     }
   };
 
+  const goToOtherApp = async (appName) => {
+    try {
+      const res = await fetchWithAuth(`${API_BASE_URL}/api/auth/generate-transfer-token`, {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+      });
+
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.error || "Failed to generate transfer token");
+      }
+
+      const data = await res.json();
+      const baseUrl = import.meta.env.VITE_REFERRAL_FRONTEND_URL;
+
+      if (!baseUrl) {
+        alert("Referral frontend URL is not configured");
+        return;
+      }
+
+      window.location.href = `${baseUrl}/sso-login?token=${data.transferToken}&app=${appName}`;
+    } catch (err) {
+      console.error(err);
+      alert(err.message || "Unable to switch application");
+    }
+  };
+
   const resetAll = () => {
     setFoundCustomer(null);
     setScannedData(null);
@@ -1071,6 +1111,9 @@ const CustomerLookup = () => {
   if (showScanner) {
     return <QrScanner onClose={() => setShowScanner(false)} />;
   }
+
+  const hasReferral = allowedApps.includes("referral");
+  const hasCoupon = allowedApps.includes("coupon");
 
   if (scannedData) {
     return (
@@ -1380,7 +1423,7 @@ const CustomerLookup = () => {
             </div>
 
             {/* Live Status Badge */}
-            <div className="md:ml-auto flex items-center gap-2 px-4 py-2 bg-emerald-50 rounded-full border border-emerald-100">
+            {/* <div className="md:ml-auto flex items-center gap-2 px-4 py-2 bg-emerald-50 rounded-full border border-emerald-100">
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
@@ -1388,6 +1431,36 @@ const CustomerLookup = () => {
               <span className="text-[10px] font-bold text-emerald-700 uppercase tracking-wider">
                 {t("customerLookup.statusActive") || "Active Session"}
               </span>
+            </div> */}
+            {/* Live Status Badge + Switch buttons */}
+            <div className="md:ml-auto flex flex-wrap items-center gap-2">
+              <div className="flex items-center gap-2 px-4 py-2 bg-emerald-50 rounded-full border border-emerald-100">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                </span>
+                <span className="text-[10px] font-bold text-emerald-700 uppercase tracking-wider">
+                  {t("customerLookup.statusActive") || "Active Session"}
+                </span>
+              </div>
+
+              {hasReferral && (
+                <button
+                  onClick={() => goToOtherApp("referral")}
+                  className="px-4 py-2 text-xs font-bold uppercase tracking-wider bg-indigo-50 text-indigo-700 rounded-full border border-indigo-100 hover:bg-indigo-100 transition"
+                >
+                  Go to Referral
+                </button>
+              )}
+
+              {hasCoupon && (
+                <button
+                  onClick={() => goToOtherApp("coupon")}
+                  className="px-4 py-2 text-xs font-bold uppercase tracking-wider bg-orange-50 text-orange-700 rounded-full border border-orange-100 hover:bg-orange-100 transition"
+                >
+                  Go to Coupon
+                </button>
+              )}
             </div>
           </div>
         </div>

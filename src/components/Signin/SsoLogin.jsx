@@ -43,7 +43,14 @@ function SsoLogin() {
           localStorage.setItem("allowedApplications", JSON.stringify(data.allowedApplications));
         }
 
-        navigate("/shopkeeper/dashboard");
+        if (data.role === "EMPLOYEE") {
+          if (data.userId) {
+            localStorage.setItem("employeeUserId", String(data.userId));
+          }
+          navigate("/employee/dashboard");
+        } else {
+          navigate("/shopkeeper/dashboard");
+        }
       } catch (err) {
         console.error(err);
         alert(err.message || "SSO failed. Please login normally.");

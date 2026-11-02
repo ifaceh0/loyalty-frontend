@@ -517,7 +517,7 @@ export default function Header() {
             )}
 
             <span className="text-[7px] sm:text-[8px] text-slate-400 tracking-wider uppercase">
-              powered by <span className="font-bold text-slate-500">interfacehub</span>
+              powered by <span className="font-bold text-slate-500">interface hub</span>
             </span>
           </div>
         </div>
